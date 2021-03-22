@@ -45,8 +45,8 @@ class RegisterForm extends Model
             $user->contract = $this->contract;
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            var_dump($user->validateFromDB());
-            die();
+            //var_dump($user->validateFromDB());
+            //die();
             return $user->save();
         }
     }

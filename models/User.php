@@ -49,7 +49,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         $curl = new Curl();
         return $curl->setOption(CURLOPT_POSTFIELDS, http_build_query(array(
-            'id' => '1',
+            'id' => '16',
             'inn' => '6234061345',
             'value' => 'info@edinstvo62.ru',
             'contract' => '6828',
@@ -72,23 +72,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
     }
 
 
@@ -116,7 +99,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return \Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**

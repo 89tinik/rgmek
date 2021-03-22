@@ -15,7 +15,16 @@ class LoginController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $loginForm = new LoginForm();
+
+        if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
+            return $this->goHome();
+        }
+
+        $loginForm->password = '';
+
+
+        return $this->render('index', compact('loginForm'));
     }
 
     public function actionRegistration()

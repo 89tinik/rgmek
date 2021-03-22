@@ -13,17 +13,17 @@ $(function() {
 	var width = $(window).width();
 
 	/*tin*/
-	$('.wrong-link a').on('click', function() {
-		$.ajax({
-			type: "POST",
-			url: "http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration",
-			data: "id=c2afaaff-9e30-11e4-9c77-001e8c2d263f&inn=6234061345&contract=6828&method=0&value=info@edinstvo62.ru",
-			complete: function (msg) {
-				console.log(msg);
-			}
-		});
-		return false;
-	});
+	// $('.wrong-link a').on('click', function() {
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: "http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration",
+	// 		data: "id=c2afaaff-9e30-11e4-9c77-001e8c2d263f&inn=6234061345&contract=6828&method=0&value=info@edinstvo62.ru",
+	// 		complete: function (msg) {
+	// 			console.log(msg);
+	// 		}
+	// 	});
+	// 	return false;
+	// });
 	/*ENDtin*/
 	/**
 		Form Styler
