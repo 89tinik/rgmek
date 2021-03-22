@@ -15,7 +15,6 @@ class LoginAssets extends AssetBundle
         'css/login.css',
     ];
     public $js = [
-        'js/jquery.min.js',
         'js/jquery.formstyler.min.js',
         'js/jquery.fancybox.min.js',
         'js/jquery.maskedinput.js',

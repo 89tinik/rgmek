@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Html;
+
 $this->title = 'Авторизация';
 ?>
 <!-- Login Form -->
@@ -21,7 +23,7 @@ $this->title = 'Авторизация';
             </div>
             <input type="submit" value="Войти" >
             <div class="wrong-link">
-                <a href="#">Получить пароль</a>
+                <?= Html::a('Зарегистрироваться', ['login/registration']) ?>
             </div>
         </form>
     </div>

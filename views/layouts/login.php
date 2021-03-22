@@ -47,7 +47,7 @@ LoginAssets::register($this);
 
             <!-- logo -->
             <div class="logo">
-                <a href="#"><img src="images/logo.png" alt="" /></a>
+                <a href="/login/"><img src="images/logo.png" alt="" /></a>
             </div>
 
             <!-- group -->
