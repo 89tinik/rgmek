@@ -42,9 +42,9 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $this->password = \Yii::$app->security->generatePasswordHash($password);
     }
 
-    public function setIdDb($contract)
+    public function setIdDb()
     {
-        $this->id_db = \Yii::$app->security->generatePasswordHash($contract);
+        $this->id_db = $this->inn . '-' . $this->contract;
     }
 
     public function generateAuthKey()
@@ -55,30 +55,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function validateFromDB($method)
     {
 
-//        $curl = new Curl();
-        //return $curl->setOption(CURLOPT_POSTFIELDS, http_build_query(array(
-        //return $curl->setPostParams(array(
-        //    'id' => '16723213321423423423',
-        //    'inn' => '6229054695',
-        //    'value' => 'test@rgmek.ru',
-        //    'contract' => '6828',
-        //    'method' => '0'
-        //))->post('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration');
-
-
-//        $request = $curl->setGetParams([
-//            'id' => $this->id_db,
-//            'inn' => $this->inn,
-//            'value' =>  $this->username,
-//            'contract' => $this->contract,
-//            'method' =>  $method
-//       // ])->get('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration');
-//        ])->get('http://pushkin.studio/testrgmekru/test.xml');
-
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
-            ->setUrl('http://pushkin.studio/testrgmekru/test.xml')
+            //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration')
             ->setData([
                 'id' => $this->id_db,
                 'inn' => $this->inn,
@@ -94,7 +75,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             if ($result['Error']){
                 return ['error'=>$result['Error']['Message']];
             } else {
-                return ['success'=>$result['value']];
+                return ['success'=>$result['Value']];
             }
         } else {
             return ['error'=> 'Не удалось связаться БД - повторите попытку пзже.'];

@@ -59,7 +59,7 @@ class RegisterForm extends Model
             $user->contract = $this->contract;
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            $user->setIdDb($this->contract);
+            $user->setIdDb();
             $validate = $user->validateFromDB($this->method);
 
             if ($validate['success']){
