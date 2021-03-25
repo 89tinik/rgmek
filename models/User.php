@@ -4,6 +4,8 @@ namespace app\models;
 
 use linslin\yii2\curl\Curl;
 use yii\db\ActiveRecord;
+use yii\httpclient\Client;
+use yii\httpclient\XmlParser;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -40,21 +42,65 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $this->password = \Yii::$app->security->generatePasswordHash($password);
     }
 
+    public function setIdDb($contract)
+    {
+        $this->id_db = \Yii::$app->security->generatePasswordHash($contract);
+    }
+
     public function generateAuthKey()
     {
         $this->auth_key = \Yii::$app->security->generateRandomString();
     }
 
-    public function validateFromDB()
+    public function validateFromDB($method)
     {
-        $curl = new Curl();
-        return $curl->setOption(CURLOPT_POSTFIELDS, http_build_query(array(
-            'id' => '16',
-            'inn' => '6234061345',
-            'value' => 'info@edinstvo62.ru',
-            'contract' => '6828',
-            'method' => '0'
-        )))->post('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration');
+
+//        $curl = new Curl();
+        //return $curl->setOption(CURLOPT_POSTFIELDS, http_build_query(array(
+        //return $curl->setPostParams(array(
+        //    'id' => '16723213321423423423',
+        //    'inn' => '6229054695',
+        //    'value' => 'test@rgmek.ru',
+        //    'contract' => '6828',
+        //    'method' => '0'
+        //))->post('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration');
+
+
+//        $request = $curl->setGetParams([
+//            'id' => $this->id_db,
+//            'inn' => $this->inn,
+//            'value' =>  $this->username,
+//            'contract' => $this->contract,
+//            'method' =>  $method
+//       // ])->get('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration');
+//        ])->get('http://pushkin.studio/testrgmekru/test.xml');
+
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://pushkin.studio/testrgmekru/test.xml')
+            ->setData([
+                'id' => $this->id_db,
+                'inn' => $this->inn,
+                'value' =>  $this->username,
+                'contract' => $this->contract,
+                'method' =>  $method
+            ])
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            $result = $xml->parse($response);
+
+            if ($result['Error']){
+                return ['error'=>$result['Error']['Message']];
+            } else {
+                return ['success'=>$result['value']];
+            }
+        } else {
+            return ['error'=> 'Не удалось связаться БД - повторите попытку пзже.'];
+        }
+
+
 
     }
 

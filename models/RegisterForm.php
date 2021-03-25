@@ -15,6 +15,7 @@ class RegisterForm extends Model
     public $contract;
     public $email;
     public $phone;
+    public $method;
 
 
     /**
@@ -27,7 +28,7 @@ class RegisterForm extends Model
             [['inn', 'contract', 'password', 'rePassword'], 'required'],
             ['rePassword', 'compare', 'compareAttribute' => 'password'],
             ['email', 'email'],
-            ['phone', 'trim'],
+            [['phone', 'method'], 'trim'],
             //[['phone','email'], 'unique', 'targetClass'=>'app/models/User'],
         ];
     }
@@ -58,9 +59,19 @@ class RegisterForm extends Model
             $user->contract = $this->contract;
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            //var_dump($user->validateFromDB());
-            //die();
-            return $user->save();
+            $user->setIdDb($this->contract);
+            $validate = $user->validateFromDB($this->method);
+
+            if ($validate['success']){
+                if ($user->save()){
+                    return ['uName'=>$user->username];
+                } else {
+                    return ['error'=>'Не удалось зарегистрироваться - повторите попытку пзже.'];
+                }
+            } else {
+                return ['error'=> $validate['error']];
+            }
+
         }
     }
 }

@@ -11,24 +11,36 @@ $(window).on("load", function() {
 
 $(function() {
 	var width = $(window).width();
-
+	/**
+	 Form Styler
+	 **/
+	styler_func();
 	/*tin*/
 	// $('.wrong-link a').on('click', function() {
-	// 	$.ajax({
-	// 		type: "POST",
-	// 		url: "http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration",
-	// 		data: "id=c2afaaff-9e30-11e4-9c77-001e8c2d263f&inn=6234061345&contract=6828&method=0&value=info@edinstvo62.ru",
-	// 		complete: function (msg) {
-	// 			console.log(msg);
-	// 		}
-	// 	});
-	// 	return false;
-	// });
+	// 	// 	$.ajax({
+	// 	// 		type: "POST",
+	// 	// 		url: "http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration",
+	// 	// 		data: "id=c2afaaff-9e30-11e4-9c77-001e8c2d263f&inn=6234061345&contract=6828&method=0&value=info@edinstvo62.ru",
+	// 	// 		complete: function (msg) {
+	// 	// 			console.log(msg);
+	// 	// 		}
+	// 	// 	});
+	// 	// 	return false;
+	// 	// });
+
+	$('#registerForm input[type=radio]').on('change', function(){
+		if ($(this).val()==1){
+			$('#registerForm input.phone').closest('.form-group').css('display', 'block');
+			$('#registerForm input.email').closest('.form-group').css('display', 'none');
+		} else {
+			$('#registerForm input.phone').closest('.form-group').css('display', 'none');
+			$('#registerForm input.email').closest('.form-group').css('display', 'block');
+		}
+	});
+
+	$('#registerForm input[type=radio]').trigger('change');
 	/*ENDtin*/
-	/**
-		Form Styler
-	**/
-	styler_func();
+
 	
 	
 	/*
