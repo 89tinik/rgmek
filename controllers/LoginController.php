@@ -39,6 +39,7 @@ class LoginController extends Controller
             return $this->goHome();
         }
         $registerForm = new RegisterForm();
+        $kpp = false;
         if ($registerForm->load(Yii::$app->request->post())) {
 
             if ($registerForm->validate() ) {
@@ -46,7 +47,10 @@ class LoginController extends Controller
                 if ($register['uName']) {
                     Yii::$app->session->setFlash('success', 'Регистрация завершена. Логин для входа <b>'.$register['uName'].'</b>.');
                     return $this->redirect('/login');
-                } else {
+                } elseif($register['error'] == 501){
+                    $kpp = true;
+                    Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
+                }else{
                     Yii::$app->session->setFlash('error', 'Ошибка регистрации!!!<br/>'.$register['error']);
                 }
             } else {
@@ -54,7 +58,7 @@ class LoginController extends Controller
             }
         }
 
-        return $this->render('registration', compact('registerForm'));
+        return $this->render('registration', compact('registerForm','kpp'));
     }
 
     public function actionLogout()

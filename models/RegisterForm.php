@@ -30,6 +30,9 @@ class RegisterForm extends Model
             ['rePassword', 'compare', 'compareAttribute' => 'password'],
             ['email', 'email'],
             [['phone', 'method', 'kpp'], 'trim'],
+            ['password', 'match', 'pattern' => '#[a-z]#is', 'message' => 'Пароль должен содержать минимум 1 английскую букву'],
+            ['password', 'match', 'pattern' => '/^[A-Za-z0-9]+$/', 'message' => 'Пароль должен содержать только цифры и английские буквы'],
+            ['password', 'string', 'min' => '6', 'message' => 'Пароль должен содержать не менее 6-ти символов'],
             //[['phone','email'], 'unique', 'targetClass'=>'app/models/User'],
         ];
     }
@@ -59,7 +62,7 @@ class RegisterForm extends Model
             $user->inn = $this->inn;
             $user->contract = $this->contract;
             $user->kpp = $this->kpp;
-            $user->setPassword($this->password);
+            $user->setPassword( mb_strtolower($this->password, 'UTF-8'));
             $user->generateAuthKey();
             $user->setIdDb();
             $validate = $user->validateFromDB($this->method);
