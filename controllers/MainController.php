@@ -4,6 +4,8 @@
 namespace app\controllers;
 
 
+use yii\httpclient\Client;
+use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
@@ -37,7 +39,25 @@ class MainController extends Controller
 
     public function actionProfile()
     {
-        return $this->render('profile');
+//        $uId = \Yii::$app->user->identity->id_db; расскоментировать
+        $uId = 'c2afaaff-9e30-11e4-9c77-001e8c2d263f';
+        $contracts = new Client();
+        $response = $contracts->createRequest()
+            ->setMethod('GET')
+            //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile')
+            ->setData([
+                'id' => $uId
+            ])
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            $result = $xml->parse($response);
+            return $this->render('profile', compact('result'));
+        } else {
+            return 'Не удалось связаться БД - повторите попытку пзже.';
+        }
+
     }
 
     public function actionPayment()

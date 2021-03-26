@@ -44,7 +44,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     public function setIdDb()
     {
-        $this->id_db = $this->inn . '-' . $this->contract;
+        $this->id_db = md5($this->username);
     }
 
     public function generateAuthKey()

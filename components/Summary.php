@@ -12,13 +12,15 @@ class Summary extends Widget
 
     public function run()
     {
+//        $uId = \Yii::$app->user->identity->id_db; расскоментировать
+        $uId = 'c2afaaff-9e30-11e4-9c77-001e8c2d263f';
         $contracts = new Client();
         $response = $contracts->createRequest()
             ->setMethod('GET')
             //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
             ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
             ->setData([
-                'id' => 'c2afaaff-9e30-11e4-9c77-001e8c2d263f'
+                'id' => $uId
             ])
             ->send();
         if ($response->isOk) {
