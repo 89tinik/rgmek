@@ -95,88 +95,10 @@ IeAssets::register($this);
             <ul>
                 <li>
                     <a href="#">Сводка</a>
-                    <?= \app\components\Summary::widget()?>
+
                 </li>
-                <li>
-                    <a href="#">№0509 от 01.01.2013 <span>Парикмакхерская на Гоголя</span></a>
-                    <ul>
-                        <li><a href="#">Узнать задолжность, оплатить</a></li>
-                        <li><a href="#">Передать показания</a></li>
-                        <li><a href="#">Счета</a></li>
-                        <li><a href="#">Начисления и платежи</a></li>
-                    </ul>
-                    <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
-                        <div class="title">Выбрать действие</div>
-                        <div class="close">Закрыть</div>
-                        <div class="bts">
-                            <div class="btn full small border white">Узнать задолжность, оплатить</div>
-                            <div class="btn full small border white">Передать показания</div>
-                            <div class="btn full small border white">Счета</div>
-                            <div class="btn full small border white">Начисления и платежи</div>
-                            <div class="btn full small border white">Объекты и приборы учета</div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">№0509 от 01.01.2013 <span>Парикмакхерская на Гоголя</span></a>
-                    <ul>
-                        <li><a href="#">Узнать задолжность, оплатить</a></li>
-                        <li><a href="#">Передать показания</a></li>
-                        <li><a href="#">Счета</a></li>
-                        <li><a href="#">Начисления и платежи</a></li>
-                    </ul>
-                    <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
-                        <div class="title">Выбрать действие</div>
-                        <div class="close">Закрыть</div>
-                        <div class="bts">
-                            <div class="btn full small border white">Узнать задолжность, оплатить</div>
-                            <div class="btn full small border white">Передать показания</div>
-                            <div class="btn full small border white">Счета</div>
-                            <div class="btn full small border white">Начисления и платежи</div>
-                            <div class="btn full small border white">Объекты и приборы учета</div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">№0509 от 01.01.2013 <span>Парикмакхерская на Гоголя</span></a>
-                    <ul>
-                        <li><a href="#">Узнать задолжность, оплатить</a></li>
-                        <li><a href="#">Передать показания</a></li>
-                        <li><a href="#">Счета</a></li>
-                        <li><a href="#">Начисления и платежи</a></li>
-                    </ul>
-                    <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
-                        <div class="title">Выбрать действие</div>
-                        <div class="close">Закрыть</div>
-                        <div class="bts">
-                            <div class="btn full small border white">Узнать задолжность, оплатить</div>
-                            <div class="btn full small border white">Передать показания</div>
-                            <div class="btn full small border white">Счета</div>
-                            <div class="btn full small border white">Начисления и платежи</div>
-                            <div class="btn full small border white">Объекты и приборы учета</div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">№0509 от 01.01.2013 <span>Парикмакхерская на Гоголя</span></a>
-                    <ul>
-                        <li><a href="#">Узнать задолжность, оплатить</a></li>
-                        <li><a href="#">Передать показания</a></li>
-                        <li><a href="#">Счета</a></li>
-                        <li><a href="#">Начисления и платежи</a></li>
-                    </ul>
-                    <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
-                        <div class="title">Выбрать действие</div>
-                        <div class="close">Закрыть</div>
-                        <div class="bts">
-                            <div class="btn full small border white">Узнать задолжность, оплатить</div>
-                            <div class="btn full small border white">Передать показания</div>
-                            <div class="btn full small border white">Счета</div>
-                            <div class="btn full small border white">Начисления и платежи</div>
-                            <div class="btn full small border white">Объекты и приборы учета</div>
-                        </div>
-                    </div>
-                </li>
+                <?= \app\components\Summary::widget()?>
+                
             </ul>
         </div>
     </div>

@@ -25,13 +25,21 @@ class Summary extends Widget
             $xml = new XmlParser();
             $result = $xml->parse($response);
             var_dump($result);
-            if ($result['Error']) {
-                return $result['Error']['Message'];
-            } else {
-                return $result['Value'];
+            if ($result['Contract']) {
+                $output = '';
+                foreach ($result['Contract'] as $contract){
+                    $output.= $this->toTemplate($contract);
+                }
+                return $output;
             }
         } else {
             return 'Не удалось связаться БД - повторите попытку пзже.';
         }
+    }
+
+    protected function toTemplate ($contract){
+        ob_start();
+        include __DIR__.'/tpl/contract_left.php';
+        return ob_get_clean();
     }
 }
