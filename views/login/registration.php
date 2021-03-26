@@ -49,9 +49,7 @@ $this->title = 'Регистрация';
         ])->textInput(['placeholder' => '№ договора']) ?>
         <?= $form->field($registerForm, 'password')->passwordInput(['placeholder' => 'Пароль']) ?>
         <?= $form->field($registerForm, 'rePassword')->passwordInput(['placeholder' => 'Повторите пароль']) ?>
-<?php
-//$registerForm->method = '1';
-?>
+
         <?= $form->field($registerForm, 'method')->radioList(['0'=>'E-mail', '1'=>'Телефон'],  ['itemOptions' => ['class' => 'styler']]); ?>
         <?= $form->field($registerForm, 'email')->textInput(['placeholder' => 'E-mail', 'class'=>'email form-control']) ?>
         <?= $form->field($registerForm, 'phone')->widget(\yii\widgets\MaskedInput::className(), [

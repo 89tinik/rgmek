@@ -56,6 +56,7 @@ class RegisterForm extends Model
         } else {
             $user->username = $this->inn;
         }
+
         if (!empty($user->username)){
             $user->email = $this->email;
             $user->phone = $this->phone;

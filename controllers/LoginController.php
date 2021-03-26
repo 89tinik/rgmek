@@ -57,7 +57,10 @@ class LoginController extends Controller
                 Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
             }
         }
-
+       // var_dump($registerForm->method);die();
+        if (is_null($registerForm->method)) {
+            $registerForm->method = 0;
+        }
         return $this->render('registration', compact('registerForm','kpp'));
     }
 

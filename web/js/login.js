@@ -27,18 +27,22 @@ $(function() {
 	// 	// 	});
 	// 	// 	return false;
 	// 	// });
-
-	$('#registerForm input[type=radio]').on('change', function(){
-		if ($(this).val()==1){
+	function setMethod(i){
+		if ( i== 1) {
 			$('#registerForm input.phone').closest('.form-group').css('display', 'block');
 			$('#registerForm input.email').closest('.form-group').css('display', 'none');
 		} else {
 			$('#registerForm input.phone').closest('.form-group').css('display', 'none');
 			$('#registerForm input.email').closest('.form-group').css('display', 'block');
 		}
+	}
+	$('#registerForm input[type=radio]').on('change', function(){
+		setMethod($(this).val());
 	});
+	setMethod($('#registerForm input[type=radio]').val());
+	//$('#registerForm input[type=radio]').change();
+	//$('#registerForm input[type=radio]').trigger('refresh');
 
-	$('#registerForm input[type=radio]').trigger('change');
 	/*ENDtin*/
 
 	
