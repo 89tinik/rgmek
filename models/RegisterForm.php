@@ -16,6 +16,7 @@ class RegisterForm extends Model
     public $email;
     public $phone;
     public $method;
+    public $kpp;
 
 
     /**
@@ -28,7 +29,7 @@ class RegisterForm extends Model
             [['inn', 'contract', 'password', 'rePassword'], 'required'],
             ['rePassword', 'compare', 'compareAttribute' => 'password'],
             ['email', 'email'],
-            [['phone', 'method'], 'trim'],
+            [['phone', 'method', 'kpp'], 'trim'],
             //[['phone','email'], 'unique', 'targetClass'=>'app/models/User'],
         ];
     }
@@ -47,16 +48,17 @@ class RegisterForm extends Model
 
     public function Registr(){
         $user = new User();
-        if (!empty($this->email)){
-            $user->username = $this->email;
-            $user->email = $this->email;
-        } elseif (!empty($this->phone)){
-            $user->username = $this->phone;
-            $user->phone = $this->phone;
+        if (!empty($this->kpp)){
+            $user->username = $this->inn.'-'.$this->kpp;
+        } else {
+            $user->username = $this->inn;
         }
         if (!empty($user->username)){
+            $user->email = $this->email;
+            $user->phone = $this->phone;
             $user->inn = $this->inn;
             $user->contract = $this->contract;
+            $user->kpp = $this->kpp;
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->setIdDb();

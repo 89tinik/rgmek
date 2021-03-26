@@ -54,33 +54,39 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     public function validateFromDB($method)
     {
-
+        $data = [
+            'id' => $this->id_db,
+            'inn' => $this->inn,
+            'contract' => $this->contract,
+            'method' => $method
+        ];
+        if ($method == 1) {
+            $data['value'] = $this->phone;
+        } else {
+            $data['value'] = $this->email;
+        }
+        if ($this->kpp) {
+            $data['kpp'] = $this->kpp;
+        }
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
             //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
             ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration')
-            ->setData([
-                'id' => $this->id_db,
-                'inn' => $this->inn,
-                'value' =>  $this->username,
-                'contract' => $this->contract,
-                'method' =>  $method
-            ])
+            ->setData($data)
             ->send();
         if ($response->isOk) {
             $xml = new XmlParser();
             $result = $xml->parse($response);
 
-            if ($result['Error']){
-                return ['error'=>$result['Error']['Message']];
+            if ($result['Error']) {
+                return ['error' => $result['Error']['Message']];
             } else {
-                return ['success'=>$result['Value']];
+                return ['success' => $result['Value']];
             }
         } else {
-            return ['error'=> 'Не удалось связаться БД - повторите попытку пзже.'];
+            return ['error' => 'Не удалось связаться БД - повторите попытку пзже.'];
         }
-
 
 
     }
