@@ -4,47 +4,34 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use app\assets\LoginAssets;
+use app\assets\DefaultAssets;
+use app\assets\IeAssets;
 
-LoginAssets::register($this);
+DefaultAssets::register($this);
+IeAssets::register($this);
 ?>
 
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->registerCsrfMetaTags() ?>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
-    <meta name="HandheldFriendly" content="true">
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->registerCsrfMetaTags() ?>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="HandheldFriendly" content="true">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    <!-- BEGIN CSS STYLES -->
-    <link rel="stylesheet" href="css/fancybox.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/form-styler.css">
-    <link rel="stylesheet" href="css/swiper.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/main.css">
-    <!-- END CSS STYLES -->
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
+        <link rel="icon" href=<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
+        <?php $this->head() ?>
+    </head>
 
-    <!--[if lt IE 9]>
-    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
-    <link rel="icon" href=<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
-    <?php $this->head() ?>
-</head>
-
-<body>
-<?php $this->beginBody() ?>
+    <body>
+    <?php $this->beginBody() ?>
 <div class="bg">
 
     <!-- Preloader -->
@@ -62,7 +49,9 @@ LoginAssets::register($this);
 
             <!-- logo -->
             <div class="h-logo">
-                <a href="#"><img src="images/logo.png" alt="" /></a>
+                <a href="<?=\yii\helpers\Url::base(true);  ?>">
+                    <img src="/images/logo.png" alt="" />
+                </a>
             </div>
 
             <div class="h-label">ООО “Огонёк”</div>
@@ -70,7 +59,7 @@ LoginAssets::register($this);
             <!-- menu -->
             <div class="top-menu">
                 <ul>
-                    <li><a href="#">Профиль потребителя</a></li> <!-- class="active" -->
+                    <li><?= Html::a('Профиль потребителя', ['main/profile']) ?></li> <!-- class="active" -->
                     <li class="children">
                         <a href="#">Заключение/изменение договора</a>
                         <ul>
@@ -86,8 +75,9 @@ LoginAssets::register($this);
 
             <!-- login -->
             <div class="h-login">
-                <a href="#" class="h-login-btn">ООО “Огонёк”</a>
-                <a href="#" class="h-login-btn-mobile">Выйти из аккаунта</a>
+
+                <?= Html::a(Yii::$app->user->identity->username, ['login/logout'], ['class'=>'h-login-btn']) ?>
+                <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class'=>'h-login-btn-mobile']) ?>
             </div>
 
             <!-- menu btn -->
@@ -105,6 +95,7 @@ LoginAssets::register($this);
             <ul>
                 <li>
                     <a href="#">Сводка</a>
+                    <?= \app\components\Summary::widget()?>
                 </li>
                 <li>
                     <a href="#">№0509 от 01.01.2013 <span>Парикмакхерская на Гоголя</span></a>
@@ -204,54 +195,11 @@ LoginAssets::register($this);
     <!-- Popups -->
     <div class="overlay"></div>
 
-    <!-- Call Popup
-    <div class="nonebox" id="call-popup">
-        <div class="title">Запишитесь на прием</div>
-        <div class="subtitle">Заполните простую форму ниже* или позвоните по телефону <a href="tel+74951508100">+7 495 150-81-00</a></div>
-        <form id="call_form" method="post">
-            <div class="c-form">
-                <div class="group">
-                    <div class="label">Имя</div>
-                    <div class="field name">
-                        <input type="text" name="name" placeholder="Введите данные" />
-                    </div>
-                </div>
-                <div class="group">
-                    <div class="label">Телефон</div>
-                    <div class="field tel">
-                        <input type="tel" name="tel" placeholder="Введите номер телефона" />
-                    </div>
-                </div>
-                <input type="submit" class="btn submit-btn" value="Отправить" />
-                <div class="info-text">
-                    Нажимая "отправить", Вы выражаете согласие <br />с <a href="#">политикой обработки персональных данных</a>.
-                </div>
-            </div>
-        </form>
-        <span class="close"></span>
-    </div>-->
+
 
 </div>
 
-<!-- Scripts -->
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.formstyler.min.js"></script>
-<script src="js/jquery.fancybox.min.js"></script>
-<script src="js/jquery.maskedinput.js"></script>
-<script src="js/jquery.validate.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/swiper.min.js"></script>
-<script src="js/script.js"></script>
-<!--<script src="js/lazysizes.min.js" async=""></script>
-<script>
-    /*Lazy*/
-    document.addEventListener('lazybeforeunveil', function(e){
-        var bg = e.target.getAttribute('data-bg');
-        if(bg){
-            e.target.style.backgroundImage = 'url(' + bg + ')';
-        }
-    });
-</script>-->
+
 
 <?php $this->endBody() ?>
 </body>

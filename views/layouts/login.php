@@ -5,8 +5,10 @@
 
 use yii\helpers\Html;
 use app\assets\LoginAssets;
+use app\assets\IeAssets;
 
 LoginAssets::register($this);
+IeAssets::register($this);
 ?>
 
 <?php $this->beginPage() ?>
@@ -19,6 +21,7 @@ LoginAssets::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="HandheldFriendly" content="true">
+    <base href="<?=\yii\helpers\Url::base(true);  ?>">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
 

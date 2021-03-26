@@ -26,6 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -57,6 +58,7 @@ $config = [
                     'suffix' => '',
                 ],
                 'registration'=>'login/registration',
+                'logout'=>'login/logout',
                 'profile'=>'main/profile',
                 'payment'=>'main/payment',
                 //'<action:(profile | payment)>'=>'main/<action>',

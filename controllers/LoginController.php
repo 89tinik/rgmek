@@ -6,6 +6,8 @@ namespace app\controllers;
 
 use app\models\LoginForm;
 use app\models\RegisterForm;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use Yii;
 
@@ -13,8 +15,12 @@ class LoginController extends Controller
 {
     public $layout = 'login';
 
+
     public function actionIndex()
     {
+        if (!\Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
         $loginForm = new LoginForm();
 
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->login()) {
@@ -29,6 +35,9 @@ class LoginController extends Controller
 
     public function actionRegistration()
     {
+        if (!\Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
         $registerForm = new RegisterForm();
         if ($registerForm->load(Yii::$app->request->post())) {
 
@@ -46,5 +55,11 @@ class LoginController extends Controller
         }
 
         return $this->render('registration', compact('registerForm'));
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->redirect('/login');
     }
 }

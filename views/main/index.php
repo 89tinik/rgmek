@@ -8,6 +8,7 @@ $this->title = 'ЛК РГМЭК';
 
     <div class="jumbotron">
         <h1>ЛК РГМЭК</h1>
+        <h1><?=$user?></h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 

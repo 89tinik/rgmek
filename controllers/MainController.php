@@ -5,13 +5,34 @@ namespace app\controllers;
 
 
 use yii\web\Controller;
+use yii\filters\AccessControl;
 
 class MainController extends Controller
 {
 
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ]
+        ];
+    }
+
     public function actionIndex()
     {
-        return $this->render('index');
+        if (\Yii::$app->user->isGuest){
+            $user = 'гость';
+        } else {
+            $user = 'негость';
+        }
+        return $this->render('index', compact('user'));
     }
 
     public function actionProfile()
