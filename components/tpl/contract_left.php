@@ -1,6 +1,6 @@
 <?php
 $dateArr = explode('T', $contract['Date']);
-$dateArr = $dateArr[0];
+$dateArr = explode('-',$dateArr[0]);
 ?>
 <li>
     <a href="<?= $contract['UID']?>">№<?= $contract['Number']?> от <?= $dateArr[2].'.'.$dateArr[1].'.'.$dateArr[0]?> <span>Какой-то текст никому не известно</span></a>

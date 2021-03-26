@@ -98,7 +98,7 @@ IeAssets::register($this);
 
                 </li>
                 <?= \app\components\Summary::widget()?>
-                
+
             </ul>
         </div>
     </div>

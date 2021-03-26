@@ -24,7 +24,6 @@ class Summary extends Widget
         if ($response->isOk) {
             $xml = new XmlParser();
             $result = $xml->parse($response);
-            var_dump($result);
             if ($result['Contract']) {
                 $output = '';
                 foreach ($result['Contract'] as $contract){
