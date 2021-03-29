@@ -1428,6 +1428,9 @@ a.lnk, .lnk {
       line-height: 24px;
       color: #959CA3;
       border-bottom: 1px dashed rgba(0, 0, 0, 0.2); }
+      .profile-details ul li:nth-child(2),.profile-details ul li:nth-child(3) {
+        padding-top: 15px;
+      }
       .profile-details ul li.last {
         border: none; }
       .profile-details ul li .label {
