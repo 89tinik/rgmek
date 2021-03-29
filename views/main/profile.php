@@ -101,19 +101,19 @@ var_dump($result);
             читайте в разделе электронный документооборот
         </div>
         <div class="status-control">
-            <?php if (!empty($result['Specifications']['EmailAccount1'])){?>
+            <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
             <div class="label active">Статус: <span>Активно</span></div>
             <div class="bts">
                 <a href="#" class="btn small border">Активно</a>
                 <a href="#" class="lnk">Подробнее</a>
             </div>
-            <?php }else{?>
+            <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>
                 <div class="bts">
                     <a href="#" class="btn small">Активировать</a>
                     <a href="#" class="lnk">Подробнее</a>
                 </div>
-            <?php} ?>
+            <?php endif; ?>
         </div>
     </div>
     <div class="profile-status white-box">
