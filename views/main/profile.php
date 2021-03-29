@@ -4,8 +4,6 @@
 
 $this->title = 'Профиль';
 
-var_dump($result);
-
 ?>
 <div class="page-heading">
     <h1 class="title">Профиль потребителя</h1>
@@ -16,19 +14,19 @@ var_dump($result);
         <ul>
             <li>
                 <span class="label">Потребитель</span>
-                <span class="value"><?= $result['name'] ?></span>
+                <span class="value"><?= $result['Name'] ?></span>
             </li>
             <li>
                 <span class="label">Юр. адрес</span>
-                <span class="value"><?= $result['Jaddress'] ?></span>
+                <span class="value"><?= $result['Jaddress']['Value'] ?></span>
             </li>
             <li>
                 <span class="label">Почтовый адрес</span>
-                <span class="value"><?= $result['Maddress'] ?></span>
+                <span class="value"><?= $result['Maddress']['Value'] ?></span>
             </li>
             <li>
                 <span class="label">Эл. почта:</span>
-                <span class="value"><?= $result['Email'][0] ?></span>
+                <span class="value"><?= $result['Email'][0]['Value'] ?></span>
             </li>
             <li>
                 <span class="label">ФИО руководителя:</span>
@@ -40,7 +38,7 @@ var_dump($result);
                     <?php
                     $phoneCity = '';
                     foreach ($result['PhoneCity'] as $arr){
-                        if (empty($restrictionNotice)){
+                        if (empty($phoneCity)){
                             $phoneCity = $arr['Value'];
                         } else {
                             $phoneCity .= ', '.$arr['Value'];
@@ -73,12 +71,18 @@ var_dump($result);
                     <div class="btn small border">Свернуть список</div>
                     <div class="more-list-popup" style="display: none;">
                         <?php
+                        //var_dump($result['Additional']['ProfileAdditional']);
+                        //die(2);
                         foreach ($result['Additional']['ProfileAdditional'] as $pa) {
-                            $outputContacts = '';
-                            foreach ($pa['Contacts'] as $c => $v) {
-                                $outputContacts .= '  /  ' . $v;
+                            if ($pa['Contacts']['Value']){
+                                $outputContacts = '  /  '.$pa['Contacts']['Value'];
+                            } else {
+                                $outputContacts = '';
+                                foreach ($pa['Contacts'] as $c => $v) {
+                                    $outputContacts .= '  /  ' . $v['Value'];
+                                }
                             }
-                            echo '<p>' . $pa['Surname'] . $pa['Name'][0] . '.' . $pa[''] . '. ' . $outputContacts . '</p>';
+                            echo '<p>' . $pa['Surname'] .' '. mb_substr($pa['Name'], 0, 1, 'UTF-8') . '.' . mb_substr($pa['MiddleName'], 0, 1, 'UTF-8') . '. ' . $outputContacts . '</p>';
                         }
                         ?>
                     </div>
@@ -102,11 +106,11 @@ var_dump($result);
         </div>
         <div class="status-control">
             <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
-            <div class="label active">Статус: <span>Активно</span></div>
-            <div class="bts">
-                <a href="#" class="btn small border">Активно</a>
-                <a href="#" class="lnk">Подробнее</a>
-            </div>
+                <div class="label active">Статус: <span>Активно</span></div>
+                <div class="bts">
+                    <a href="#" class="btn small border">Активно</a>
+                    <a href="#" class="lnk">Подробнее</a>
+                </div>
             <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>
                 <div class="bts">
