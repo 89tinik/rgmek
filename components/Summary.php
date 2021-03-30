@@ -12,8 +12,8 @@ class Summary extends Widget
 
     public function run()
     {
-//        $uId = \Yii::$app->user->identity->id_db; расскоментировать UID
-        $uId = 'c2afaaff-9e30-11e4-9c77-001e8c2d263f';
+        $uId = \Yii::$app->user->identity->id_db; //расскоментировать UID
+//        $uId = 'c2afaaff-9e30-11e4-9c77-001e8c2d263f';
         $contracts = new Client();
         $response = $contracts->createRequest()
             ->setMethod('GET')
