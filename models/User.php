@@ -42,9 +42,19 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $this->password = \Yii::$app->security->generatePasswordHash($password);
     }
 
-    public function setIdDb()
+    public function setIdDb($old = '')
     {
-        $this->id_db = base64_encode($this->username);
+        $newIdDb = base64_encode($this->username);
+        if ($newIdDb == $old) {
+            $uNameArr = explode('-', $this->username);
+            if (isset($uNameArr[1])) {
+                $newIdDb = base64_encode($uNameArr[1] . '-' . $uNameArr[0]);
+            } else {
+                $newIdDb = base64_encode($uNameArr[0] . '-' . $this->id);
+            }
+
+        }
+        $this->id_db = $newIdDb;
     }
 
     public function generateAuthKey()

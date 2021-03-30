@@ -63,6 +63,36 @@ class LoginController extends Controller
         }
         return $this->render('registration', compact('registerForm','kpp'));
     }
+public function actionRepassword()
+    {
+        if (!\Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+        $registerForm = new RegisterForm();
+        $kpp = false;
+        if ($registerForm->load(Yii::$app->request->post())) {
+
+            if ($registerForm->validate() ) {
+                $register = $registerForm->Registr();
+                if ($register['uName']) {
+                    Yii::$app->session->setFlash('success', 'Пароль изменён. Логин для входа <b>'.$register['uName'].'</b>.');
+                    return $this->redirect('/login');
+                } elseif($register['error'] == 501){
+                    $kpp = true;
+                    Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
+                }else{
+                    Yii::$app->session->setFlash('error', 'Ошибка регистрации!!!<br/>'.$register['error']);
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
+            }
+        }
+       // var_dump($registerForm->method);die();
+        if (is_null($registerForm->method)) {
+            $registerForm->method = 0;
+        }
+        return $this->render('repassword', compact('registerForm','kpp'));
+    }
 
     public function actionLogout()
     {

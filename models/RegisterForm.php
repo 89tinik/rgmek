@@ -50,13 +50,19 @@ class RegisterForm extends Model
     }
 
     public function Registr(){
-        $user = new User();
         if (!empty($this->kpp)){
-            $user->username = $this->inn.'-'.$this->kpp;
+            $username = $this->inn.'-'.$this->kpp;
         } else {
-            $user->username = $this->inn;
+            $username = $this->inn;
         }
 
+        $user = User::findOne(['username'=>$username]);
+
+        if (!$user){
+            $user = new User();
+        }
+
+        $user->username = $username;
         if (!empty($user->username)){
             $user->email = $this->email;
             $user->phone = $this->phone;
@@ -65,14 +71,14 @@ class RegisterForm extends Model
             $user->kpp = $this->kpp;
             $user->setPassword( mb_strtolower($this->password, 'UTF-8'));
             $user->generateAuthKey();
-            $user->setIdDb();
+            $user->setIdDb($user->id_db);
             $validate = $user->validateFromDB($this->method);
 
             if ($validate['success']){
                 if ($user->save()){
                     return ['uName'=>$user->username];
                 } else {
-                    return ['error'=>'Не удалось зарегистрироваться - повторите попытку пзже.'];
+                    return ['error'=>'Не удалось зарегистрироваться - повторите попытку позже.'];
                 }
             } else {
                 return ['error'=> $validate['error']];
