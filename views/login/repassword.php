@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
 use yii\helpers\Html;
 
-$this->title = 'Регистрация';
+$this->title = 'Восстановление пароля';
 ?>
 
 <!-- Login Form -->

@@ -71,7 +71,7 @@ class RegisterForm extends Model
             $user->kpp = $this->kpp;
             $user->setPassword( mb_strtolower($this->password, 'UTF-8'));
             $user->generateAuthKey();
-            $user->setIdDb($user->id_db);
+            $user->setIdDb();
             $validate = $user->validateFromDB($this->method);
 
             if ($validate['success']){
