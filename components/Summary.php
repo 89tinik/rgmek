@@ -28,9 +28,13 @@ class Summary extends Widget
             $result = $xml->parse($response);
             if ($result['Contract']) {
                 $output = '';
-                foreach ($result['Contract'] as $contract){
-                    $output.= $this->toTemplate($contract);
-                }
+				if (!empty($result['Contract']['FullName'])){
+					$output = $this->toTemplate($result['Contract']);
+				} else {
+					foreach ($result['Contract'] as $contract){
+						$output.= $this->toTemplate($contract);
+					}
+				}
                 return $output;
             }
         } else {
