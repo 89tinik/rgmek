@@ -59,6 +59,7 @@ $config = [
                 ],
                 'registration'=>'login/registration',
                 'logout'=>'login/logout',
+                'verification'=>'login/verification',
                 'profile'=>'main/profile',
                 'payment'=>'main/payment',
                 //'<action:(profile | payment)>'=>'main/<action>',

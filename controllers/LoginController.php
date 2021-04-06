@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\LoginForm;
 use app\models\RegisterForm;
+use app\models\VerificationForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -44,9 +45,9 @@ class LoginController extends Controller
 
             if ($registerForm->validate() ) {
                 $register = $registerForm->Registr();
-                if ($register['uName']) {
-                    Yii::$app->session->setFlash('success', 'Регистрация завершена. Логин для входа <b>'.$register['uName'].'</b>.');
-                    return $this->redirect('/login');
+                if ($register['uMethod']) {
+                    Yii::$app->session->setFlash('success', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами '.$register['uMethod'].'.'.Yii::$app->session->get('vCode'));
+                    return $this->redirect('/verification');
                 } elseif($register['error'] == 501){
                     $kpp = true;
                     Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
@@ -98,5 +99,23 @@ public function actionRepassword()
     {
         Yii::$app->user->logout();
         return $this->redirect('/login');
+    }
+
+    public function actionVerification(){
+        if (!\Yii::$app->user->isGuest){
+            return $this->goHome();
+        }
+
+        $verificationForm = new VerificationForm();
+        if ($verificationForm->load(Yii::$app->request->post()) ) {
+            $activationResult = $verificationForm->activate();
+            if ($activationResult['uName']) {
+                Yii::$app->session->setFlash('success', 'Регистрация завершена. Логин для входа <b>' . $activationResult['uName'] . '</b>.');
+                return $this->redirect('/login');
+            } else {
+                Yii::$app->session->setFlash('error', $activationResult['error']);
+            }
+        }
+        return $this->render('verification', compact('verificationForm'));
     }
 }

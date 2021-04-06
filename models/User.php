@@ -6,6 +6,7 @@ use linslin\yii2\curl\Curl;
 use yii\db\ActiveRecord;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
+use Yii;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -78,10 +79,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         if ($this->kpp) {
             $data['kpp'] = $this->kpp;
         }
+       // return ['success' => 'типа провалидиравали'];
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
-            //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
             ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration')
             ->setData($data)
             ->send();
@@ -99,6 +100,69 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         }
 
 
+    }
+
+    public function setVerification()
+    {
+        $vCode = rand(1000, 9999);
+        Yii::$app->session->set('vCode', $vCode);
+        Yii::$app->session->set('uId', $this->id);
+        if (!empty($this->phone)) {
+            //отправляем SMS
+            $client = new Client();
+            $phone = substr_replace($this->phone, '7', 0, 1);
+            $data = [
+                'operation' => 'send',
+                'login' => 'sm729119774',
+                'password' => 'Q99ZW9Nf',
+                'msisdn' => $phone,
+                'shortcode' => 'RGMEK',
+                'text' => $vCode
+            ];
+            $response = $client->createRequest()
+                ->setMethod('GET')
+                ->setUrl('https://newbsms.tele2.ru/api/')
+                ->setData($data)
+                ->send();
+            if (!$response->isOk) {
+                return ['error' => 'Не удалось отправить SMS - повторите попытку регистрации позже.'];
+            }
+        } else {
+            //отправляем почту
+            $mail = Yii::$app->mailer->compose()
+                ->setFrom('no-reply@rgmek.ru')
+                ->setTo($this->email)
+                ->setSubject('Подтверждение почты')
+                ->setTextBody('Код:' . $vCode)
+                ->send();
+            if (!$mail){
+                return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
+            }
+        }
+        return true;
+    }
+
+    public function activation(){ //@return true or array('error'=>'error message')
+
+        $data = ['id' => $this->id_db];
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/activation')
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            $result = $xml->parse($response);
+
+            if ($result['Error']) {
+                return ['error' => $result['Error']['Message']];
+            } else {
+                return true;
+            }
+        } else {
+            return ['error' => 'Не удалось связаться БД - повторите попытку регистрации позже.'];
+        }
     }
 
     /**

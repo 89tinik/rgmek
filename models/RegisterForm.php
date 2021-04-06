@@ -76,7 +76,13 @@ class RegisterForm extends Model
 
             if ($validate['success']){
                 if ($user->save()){
-                    return ['uName'=>$user->username];
+                    $sendCode = $user->setVerification();
+                    if ( $sendCode === true) {
+                        $uMethod = (!empty($user->phone))?'телефон':'e-mail';
+                        return ['uMethod' => $uMethod];
+                    } else {
+                        return $sendCode;
+                    }
                 } else {
                     return ['error'=>'Не удалось зарегистрироваться - повторите попытку позже.'];
                 }
