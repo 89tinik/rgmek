@@ -130,7 +130,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         } else {
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
-                ->setFrom('no-reply@rgmek.ru')
+                ->setFrom('prgmek@yandex.ru')
                 ->setTo($this->email)
                 ->setSubject('Подтверждение почты')
                 ->setTextBody('Код:' . $vCode)
@@ -138,6 +138,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             if (!$mail){
                 return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
             }
+			var_dump($mail);
+			die();
         }
         return true;
     }
