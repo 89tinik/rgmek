@@ -37,13 +37,20 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => false,
+			//'transport' => [
+			//	'class' => 'Swift_SmtpTransport',
+			//	'host' => 'smtp.yandex.ru',
+			//	'username' => 'prgmek@yandex.ru',
+			//	'password' => 'njdnjayngrzxtpwn',
+			//	'port' => '465',
+			//	'encryption' => 'SSL',
+			//],
 			'transport' => [
 				'class' => 'Swift_SmtpTransport',
-				'host' => 'smtp.yandex.ru',
-				'username' => 'prgmek@yandex.ru',
-				'password' => 'njdnjayngrzxtpwn',
-				'port' => '465',
-				'encryption' => 'SSL',
+				'host' => 'smtp.send.rgmek.ru',
+				'username' => 'noreply@send.rgmek.ru',
+				'password' => 'r@&hXR$X8G',
+				'port' => '587',
 			],
         ],
         'log' => [

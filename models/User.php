@@ -111,26 +111,33 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
+			$username='0ec34eb3a1';
+			$password='caa4011422';
             $data = [
-                'operation' => 'send',
-                'login' => 'sm729119774',
-                'password' => 'Q99ZW9Nf',
                 'msisdn' => $phone,
-                'shortcode' => 'RGMEK',
+                'shortcode' => 'rgmek',
                 'text' => $vCode
             ];
+			
             $response = $client->createRequest()
-                ->setMethod('GET')
-                ->setUrl('https://newbsms.tele2.ru/api/')
+                ->setMethod('POST')
+				->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
+                ->setUrl('https://target.tele2.ru/api/v2/send_message')
                 ->setData($data)
                 ->send();
+				
             if (!$response->isOk) {
                 return ['error' => 'Не удалось отправить SMS - повторите попытку регистрации позже.'];
-            }
+            } else {
+				$responseArrContent = json_decode($response->content, true);
+				if ($responseArrContent['status']== 'error'){
+					return ['error' => 'Не удалось отправить SMS - повторите попытку регистрации позже.Error:'.$responseArrContent['reason']];
+				}
+			}
         } else {
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
-                ->setFrom('prgmek@yandex.ru')
+                ->setFrom('noreply@send.rgmek.ru')
                 ->setTo($this->email)
                 ->setSubject('Подтверждение почты')
                 ->setTextBody('Код:' . $vCode)
@@ -138,8 +145,6 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             if (!$mail){
                 return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
             }
-			var_dump($mail);
-			die();
         }
         return true;
     }
