@@ -40,7 +40,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     public function setPassword($password)
     {
-        $this->password = \Yii::$app->security->generatePasswordHash($password);
+        $this->temp = \Yii::$app->security->generatePasswordHash($password);
     }
 
     public function setIdDb()
@@ -79,7 +79,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         if ($this->kpp) {
             $data['kpp'] = $this->kpp;
         }
-       // return ['success' => 'типа провалидиравали'];
+        //return ['success' => 'типа провалидиравали'];
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -107,6 +107,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $vCode = rand(1000, 9999);
         Yii::$app->session->set('vCode', $vCode);
         Yii::$app->session->set('uId', $this->id);
+
+        //return true; закоментировать
         if (!empty($this->phone)) {
             //отправляем SMS
             $client = new Client();
@@ -165,6 +167,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             if ($result['Error']) {
                 return ['error' => $result['Error']['Message']];
             } else {
+                $this->password = $this->temp;
                 return true;
             }
         } else {

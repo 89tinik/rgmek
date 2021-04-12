@@ -19,7 +19,7 @@ class LoginController extends Controller
 
     public function actionIndex()
     {
-        if (!\Yii::$app->user->isGuest){
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $loginForm = new LoginForm();
@@ -36,63 +36,26 @@ class LoginController extends Controller
 
     public function actionRegistration()
     {
-        if (!\Yii::$app->user->isGuest){
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $registerForm = new RegisterForm();
-        $kpp = false;
-        if ($registerForm->load(Yii::$app->request->post())) {
 
-            if ($registerForm->validate() ) {
-                $register = $registerForm->Registr();
-                if ($register['uMethod']) {
-                    Yii::$app->session->setFlash('success', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами '.$register['uMethod'].'.'.Yii::$app->session->get('vCode'));
-                    return $this->redirect('/verification');
-                } elseif($register['error'] == 501){
-                    $kpp = true;
-                    Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
-                }else{
-                    Yii::$app->session->setFlash('error', 'Ошибка регистрации!!!<br/>'.$register['error']);
-                }
-            } else {
-                Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
-            }
-        }
-       // var_dump($registerForm->method);die();
-        if (is_null($registerForm->method)) {
-            $registerForm->method = 0;
-        }
-        return $this->render('registration', compact('registerForm','kpp'));
+        $registerFormArr = $this->generateForm(['error'=>'Ошибка регистрации!!!']);
+        $registerForm = $registerFormArr['form'];
+        $kpp = $registerFormArr['kpp'];
+
+        return $this->render('registration', compact('registerForm', 'kpp'));
     }
-public function actionRepassword()
+
+    public function actionRepassword()
     {
-        if (!\Yii::$app->user->isGuest){
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $registerForm = new RegisterForm();
-        $kpp = false;
-        if ($registerForm->load(Yii::$app->request->post())) {
-
-            if ($registerForm->validate() ) {
-                $register = $registerForm->Registr();
-                if ($register['uName']) {
-                    Yii::$app->session->setFlash('success', 'Пароль изменён. Логин для входа <b>'.$register['uName'].'</b>.');
-                    return $this->redirect('/login');
-                } elseif($register['error'] == 501){
-                    $kpp = true;
-                    Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
-                }else{
-                    Yii::$app->session->setFlash('error', 'Ошибка регистрации!!!<br/>'.$register['error']);
-                }
-            } else {
-                Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
-            }
-        }
-       // var_dump($registerForm->method);die();
-        if (is_null($registerForm->method)) {
-            $registerForm->method = 0;
-        }
-        return $this->render('repassword', compact('registerForm','kpp'));
+        $registerFormArr = $this->generateForm(['error'=>'Ошибка регистрации!!!']);
+        $registerForm = $registerFormArr['form'];
+        $kpp = $registerFormArr['kpp'];
+        return $this->render('repassword', compact('registerForm', 'kpp'));
     }
 
     public function actionLogout()
@@ -101,21 +64,64 @@ public function actionRepassword()
         return $this->redirect('/login');
     }
 
-    public function actionVerification(){
-        if (!\Yii::$app->user->isGuest){
+    public function actionVerification()
+    {
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $verificationForm = new VerificationForm();
-        if ($verificationForm->load(Yii::$app->request->post()) ) {
+        if ($verificationForm->load(Yii::$app->request->post())) {
             $activationResult = $verificationForm->activate();
             if ($activationResult['uName']) {
-                Yii::$app->session->setFlash('success', 'Регистрация завершена. Логин для входа <b>' . $activationResult['uName'] . '</b>.');
+                $urlArr = explode('/', Yii::$app->request->referrer);
+                $prevAction = end($urlArr);
+                $messageF='';
+                if ($prevAction == 'registration'){
+                    $messageF = 'Регистрация завершена. ';
+                } elseif ($prevAction == 'repassword'){
+                    $messageF = 'Пароль успешно изменён. ';
+                }
+                Yii::$app->session->setFlash('success', $messageF.'Логин для входа <b>' . $activationResult['uName'] . '</b>.');
                 return $this->redirect('/login');
             } else {
                 Yii::$app->session->setFlash('error', $activationResult['error']);
             }
         }
         return $this->render('verification', compact('verificationForm'));
+    }
+
+    protected function generateForm($message=array()){
+        $registerForm = new RegisterForm();
+        $kpp = false;
+        if ($registerForm->load(Yii::$app->request->post())) {
+
+            if ($registerForm->validate()) {
+                $register = $registerForm->Registr();
+                if ($register['uMethod']) {
+                    Yii::$app->session->setFlash('success', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
+                    return $this->redirect('/verification');
+                } elseif ($register['error'] == 501) {
+                    $kpp = true;
+                    Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
+                } else {
+                    Yii::$app->session->setFlash('error', $message.'<br/>' . $register['error']);
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
+            }
+        }
+        // var_dump($registerForm->method);die();
+        if (is_null($registerForm->method)) {
+            $registerForm->method = 0;
+        }
+        if (!is_null($registerForm->kpp) || $kpp) {
+            $output['kpp'] = true;
+        } else {
+            $output['kpp'] = false;
+        }
+
+        $output['form'] = $registerForm;
+        return $output;
     }
 }
