@@ -18,6 +18,8 @@ class RegisterForm extends Model
     public $method;
     public $kpp;
 
+    protected $showKpp=false;
+
 
     /**
      * @return array the validation rules.
@@ -91,5 +93,13 @@ class RegisterForm extends Model
             }
 
         }
+    }
+
+    public function setKPP(){
+        $this->showKpp=true;
+    }
+
+    public function getKPP(){
+        return $this->showKpp;
     }
 }

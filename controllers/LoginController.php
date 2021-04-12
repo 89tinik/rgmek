@@ -40,11 +40,9 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
-        $registerFormArr = $this->generateForm(['error'=>'Ошибка регистрации!!!']);
-        $registerForm = $registerFormArr['form'];
-        $kpp = $registerFormArr['kpp'];
+        $registerForm = $this->generateForm(['error'=>'Ошибка регистрации!!!']);
 
-        return $this->render('registration', compact('registerForm', 'kpp'));
+        return $this->render('registration', compact('registerForm'));
     }
 
     public function actionRepassword()
@@ -52,10 +50,10 @@ class LoginController extends Controller
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $registerFormArr = $this->generateForm(['error'=>'Ошибка регистрации!!!']);
-        $registerForm = $registerFormArr['form'];
-        $kpp = $registerFormArr['kpp'];
-        return $this->render('repassword', compact('registerForm', 'kpp'));
+
+        $registerForm = $this->generateForm(['error'=>'Ошибка восстановления пароля!!!']);
+
+        return $this->render('repassword', compact('registerForm'));
     }
 
     public function actionLogout()
@@ -102,7 +100,7 @@ class LoginController extends Controller
                     Yii::$app->session->setFlash('success', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
                     return $this->redirect('/verification');
                 } elseif ($register['error'] == 501) {
-                    $kpp = true;
+                    $registerForm->setKPP();
                     Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
                 } else {
                     Yii::$app->session->setFlash('error', $message.'<br/>' . $register['error']);
@@ -115,13 +113,10 @@ class LoginController extends Controller
         if (is_null($registerForm->method)) {
             $registerForm->method = 0;
         }
-        if (!is_null($registerForm->kpp) || $kpp) {
-            $output['kpp'] = true;
-        } else {
-            $output['kpp'] = false;
+        if (!is_null($registerForm->kpp)) {
+            $registerForm->setKPP();
         }
 
-        $output['form'] = $registerForm;
-        return $output;
+        return $registerForm;
     }
 }

@@ -39,7 +39,7 @@ $this->title = 'Регистрация';
         <?= $form->field($registerForm, 'inn')->widget(\yii\widgets\MaskedInput::className(), [
             'mask' => '9{1,12}',
         ])->textInput(['placeholder' => 'ИНН']) ?>
-        <?php if($kpp):?>
+        <?php if($registerForm->getKPP()):?>
         <?= $form->field($registerForm, 'kpp')->widget(\yii\widgets\MaskedInput::className(), [
                 'mask' => '999999999',
             ])->textInput(['placeholder' => 'КПП', 'required'=>'required']) ?>

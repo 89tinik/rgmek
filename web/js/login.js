@@ -36,7 +36,7 @@ $(function() {
 			$('#registerForm input.email').closest('.form-group').css('display', 'block');
 		}
 	}
-	$('#registerForm input[type=radio]').on('change', function(){
+	$('#registerForm input[type=radio]:checked').on('change', function(){
 		setMethod($(this).val());
 	});
 	setMethod($('#registerForm input[type=radio]').val());
