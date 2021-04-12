@@ -36,10 +36,10 @@ $(function() {
 			$('#registerForm input.email').closest('.form-group').css('display', 'block');
 		}
 	}
-	$('#registerForm input[type=radio]:checked').on('change', function(){
+	$('#registerForm input[type=radio]').on('change', function(){
 		setMethod($(this).val());
 	});
-	setMethod($('#registerForm input[type=radio]').val());
+	setMethod($('#registerForm input[type=radio]:checked').val());
 	//$('#registerForm input[type=radio]').change();
 	//$('#registerForm input[type=radio]').trigger('refresh');
 
