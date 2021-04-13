@@ -113,29 +113,29 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
-			$username='0ec34eb3a1';
-			$password='caa4011422';
+            $username = '0ec34eb3a1';
+            $password = 'caa4011422';
             $data = [
                 'msisdn' => $phone,
                 'shortcode' => 'rgmek',
                 'text' => $vCode
             ];
-			
+
             $response = $client->createRequest()
                 ->setMethod('POST')
-				->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
+                ->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
                 ->setUrl('https://target.tele2.ru/api/v2/send_message')
                 ->setData($data)
                 ->send();
-				
+
             if (!$response->isOk) {
                 return ['error' => 'Не удалось отправить SMS - повторите попытку регистрации позже.'];
             } else {
-				$responseArrContent = json_decode($response->content, true);
-				if ($responseArrContent['status']== 'error'){
-					return ['error' => 'Не удалось отправить SMS - повторите попытку регистрации позже.Error:'.$responseArrContent['reason']];
-				}
-			}
+                $responseArrContent = json_decode($response->content, true);
+                if ($responseArrContent['status'] == 'error') {
+                    return ['error' => 'Не удалось отправить SMS - повторите попытку регистрации позже.Error:' . $responseArrContent['reason']];
+                }
+            }
         } else {
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
@@ -144,14 +144,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 ->setSubject('Подтверждение почты')
                 ->setTextBody('Код:' . $vCode)
                 ->send();
-            if (!$mail){
+            if (!$mail) {
                 return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
             }
         }
         return true;
     }
 
-    public function activation(){ //@return true or array('error'=>'error message')
+    public function activation()
+    { //@return true or array('error'=>'error message')
 
         $data = ['id' => $this->id_db];
         $client = new Client();
@@ -168,11 +169,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 return ['error' => $result['Error']['Message']];
             } else {
                 $this->password = $this->temp;
-				if ($this->save()){
-					return true;
-				} else {
-					return ['error' => 'Не удалось сохранить пароль!'];
-				}
+                if ($this->save()) {
+                    return true;
+                } else {
+                    return ['error' => 'Не удалось сохранить пароль!'];
+                }
             }
         } else {
             return ['error' => 'Не удалось связаться БД - повторите попытку регистрации позже.'];
@@ -192,6 +193,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $this->delete();
         }
     }
+
     /**
      * {@inheritdoc}
      */

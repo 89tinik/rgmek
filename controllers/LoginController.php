@@ -40,7 +40,7 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
-        $registerForm = $this->generateForm(['error'=>'Ошибка регистрации!!!']);
+        $registerForm = $this->generateForm(['error' => 'Ошибка регистрации!!!']);
 
         return $this->render('registration', compact('registerForm'));
     }
@@ -51,7 +51,7 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
-        $registerForm = $this->generateForm(['error'=>'Ошибка восстановления пароля!!!']);
+        $registerForm = $this->generateForm(['error' => 'Ошибка восстановления пароля!!!']);
 
         return $this->render('repassword', compact('registerForm'));
     }
@@ -74,13 +74,13 @@ class LoginController extends Controller
             if ($activationResult['uName']) {
                 $urlArr = explode('/', Yii::$app->request->referrer);
                 $prevAction = end($urlArr);
-                $messageF='';
-                if ($prevAction == 'registration'){
+                $messageF = '';
+                if ($prevAction == 'registration') {
                     $messageF = 'Регистрация завершена. ';
-                } elseif ($prevAction == 'repassword'){
+                } elseif ($prevAction == 'repassword') {
                     $messageF = 'Пароль успешно изменён. ';
                 }
-                Yii::$app->session->setFlash('success', $messageF.'Логин для входа <b>' . $activationResult['uName'] . '</b>.');
+                Yii::$app->session->setFlash('success', $messageF . 'Логин для входа <b>' . $activationResult['uName'] . '</b>.');
                 return $this->redirect('/login');
             } else {
                 Yii::$app->session->setFlash('error', $activationResult['error']);
@@ -88,15 +88,16 @@ class LoginController extends Controller
         }
         return $this->render('verification', compact('verificationForm'));
     }
-	
-	public function actionRemove()
-	{
-        $user = \app\models\User::findOne(['id_db'=>Yii::$app->request->get('id')]);
+
+    public function actionRemove()
+    {
+        $user = \app\models\User::findOne(['id_db' => Yii::$app->request->get('id')]);
 
         return $user->remove();
-	}
+    }
 
-    protected function generateForm($message=array()){
+    protected function generateForm($message = array())
+    {
         $registerForm = new RegisterForm();
         $kpp = false;
         if ($registerForm->load(Yii::$app->request->post())) {
@@ -104,13 +105,13 @@ class LoginController extends Controller
             if ($registerForm->validate()) {
                 $register = $registerForm->Registr();
                 if ($register['uMethod']) {
-					Yii::$app->session->set('success_m', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
+                    Yii::$app->session->set('success_m', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
                     $this->redirect('/verification');
                 } elseif ($register['error'] == 501) {
                     $registerForm->setKPP();
                     Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
                 } else {
-                    Yii::$app->session->setFlash('error', $message['error'].'<br/>' . $register['error']);
+                    Yii::$app->session->setFlash('error', $message['error'] . '<br/>' . $register['error']);
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
