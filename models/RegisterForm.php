@@ -62,15 +62,15 @@ class RegisterForm extends Model
 
         if (!$user){
             $user = new User();
-        }
-
-        $user->username = $username;
-        if (!empty($user->username)){
             $user->email = $this->email;
             $user->phone = $this->phone;
             $user->inn = $this->inn;
             $user->contract = $this->contract;
             $user->kpp = $this->kpp;
+        }
+
+        $user->username = $username;
+        if (!empty($user->username)){
             $user->setPassword( mb_strtolower($this->password, 'UTF-8'));
             $user->generateAuthKey();
             $user->setIdDb();

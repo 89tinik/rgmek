@@ -88,6 +88,13 @@ class LoginController extends Controller
         }
         return $this->render('verification', compact('verificationForm'));
     }
+	
+	public function actionRemove()
+	{
+        $user = \app\models\User::findOne(['id_db'=>Yii::$app->request->get('id')]);
+
+        return $user->remove();
+	}
 
     protected function generateForm($message=array()){
         $registerForm = new RegisterForm();
@@ -97,13 +104,13 @@ class LoginController extends Controller
             if ($registerForm->validate()) {
                 $register = $registerForm->Registr();
                 if ($register['uMethod']) {
-                    Yii::$app->session->setFlash('success', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
-                    return $this->redirect('/verification');
+					Yii::$app->session->set('success_m', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
+                    $this->redirect('/verification');
                 } elseif ($register['error'] == 501) {
                     $registerForm->setKPP();
                     Yii::$app->session->setFlash('error', 'Ваш ИНН не уникален - введите КПП.<br/>');
                 } else {
-                    Yii::$app->session->setFlash('error', $message.'<br/>' . $register['error']);
+                    Yii::$app->session->setFlash('error', $message['error'].'<br/>' . $register['error']);
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');

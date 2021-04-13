@@ -37,7 +37,7 @@ $this->title = 'Восстановление пароля';
         }
         ?>
         <?= $form->field($registerForm, 'inn')->widget(\yii\widgets\MaskedInput::className(), [
-            'mask' => '999999999999',
+            'mask' => '9{1,12}',
         ])->textInput(['placeholder' => 'ИНН']) ?>
         <?php if($registerForm->getKPP()):?>
             <?= $form->field($registerForm, 'kpp')->widget(\yii\widgets\MaskedInput::className(), [

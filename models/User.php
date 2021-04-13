@@ -168,13 +168,30 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 return ['error' => $result['Error']['Message']];
             } else {
                 $this->password = $this->temp;
-                return true;
+				if ($this->save()){
+					return true;
+				} else {
+					return ['error' => 'Не удалось сохранить пароль!'];
+				}
             }
         } else {
             return ['error' => 'Не удалось связаться БД - повторите попытку регистрации позже.'];
         }
     }
 
+    public function remove()
+    {
+        $data = ['id' => $this->id_db];
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/delete')
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            $this->delete();
+        }
+    }
     /**
      * {@inheritdoc}
      */

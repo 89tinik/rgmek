@@ -20,9 +20,13 @@ $this->title = 'Подтверждение контактных данных';
             ]
         ]); ?>
         <div class="title">Проверочный код</div>
-        <?php
+        <?php 
+        if (Yii::$app->session->get('success_m')) {
+			echo Yii::$app->session->get('success_m');
+			Yii::$app->session->remove('success_m');
+        }
         if (Yii::$app->session->hasFlash('success')) {
-            echo Yii::$app->session->getFlash('success');
+			echo Yii::$app->session->getFlash('success');
         }
         if (Yii::$app->session->hasFlash('error')) {
             echo Yii::$app->session->getFlash('error');
