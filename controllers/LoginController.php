@@ -114,7 +114,13 @@ class LoginController extends Controller
 
         return $user->remove();
     }
-
+	
+    public function actionAll()//удалить после разработки
+    {
+        var_dump(User::showAll());
+		die();
+    }
+	
     protected function generateForm($message = array())
     {
         $registerForm = new RegisterForm();

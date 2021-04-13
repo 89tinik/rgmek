@@ -107,6 +107,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         Yii::$app->session->set('vCode', rand(1000, 9999));
         Yii::$app->session->set('uId', $this->id);
         Yii::$app->session->set('vMethod', $method);
+		return true;
     }
 
     public function sendVerification()
@@ -198,7 +199,19 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $this->delete();
         }
     }
-
+	public static function showAll()
+    {
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/accounts')
+            ->send();
+        if ($response->isOk) {
+           $xml = new XmlParser();
+           return  $xml->parse($response);
+        }
+    
+	}
     /**
      * {@inheritdoc}
      */
