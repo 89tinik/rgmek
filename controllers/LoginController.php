@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\LoginForm;
 use app\models\RegisterForm;
+use app\models\User;
 use app\models\VerificationForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -68,12 +69,13 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
+        $urlArr = explode('/', Yii::$app->request->referrer);
+        $prevAction = end($urlArr);
+
         $verificationForm = new VerificationForm();
         if ($verificationForm->load(Yii::$app->request->post())) {
             $activationResult = $verificationForm->activate();
             if ($activationResult['uName']) {
-                $urlArr = explode('/', Yii::$app->request->referrer);
-                $prevAction = end($urlArr);
                 $messageF = '';
                 if ($prevAction == 'registration') {
                     $messageF = 'Регистрация завершена. ';
@@ -85,13 +87,30 @@ class LoginController extends Controller
             } else {
                 Yii::$app->session->setFlash('error', $activationResult['error']);
             }
+        } else {
+            $user = User::findOne(['id' => Yii::$app->session->get('uId')]);
+            if ($user){
+                if($send = $user->sendVerification() === true){
+                    $uMethod = (Yii::$app->session->get('vMethod')==1) ? 'телефон' : 'e-mail';
+                    Yii::$app->session->setFlash('success','Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $uMethod . '.');
+                } else {
+                    Yii::$app->session->setFlash('error', $send['error']);
+                }
+            } else {
+                if ($prevAction == 'registration') {
+                    $messageF = 'регистрации';
+                } elseif ($prevAction == 'repassword') {
+                    $messageF = 'восстановления пароля';
+                }
+                Yii::$app->session->setFlash('error', 'Ваша сессия просрочена - заполните форму '.$messageF.' заново.');
+            }
         }
         return $this->render('verification', compact('verificationForm'));
     }
 
     public function actionRemove()
     {
-        $user = \app\models\User::findOne(['id_db' => Yii::$app->request->get('id')]);
+        $user = User::findOne(['id_db' => Yii::$app->request->get('id')]);
 
         return $user->remove();
     }

@@ -102,14 +102,19 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     }
 
-    public function setVerification()
+    public function setVerification($method)
     {
-        $vCode = rand(1000, 9999);
-        Yii::$app->session->set('vCode', $vCode);
+        Yii::$app->session->set('vCode', rand(1000, 9999));
         Yii::$app->session->set('uId', $this->id);
+        Yii::$app->session->set('vMethod', $method);
+    }
 
+    public function sendVerification()
+    {
         //return true; закоментировать
-        if (!empty($this->phone)) {
+
+        $vCode = Yii::$app->session->get('vCode');
+        if ( Yii::$app->session->get('vMethod') == 1) {
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
