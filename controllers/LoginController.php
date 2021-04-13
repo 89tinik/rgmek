@@ -83,6 +83,9 @@ class LoginController extends Controller
                     $messageF = 'Пароль успешно изменён. ';
                 }
                 Yii::$app->session->setFlash('success', $messageF . 'Логин для входа <b>' . $activationResult['uName'] . '</b>.');
+                Yii::$app->session->remove('vCode');
+                Yii::$app->session->remove('uId');
+                Yii::$app->session->remove('vMethod');
                 return $this->redirect('/login');
             } else {
                 Yii::$app->session->setFlash('error', $activationResult['error']);
@@ -130,7 +133,6 @@ class LoginController extends Controller
             if ($registerForm->validate()) {
                 $register = $registerForm->Registr();
                 if ($register['uMethod']) {
-                    Yii::$app->session->set('success_m', 'Подтвердите Ваши котактные данные. Введите проверочный код отправленый на указанный Вами ' . $register['uMethod'] . '.');
                     $this->redirect('/verification');
                 } elseif ($register['error'] == 501) {
                     $registerForm->setKPP();

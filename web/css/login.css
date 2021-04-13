@@ -151,6 +151,9 @@ input, textarea, button {
 	color: red;
 	font-size: 12px;
 }
+.login-form .message.red{
+	color: red;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {
