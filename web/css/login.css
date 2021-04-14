@@ -154,6 +154,16 @@ input, textarea, button {
 .login-form .message.red{
 	color: red;
 }
+.login-form p a.resend {
+	color: #4475F2;
+}
+.login-form p a.resend:hover {
+	color: #4475F2;
+}
+.login-form p a.resend.disable:hover, .login-form p a.resend.disable {
+	color: #1C2834;
+	cursor: default;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {

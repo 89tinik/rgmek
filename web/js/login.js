@@ -17,18 +17,25 @@ $(function () {
     styler_func();
     /*tin*/
     $('a.resend').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: '/ajax/re-send-verification',
-            success: function (msg) {
-                var msgArr = JSON.parse(msg);
-                if (msgArr.error){
-                    $('.message').addClass('red').text(msgArr.error);
-                } else {
-                    $('.message').text(msgArr.success);
+        if (!$(this).hasClass('disable')) {
+            $(this).addClass('disable').attr('title', 'прошло менее минуты, с момента запроса');
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/re-send-verification',
+                success: function (msg) {
+                    var msgArr = JSON.parse(msg);
+                    if (msgArr.error) {
+                        $('.message').addClass('red').text(msgArr.error);
+                    } else {
+                        $('.message').text(msgArr.success);
+                    }
+                    setTimeout(function () {
+                        $('a.resend.disable').removeAttr('title').removeClass('disable');
+                        $('.message').text('');
+                    }, 60000);
                 }
-            }
-        });
+            });
+        }
         return false;
     });
 
