@@ -38,17 +38,17 @@ $this->title = 'Регистрация';
         ?>
         <?= $form->field($registerForm, 'inn')->widget(\yii\widgets\MaskedInput::className(), [
             'mask' => '9{1,12}',
-        ])->textInput(['placeholder' => 'ИНН']) ?>
+        ])->textInput(['placeholder' => 'ИНН', 'autocomplete'=>'off']) ?>
         <?php if($registerForm->getKPP()):?>
         <?= $form->field($registerForm, 'kpp')->widget(\yii\widgets\MaskedInput::className(), [
                 'mask' => '999999999',
-            ])->textInput(['placeholder' => 'КПП', 'required'=>'required']) ?>
+            ])->textInput(['placeholder' => 'КПП', 'required'=>'required', 'autocomplete'=>'off']) ?>
         <?php endif;?>
         <?= $form->field($registerForm, 'contract')->widget(\yii\widgets\MaskedInput::className(), [
             'mask' => '9{1,}',
-        ])->textInput(['placeholder' => '№ договора']) ?>
-        <?= $form->field($registerForm, 'password')->passwordInput(['placeholder' => 'Пароль']) ?>
-        <?= $form->field($registerForm, 'rePassword')->passwordInput(['placeholder' => 'Повторите пароль']) ?>
+        ])->textInput(['placeholder' => '№ договора', 'autocomplete'=>'off']) ?>
+        <?= $form->field($registerForm, 'password')->passwordInput(['placeholder' => 'Пароль', 'autocomplete'=>'off']) ?>
+        <?= $form->field($registerForm, 'rePassword')->passwordInput(['placeholder' => 'Повторите пароль', 'autocomplete'=>'off']) ?>
 
         <?= $form->field($registerForm, 'method')->radioList(['0'=>'E-mail', '1'=>'Телефон'],  ['itemOptions' => ['class' => 'styler']]); ?>
         <?= $form->field($registerForm, 'email')->textInput(['placeholder' => 'E-mail', 'class'=>'email form-control']) ?>

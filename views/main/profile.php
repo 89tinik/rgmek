@@ -12,59 +12,82 @@ $this->title = 'Профиль';
 <div class="profile-left">
     <div class="profile-details">
         <ul>
+		<?php if (!empty($result['Name'])):?>
             <li>
                 <span class="label">Потребитель</span>
                 <span class="value"><?= $result['Name'] ?></span>
             </li>
+		<?php endif;?>
+		<?php if (!empty($result['Jaddress']['Value'])):?>
             <li>
                 <span class="label">Юр. адрес</span>
                 <span class="value"><?= $result['Jaddress']['Value'] ?></span>
             </li>
+		<?php endif;?>
+		<?php if (!empty($result['Maddress']['Value'])):?>
             <li>
                 <span class="label">Почтовый адрес</span>
                 <span class="value"><?= $result['Maddress']['Value'] ?></span>
             </li>
+		<?php endif;?>
+		<?php if (!empty($result['Email'][0]['Value'])):?>
             <li>
                 <span class="label">Эл. почта:</span>
                 <span class="value"><?= $result['Email'][0]['Value'] ?></span>
             </li>
+		<?php endif;?>
+		<?php if (!empty($result['FIO'])):?>
             <li>
                 <span class="label">ФИО руководителя:</span>
                 <span class="value"><?= implode(' ', $result['FIO']); ?></span>
             </li>
+		<?php endif;?>
+		<?php if (!empty($result['PhoneCity'])):?>
             <li>
                 <span class="label">Телефоны:</span>
                 <span class="value">
                     <?php
-                    $phoneCity = '';
-                    foreach ($result['PhoneCity'] as $arr){
-                        if (empty($phoneCity)){
-                            $phoneCity = $arr['Value'];
-                        } else {
-                            $phoneCity .= ', '.$arr['Value'];
-                        }
-                    }
+					if (is_array($result['PhoneCity']) && !isset($result['PhoneCity']['Value'])){
+						$phoneCity = '';
+						foreach ($result['PhoneCity'] as $arr){
+							if (empty($phoneCity)){
+								$phoneCity = $arr['Value'];
+							} else {
+								$phoneCity .= ', '.$arr['Value'];
+							}
+						}
+					} else {
+						$phoneCity = $result['PhoneCity']['Value'];
+					}
                     echo $phoneCity;
                     ?>
                 </span>
             </li>
-            <li>
+			<?php endif;?>
+			<?php if (!empty($result['RestrictionNotice'])):?>
+            <li class="big">
                 <span class="label">Контакты для уведомлений об ограничении:</span>
                 <span class="value">
                     <?php
-                    $restrictionNotice = '';
-                    foreach ($result['RestrictionNotice'] as $arr){
-                        if (empty($restrictionNotice)){
-                            $restrictionNotice = $arr['Value'];
-                        } else {
-                            $restrictionNotice .= ', '.$arr['Value'];
-                        }
-                    }
+					if (is_array($result['RestrictionNotice']) && !isset($result['RestrictionNotice']['Value'])){
+						$restrictionNotice = '';
+						foreach ($result['RestrictionNotice'] as $arr){
+							if (empty($restrictionNotice)){
+								$restrictionNotice = $arr['Value'];
+							} else {
+								$restrictionNotice .= ', '.$arr['Value'];
+							}
+						} 
+					}else {
+						$restrictionNotice = $result['RestrictionNotice']['Value'];
+					}
                     echo $restrictionNotice;
                     ?>
 
                 </span>
             </li>
+			<?php endif;?>
+			<?php if (!empty($result['Additional']['ProfileAdditional'])):?>
             <li class="last">
                 <span class="label">Ответственные лица по стороны Потребителя:</span>
                 <div class="more-list">
@@ -73,21 +96,34 @@ $this->title = 'Профиль';
                         <?php
                         //var_dump($result['Additional']['ProfileAdditional']);
                         //die(2);
-                        foreach ($result['Additional']['ProfileAdditional'] as $pa) {
-                            if ($pa['Contacts']['Value']){
-                                $outputContacts = '  /  '.$pa['Contacts']['Value'];
-                            } else {
-                                $outputContacts = '';
-                                foreach ($pa['Contacts'] as $c => $v) {
-                                    $outputContacts .= '  /  ' . $v['Value'];
-                                }
-                            }
-                            echo '<p>' . $pa['Surname'] .' '. mb_substr($pa['Name'], 0, 1, 'UTF-8') . '.' . mb_substr($pa['MiddleName'], 0, 1, 'UTF-8') . '. ' . $outputContacts . '</p>';
-                        }
+						if(is_array($result['Additional']['ProfileAdditional']) && !isset($result['Additional']['ProfileAdditional']['Name'])){
+							foreach ($result['Additional']['ProfileAdditional'] as $pa) {
+								if ($pa['Contacts']['Value']){
+									$outputContacts = '  /  '.$pa['Contacts']['Value'];
+								} else {
+									$outputContacts = '';
+									foreach ($pa['Contacts'] as $c => $v) {
+										$outputContacts .= '  /  ' . $v['Value'];
+									}
+								}
+								echo '<p>' . $pa['Surname'] .' '. mb_substr($pa['Name'], 0, 1, 'UTF-8') . '.' . mb_substr($pa['MiddleName'], 0, 1, 'UTF-8') . '. ' . $outputContacts . '</p>';
+							}
+						}else{
+							if ($result['Additional']['ProfileAdditional']['Contacts']['Value']){
+									$outputContacts = '  /  '.$result['Additional']['ProfileAdditional']['Contacts']['Value'];
+								} else {
+									$outputContacts = '';
+									foreach ($result['Additional']['ProfileAdditional']['Contacts'] as $c => $v) {
+										$outputContacts .= '  /  ' . $v['Value'];
+									}
+								}
+								echo '<p>' . $result['Additional']['ProfileAdditional']['Surname'] .' '. mb_substr($result['Additional']['ProfileAdditional']['Name'], 0, 1, 'UTF-8') . '.' . mb_substr($result['Additional']['ProfileAdditional']['MiddleName'], 0, 1, 'UTF-8') . '. ' . $outputContacts . '</p>';
+						}
                         ?>
                     </div>
                 </div>
             </li>
+			<?php endif;?>
         </ul>
     </div>
     <div class="info-warning">

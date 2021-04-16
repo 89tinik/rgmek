@@ -39,12 +39,10 @@ class MainController extends Controller
 
     public function actionProfile()
     {
-        $uId = \Yii::$app->user->identity->id_db;// расскоментировать UID
-        //$uId = 'c2afaaff-9e30-11e4-9c77-001e8c2d263f';
+        $uId = \Yii::$app->user->identity->id_db;
         $contracts = new Client();
         $response = $contracts->createRequest()
             ->setMethod('GET')
-            //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
             ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile')
             ->setData([
                 'id' => $uId
@@ -53,6 +51,8 @@ class MainController extends Controller
         if ($response->isOk) {
             $xml = new XmlParser();
             $result = $xml->parse($response);
+			//var_dump($result);
+			//die();
             return $this->render('profile', compact('result'));
         } else {
             return 'Не удалось связаться БД - повторите попытку пзже.';

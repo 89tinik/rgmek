@@ -1427,10 +1427,7 @@ a.lnk, .lnk {
       font-size: 16px;
       line-height: 24px;
       color: #959CA3;
-      border-bottom: 1px dashed rgba(0, 0, 0, 0.2); }
-      .profile-details ul li:nth-child(2),.profile-details ul li:nth-child(3) {
-        padding-top: 15px;
-      }
+      /*border-bottom: 1px dashed rgba(0, 0, 0, 0.2);*/ }
       .profile-details ul li.last {
         border: none; }
       .profile-details ul li .label {
@@ -2563,6 +2560,28 @@ a.lnk, .lnk {
         .contracts-devices-popup .table table td strong {
           color: #000;
           font-weight: 400; }
+
+/*tin*/
+
+.profile-details ul li:after{
+	content: "";
+	position: absolute;
+	width: 100%;
+	border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+	top: 24px;
+	overflow: hidden;
+	left: 0;
+}
+.profile-details ul li.big:after{
+	top:48px;
+}
+.profile-details ul li.last:after{
+	display:none;
+}
+.profile-details ul li .value, .profile-details ul li .label{
+	z-index:1;
+}
+/*ENDtin*/
 
 @media screen and (max-width: 1200px) {
   .contracts-devices-popup {

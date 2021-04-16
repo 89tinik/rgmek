@@ -1,6 +1,12 @@
 /* Preloader */
 $(window).on("load", function() {
-	
+		/*tin*/
+	$('.profile-details ul li:not(.last)').each(function(){
+		if($(this).height()<$(this).find('.value').height()){
+			$(this).height($(this).find('.value').height());
+		}
+	});
+	/*ENDtin*/
 	/* Preload */
 	var preload = $('.preloader');
 	preload.find('.spinner').fadeOut(function(){
@@ -11,6 +17,9 @@ $(window).on("load", function() {
 
 $(function() {
 	var width = $(window).width();
+	
+
+
 
 	/*contracts popup*/
 	$('.contracts-devices .devices-link').on('click', function(){
