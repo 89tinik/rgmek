@@ -18,67 +18,101 @@ use yii\helpers\Html;
                     <ul>
                         <?php if (!empty($object['Expand']['PartusPunctum'])): ?>
                             <li>
-											<span class="list-label">
-												<span>Точка поставки</span>
-											</span>
+                                <span class="list-label">
+                                    <span>Точка поставки</span>
+                                </span>
                                 <span class="list-value">
-												<span><?= $object['Expand']['PartusPunctum'] ?></span>
-											</span>
+                                    <span><?= $object['Expand']['PartusPunctum'] ?></span>
+                                </span>
                             </li>
                         <?php endif; ?>
 
                         <?php if (!empty($object['Expand']['GridOrganization'])): ?>
 
                             <li>
-											<span class="list-label">
-												<span>Сетевая организация к сетям,  к которой присоединен объект</span>
-											</span>
+                                <span class="list-label">
+                                    <span>Сетевая организация к сетям,  к которой присоединен объект</span>
+                                </span>
                                 <span class="list-value">
-												<span>МУП “РГМЭК”</span>
-											</span>
+                                    <span><?= $object['Expand']['GridOrganization'] ?></span>
+                                </span>
                             </li>
                         <?php endif; ?>
                         <?php if (!empty($object['Expand']['MaxPower'])): ?>
                             <li>
-											<span class="list-label">
-												<span>Максимальная мощность, кВт</span>
-											</span>
+                                <span class="list-label">
+                                    <span>Максимальная мощность, кВт</span>
+                                </span>
                                 <span class="list-value">
-												<span><?= $object['Expand']['MaxPower'] ?></span>
-											</span>
+                                    <span><?= $object['Expand']['MaxPower'] ?></span>
+                                </span>
                             </li>
                         <?php endif; ?>
                         <?php if (!empty($object['Expand']['TariffGroup']['Name'])): ?>
                             <li>
-											<span class="list-label">
-												<span>Тарифная группа</span>
-											</span>
+								<span class="list-label">
+                                    <span>Тарифная группа</span>
+                                </span>
                                 <span class="list-value">
-												<span><?= $object['Expand']['TariffGroup']['Name'] ?></span>
-											</span>
+                                    <span><?= $object['Expand']['TariffGroup']['Name'] ?></span>
+                                </span>
+                            </li>
+                        <?php elseif (!empty($object['Expand']['TariffGroup'][0]['Name'])): ?>
+                            <li>
+								<span class="list-label">
+                                    <span>Тарифная группа</span>
+                                </span>
+                                <span class="list-value">
+                                    <span>
+                                        <?php
+                                        $arrName = [];
+                                        foreach ($object['Expand']['TariffGroup'] as $arr) {
+                                            $arrName[] = $arr['Name'];
+                                        }
+                                        echo implode(',', $arrName);
+                                        ?>
+                                    </span>
+                                </span>
                             </li>
                         <?php endif; ?>
 
                         <?php if (!empty($object['Expand']['VoltageLevel']['Name'])): ?>
                             <li>
-											<span class="list-label">
-												<span>Уровень напряжения для применения тарифа</span>
-											</span>
+                                <span class="list-label">
+                                    <span>Уровень напряжения для применения тарифа</span>
+                                </span>
                                 <span class="list-value">
-												<span><?= $object['Expand']['VoltageLevel']['Name'] ?></span>
-											</span>
+                                    <span><?= $object['Expand']['VoltageLevel']['Name'] ?></span>
+                                </span>
+                            </li>
+                        <?php elseif (!empty($object['Expand']['VoltageLevel'][0]['Name'])): ?>
+                            <li>
+								<span class="list-label">
+                                    <span>Тарифная группа</span>
+                                </span>
+                                <span class="list-value">
+                                    <span>
+                                        <?php
+                                        $arrName = [];
+                                        foreach ($object['Expand']['VoltageLevel'] as $arr) {
+                                            $arrName[] = $arr['Name'];
+                                        }
+                                        echo implode(',', $arrName);
+                                        ?>
+                                    </span>
+                                </span>
                             </li>
                         <?php endif; ?>
                         <?php if (!empty($object['Expand']['PriceCategory'])): ?>
                             <li>
-											<span class="list-label">
-												<span>Ценовая категория</span>
-											</span>
+                                <span class="list-label">
+                                    <span>Ценовая категория</span>
+                                </span>
                                 <span class="list-value">
-												<span><?= $object['Expand']['PriceCategory'] ?></span>
-												<a class="btn small border btn-contracts-ask">?</a>
-												<a class="btn small border btn-contracts-edit">Изменить</a>
-											</span>
+                                    <span><?= $object['Expand']['PriceCategory'] ?></span>
+                                    <a class="btn small border btn-contracts-ask">?</a>
+                                    <a class="btn small border btn-contracts-edit">Изменить</a>
+                                </span>
                             </li>
                         <?php endif; ?>
                     </ul>

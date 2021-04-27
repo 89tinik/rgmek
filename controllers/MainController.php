@@ -100,6 +100,23 @@ class MainController extends Controller
         }
     }
 
+    public function actionAccessFile()
+    {
+
+        $data = ['uid' => \Yii::$app->request->get('uid'), 'print' => \Yii::$app->request->get('print')];
+        //$data = ['uid' => '899d2100-6c34-11eb-929b-002590c76e1b', 'print' => \Yii::$app->request->get('print')];
+        $invoiceInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/download_account', $data);
+        if (isset($invoiceInfo['success'])){
+            if ($invoiceInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+                throw new HttpException(403, 'Доступ запрещён');
+            }
+            return $this->redirect($invoiceInfo['success']['URL'], 301);
+        } else {
+            return $invoiceInfo['error'];
+        }
+
+    }
+
     public function actionDecoding()
     {
 
