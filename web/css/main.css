@@ -2583,6 +2583,10 @@ a.lnk, .lnk {
 .profile-details ul li .value, .profile-details ul li .label{
 	z-index:1;
 }
+
+.contracts-devices .device-wrap{
+  display: inline-block;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

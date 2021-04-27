@@ -62,7 +62,6 @@ class MainController extends Controller
 //        die();
         if (isset($arrearInfo['success'])){
             if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
-                //throw new yii\web\HttpException(403, 'Доступ запрещен');
                 throw new HttpException(403, 'Доступ запрещён');
             }
             return $this->render('arrear', ['result'=>$arrearInfo['success']]);
@@ -78,7 +77,6 @@ class MainController extends Controller
 
         if (isset($arrearInfo['success'])){
             if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
-                //throw new yii\web\HttpException(403, 'Доступ запрещен');
                 throw new HttpException(403, 'Доступ запрещён');
             }
             return $this->render('allArrear', ['result'=>$arrearInfo['success']['Account']]);
@@ -93,6 +91,9 @@ class MainController extends Controller
         $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list', $data);
 
         if (isset($arrearInfo['success'])){
+            if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+                throw new HttpException(403, 'Доступ запрещён');
+            }
             return $this->render('objects', ['result'=>$arrearInfo['success']]);
         } else {
             return $arrearInfo['error'];

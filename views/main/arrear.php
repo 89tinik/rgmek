@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $result */
+
+$this->title = 'Узнать задолжность, оплатить | ЛК РГМЭК';
 ?>
 
 <div class="page-heading">

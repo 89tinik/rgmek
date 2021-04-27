@@ -26,6 +26,8 @@ class Summary extends Widget
         if ($response->isOk) {
             $xml = new XmlParser();
             $result = $xml->parse($response);
+            \Yii::$app->session->set('fullUserName', $result['Name']);
+
             if ($result['Contract']) {
                 $output = '';
 				if (!empty($result['Contract']['FullName'])){

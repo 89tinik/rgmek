@@ -32,6 +32,9 @@ IeAssets::register($this);
 
     <body>
     <?php $this->beginBody() ?>
+    <?php
+    $sidebar= \app\components\Summary::widget();
+    ?>
 <div class="bg">
 
     <!-- Preloader -->
@@ -54,7 +57,7 @@ IeAssets::register($this);
                 </a>
             </div>
 
-            <div class="h-label"><?= Yii::$app->user->identity->username ?></div>
+            <div class="h-label"><?= Yii::$app->session->get('fullUserName') ?></div>
 
             <!-- menu -->
             <div class="top-menu">
@@ -76,7 +79,7 @@ IeAssets::register($this);
             <!-- login -->
             <div class="h-login">
 
-                <?= Html::a(Yii::$app->user->identity->username, ['login/logout'], ['class'=>'h-login-btn']) ?>
+                <?= Html::a(Yii::$app->session->get('fullUserName'), ['login/logout'], ['class'=>'h-login-btn']) ?>
                 <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class'=>'h-login-btn-mobile']) ?>
             </div>
 
@@ -97,7 +100,7 @@ IeAssets::register($this);
                     <a href="#">Сводка</a>
 
                 </li>
-                <?= \app\components\Summary::widget()?>
+                <?= $sidebar?>
 
             </ul>
         </div>
@@ -117,7 +120,13 @@ IeAssets::register($this);
     <!-- Popups -->
     <div class="overlay"></div>
 
+    <div class="contracts-devices-popup-overlay"></div>
+    <div class="contracts-devices-popup">
+        <div class="table">
 
+        </div>
+        <div class="close"></div>
+    </div>
 
 </div>
 

@@ -40,10 +40,12 @@ $(function() {
 
 	/*contracts popup*/
 	$('.contracts-devices .devices-link').on('click', function(){
+		$('.contracts-devices-popup .table').html($(this).next('div').html());
 		$('.contracts-devices-popup').animate({'top': $(window).scrollTop() + 50}, 450);
 		$('.contracts-devices-popup-overlay').fadeIn(250);
 		return false;
 	});
+
 	$('.contracts-devices-popup .close').on('click', function(){
 		$('.contracts-devices-popup').animate({'top': '-3000px'}, 450);
 		$('.contracts-devices-popup-overlay').fadeOut(250);
