@@ -227,7 +227,9 @@ a.lnk, .lnk {
     text-decoration: none; }
   .breadcrumbs strong {
     color: #5E676F;
-    font-weight: 700; }
+    font-weight: 700;
+    font-size:16px;
+    line-heght:24px; }
   .breadcrumbs a {
     text-decoration: none; }
     .breadcrumbs a:hover {
@@ -1346,7 +1348,7 @@ a.lnk, .lnk {
       font-size: 14px;
       line-height: 24px;
       color: #959CA3;
-      max-width: 250px; }
+      max-width: 215px; }
       .arrear-lists .list ul li .name strong {
         display: block;
         font-weight: 500;
@@ -1360,7 +1362,7 @@ a.lnk, .lnk {
     .arrear-lists .list ul li .bts {
       margin-left: auto; }
       .arrear-lists .list ul li .bts .btn {
-        margin-left: 10px; }
+        margin-left: 8px; }
 
 .arrear-right {
   margin-bottom: 30px;

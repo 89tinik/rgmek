@@ -26,7 +26,7 @@ IeAssets::register($this);
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
-        <link rel="icon" href=<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
+        <link rel="icon" href="<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
         <?php $this->head() ?>
     </head>
 
@@ -54,7 +54,7 @@ IeAssets::register($this);
                 </a>
             </div>
 
-            <div class="h-label">ООО “Огонёк”</div>
+            <div class="h-label"><?= Yii::$app->user->identity->username ?></div>
 
             <!-- menu -->
             <div class="top-menu">

@@ -17,9 +17,26 @@ $(window).on("load", function() {
 
 $(function() {
 	var width = $(window).width();
-	
 
-
+	$('.aj-all-invoice').on('click', function(){
+		$('.preloader').css({'display':'block', 'opacity':'0.5'});
+		$('.preloader .spinner').css('display', 'inline-block');
+		$(this).css('display', 'none');
+		$.ajax({
+			type: "GET",
+			url: "/main/all-arrear",
+			data: 'uid='+$(this).attr('data-uid'),
+			success: function(mess) {
+				$('.wrap-invoice').html(mess);
+				$('.arrear-lists.white-box .white-box-title').text('Все выставленные счета');
+				var preload = $('.preloader');
+				preload.find('.spinner').fadeOut(function(){
+					preload.fadeOut(500);
+				});
+			}
+		});
+		return false;
+	});
 
 	/*contracts popup*/
 	$('.contracts-devices .devices-link').on('click', function(){
