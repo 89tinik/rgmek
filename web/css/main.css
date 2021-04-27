@@ -3395,6 +3395,11 @@ a.lnk, .lnk {
     border-right: 10px solid transparent;
     border-top: 10px solid #FCFCFC; } }
 
+@media screen and (max-width: 350px) {
+  .profile-status .status-control .label span {
+    display: block;
+  }
+}
 /*@media screen and (max-width: 740px) {
 	.fw {
 		margin: 0 20px;

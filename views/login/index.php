@@ -37,7 +37,7 @@ $this->title = 'Авторизация';
         <?= Html::submitButton('Войти') ?>
         <div class="wrong-link">
             <?= Html::a('Зарегистрироваться', ['login/registration']) ?>
-            <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+            <span>&nbsp; &nbsp; </span>
             <?= Html::a('Восстановить пароль', ['login/repassword']) ?>
         </div>
         <?php ActiveForm::end(); ?>
