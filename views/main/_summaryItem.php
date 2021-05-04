@@ -55,7 +55,7 @@ use yii\helpers\Html;
             <li class="item-1"><?=Html::a('Перейти к оплате', ['main/arrear', 'uid'=>$contract['UID']])?></li>
             <li class="item-2"><?=Html::a('Передать показания', ['main/indication', 'uid'=>$contract['UID']])?></li>
             <li class="item-3"><a href="#">Счета</a></li>
-            <li class="item-4"><a href="#">Начисления  и платежи</a></li>
+            <li class="item-5"><?=Html::a('Начисления  и платежи', ['main/payment', 'uid'=>$contract['UID']])?></li>
             <li class="item-5"><?=Html::a('Действующие объекты  и приборы учёта', ['main/objects', 'uid'=>$contract['UID']])?></li>
         </ul>
     </div>

@@ -17,7 +17,49 @@ $(window).on("load", function() {
 
 $(function() {
 	var width = $(window).width();
+	/**
+	 Tabs
+	 **/
+	$('.tab-menu').on('click', '.tab-btn', function(){
+		var tab_bl = $(this).attr('href');
 
+		$(this).closest('.tab-menu').find('li').removeClass('active');
+		$(this).closest('li').addClass('active');
+
+		$(this).closest('.tabs').find('.tab-item').hide();
+		$(tab_bl).fadeIn();
+
+		return false;
+	});
+
+	/*tin*/
+	// выбор контракта для ЭДО
+	$('.link-popup-contract-edo').on('click', function(){
+		$('.contracts-edo-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		$('.contracts-devices-popup-overlay').fadeIn(250);
+		return false;
+	});
+
+	$('.contracts-edo-popup .close').on('click', function(){
+		$('.contracts-edo-popup').animate({'top': '-3000px'}, 450);
+		$('.contracts-devices-popup-overlay').fadeOut(250);
+		return false;
+	});
+	//переключение таба
+	var url = window.location.href;
+	var arrAncor = url.split('#');
+	if($('a.tab-btn').length && typeof arrAncor[1] != "undefined"){
+		$('a.tab-btn').each(function(){
+			if ($(this).attr('href') == '#'+arrAncor[1]){
+				$(this).trigger('click');
+			}
+		});
+	}
+
+	//подтягивание контракта с сайдбара
+	$('.name-sidebar').text($('.sidebar-menu-fw a.active').attr('data-name'));
+
+	//получение всех счетов
 	$('.aj-all-invoice').on('click', function(){
 		$('.preloader').css({'display':'block', 'opacity':'0.5'});
 		$('.preloader .spinner').css('display', 'inline-block');
@@ -227,20 +269,7 @@ $(function() {
 		}
 	});
 
-	/**
-		Tabs
-	**/
-	$('.tab-menu').on('click', '.tab-btn', function(){
-		var tab_bl = $(this).attr('href');
-		
-		$(this).closest('.tab-menu').find('li').removeClass('active');
-		$(this).closest('li').addClass('active');
-		
-		$(this).closest('.tabs').find('.tab-item').hide();
-		$(tab_bl).fadeIn();
 
-		return false;
-	});
 
 	/**
 		Collapse

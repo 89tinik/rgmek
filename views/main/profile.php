@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Html;
+
 $this->title = 'Профиль';
 
 ?>
@@ -144,14 +146,12 @@ $this->title = 'Профиль';
             <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
                 <div class="label active">Статус: <span>Активно</span></div>
                 <div class="bts">
-                    <a href="#" class="btn small border">Активно</a>
-                    <a href="#" class="lnk">Подробнее</a>
+                    <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_1'],['class'=>'lnk'])?>
                 </div>
             <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>
                 <div class="bts">
-                    <a href="#" class="btn small">Активировать</a>
-                    <a href="#" class="lnk">Подробнее</a>
+                    <?=Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_1'],['class'=>'lnk'])?>
                 </div>
             <?php endif; ?>
         </div>
@@ -165,14 +165,12 @@ $this->title = 'Профиль';
             <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
                 <div class="label active">Статус: <span>Активно</span></div>
                 <div class="bts">
-                    <a href="#" class="btn small border">Активно</a>
-                    <a href="#" class="lnk">Подробнее</a>
+                    <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_2'],['class'=>'lnk'])?>
                 </div>
             <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>
                 <div class="bts">
-                    <a href="#" class="btn small">Активировать</a>
-                    <a href="#" class="lnk">Подробнее</a>
+                    <?=Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_2'],['class'=>'lnk'])?>
                 </div>
             <?php endif; ?>
         </div>

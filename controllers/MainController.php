@@ -4,11 +4,13 @@
 namespace app\controllers;
 
 
+use app\models\InstallESForm;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\HttpException;
+use yii\helpers\Url;
 
 class MainController extends Controller
 {
@@ -54,12 +56,59 @@ class MainController extends Controller
 
     }
 
+    public function actionEdo()
+    {
+        $installESForm = new InstallESForm();
+
+        $buttonText = 'Подписаться';
+        $invoiceEmail = false;
+        if(!empty(\Yii::$app->request->get('currentEmail'))){
+            \Yii::$app->session->setFlash('success','Ящик для рассылки электронных счетов - '.\Yii::$app->request->get('currentEmail'));
+            $buttonText = 'Изменить';
+            $invoiceEmail = true;
+        }
+
+        if ($installESForm->load(\Yii::$app->request->post()) && $installESForm->validate()) {
+            $data = ['id' => \Yii::$app->user->identity->id_db,
+                'value'=> $installESForm->email];
+            $setEmail = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/add_mail', $data);
+
+
+            if (isset($setEmail['success'])){
+                \Yii::$app->session->setFlash('success', $setEmail['success']['Message']);
+                $buttonText = 'Изменить';
+                $invoiceEmail = true;
+            } else {
+                \Yii::$app->session->setFlash('error', $setEmail['error']);
+            }
+        }
+        return $this->render('edo', compact('installESForm','buttonText', 'invoiceEmail'));
+
+    }
+
+    public function actionDownloadedo()
+    {
+
+        $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
+        $edoInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_edo', $data);
+        if (isset($edoInfo['success'])){
+            if ($edoInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+                throw new HttpException(403, 'Доступ запрещён');
+            }
+            $file_name = \Yii::$app->user->identity->id.'_'.$edoInfo['success']['Name'];
+            if ($this->decodingToDocSave($edoInfo['success']['File'], $file_name)){
+                return $this->redirect(Url::home(true).'web/temp_edo/'.$file_name, 301);
+            }
+        } else {
+            return $edoInfo['error'];
+        }
+
+    }
+
     public function actionArrear()
     {
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_account/', $data);
-//        var_dump($arrearInfo);
-//        die();
         if (isset($arrearInfo['success'])){
             if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
@@ -117,22 +166,27 @@ class MainController extends Controller
 
     }
 
-    public function actionDecoding()
-    {
-
-        $data = ['uidaccounts' => \Yii::$app->request->get('uid')];
-        $invoiceInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_account', $data);
-        if (isset($invoiceInfo['success'])){
-            return $this->decodingToPdfSave($invoiceInfo['success']['File']);
-        } else {
-            return $invoiceInfo['error'];
-        }
-
-    }
+//    public function actionDecoding()
+//    {
+//
+//        $data = ['uidaccounts' => \Yii::$app->request->get('uid')];
+//        $invoiceInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_account', $data);
+//        if (isset($invoiceInfo['success'])){
+//            return $this->decodingToPdfSave($invoiceInfo['success']['File']);
+//        } else {
+//            return $invoiceInfo['error'];
+//        }
+//
+//    }
 
     public function actionPayment()
     {
         return $this->render('payment');
+    }
+
+    public function actionIndication()
+    {
+        return $this->render('indication');
     }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
@@ -154,41 +208,52 @@ class MainController extends Controller
         }
     }
 
-    private function decodingToPdf ($base_64){
-        // Real date format (xxx-xx-xx)
-        $toDay   = date("Y-m-d");
+//    private function decodingToPdf ($base_64){
+//        // Real date format (xxx-xx-xx)
+//        $toDay   = date("Y-m-d");
+//
+//        // we give the file a random name
+//        $name    = "archive_".$toDay."_XXXXX_.pdf";
+//
+//        // a route is created, (it must already be created in its repository(pdf)).
+//        $rute    = "pdf/".$name;
+//
+//        // decode base64
+//        $pdf_b64 = base64_decode($base_64);
+//
+//        // you record the file in existing folder
+//        if(file_put_contents($rute, $pdf_b64)){
+//            //just to force download by the browser
+//            header("Content-type: application/pdf");
+//
+//            //print base64 decoded
+//            echo $pdf_b64;
+//        }
+//    }
 
-        // we give the file a random name
-        $name    = "archive_".$toDay."_XXXXX_.pdf";
-
-        // a route is created, (it must already be created in its repository(pdf)).
-        $rute    = "pdf/".$name;
-
-        // decode base64
-        $pdf_b64 = base64_decode($base_64);
-
-        // you record the file in existing folder
-        if(file_put_contents($rute, $pdf_b64)){
-            //just to force download by the browser
-            header("Content-type: application/pdf");
-
-            //print base64 decoded
-            echo $pdf_b64;
-        }
-    }
-    private function decodingToPdfSave ($base_64){
-//        $pdf_base64 = "base64pdf.txt";
-////Get File content from txt file
-//        $pdf_base64_handler = fopen($pdf_base64,'r');
-//        $pdf_content = fread ($pdf_base64_handler,filesize($pdf_base64));
-//        fclose ($pdf_base64_handler);
-////Decode pdf content
-        $pdf_decoded = base64_decode ($base_64);
+//    private function decodingToPdfSave ($base_64){
+////        $pdf_base64 = "base64pdf.txt";
+//////Get File content from txt file
+////        $pdf_base64_handler = fopen($pdf_base64,'r');
+////        $pdf_content = fread ($pdf_base64_handler,filesize($pdf_base64));
+////        fclose ($pdf_base64_handler);
+//////Decode pdf content
+//        $pdf_decoded = base64_decode ($base_64);
+////Write data back to pdf file
+//        $pdf = fopen ('test.pdf','w');
+//        fwrite ($pdf,$pdf_decoded);
+////close output file
+//        fclose ($pdf);
+//        echo 'Done';
+//    }
+//
+private function decodingToDocSave ($base_64, $file_name){
+        $doc_decoded = base64_decode ($base_64);
 //Write data back to pdf file
-        $pdf = fopen ('test.pdf','w');
-        fwrite ($pdf,$pdf_decoded);
+        $doc = fopen ('temp_edo/'.$file_name,'w');
+        fwrite ($doc,$doc_decoded);
 //close output file
-        fclose ($pdf);
-        echo 'Done';
+        fclose ($doc);
+        return true;
     }
 }

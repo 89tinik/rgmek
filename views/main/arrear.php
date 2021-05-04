@@ -90,7 +90,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                 <?php
                 if (isset($result['Account']['FullName'])) {
                     echo $this->render('_invoiceItem', [
-                        'invoice' => $result['Contract']
+                        'invoice' => $result['Account']
                     ]);
                 } else {
                     foreach ($result['Account'] as $arr) {

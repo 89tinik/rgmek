@@ -12,12 +12,10 @@ class Summary extends Widget
 
     public function run()
     {
-        $uId = \Yii::$app->user->identity->id_db; //расскоментировать UID
-//        $uId = 'c2afaaff-9e30-11e4-9c77-001e8c2d263f';
+        $uId = \Yii::$app->user->identity->id_db;
         $contracts = new Client();
         $response = $contracts->createRequest()
             ->setMethod('GET')
-            //->setUrl('http://pushkin.studio/testrgmekru/test.xml')
             ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
             ->setData([
                 'id' => $uId
@@ -29,24 +27,33 @@ class Summary extends Widget
             \Yii::$app->session->set('fullUserName', $result['Name']);
 
             if ($result['Contract']) {
-                $output = '';
+                $outputLeft = '';
+                $outputEdo = '';
 				if (!empty($result['Contract']['FullName'])){
-					$output = $this->toTemplate($result['Contract']);
+                    $outputLeft = $this->toTemplateLeft($result['Contract']);
+                    $outputEdo = $this->toTemplateEdo($result['Contract']);
 				} else {
 					foreach ($result['Contract'] as $contract){
-						$output.= $this->toTemplate($contract);
+                        $outputLeft.= $this->toTemplateLeft($contract);
+                        $outputEdo.= $this->toTemplateEdo($contract);
 					}
 				}
-                return $output;
+                return $outputLeft. '||--||' . $outputEdo;
             }
         } else {
-            return 'Не удалось связаться БД - повторите попытку пзже.';
+            return 'Не удалось связаться БД - повторите попытку позже.';
         }
     }
 
-    protected function toTemplate ($contract){
+    protected function toTemplateLeft ($contract){
         ob_start();
         include __DIR__.'/tpl/contract_left.php';
+        return ob_get_clean();
+    }
+
+    protected function toTemplateEdo ($contract){
+        ob_start();
+        include __DIR__.'/tpl/contract_edo.php';
         return ob_get_clean();
     }
 }

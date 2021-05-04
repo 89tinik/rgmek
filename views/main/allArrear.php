@@ -5,7 +5,7 @@
 
 if (isset($result['FullName'])) {
     echo $this->render('_invoiceItem', [
-        'invoice' => $result['Contract']
+        'invoice' => $result['Account']
     ]);
 } else {
     foreach ($result as $arr) {

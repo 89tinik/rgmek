@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -25,114 +26,120 @@ IeAssets::register($this);
         <link rel="preconnect" href="https://fonts.gstatic.com">
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
-        <link rel="icon" href="<?php echo Yii::$app->getHomeUrl();?>favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="<?php echo Yii::$app->getHomeUrl(); ?>favicon.ico" type="image/x-icon">
+        <link rel="icon" href="<?php echo Yii::$app->getHomeUrl(); ?>favicon.ico" type="image/x-icon">
         <?php $this->head() ?>
     </head>
 
     <body>
     <?php $this->beginBody() ?>
     <?php
-    $sidebar= \app\components\Summary::widget();
+    $sidebar = explode('||--||', \app\components\Summary::widget());
     ?>
-<div class="bg">
+    <div class="bg">
 
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="centrize full-width">
-            <div class="vertical-center">
-                <div class="spinner"></div>
+        <!-- Preloader -->
+        <div class="preloader">
+            <div class="centrize full-width">
+                <div class="vertical-center">
+                    <div class="spinner"></div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="fw">
+        <!-- Header -->
+        <header class="header">
+            <div class="fw">
 
-            <!-- logo -->
-            <div class="h-logo">
-                <a href="<?=\yii\helpers\Url::base(true);  ?>">
-                    <img src="/images/logo.png" alt="" />
+                <!-- logo -->
+                <div class="h-logo">
+                    <a href="<?= \yii\helpers\Url::base(true); ?>">
+                        <img src="/images/logo.png" alt=""/>
+                    </a>
+                </div>
+
+                <div class="h-label"><?= Yii::$app->session->get('fullUserName') ?></div>
+
+                <!-- menu -->
+                <div class="top-menu">
+                    <ul>
+                        <li><?= Html::a('Профиль потребителя', ['main/profile']) ?></li> <!-- class="active" -->
+                        <li class="children">
+                            <a href="#">Заключение/изменение договора</a>
+                            <ul>
+                                <li><a href="#">Заключить договор</a></li>
+                                <li><a href="#">Внести изменения в договор</a></li>
+                                <li><a href="#">Ранее поданные заявки</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Помощь</a></li>
+                        <li><a href="#">Диалоги <span>12</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- login -->
+                <div class="h-login">
+
+                    <?= Html::a(Yii::$app->session->get('fullUserName'), ['login/logout'], ['class' => 'h-login-btn']) ?>
+                    <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']) ?>
+                </div>
+
+                <!-- menu btn -->
+                <a href="#" class="menu-btn">
+                    <span class="lines"></span>
+                    <span class="num">12</span>
                 </a>
+
             </div>
+        </header>
 
-            <div class="h-label"><?= Yii::$app->session->get('fullUserName') ?></div>
-
-            <!-- menu -->
-            <div class="top-menu">
+        <!-- Sidebar -->
+        <div class="sidebar-menu">
+            <div class="sidebar-menu-fw">
                 <ul>
-                    <li><?= Html::a('Профиль потребителя', ['main/profile']) ?></li> <!-- class="active" -->
-                    <li class="children">
-                        <a href="#">Заключение/изменение договора</a>
-                        <ul>
-                            <li><a href="#">Заключить договор</a></li>
-                            <li><a href="#">Внести изменения в договор</a></li>
-                            <li><a href="#">Ранее поданные заявки</a></li>
-                        </ul>
+                    <li>
+                        <a href="#">Сводка</a>
+
                     </li>
-                    <li><a href="#">Помощь</a></li>
-                    <li><a href="#">Диалоги <span>12</span></a></li>
+                    <?= $sidebar[0] ?>
+
                 </ul>
             </div>
+        </div>
 
-            <!-- login -->
-            <div class="h-login">
+        <!-- Wrapper -->
+        <div class="wrapper">
 
-                <?= Html::a(Yii::$app->session->get('fullUserName'), ['login/logout'], ['class'=>'h-login-btn']) ?>
-                <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class'=>'h-login-btn-mobile']) ?>
+            <?= $content ?>
+
+            <div class="clear"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer"></div>
+
+        <!-- Popups -->
+        <div class="overlay"></div>
+
+        <div class="contracts-devices-popup-overlay"></div>
+        <div class="contracts-devices-popup">
+            <div class="table">
+
             </div>
-
-            <!-- menu btn -->
-            <a href="#" class="menu-btn">
-                <span class="lines"></span>
-                <span class="num">12</span>
-            </a>
-
+            <div class="close"></div>
         </div>
-    </header>
-
-    <!-- Sidebar -->
-    <div class="sidebar-menu">
-        <div class="sidebar-menu-fw">
+        <div class="contracts-edo-popup">
+            <h2>Выберите договор</h2>
             <ul>
-                <li>
-                    <a href="#">Сводка</a>
-
-                </li>
-                <?= $sidebar?>
-
+                <?= $sidebar[1] ?>
             </ul>
+            <div class="close"></div>
         </div>
+
     </div>
 
-    <!-- Wrapper -->
-    <div class="wrapper">
 
-        <?= $content ?>
-
-        <div class="clear"></div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer"></div>
-
-    <!-- Popups -->
-    <div class="overlay"></div>
-
-    <div class="contracts-devices-popup-overlay"></div>
-    <div class="contracts-devices-popup">
-        <div class="table">
-
-        </div>
-        <div class="close"></div>
-    </div>
-
-</div>
-
-
-
-<?php $this->endBody() ?>
-</body>
-</html>
+    <?php $this->endBody() ?>
+    </body>
+    </html>
 <?php $this->endPage() ?>
