@@ -143,7 +143,7 @@ $this->title = 'Профиль';
             читайте в разделе электронный документооборот
         </div>
         <div class="status-control">
-            <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
+            <?php if (!empty($result['Specifications']['EDO'])):?>
                 <div class="label active">Статус: <span>Активно</span></div>
                 <div class="bts">
                     <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_1'],['class'=>'lnk'])?>

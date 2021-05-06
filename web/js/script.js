@@ -33,6 +33,21 @@ $(function() {
 	});
 
 	/*tin*/
+
+	//переключение типа получения счетов
+	function subscribeType () {
+		if ($('.subscribe-form input[type=radio]:checked').val() == 1) {
+			$('.subscribe-group').css('display', 'block');
+		} else {
+			$('.subscribe-group').css('display', 'none');
+		}
+	}
+	subscribeType();
+	$('.subscribe-form input[type=radio]').on('change', function(){
+		subscribeType();
+	});
+
+
 	// выбор контракта для ЭДО
 	$('.link-popup-contract-edo').on('click', function(){
 		$('.contracts-edo-popup').animate({'top': $(window).scrollTop() + 50}, 450);

@@ -2609,6 +2609,9 @@ a.lnk, .lnk {
   background: url(../images/small_close.svg) no-repeat;
   background-size: contain;
   cursor: pointer; }
+.payment-items{
+  min-height: 50px;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

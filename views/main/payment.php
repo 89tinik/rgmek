@@ -21,10 +21,11 @@ $contractFullName = Yii::$app->params['contractFullName'];
             <div class="value">
                 <select class="styler select__default">
                     <option>Из списка</option>
-                    <option>Из списка 2</option>
-                    <option>Из списка 3</option>
-                    <option>Из списка 4</option>
-                    <option>Из списка 5</option>
+                    <option>Отчет детализация</option>
+                    <option>Расчет пени</option>
+                    <option>Отчет По Расчету ОДН</option>
+                    <option>Отчет Начислено Оплачено</option>
+                    <option>Акт приема передачи</option>
                 </select>
             </div>
         </div>
@@ -48,7 +49,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
 </div>
 
 <div class="payment-items">
-
+<!--
     <div class="payment-item">
         <div class="payment-info border-box">
             <div class="title">Детализация счета по договору № 0509 за период 17.05.2019 - 27.05.2019</div>
@@ -165,5 +166,5 @@ $contractFullName = Yii::$app->params['contractFullName'];
             </div>
         </div>
     </div>
-
+-->
 </div>
