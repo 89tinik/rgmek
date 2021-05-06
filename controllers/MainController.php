@@ -46,8 +46,7 @@ class MainController extends Controller
     {
         $data = ['id' => \Yii::$app->user->identity->id_db];
         $proifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile', $data);
-//        var_dump($proifileInfo);
-//        die();
+
         if (isset($proifileInfo['success'])){
             return $this->render('profile', ['result'=>$proifileInfo['success']]);
         } else {
