@@ -89,7 +89,7 @@ $this->title = 'Профиль';
                 </span>
             </li>
 			<?php endif;?>
-			<?php if (!empty($result['Additional']['ProfileAdditional'])):?>
+			<?php if (!empty($result['Additional'])):?>
             <li class="last">
                 <span class="label">Ответственные лица по стороны Потребителя:</span>
                 <div class="more-list">
@@ -98,29 +98,37 @@ $this->title = 'Профиль';
                         <?php
                         //var_dump($result['Additional']['ProfileAdditional']);
                         //die(2);
-						if(is_array($result['Additional']['ProfileAdditional']) && !isset($result['Additional']['ProfileAdditional']['Name'])){
-							foreach ($result['Additional']['ProfileAdditional'] as $pa) {
-								if ($pa['Contacts']['Value']){
-									$outputContacts = '  /  '.$pa['Contacts']['Value'];
-								} else {
+						if(is_array($result['Additional'][0]['ProfileAdditional'])){
+							foreach ($result['Additional'] as $pa) {
+								if ($pa['ProfileAdditional']['Contacts']['Value'] && $pa['ProfileAdditional']['Contacts']){
+									$outputContacts = '  /  '.$pa['ProfileAdditional']['Contacts']['Value'];
+								} elseif($pa['ProfileAdditional']['Contacts']) {
 									$outputContacts = '';
-									foreach ($pa['Contacts'] as $c => $v) {
+									foreach ($pa['ProfileAdditional']['Contacts'] as $c => $v) {
 										$outputContacts .= '  /  ' . $v['Value'];
 									}
 								}
-								echo '<p>' . $pa['Surname'] .' '. mb_substr($pa['Name'], 0, 1, 'UTF-8') . '.' . mb_substr($pa['MiddleName'], 0, 1, 'UTF-8') . '. ' . $outputContacts . '</p>';
+								$sName = (!empty($pa['ProfileAdditional']['Surname']))?$pa['ProfileAdditional']['Surname']:'';
+								$name = (!empty($pa['ProfileAdditional']['Name']))?mb_substr($pa['ProfileAdditional']['Name'], 0, 1, 'UTF-8').'.':'';
+								$mName = (!empty($pa['ProfileAdditional']['MiddleName']))?mb_substr($pa['ProfileAdditional']['MiddleName'], 0, 1, 'UTF-8') . '.':'';
+								echo '<p>' . $sName .' ' . $name . $mName . ' ' . $outputContacts . '</p>';
 							}
 						}else{
-							if ($result['Additional']['ProfileAdditional']['Contacts']['Value']){
+							if ($result['Additional']['ProfileAdditional']['Contacts']['Value'] && $result['Additional']['ProfileAdditional']['Contacts']){
 									$outputContacts = '  /  '.$result['Additional']['ProfileAdditional']['Contacts']['Value'];
-								} else {
+								} elseif($result['Additional']['ProfileAdditional']['Contacts']) {
 									$outputContacts = '';
 									foreach ($result['Additional']['ProfileAdditional']['Contacts'] as $c => $v) {
 										$outputContacts .= '  /  ' . $v['Value'];
 									}
 								}
-								echo '<p>' . $result['Additional']['ProfileAdditional']['Surname'] .' '. mb_substr($result['Additional']['ProfileAdditional']['Name'], 0, 1, 'UTF-8') . '.' . mb_substr($result['Additional']['ProfileAdditional']['MiddleName'], 0, 1, 'UTF-8') . '. ' . $outputContacts . '</p>';
+								$sName = (!empty($result['Additional']['ProfileAdditional']['Surname']))?$result['Additional']['ProfileAdditional']['Surname']:'';
+								$name = (!empty($result['Additional']['ProfileAdditional']['Name']))?mb_substr($result['Additional']['ProfileAdditional']['Name'], 0, 1, 'UTF-8').'.':'';
+								$mName = (!empty($result['Additional']['ProfileAdditional']['MiddleName']))?mb_substr($result['Additional']['ProfileAdditional']['MiddleName'], 0, 1, 'UTF-8') . '.':'';
+								echo '<p>' . $sName .' ' . $name . $mName . ' ' . $outputContacts . '</p>';
 						}
+						
+						
                         ?>
                     </div>
                 </div>
