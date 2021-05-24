@@ -33,6 +33,32 @@ $(function() {
 	});
 
 	/*tin*/
+	//обработка формы НАЧИСЛЕНИЯ И ПЛАТЕЖИ
+	//$('.get-report').on('click', function(){
+	$('.get-order-form').on('submit', function(){
+
+		var uid = $('.sidebar-menu-fw a.active').attr('data-uid');
+		var dateFrom = $('#from_dialog').val();
+		var dateTo = $('#to_dialog').val();
+		switch ($('.type-order option:selected').val()) {
+			case 'detail':
+
+				$('.detail-report-wrap .title').text('Детализация счета по договору ' + $('.sidebar-menu-fw a.active').attr('data-name') + ' за период ' + dateFrom + '-' + dateTo);
+
+				$('.detail-report-wrap a.print').attr('href', $('.detail-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
+				$('.detail-report-wrap a.download').attr('href', $('.detail-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
+
+				$('.detail-report-wrap').show();
+				break;
+			case 5:
+				alert( 'Перебор' );
+				break;
+			default:
+				alert( "Нет таких значений" );
+		}
+
+		return false;
+	});
 
 	//переключение типа получения счетов
 	function subscribeType () {
@@ -545,31 +571,41 @@ $(function() {
 
 function styler_func() {
 	/*styler*/
-	$('input.styler, select.styler').styler();
+	$('input.styler, select.styler').styler({'selectPlaceholder':'Из списка'});
 
 	/*datepicker from-to dialog*/
-	var dateFormat = "mm/dd/yy", from = $( "#from_dialog" ).datepicker({
+	var dateFormat = "dd.mm.yy", from = $( "#from_dialog" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: true,
-		numberOfMonths: 1
+		numberOfMonths: 1,
+			regional: "ru"
 	})
 	.on( "change", function() {
 		to.datepicker( "option", "minDate", getDate( this ) );
+		to.datepicker( "option", "maxDate", getDate( this , '+1y') );
 	}),
 
 	to = $( "#to_dialog" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: true,
-		numberOfMonths: 1
+		numberOfMonths: 1,
+		regional: "ru"
 	})
 	.on( "change", function() {
 		from.datepicker( "option", "maxDate", getDate( this ) );
+		from.datepicker( "option", "minDate", getDate( this, '-1y' ) );
 	});
 
-	function getDate( element ) {
+	function getDate( element, offset) {
 		var date;
 		try {
 			date = $.datepicker.parseDate( dateFormat, element.value );
+			if (offset == '-1y'){
+				date.setFullYear(date.getFullYear() - 1);
+			}
+			if (offset == '+1y'){
+				date.setFullYear(date.getFullYear() + 1);
+			}
 		} catch( error ) {
 			date = null;
 		}

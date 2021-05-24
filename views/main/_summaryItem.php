@@ -21,28 +21,39 @@ use yii\helpers\Html;
         <div class="info-bottom" style="display: none;">
             <div class="title">
                 <div class="label">Долг на <?= date('d.m.Y')?>  электроноэнергия</div>
-                <div class="value"><?= (!empty($contract['CurrentDebt'])) ? $contract['CurrentDebt'].' руб.' : 0 ;?>  </div>
+                <div class="value"><?= (!empty($contract['Expand']['CurrentDebt'])) ? $contract['Expand']['CurrentDebt'].' руб.' : 0 ;?>  </div>
             </div>
             <div class="list">
                 <ul>
                     <li>
+                        <span class="name">Электроэнергия</span>
+                        <span class="value"><?= (!empty($contract['Expand']['ElectricityDebt'])) ? $contract['Expand']['ElectricityDebt'].' руб.' : 0 ;?></span>
+                    </li>
+                    <li>
                         <span class="name">Пени</span>
-                        <span class="value"><?= (!empty($contract['CurrentPenalty'])) ? $contract['CurrentPenalty'].' руб.' : 0 ;?></span>
+                        <span class="value"><?= (!empty($contract['Expand']['CurrentPenalty'])) ? $contract['Expand']['CurrentPenalty'].' руб.' : 0 ;?></span>
                     </li>
                 </ul>
             </div>
             <div class="title">
                 <div class="label">Предстоящие платежи текущего месяца</div>
-                <div class="value"><?= (!empty($contract['UpcomingDebt'])) ? $contract['UpcomingDebt'].' руб.' : 0 ;?></div>
+                <div class="value"><?= (!empty($contract['Expand']['UpcomingDebt'])) ? $contract['Expand']['UpcomingDebt'].' руб.' : 0 ;?></div>
             </div>
-            <div class="list">
+            <!--div class="list">
                 <ul>
                     <li>
                         <span class="name">Пени</span>
-                        <span class="value"><?= (!empty($contract['UpcomingPenalty'])) ? $contract['UpcomingPenalty'].' руб.' : 0 ;?></span>
+                        <span class="value"><?= (!empty($contract['Expand']['UpcomingPenalty'])) ? $contract['Expand']['UpcomingPenalty'].' руб.' : 0 ;?></span>
                     </li>
                 </ul>
-            </div>
+            </div-->
+
+            <?php if (!empty($contract['Expand']['Overpayment'])):?>
+                <div class="title">
+                    <div class="label">Преплата</div>
+                    <div class="value"><?= $contract['Expand']['Overpayment'].' руб.'?></div>
+                </div>
+            <?php endif;?>
         </div>
 
         <a href="#" class="show-btn">Подробная детализация</a>

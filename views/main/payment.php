@@ -3,6 +3,8 @@
 /* @var $this yii\web\View */
 /* @var $result */
 
+use yii\helpers\Html;
+
 $this->title = 'Начисление и платежи |  ЛК РГМЭК';
 $contractFullName = Yii::$app->params['contractFullName'];
 ?>
@@ -15,13 +17,14 @@ $contractFullName = Yii::$app->params['contractFullName'];
 </div>
 
 <div class="payment-filter white-box">
+    <form class="get-order-form">
     <div class="group small">
         <div class="field">
             <div class="label">Выбрать тип отчета:</div>
             <div class="value">
-                <select class="styler select__default">
-                    <option>Из списка</option>
-                    <option>Отчет детализация</option>
+                <select class="styler select__default type-order" required="required">
+                    <option></option>
+                    <option value="detail">Отчет детализация</option>
                     <option>Расчет пени</option>
                     <option>Отчет По Расчету ОДН</option>
                     <option>Отчет Начислено Оплачено</option>
@@ -35,30 +38,33 @@ $contractFullName = Yii::$app->params['contractFullName'];
         <div class="field">
             <div class="value">
                 <span>с</span>
-                <input type="text" value="17.05.2019" />
+                <input type="text" value="" id="from_dialog" required="required"/>
             </div>
         </div>
         <div class="field">
             <div class="value">
                 <span>По</span>
-                <input type="text" value="17.05.2019" />
+                <input type="text" value="" id="to_dialog" required="required"/>
             </div>
         </div>
-        <input type="submit" class="btn submit-btn" value="Сформировать" />
+        <input type="submit" class="btn submit-btn get-report" value="Сформировать" />
     </div>
+    </form>
 </div>
 
 <div class="payment-items">
-<!--
+
     <div class="payment-item">
-        <div class="payment-info border-box">
-            <div class="title">Детализация счета по договору № 0509 за период 17.05.2019 - 27.05.2019</div>
+        <div class="payment-info border-box detail-report-wrap" style="display: none">
+            <div class="title"></div>
             <div class="bts">
-                <a href="#" class="btn small border">Просмотр</a>
-                <a href="#" class="btn small right">Печать</a>
-                <a href="#" class="btn small right">Скачать</a>
+                <!--a href="#" class="btn small border">Просмотр</a-->
+                <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right print'])?>
+                <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_report_detal'],['class'=>'btn small right download'])?>
+                <div class="clear"></div>
             </div>
         </div>
+        <!--
         <div class="payment-content border-box" style="display: block;">
             <div class="info-bottom">
                 <div class="title">
@@ -165,6 +171,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
                 </div>
             </div>
         </div>
+        -->
     </div>
--->
+
 </div>

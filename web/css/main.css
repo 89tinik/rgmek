@@ -2612,6 +2612,9 @@ a.lnk, .lnk {
 .payment-items{
   min-height: 50px;
 }
+.ui-widget.ui-widget-content{
+  z-index: 10 !important;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

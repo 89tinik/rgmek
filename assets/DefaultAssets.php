@@ -25,6 +25,7 @@ class DefaultAssets extends AssetBundle
         'js/jquery.maskedinput.js',
         'js/jquery.validate.min.js',
         'js/jquery-ui.js',
+        'js/datepicker-ru.js',
         'js/swiper.min.js',
         'js/script.js',
     ];

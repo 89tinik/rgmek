@@ -34,6 +34,7 @@ class MainController extends Controller
     public function actionIndex()
     {
         $data = ['id' => \Yii::$app->user->identity->id_db];
+        //$data = ['id' => 'NjIyODAwMDM1MS02Mg=='];
         $prifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
         if (isset($prifileInfo['success'])){
             return $this->render('index', ['result'=>$prifileInfo['success']]);
@@ -151,9 +152,9 @@ class MainController extends Controller
     public function actionAccessFile()
     {
 
-        $data = ['uid' => \Yii::$app->request->get('uid'), 'print' => \Yii::$app->request->get('print')];
+        $data = \Yii::$app->request->get();
         //$data = ['uid' => '899d2100-6c34-11eb-929b-002590c76e1b', 'print' => \Yii::$app->request->get('print')];
-        $invoiceInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/download_account', $data);
+        $invoiceInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/'.\Yii::$app->request->get('action'), $data);
         if (isset($invoiceInfo['success'])){
             if ($invoiceInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
@@ -180,6 +181,7 @@ class MainController extends Controller
 
     public function actionPayment()
     {
+
         return $this->render('payment');
     }
 

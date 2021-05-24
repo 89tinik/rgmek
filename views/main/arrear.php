@@ -51,28 +51,38 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         <div class="info-bottom">
             <div class="title">
                 <div class="label">Долг на <?= date('d.m.Y') ?> электроноэнергия</div>
-                <div class="value"><?= (!empty($result['Contract']['CurrentDebt'])) ? $result['Contract']['CurrentDebt'] . ' руб.' : 0; ?></div>
+                <div class="value"><?= (!empty($result['Contract']['Expand']['CurrentDebt'])) ? $result['Contract']['Expand']['CurrentDebt'] . ' руб.' : 0; ?></div>
             </div>
             <div class="list">
                 <ul>
                     <li>
+                        <span class="name">Электроэнергия</span>
+                        <span class="value"><?= (!empty($result['Contract']['Expand']['ElectricityDebt'])) ? $result['Contract']['Expand']['ElectricityDebt'] . ' руб.' : 0; ?></span>
+                    </li>
+                    <li>
                         <span class="name">Пени</span>
-                        <span class="value"><?= (!empty($result['Contract']['CurrentPenalty'])) ? $result['Contract']['CurrentPenalty'] . ' руб.' : 0; ?></span>
+                        <span class="value"><?= (!empty($result['Contract']['Expand']['CurrentPenalty'])) ? $result['Contract']['Expand']['CurrentPenalty'] . ' руб.' : 0; ?></span>
                     </li>
                 </ul>
             </div>
             <div class="title">
                 <div class="label">Предстоящие платежи текущего месяца</div>
-                <div class="value"><?= (!empty($result['Contract']['UpcomingDebt'])) ? $result['Contract']['UpcomingDebt'] . ' руб.' : 0; ?></div>
+                <div class="value"><?= (!empty($result['Contract']['Expand']['UpcomingDebt'])) ? $result['Contract']['Expand']['UpcomingDebt'] . ' руб.' : 0; ?></div>
             </div>
-            <div class="list">
+            <!--div class="list">
                 <ul>
                     <li>
                         <span class="name">Пени</span>
                         <span class="value"><?= (!empty($result['Contract']['UpcomingPenalty'])) ? $result['Contract']['UpcomingPenalty'] . ' руб.' : 0; ?></span>
                     </li>
                 </ul>
-            </div>
+            </div-->
+            <?php if (!empty($result['Expand']['Overpayment'])):?>
+                <div class="title">
+                    <div class="label">Преплата</div>
+                    <div class="value"><?= $result['Expand']['Overpayment'].' руб.'?></div>
+                </div>
+            <?php endif;?>
             <div class="itog">
                 Итого:
                 <div class="value"><?= (!empty($result['Contract']['TotalDebt'])) ? $result['Contract']['TotalDebt'] . ' ₽' : 0; ?> </div>

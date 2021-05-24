@@ -12,7 +12,7 @@ if (Yii::$app->request->get('uid') == $contract['UID']) {
 }
 ?>
 <li>
-    <a href="javascript:void(0);" class="<?= $activeClass ?>" data-name="<?= $contract['FullName'] ?>"><?= $contract['FullName'] ?><span>Какой-то текст никому не известно</span></a>
+    <a href="javascript:void(0);" class="<?= $activeClass ?>" data-name="<?= $contract['FullName'] ?>" data-uid="<?=$contract['UID']?>"><?= $contract['FullName'] ?><span>Какой-то текст никому не известно</span></a>
     <ul>
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['UID']]) ?></li>
         <li><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['UID']]) ?></li>
