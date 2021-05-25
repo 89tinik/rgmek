@@ -48,10 +48,27 @@ $(function() {
 				$('.detail-report-wrap a.print').attr('href', $('.detail-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 				$('.detail-report-wrap a.download').attr('href', $('.detail-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 
+				$('.report-item').hide();
 				$('.detail-report-wrap').show();
 				break;
-			case 5:
-				alert( 'Перебор' );
+			case 'penalty':
+				$.ajax({
+					type: 'POST',
+					url: '/ajax/list-penalty',
+					data: 'uidcontracts=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo,
+					success: function (msg) {
+						try {
+							var msgArr = JSON.parse(msg);
+						} catch (e) {
+							$('.report-item').hide();
+							$('.penalty-report-wrap ul').html(msg);
+							$('.penalty-report-wrap').show();
+						}
+						if (msgArr !== undefined){
+							alert(msgArr.error);
+						}
+					}
+				});
 				break;
 			default:
 				alert( "Нет таких значений" );
@@ -600,16 +617,17 @@ function styler_func() {
 		var date;
 		try {
 			date = $.datepicker.parseDate( dateFormat, element.value );
+		} catch( error ) {
+			date = null;
+		}
+		if (date){
 			if (offset == '-1y'){
 				date.setFullYear(date.getFullYear() - 1);
 			}
 			if (offset == '+1y'){
 				date.setFullYear(date.getFullYear() + 1);
 			}
-		} catch( error ) {
-			date = null;
 		}
-
 		return date;
 	}
 }

@@ -25,7 +25,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
                 <select class="styler select__default type-order" required="required">
                     <option></option>
                     <option value="detail">Отчет детализация</option>
-                    <option>Расчет пени</option>
+                    <option value="penalty">Расчет пени</option>
                     <option>Отчет По Расчету ОДН</option>
                     <option>Отчет Начислено Оплачено</option>
                     <option>Акт приема передачи</option>
@@ -55,7 +55,55 @@ $contractFullName = Yii::$app->params['contractFullName'];
 <div class="payment-items">
 
     <div class="payment-item">
-        <div class="payment-info border-box detail-report-wrap" style="display: none">
+
+        <div class="arrear-lists white-box penalty-report-wrap report-item" style="display: none;">
+            <div class="white-box-title">Пени</div>
+            <div class="list">
+                <ul>
+                    <li>
+                        <div class="name">
+                            Парикмакхерская на Гоголя
+                            <strong>№0509 от 01.01.2013</strong>
+                        </div>
+                        <div class="price">
+                            400, 00 руб.
+                        </div>
+                        <div class="bts">
+                            <a href="#" class="btn small border">Печать</a>
+                            <a href="#" class="btn small border">Скачать</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            Парикмакхерская на Гоголя
+                            <strong>№0509 от 01.01.2013</strong>
+                        </div>
+                        <div class="price">
+                            400, 00 руб.
+                        </div>
+                        <div class="bts">
+                            <a href="#" class="btn small border">Печать</a>
+                            <a href="#" class="btn small border">Скачать</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            Парикмакхерская на Гоголя
+                            <strong>№0509 от 01.01.2013</strong>
+                        </div>
+                        <div class="price">
+                            400, 00 руб.
+                        </div>
+                        <div class="bts">
+                            <a href="#" class="btn small border">Печать</a>
+                            <a href="#" class="btn small border">Скачать</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="payment-info border-box detail-report-wrap report-item" style="display: none">
             <div class="title"></div>
             <div class="bts">
                 <!--a href="#" class="btn small border">Просмотр</a-->
