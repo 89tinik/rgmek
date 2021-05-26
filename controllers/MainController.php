@@ -35,11 +35,11 @@ class MainController extends Controller
     {
         $data = ['id' => \Yii::$app->user->identity->id_db];
         //$data = ['id' => 'NjIyODAwMDM1MS02Mg=='];
-        $prifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
-        if (isset($prifileInfo['success'])){
-            return $this->render('index', ['result'=>$prifileInfo['success']]);
+        $profileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
+        if (isset($profileInfo['success'])){
+            return $this->render('index', ['result'=>$profileInfo['success']]);
         } else {
-            return $prifileInfo['error'];
+            return $profileInfo['error'];
         }
     }
 

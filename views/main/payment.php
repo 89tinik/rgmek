@@ -26,7 +26,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
                     <option></option>
                     <option value="detail">Отчет детализация</option>
                     <option value="penalty">Расчет пени</option>
-                    <option>Отчет По Расчету ОДН</option>
+                    <option value="odn">Отчет По Расчету ОДН</option>
                     <option>Отчет Начислено Оплачено</option>
                     <option>Акт приема передачи</option>
                 </select>

@@ -171,7 +171,7 @@ $this->title = 'Профиль';
         </div>
         <div class="status-control">
             <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
-                <div class="label active">Статус: <span>Активно</span></div>
+                <div class="label active">Статус: <span>Активно</span> (<?=$result['Specifications']['EmailAccount1']?>)</div>
                 <div class="bts">
                     <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_2'],['class'=>'lnk'])?>
                 </div>

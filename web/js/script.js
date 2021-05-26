@@ -33,8 +33,13 @@ $(function() {
 	});
 
 	/*tin*/
+
+	//доступные отчеты в разделе НАЧИСЛЕНИЯ И ПЛАТЕЖИ
+	if ($('.sidebar-menu-fw a.active').attr('data-odn') != 'true' && $('.type-order option[value=odn]').length){
+		$('.type-order option[value=odn]').attr('disabled', 'disabled');
+	}
+
 	//обработка формы НАЧИСЛЕНИЯ И ПЛАТЕЖИ
-	//$('.get-report').on('click', function(){
 	$('.get-order-form').on('submit', function(){
 
 		var uid = $('.sidebar-menu-fw a.active').attr('data-uid');
@@ -43,7 +48,7 @@ $(function() {
 		switch ($('.type-order option:selected').val()) {
 			case 'detail':
 
-				$('.detail-report-wrap .title').text('Детализация счета по договору ' + $('.sidebar-menu-fw a.active').attr('data-name') + ' за период ' + dateFrom + '-' + dateTo);
+				$('.detail-report-wrap .title').text('Детализация счета по договору<br/>' + $('.sidebar-menu-fw a.active').attr('data-name') + '<br/>за период ' + dateFrom + '-' + dateTo);
 
 				$('.detail-report-wrap a.print').attr('href', $('.detail-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 				$('.detail-report-wrap a.download').attr('href', $('.detail-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);

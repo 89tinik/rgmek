@@ -6,7 +6,6 @@ use yii\helpers\Html;
 ?>
 <li>
     <div class="name">
-        Какой-то текст ни кому не известно
         <strong><?=$invoice['FullName']?></strong>
     </div>
     <div class="price"><?= (!empty($invoice['TotalDebt'])) ? $invoice['TotalDebt'].' руб.' : 0 ;?></div>

@@ -98,7 +98,7 @@ IeAssets::register($this);
             <div class="sidebar-menu-fw">
                 <ul>
                     <li>
-                        <a href="#">Сводка</a>
+                        <a href="<?= \yii\helpers\Url::base(true); ?>">Сводка</a>
 
                     </li>
                     <?= $sidebar[0] ?>
