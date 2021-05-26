@@ -19,7 +19,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
             <div class="field">
                 <div class="label">Электроэнергия:</div>
                 <div class="value">
-                    <input type="text" placeholder="Введите" value="<?= (!empty($result['Contract']['ElectricityDebt'])) ? str_replace(' ', '', $result['Contract']['ElectricityDebt']) : 0; ?>"/>
+                    <input type="text" placeholder="Введите" value="<?= (!empty($result['Contract']['Expand']['ElectricityDebt'])) ? str_replace(' ', '', $result['Contract']['Expand']['ElectricityDebt']) : 0; ?>"/>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                 <div class="label">Пени:</div>
                 <div class="value ruble">
                     <input type="text"
-                           value="<?= (!empty($result['Contract']['CurrentPenalty'])) ? str_replace(' ', '', $result['Contract']['CurrentPenalty']) : 0; ?>"/>
+                           value="<?= (!empty($result['Contract']['Expand']['CurrentPenalty'])) ? str_replace(' ', '', $result['Contract']['Expand']['CurrentPenalty']) : 0; ?>"/>
                 </div>
             </div>
         </div>
