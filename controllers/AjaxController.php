@@ -34,8 +34,6 @@ class AjaxController extends Controller
 
     public function actionListPenalty()
     {
-// http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_penalty?uidcontracts=b95aa4a7-9f5e-11e4-9c77-001e8c2d263f&withdate=10.12.2016&bydate=10.03.2017
-
         $data = \Yii::$app->request->post();
         //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
         $client = new Client();
@@ -47,6 +45,25 @@ class AjaxController extends Controller
         if ($response->isOk) {
             $xml = new XmlParser();
             return $this->render('listPenalty', ['result' => $xml->parse($response)]);
+        } else {
+            return json_encode(['error' => 'Не удалось связаться БД - повторите попытку позже.']);
+        }
+
+    }
+
+    public function actionListAktpp()
+    {
+        $data = \Yii::$app->request->post();
+        //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/act_reception_transfer')
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            return $this->render('listAktpp', ['result' => $xml->parse($response)]);
         } else {
             return json_encode(['error' => 'Не удалось связаться БД - повторите попытку позже.']);
         }

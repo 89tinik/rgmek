@@ -85,6 +85,25 @@ $(function() {
 				$('.report-item').hide();
 				$('.odn-report-wrap').show();
 				break;
+			case 'aktpp':
+				$.ajax({
+					type: 'POST',
+					url: '/ajax/list-aktpp',
+					data: 'uidcontracts=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo,
+					success: function (msg) {
+						try {
+							var msgArr = JSON.parse(msg);
+						} catch (e) {
+							$('.report-item').hide();
+							$('.aktpp-report-wrap ul').html(msg);
+							$('.aktpp-report-wrap').show();
+						}
+						if (msgArr !== undefined){
+							alert(msgArr.error);
+						}
+					}
+				});
+				break;
 			default:
 				alert( "Нет таких значений" );
 		}

@@ -1,7 +1,7 @@
 <?php
 if (isset($result['Penalty'])) {
     if (isset($result['Penalty']['Number'])) {
-        echo $this->render('_invoiceItem', [
+        echo $this->render('_penaltyItem', [
             'penalty' => $result['Penalty']
         ]);
     } else {

@@ -28,7 +28,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
                     <option value="penalty">Расчет пени</option>
                     <option value="odn">Отчет По Расчету ОДН</option>
                     <option>Отчет Начислено Оплачено</option>
-                    <option>Акт приема передачи</option>
+                    <option value="aktpp">Акт приема передачи</option>
                 </select>
             </div>
         </div>
@@ -56,6 +56,14 @@ $contractFullName = Yii::$app->params['contractFullName'];
 
     <div class="payment-item">
 
+        <div class="arrear-lists white-box aktpp-report-wrap report-item" style="display: none;">
+            <div class="white-box-title">Акт приема передачи</div>
+            <div class="list">
+                <ul>
+
+                </ul>
+            </div>
+        </div>
         <div class="arrear-lists white-box penalty-report-wrap report-item" style="display: none;">
             <div class="white-box-title">Пени</div>
             <div class="list">
