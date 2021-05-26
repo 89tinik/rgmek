@@ -60,45 +60,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
             <div class="white-box-title">Пени</div>
             <div class="list">
                 <ul>
-                    <li>
-                        <div class="name">
-                            Парикмакхерская на Гоголя
-                            <strong>№0509 от 01.01.2013</strong>
-                        </div>
-                        <div class="price">
-                            400, 00 руб.
-                        </div>
-                        <div class="bts">
-                            <a href="#" class="btn small border">Печать</a>
-                            <a href="#" class="btn small border">Скачать</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            Парикмакхерская на Гоголя
-                            <strong>№0509 от 01.01.2013</strong>
-                        </div>
-                        <div class="price">
-                            400, 00 руб.
-                        </div>
-                        <div class="bts">
-                            <a href="#" class="btn small border">Печать</a>
-                            <a href="#" class="btn small border">Скачать</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            Парикмакхерская на Гоголя
-                            <strong>№0509 от 01.01.2013</strong>
-                        </div>
-                        <div class="price">
-                            400, 00 руб.
-                        </div>
-                        <div class="bts">
-                            <a href="#" class="btn small border">Печать</a>
-                            <a href="#" class="btn small border">Скачать</a>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -109,6 +71,16 @@ $contractFullName = Yii::$app->params['contractFullName'];
                 <!--a href="#" class="btn small border">Просмотр</a-->
                 <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right print'])?>
                 <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_report_detal'],['class'=>'btn small right download'])?>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div class="payment-info border-box odn-report-wrap report-item" style="display: none">
+            <div class="title"></div>
+            <div class="bts">
+                <!--a href="#" class="btn small border">Просмотр</a-->
+                <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_counting'],['class'=>'btn small right print'])?>
+                <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_counting'],['class'=>'btn small right download'])?>
                 <div class="clear"></div>
             </div>
         </div>

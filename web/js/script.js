@@ -48,7 +48,7 @@ $(function() {
 		switch ($('.type-order option:selected').val()) {
 			case 'detail':
 
-				$('.detail-report-wrap .title').text('Детализация счета по договору<br/>' + $('.sidebar-menu-fw a.active').attr('data-name') + '<br/>за период ' + dateFrom + '-' + dateTo);
+				$('.detail-report-wrap .title').html('Детализация счета по договору<br/>' + $('.sidebar-menu-fw a.active').attr('data-name') + '<br/>за период ' + dateFrom + '-' + dateTo);
 
 				$('.detail-report-wrap a.print').attr('href', $('.detail-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 				$('.detail-report-wrap a.download').attr('href', $('.detail-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
@@ -74,6 +74,16 @@ $(function() {
 						}
 					}
 				});
+				break;
+			case 'odn':
+
+				$('.odn-report-wrap .title').html('Отчёт по расчёту ОДН <br/> за период ' + dateFrom + '-' + dateTo);
+
+				$('.odn-report-wrap a.print').attr('href', $('.odn-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
+				$('.odn-report-wrap a.download').attr('href', $('.odn-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
+
+				$('.report-item').hide();
+				$('.odn-report-wrap').show();
 				break;
 			default:
 				alert( "Нет таких значений" );
