@@ -69,4 +69,22 @@ class AjaxController extends Controller
         }
 
     }
+    public function actionAccruedPaid()
+    {
+        $data = \Yii::$app->request->post();
+        //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/report_accrual_payment')
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            return $this->render('accruedPaid', ['result' => $xml->parse($response)]);
+        } else {
+            return json_encode(['error' => 'Не удалось связаться БД - повторите попытку позже.']);
+        }
+
+    }
 }

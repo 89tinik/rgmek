@@ -2615,6 +2615,12 @@ a.lnk, .lnk {
 .ui-widget.ui-widget-content{
   z-index: 10 !important;
 }
+.select__default .jq-selectbox__select-text{
+  overflow: hidden;
+}
+.arrear-lists.big-name .list ul li .name{
+  max-width: 300px;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

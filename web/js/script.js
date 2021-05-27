@@ -15,6 +15,7 @@ $(window).on("load", function() {
 
 });
 
+
 $(function() {
 	var width = $(window).width();
 	/**
@@ -33,7 +34,18 @@ $(function() {
 	});
 
 	/*tin*/
-
+	//показать прелоадер
+	function ajaxPreloaderOn(){
+		$('.preloader').css({'display':'block', 'opacity':'0.5'});
+		$('.preloader .spinner').css('display', 'inline-block');
+	}
+	//показать прелоадер
+	function ajaxPreloaderOff() {
+		var preload = $('.preloader');
+		preload.find('.spinner').fadeOut(function(){
+			preload.fadeOut(500);
+		});
+	}
 	//доступные отчеты в разделе НАЧИСЛЕНИЯ И ПЛАТЕЖИ
 	if ($('.sidebar-menu-fw a.active').attr('data-odn') != 'true' && $('.type-order option[value=odn]').length){
 		$('.type-order option[value=odn]').attr('disabled', 'disabled');
@@ -57,6 +69,7 @@ $(function() {
 				$('.detail-report-wrap').show();
 				break;
 			case 'penalty':
+				ajaxPreloaderOn();
 				$.ajax({
 					type: 'POST',
 					url: '/ajax/list-penalty',
@@ -72,6 +85,7 @@ $(function() {
 						if (msgArr !== undefined){
 							alert(msgArr.error);
 						}
+						ajaxPreloaderOff();
 					}
 				});
 				break;
@@ -86,6 +100,7 @@ $(function() {
 				$('.odn-report-wrap').show();
 				break;
 			case 'aktpp':
+				ajaxPreloaderOn();
 				$.ajax({
 					type: 'POST',
 					url: '/ajax/list-aktpp',
@@ -101,6 +116,28 @@ $(function() {
 						if (msgArr !== undefined){
 							alert(msgArr.error);
 						}
+						ajaxPreloaderOff();
+					}
+				});
+				break;
+			case 'accruedpaid':
+				ajaxPreloaderOn();
+				$.ajax({
+					type: 'POST',
+					url: '/ajax/accrued-paid',
+					data: 'uidcontracts=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo,
+					success: function (msg) {
+						try {
+							var msgArr = JSON.parse(msg);
+						} catch (e) {
+							$('.report-item').hide();
+							$('.accruedpaid-report-wrap').html(msg);
+							$('.accruedpaid-report-wrap').show();
+						}
+						if (msgArr !== undefined){
+							alert(msgArr.error);
+						}
+						ajaxPreloaderOff();
 					}
 				});
 				break;
@@ -153,8 +190,7 @@ $(function() {
 
 	//получение всех счетов
 	$('.aj-all-invoice').on('click', function(){
-		$('.preloader').css({'display':'block', 'opacity':'0.5'});
-		$('.preloader .spinner').css('display', 'inline-block');
+		ajaxPreloaderOn();
 		$(this).css('display', 'none');
 		$.ajax({
 			type: "GET",
@@ -163,10 +199,7 @@ $(function() {
 			success: function(mess) {
 				$('.wrap-invoice').html(mess);
 				$('.arrear-lists.white-box .white-box-title').text('Все выставленные счета');
-				var preload = $('.preloader');
-				preload.find('.spinner').fadeOut(function(){
-					preload.fadeOut(500);
-				});
+				ajaxPreloaderOff();
 			}
 		});
 		return false;

@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 <li>
     <div class="name">
-        <?=$act['Number']?>
+        <?=$act['FullName']?>
         <strong><?=$act['Contractor']?></strong>
     </div>
     <div class="price">

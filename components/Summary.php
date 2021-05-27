@@ -30,11 +30,11 @@ class Summary extends Widget
                 $outputLeft = '';
                 $outputEdo = '';
 				if (!empty($result['Contract']['FullName'])){
-                    $outputLeft = $this->toTemplateLeft($result['Contract']);
+                    $outputLeft = $this->toTemplateLeft($result['Contract'], $result['Withdate'], $result['Bydate']);
                     $outputEdo = $this->toTemplateEdo($result['Contract']);
 				} else {
 					foreach ($result['Contract'] as $contract){
-                        $outputLeft.= $this->toTemplateLeft($contract);
+                        $outputLeft.= $this->toTemplateLeft($contract, $result['Withdate'], $result['Bydate']);
                         $outputEdo.= $this->toTemplateEdo($contract);
 					}
 				}
@@ -45,7 +45,7 @@ class Summary extends Widget
         }
     }
 
-    protected function toTemplateLeft ($contract){
+    protected function toTemplateLeft ($contract, $fromDate, $byDate){
         ob_start();
         include __DIR__.'/tpl/contract_left.php';
         return ob_get_clean();
