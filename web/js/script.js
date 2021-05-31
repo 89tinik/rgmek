@@ -49,6 +49,8 @@ $(function() {
 	//доступные отчеты в разделе НАЧИСЛЕНИЯ И ПЛАТЕЖИ
 	if ($('.sidebar-menu-fw a.active').attr('data-odn') != 'true' && $('.type-order option[value=odn]').length){
 		$('.type-order option[value=odn]').attr('disabled', 'disabled');
+		$('.odn-report-wrap').css('display', 'none');
+
 	}
 
 
@@ -56,9 +58,11 @@ $(function() {
 	$('.loading-report-popup .submit-report').on('click', function(){
 		$('.get-order-form').submit();
 		$('.loading-report-popup .close').trigger('click');
+		return false;
 	});
 	$('.loading-report-popup .new-date').on('click', function(){
 		$('.loading-report-popup .close').trigger('click');
+		return false;
 	});
 	$('.get-order-form').on('submit', function(){
 		var dateFrom = $('#from_dialog').val();
@@ -157,6 +161,27 @@ $(function() {
 							$('.report-item').hide();
 							$('.accruedpaid-report-wrap').html(msg);
 							$('.accruedpaid-report-wrap').show();
+						}
+						if (msgArr !== undefined){
+							alert(msgArr.error);
+						}
+						ajaxPreloaderOff();
+					}
+				});
+				break;
+			case 'invoices':
+				ajaxPreloaderOn();
+				$.ajax({
+					type: 'POST',
+					url: '/ajax/list-invoice',
+					data: 'uidcontracts=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo,
+					success: function (msg) {
+						try {
+							var msgArr = JSON.parse(msg);
+						} catch (e) {
+							$('.report-item').hide();
+							$('.invoices-report-wrap ul').html(msg);
+							$('.invoices-report-wrap').show();
 						}
 						if (msgArr !== undefined){
 							alert(msgArr.error);

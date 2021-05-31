@@ -155,9 +155,9 @@ class MainController extends Controller
 
         $data = \Yii::$app->request->get();
         //$data = ['uid' => '899d2100-6c34-11eb-929b-002590c76e1b', 'print' => \Yii::$app->request->get('print')];
-        $invoiceInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/'.\Yii::$app->request->get('action'), $data);
-        if (isset($invoiceInfo['success'])){
-            if ($invoiceInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        $fileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/'.\Yii::$app->request->get('action'), $data);
+        if (isset($fileInfo['success'])){
+            if ($fileInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
             }
 //            $client = new Client();
@@ -180,11 +180,11 @@ class MainController extends Controller
                 $options=['inline' => true, 'mimeType' => 'application/pdf'];
             }
 
-            return \Yii::$app->response->sendContentAsFile(file_get_contents($invoiceInfo['success']['URL']), $data['uid'].'.pdf', $options);
+            return \Yii::$app->response->sendContentAsFile(file_get_contents($fileInfo['success']['URL']), $fileInfo['Name'].'.pdf', $options);
 
             //return $this->redirect($invoiceInfo['success']['URL'], 301);
         } else {
-            return $invoiceInfo['error'];
+            return $fileInfo['error'];
         }
 
     }
@@ -215,8 +215,13 @@ class MainController extends Controller
 
     public function actionInvoice()
     {
-
-        return $this->render('invoice');
+        $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
+        $invoiceData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/package_documents', $data);
+        if (isset($invoiceData['success'])){
+            return $this->render('invoice', ['result'=>$invoiceData['success']]);
+        } else {
+            return $invoiceData['error'];
+        }
     }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){

@@ -6,7 +6,6 @@
 use yii\helpers\Html;
 
 $this->title = 'Начисление и платежи |  ЛК РГМЭК';
-$contractFullName = Yii::$app->params['contractFullName'];
 ?>
 
 <div class="page-heading">
