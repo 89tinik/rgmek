@@ -12,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\web\HttpException;
 use yii\helpers\Url;
 
+
 class MainController extends Controller
 {
 
@@ -159,7 +160,29 @@ class MainController extends Controller
             if ($invoiceInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
             }
-            return $this->redirect($invoiceInfo['success']['URL'], 301);
+//            $client = new Client();
+//            $request = $client->createRequest()
+//                ->setMethod('get')
+//                ->setUrl($invoiceInfo['success']['URL']);
+//            $request->on(Request::EVENT_AFTER_SEND, function (RequestEvent $event) {
+//                $data = $event->response->getData();
+//
+//                $data['content'] = base64_decode($data['encoded_content']);
+//
+//                $event->response->setData($data);
+//            });
+//
+//            return $request->send();
+
+           // return file_get_contents($invoiceInfo['success']['URL']);
+            $options=[];
+            if($data['print'] == 'true'){
+                $options=['inline' => true, 'mimeType' => 'application/pdf'];
+            }
+
+            return \Yii::$app->response->sendContentAsFile(file_get_contents($invoiceInfo['success']['URL']), $data['uid'].'.pdf', $options);
+
+            //return $this->redirect($invoiceInfo['success']['URL'], 301);
         } else {
             return $invoiceInfo['error'];
         }
@@ -188,6 +211,12 @@ class MainController extends Controller
     public function actionIndication()
     {
         return $this->render('indication');
+    }
+
+    public function actionInvoice()
+    {
+
+        return $this->render('invoice');
     }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){

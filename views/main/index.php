@@ -52,12 +52,16 @@ $this->title = 'Сводка | ЛК РГМЭК';
 <div class="summary-items">
     <?php if (isset($result['Contract']['Number'])) {
         echo $this->render('_summaryItem', [
-            'contract' => $result['Contract']
+            'contract' => $result['Contract'],
+            //'fromDate' => $result['Withdate'],
+            //'byDate' => $result['Bydate']
         ]);
     } else {
         foreach ($result['Contract'] as $arr) {
             echo $this->render('_summaryItem', [
-                'contract' => $arr
+                'contract' => $arr,
+                //'fromDate' => $result['Withdate'],
+                //'byDate' => $result['Bydate']
             ]);
         }
     }

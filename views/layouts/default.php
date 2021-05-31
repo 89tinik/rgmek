@@ -128,14 +128,20 @@ IeAssets::register($this);
             </div>
             <div class="close"></div>
         </div>
-        <div class="contracts-edo-popup">
+        <div class="contracts-edo-popup custom-popup">
             <h2>Выберите договор</h2>
             <ul>
                 <?= $sidebar[1] ?>
             </ul>
             <div class="close"></div>
         </div>
-
+        <div class="loading-report-popup custom-popup">
+            <h2>Внимание!</h2>
+            <p>Вы указали большой расчетный период, формирование документов займет некоторое время.</p>
+            <a href="#" class="btn submit-report">Далее</a>
+            <a href="#" class="btn border new-date">Изменить</a>
+            <div class="close"></div>
+        </div>
     </div>
 
 

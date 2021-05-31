@@ -51,12 +51,36 @@ $(function() {
 		$('.type-order option[value=odn]').attr('disabled', 'disabled');
 	}
 
-	//обработка формы НАЧИСЛЕНИЯ И ПЛАТЕЖИ
-	$('.get-order-form').on('submit', function(){
 
-		var uid = $('.sidebar-menu-fw a.active').attr('data-uid');
+	//обработка формы НАЧИСЛЕНИЯ И ПЛАТЕЖИ
+	$('.loading-report-popup .submit-report').on('click', function(){
+		$('.get-order-form').submit();
+		$('.loading-report-popup .close').trigger('click');
+	});
+	$('.loading-report-popup .new-date').on('click', function(){
+		$('.loading-report-popup .close').trigger('click');
+	});
+	$('.get-order-form').on('submit', function(){
 		var dateFrom = $('#from_dialog').val();
 		var dateTo = $('#to_dialog').val();
+
+
+		if ($('.loading-report-popup.open').length == 0) {
+
+			var dateFromArr = dateFrom.split('.');
+			var dateToArr = dateTo.split('.');
+			var Date1 = new Date (dateFromArr[2], dateFromArr[1], dateFromArr[0]);
+			var Date2 = new Date (dateToArr[2], dateToArr[1], dateToArr[0]);
+			var Days = Math.floor((Date2.getTime() - Date1.getTime())/(1000*60*60*24));
+			if (Days > 60) {
+				$('.loading-report-popup').addClass('open');
+				$('.loading-report-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+				$('.contracts-devices-popup-overlay').fadeIn(250);
+				return false;
+			}
+		}
+		var uid = $('.sidebar-menu-fw a.active').attr('data-uid');
+
 		switch ($('.type-order option:selected').val()) {
 			case 'detail':
 
@@ -169,9 +193,10 @@ $(function() {
 		return false;
 	});
 
-	$('.contracts-edo-popup .close').on('click', function(){
-		$('.contracts-edo-popup').animate({'top': '-3000px'}, 450);
+	$('.custom-popup .close').on('click', function(){
+		$('.custom-popup').animate({'top': '-3000px'}, 450);
 		$('.contracts-devices-popup-overlay').fadeOut(250);
+		$('.loading-report-popup.open').removeClass('open');
 		return false;
 	});
 	//переключение таба
