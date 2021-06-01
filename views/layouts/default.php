@@ -142,6 +142,11 @@ IeAssets::register($this);
             <a href="#" class="btn border new-date">Изменить</a>
             <div class="close"></div>
         </div>
+        <div class="warning-pay-popup custom-popup">
+            <h2>Функционал находится в разработке!</h2>
+            <p>Оплатите на сайте банка.</p>
+            <div class="close"></div>
+        </div>
     </div>
 
 

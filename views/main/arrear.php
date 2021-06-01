@@ -14,6 +14,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
 
 <div class="arrear-right">
     <div class="payment-form white-box">
+        <form class="pay-form">
         <div class="title">Оплата</div>
         <div class="group">
             <div class="field">
@@ -37,6 +38,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
             <div class="price"><?= (!empty($result['Contract']['TotalDebt'])) ? $result['Contract']['TotalDebt'] . ' ₽' : 0; ?></div>
         </div>
         <input type="submit" class="btn submit-btn" value="Перейти к оплате"/>
+        </form>
     </div>
 </div>
 

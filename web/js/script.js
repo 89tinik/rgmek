@@ -34,6 +34,13 @@ $(function() {
 	});
 
 	/*tin*/
+	//обработка формы перехода на оплату
+	$('.pay-form').on('submit', function(){
+		$('.warning-pay-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		$('.contracts-devices-popup-overlay').fadeIn(250);
+		return false;
+	});
+
 	//показать прелоадер
 	function ajaxPreloaderOn(){
 		$('.preloader').css({'display':'block', 'opacity':'0.5'});
