@@ -49,7 +49,7 @@ $(function() {
 	//доступные отчеты в разделе НАЧИСЛЕНИЯ И ПЛАТЕЖИ
 	if ($('.sidebar-menu-fw a.active').attr('data-odn') != 'true' && $('.type-order option[value=odn]').length){
 		$('.type-order option[value=odn]').attr('disabled', 'disabled');
-		$('.odn-report-wrap').css('display', 'none');
+		$('.tr-odn').css('display', 'none');
 
 	}
 

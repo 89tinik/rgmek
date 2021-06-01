@@ -22,7 +22,7 @@ use yii\helpers\Html;
 
         <div class="info-bottom" style="display: none;">
             <div class="title">
-                <div class="label">Долг на <?= date('d.m.Y')?>  электроноэнергия</div>
+                <div class="label">Долг на <?= date('d.m.Y')?></div>
                 <div class="value"><?= (!empty($contract['Expand']['CurrentDebt'])) ? $contract['Expand']['CurrentDebt'].' руб.' : 0 ;?>  </div>
             </div>
             <div class="list">

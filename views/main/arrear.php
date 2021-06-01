@@ -50,7 +50,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         </div>
         <div class="info-bottom">
             <div class="title">
-                <div class="label">Долг на <?= date('d.m.Y') ?> электроноэнергия</div>
+                <div class="label">Долг на <?= date('d.m.Y') ?> электроэнергия</div>
                 <div class="value"><?= (!empty($result['Contract']['Expand']['CurrentDebt'])) ? $result['Contract']['Expand']['CurrentDebt'] . ' руб.' : 0; ?></div>
             </div>
             <div class="list">

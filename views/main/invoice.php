@@ -96,7 +96,66 @@ $contractFullName = Yii::$app->params['contractFullName'];
                         }
                     }
                     ?>
+                    <tr>
+                        <td>
+                            <div class="checkbox-item">
+                                <strong>Детализация счета по договору<br/><span class="name-sidebar"></span></strong>
+                            </div>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <div class="bts">
+                                <!--a href="#" class="btn small border">Просмотр</a-->
+                                <?= Html::a('Печать', [
+                                    'main/access-file',
+                                    'print' => 'true',
+                                    'action' => 'download_report_detal',
+                                    'uid' => \Yii::$app->request->get('uid'),
+                                    'withdate' => \Yii::$app->request->get('dateFrom'),
+                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                ], ['class' => 'btn small right print']) ?>
+                                <?= Html::a('Скачать', [
+                                    'main/access-file',
+                                    'print' => 'false',
+                                    'action' => 'download_report_detal',
+                                    'uid' => \Yii::$app->request->get('uid'),
+                                    'withdate' => \Yii::$app->request->get('dateFrom'),
+                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                ], ['class' => 'btn small right download']) ?>
+                            </div>
+                        </td>
+                    </tr>
 
+                    <tr class="tr-odn">
+                        <td>
+                            <div class="checkbox-item">
+                                <strong>Отчёт по расчёту ОДН</strong>
+                            </div>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <div class="bts">
+                                <?= Html::a('Печать', [
+                                    'main/access-file',
+                                    'print' => 'true',
+                                    'action' => 'download_counting',
+                                    'uid' => \Yii::$app->request->get('uid'),
+                                    'withdate' => \Yii::$app->request->get('dateFrom'),
+                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                ], ['class' => 'btn small right print']) ?>
+                                <?= Html::a('Скачать', [
+                                    'main/access-file',
+                                    'print' => 'false',
+                                    'action' => 'download_counting',
+                                    'uid' => \Yii::$app->request->get('uid'),
+                                    'withdate' => \Yii::$app->request->get('dateFrom'),
+                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                ], ['class' => 'btn small right download']) ?>
+                            </div>
+                        </td>
+                    </tr>
 
                 </table>
             </div>
@@ -114,7 +173,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
         </div>
 
 
-        <div class="payment-info border-box detail-report-wrap report-item">
+        <div class="payment-info border-box detail-report-wrap report-item" style="display: none">
             <div class="title">Детализация счета по договору<br/><span class="name-sidebar"></span><br/>за
                 период <?= \Yii::$app->request->get('dateFrom'); ?>-<?= \Yii::$app->request->get('dateBy'); ?></div>
             <div class="bts">
@@ -123,23 +182,19 @@ $contractFullName = Yii::$app->params['contractFullName'];
                     'main/access-file',
                     'print' => 'true',
                     'action' => 'download_report_detal',
-                    'uid' => \Yii::$app->request->get('uid'),
-                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                    'bydate' => \Yii::$app->request->get('dateBy')
+                    'uid' => \Yii::$app->request->get('uid')
                 ], ['class' => 'btn small right print']) ?>
                 <?= Html::a('Скачать', [
                     'main/access-file',
                     'print' => 'false',
                     'action' => 'download_report_detal',
-                    'uid' => \Yii::$app->request->get('uid'),
-                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                    'bydate' => \Yii::$app->request->get('dateBy')
+                    'uid' => \Yii::$app->request->get('uid')
                 ], ['class' => 'btn small right download']) ?>
                 <div class="clear"></div>
             </div>
         </div>
 
-        <div class="payment-info border-box odn-report-wrap report-item">
+        <div class="payment-info border-box odn-report-wrap report-item" style="display: none">
             <div class="title">Отчёт по расчёту ОДН <br/> за период за период
                 <?= \Yii::$app->request->get('dateFrom'); ?>-<?= \Yii::$app->request->get('dateBy'); ?></div>
             <div class="bts">
@@ -148,17 +203,13 @@ $contractFullName = Yii::$app->params['contractFullName'];
                     'main/access-file',
                     'print' => 'true',
                     'action' => 'download_counting',
-                    'uid' => \Yii::$app->request->get('uid'),
-                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                    'bydate' => \Yii::$app->request->get('dateBy')
+                    'uid' => \Yii::$app->request->get('uid')
                 ], ['class' => 'btn small right print']) ?>
                 <?= Html::a('Скачать', [
                     'main/access-file',
                     'print' => 'false',
                     'action' => 'download_counting',
-                    'uid' => \Yii::$app->request->get('uid'),
-                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                    'bydate' => \Yii::$app->request->get('dateBy')
+                    'uid' => \Yii::$app->request->get('uid')
                 ], ['class' => 'btn small right download']) ?>
                 <div class="clear"></div>
             </div>

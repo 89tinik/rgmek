@@ -164,6 +164,9 @@ input, textarea, button {
 	color: #1C2834;
 	cursor: default;
 }
+.register-polit{
+	font-size: 10px;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {

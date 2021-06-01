@@ -55,11 +55,11 @@ IeAssets::register($this);
 
             <!-- group -->
             <div class="group">
-                Горячая линия
+                &nbsp;
                 <a href="tel:+74912908790">+7 (4912) 90-87-90</a>
             </div>
             <div class="group">
-                Общий номер
+                Контактный центр
                 <a href="tel:88002505078">8 (800) 250-50-78</a>
             </div>
 

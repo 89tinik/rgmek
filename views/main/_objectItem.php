@@ -31,7 +31,7 @@ use yii\helpers\Html;
 
                             <li>
                                 <span class="list-label">
-                                    <span>Сетевая организация к сетям,  к которой присоединен объект</span>
+                                    <span>Сетевая организация, к сетям которой присоединен объект</span>
                                 </span>
                                 <span class="list-value">
                                     <span><?= $object['Expand']['GridOrganization'] ?></span>
