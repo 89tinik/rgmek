@@ -93,6 +93,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         <?php endif; ?>
 
     </div>
+    <?php  if (isset($result['Account'])) : ?>
     <div class="arrear-lists white-box">
         <div class="white-box-title">Счета текущего расчетного периода</div>
         <div class="list">
@@ -115,6 +116,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
             </ul>
         </div>
     </div>
+    <?php endif; ?>
     <div class="bts">
         <a href="#" class="btn border full aj-all-invoice" data-uid="<?= $result['Contract']['UID'] ?>">Все выставленные
             счета</a>
