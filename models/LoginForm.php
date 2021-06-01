@@ -68,7 +68,7 @@ class LoginForm extends Model
             $client = new Client();
             $client->createRequest()
                 ->setMethod('GET')
-                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task?id=c2afaaff-9e30-11e4-9c77-001e8c2d263f')
+                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
                 ->setData(['id'=>$user->id_db])
                 ->send();
 
