@@ -19,7 +19,7 @@ if (Yii::$app->request->get('uid') == $contract['UID']) {
        data-name="<?= $contract['FullName'] ?>"
        data-uid="<?=$contract['UID']?>"
        data-odn="<?php echo (in_array($contract['Category'], ['2.3','4.2'])) ? 'true' :  'false';?>">
-        <?= $contract['FullName'] ?><span>Какой-то текст никому не известно</span>
+        <?= $contract['FullName'] ?><!--span>Какой-то текст никому не известно</span-->
     </a>
     <ul>
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['UID']]) ?></li>

@@ -8,11 +8,8 @@ use yii\helpers\Html;
 <tr>
     <td>
         <div class="checkbox-item">
-            <label>
-                <input type="checkbox" class="styler"/>
                 <strong><?=$pack['FullName']?></strong>
                 <!--span>Счет на оплату от: 01.01.2013</span-->
-            </label>
         </div>
     </td>
     <td>
@@ -22,6 +19,7 @@ use yii\helpers\Html;
         <!--a href="#" class="btn small border right">Просмотр</a-->
         <div class="bts">
             <?=Html::a('Печать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'true', 'action'=>$action],['class'=>'btn small border right'])?>
+            <?=Html::a('Скачать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'false', 'action'=>$action],['class'=>'btn small border right'])?>
 
         </div>
     </td>

@@ -63,17 +63,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
             </div>
             <div class="invoice-table">
                 <table>
-                    <tr>
-                        <td>
-                            <div class="checkbox-item">
-                                <label>
-                                    <input type="checkbox" class="styler"/>Отметить все
-                                </label>
-                            </div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+
                     <?php
                     if (isset($result['Account'])) {
                         if (isset($result['Account']['FullName'])) {
@@ -110,11 +100,7 @@ $contractFullName = Yii::$app->params['contractFullName'];
 
                 </table>
             </div>
-            <div class="bts">
-                <a href="#" class="btn border left">Печать выделенные</a>
-                <a href="#" class="btn left">Скачать выделенные</a>
-                <div class="clear"></div>
-            </div>
+
         </div>
 
 

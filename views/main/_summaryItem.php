@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <div class="info">
         <div class="info-top">
             <div class="name">
-                Какой-то текст никому не известно
+                <!--Какой-то текст никому не известно-->
                 <span class="value"><?=$contract['FullName']?></span>
             </div>
             <div class="price">

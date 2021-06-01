@@ -180,7 +180,7 @@ class MainController extends Controller
                 $options=['inline' => true, 'mimeType' => 'application/pdf'];
             }
 
-            return \Yii::$app->response->sendContentAsFile(file_get_contents($fileInfo['success']['URL']), $fileInfo['Name'].'.pdf', $options);
+            return \Yii::$app->response->sendContentAsFile(file_get_contents($fileInfo['success']['URL']), $fileInfo['success']['Name'], $options);
 
             //return $this->redirect($invoiceInfo['success']['URL'], 301);
         } else {

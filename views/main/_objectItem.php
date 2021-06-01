@@ -109,7 +109,7 @@ use yii\helpers\Html;
                                     <span>Ценовая категория</span>
                                 </span>
                                 <span class="list-value">
-                                    <span><?= $object['Expand']['PriceCategory'] ?></span>
+                                    <span><?= $object['Expand']['PriceCategory'] ?></span><br>
                                     <a class="btn small border btn-contracts-ask">?</a>
                                     <a class="btn small border btn-contracts-edit">Изменить</a>
                                 </span>

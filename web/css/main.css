@@ -841,8 +841,8 @@ a.lnk, .lnk {
               background: none; }
 
 @media screen and (min-width: 1200px) {
-  .sidebar-menu .sidebar-menu-fw ul li:hover > a {
-    background: #4475F2; }
+ /* .sidebar-menu .sidebar-menu-fw ul li:hover > a {
+    background: #4475F2; } косячит левое меню при наведении на ПК*/
     .sidebar-menu .sidebar-menu-fw ul li:hover > a span {
       color: #FFF; }
   .sidebar-menu .sidebar-menu-fw ul li:hover ul {
@@ -1625,8 +1625,8 @@ a.lnk, .lnk {
   .contracts-list li .btn {
     display: inline-block;
     vertical-align: top;
-    margin-left: 20px;
-    margin-top: -10px; }
+    /*margin-left: 20px;
+    margin-top: -10px;*/ }
     .contracts-list li .btn-contracts-ask {
       width: 44px;
       padding: 0;

@@ -44,7 +44,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
     <div class="arrear-summary border-box">
         <div class="info-top">
             <div class="title">
-                Какой-то текст ни кому не известно
+                <!--Какой-то текст ни кому не известно-->
                 <strong><?= $result['Contract']['FullName'] ?></strong>
             </div>
         </div>
