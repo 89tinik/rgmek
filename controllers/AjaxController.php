@@ -109,16 +109,23 @@ class AjaxController extends Controller
     public function actionTransfer()
     {
         $data = \Yii::$app->request->post();
-        $data['quantity'] = 'full';
-        $data=' {
-    "id":"c2afaaff-9e30-11e4-9c77-001e8c2d263f",
-    "uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f",
-    "tu":[
-        {"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},
-        {"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}
-        ]
-}
-';
+        $data['tu'] = json_decode($data['tu'], true);
+//        $data=[
+//            "id"=>"c222afaaff-9e30-11e4-9c77-001e8c2d263f",
+//            "uidcontract"=>"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f",
+//            "tu"=>[
+//                0=>[
+//                    "uidtu"=>"a383457f-19a8-41bd-99af-44c19f7afdb3",
+//                     "indications"=>10000
+//                ],
+//                1=>[
+//                    "uidtu"=>"8907550c-9e9a-11e4-9c77-001e8c2d263f",
+//                    "indications"=>12000
+//                ]
+//            ]
+//        ];
+        //var_dump($data);
+       // die();
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('POST')
@@ -127,9 +134,15 @@ class AjaxController extends Controller
             ->setData($data)
             ->send();
         if ($response->isOk) {
-            return $response->data;
+            $xml = new XmlParser();
+            $responseArr = $xml->parse($response);
+            if (isset($responseArr['Error'])){
+                return $responseArr['Error']['Message'];
+            } else {
+                return 'Ваши данные успешно переданны!';
+            }
         } else {
-            return json_encode(['error' => 'Не удалось связаться БД - повторите попытку позже.']);
+            return 'Не удалось связаться БД - повторите попытку позже.';
         }
 
     }

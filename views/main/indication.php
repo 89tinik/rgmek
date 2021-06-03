@@ -11,7 +11,7 @@ $this->title = 'Передать показания | ЛК РГМЭК';
     </div>
 </div>
 
-<div class="objects-items">
+<div class="objects-items uid-d"  data-uid="<?=\Yii::$app->user->identity->id_db?>">
 
     <?php
     if (isset($result['Object'])){

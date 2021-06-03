@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 ?>
-<div class="sub-objects-item collapse-item no-result wrap-pu">
+<div class="sub-objects-item collapse-item no-result wrap-pu" data-id="<?=$pu['UIDTU']?>">
     <div class="sub-objects-btn collapse-btn">
         <?=$pu['FullName']?>
         <!--span class="tip" style="display:none;">Показания переданы объем <span class="result-pu"></span>кВтч</span-->

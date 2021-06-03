@@ -147,6 +147,10 @@ IeAssets::register($this);
             <p>Оплатите на сайте банка.</p>
             <div class="close"></div>
         </div>
+        <div class="transfer-indication-popup custom-popup">
+                <h3></h3>
+            <div class="close"></div>
+        </div>
     </div>
 
 

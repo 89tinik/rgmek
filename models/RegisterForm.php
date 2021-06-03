@@ -62,10 +62,10 @@ class RegisterForm extends Model
         $user = User::findOne(['username' => $username]);
 
         if ($user) {
-            if (empty($user->email) && !empty($this->email)) {
+            if (!empty($this->email)) {
                 $user->email = $this->email;
             }
-            if (empty($user->phone) && !empty($this->phone)) {
+            if (!empty($this->phone)) {
                 $user->phone = $this->phone;
             }
         } else {
