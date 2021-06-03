@@ -34,6 +34,76 @@ $(function() {
 	});
 
 	/*tin*/
+	//рассчет показаний ПУ
+	$('.computation-pu').on('click', function () {
+		var blockPU = $(this).closest('.wrap-pu');
+		blockPU.addClass('no-result');
+		var errorBlock = blockPU.find('.label-error');
+		var wrapResultBlock = blockPU.find('.consumed-wrap');
+		var resultBlock = blockPU.find('.result-pu');
+		resultBlock.text('0');
+		blockPU.attr('data-result', '0');
+		errorBlock.hide();
+		wrapResultBlock.hide();
+		var old = '';
+		var curr = '';
+		blockPU.find('.old-num').each(function () {
+			old += $(this).val();
+		});
+		blockPU.find('.curr-num').each(function () {
+			curr += $(this).val();
+		});
+		old = parseInt(old);
+		curr = parseInt(curr);
+
+		if(old > curr){
+			errorBlock.text('Введённое показание меньше предыдущего!');
+			errorBlock.show();
+		} else if(isNaN(curr)) {
+			errorBlock.text('Не заполнено текущее показание!');
+			errorBlock.show();
+		} else {
+			var consumed = (curr - old)*parseInt($(this).attr('data-k'));
+			resultBlock.text(consumed);
+			blockPU.attr('data-result', consumed);
+			wrapResultBlock.show();
+			blockPU.removeClass('no-result');
+
+		}
+		var objectResult = 0;
+		$(this).closest('.wrap-object').find('.wrap-pu:not(.no-result)').each(function () {
+			objectResult += parseInt($(this).attr('data-result'));
+		});
+
+		$(this).closest('.wrap-object').find('.object-result').text(objectResult);
+		return false;
+	});
+
+	//отправка показаний объекта
+	$('.transfer-object').on('click', function () {
+		if ($('.wrap-pu.no-result').length > 0){
+			var firstNorersult = $('.wrap-pu.no-result:first');
+			if (!firstNorersult.hasClass('active')){
+				firstNorersult.children('.collapse-btn').addClass('active');
+				firstNorersult.children('.collapse-content').attr('style', '');
+			}
+			firstNorersult.find('.label-error').show();
+			$('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: 'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/send_indication',
+				//data: '{"id":"c2afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
+				data: '{"id":"c222afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
+				success: function (msg) {
+					alert(msg);
+				}
+			});
+		}
+
+		return false;
+	});
+
 	//обработка формы перехода на оплату
 	$('.pay-form').on('submit', function(){
 		$('.warning-pay-popup').animate({'top': $(window).scrollTop() + 50}, 450);

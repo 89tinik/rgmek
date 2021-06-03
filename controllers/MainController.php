@@ -160,21 +160,7 @@ class MainController extends Controller
             if ($fileInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
             }
-//            $client = new Client();
-//            $request = $client->createRequest()
-//                ->setMethod('get')
-//                ->setUrl($invoiceInfo['success']['URL']);
-//            $request->on(Request::EVENT_AFTER_SEND, function (RequestEvent $event) {
-//                $data = $event->response->getData();
-//
-//                $data['content'] = base64_decode($data['encoded_content']);
-//
-//                $event->response->setData($data);
-//            });
-//
-//            return $request->send();
 
-           // return file_get_contents($invoiceInfo['success']['URL']);
             $options=[];
             if($data['print'] == 'true'){
                 $options=['inline' => true, 'mimeType' => 'application/pdf'];
@@ -210,7 +196,14 @@ class MainController extends Controller
 
     public function actionIndication()
     {
-        return $this->render('indication');
+        $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
+        $indicationData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list_ind', $data);
+        if (isset($indicationData['success'])){
+            return $this->render('indication', ['result'=>$indicationData['success']]);
+        } else {
+            return $indicationData['error'];
+        }
+
     }
 
     public function actionInvoice()

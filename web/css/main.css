@@ -1906,7 +1906,9 @@ a.lnk, .lnk {
     .sub-objects-content .info .btn {
       position: absolute;
       right: 0;
-      top: -50px; }
+      /*top: -50px;после удаления цветных блоков*/
+      top: -25px;
+    }
 
 .testimony-box .cols {
   margin: 0 -25px;
@@ -2620,6 +2622,10 @@ a.lnk, .lnk {
 }
 .arrear-lists.big-name .list ul li .name{
   max-width: 300px;
+}
+.testimony-box .wrap-error{
+  width:100%;
+  min-height: 110px;
 }
 /*ENDtin*/
 

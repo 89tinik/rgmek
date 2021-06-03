@@ -4,3 +4,31 @@
 
 $this->title = 'Передать показания | ЛК РГМЭК';
 ?>
+<div class="page-heading">
+    <div class="breadcrumbs">
+        <strong>Передать показания приборов учета</strong><span class="sep"></span>
+        <span>Договор <span class="name-sidebar"></span></span>
+    </div>
+</div>
+
+<div class="objects-items">
+
+    <?php
+    if (isset($result['Object'])){
+        if (isset($result['Object']['Name'])){
+            echo $this->render('_objectIndicationItemItem', [
+                'object' => $result['Object']
+            ]);
+        } else {
+            foreach ($result['Object'] as $arr) {
+                echo $this->render('_objectIndicationItemItem', [
+                    'object' => $arr
+                ]);
+            }
+        }
+
+    }
+    ?>
+
+
+</div>

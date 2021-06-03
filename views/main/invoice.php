@@ -7,7 +7,6 @@
 use yii\helpers\Html;
 
 $this->title = 'Счета |  ЛК РГМЭК';
-$contractFullName = Yii::$app->params['contractFullName'];
 ?>
 <div class="page-heading">
     <div class="breadcrumbs">
