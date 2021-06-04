@@ -16,12 +16,12 @@ $this->title = 'Передать показания | ЛК РГМЭК';
     <?php
     if (isset($result['Object'])){
         if (isset($result['Object']['Name'])){
-            echo $this->render('_objectIndicationItemItem', [
+            echo $this->render('_objectIndicationItem', [
                 'object' => $result['Object']
             ]);
         } else {
             foreach ($result['Object'] as $arr) {
-                echo $this->render('_objectIndicationItemItem', [
+                echo $this->render('_objectIndicationItem', [
                     'object' => $arr
                 ]);
             }

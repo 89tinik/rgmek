@@ -120,6 +120,7 @@ use yii\helpers\Html;
             </div>
             <div class="contracts-col contracts-col-2">
                 <div class="contracts-devices white-box">
+                    <?php if(isset($object['Expand']['PU'])){?>
                     <div class="title">Приборы учета электроэнергии:</div>
                     <div class="devices-links">
 
@@ -137,6 +138,9 @@ use yii\helpers\Html;
                         }
                         ?>
                     </div>
+                    <?php } else {?>
+                        <div class="title">Приборы учета отсутствуют</div>
+                    <?php }?>
                 </div>
             </div>
         </div>

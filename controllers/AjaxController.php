@@ -9,6 +9,8 @@ use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use Yii;
+use XLSXWriter;
+
 
 class AjaxController extends Controller
 {
@@ -110,22 +112,8 @@ class AjaxController extends Controller
     {
         $data = \Yii::$app->request->post();
         $data['tu'] = json_decode($data['tu'], true);
-//        $data=[
-//            "id"=>"c222afaaff-9e30-11e4-9c77-001e8c2d263f",
-//            "uidcontract"=>"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f",
-//            "tu"=>[
-//                0=>[
-//                    "uidtu"=>"a383457f-19a8-41bd-99af-44c19f7afdb3",
-//                     "indications"=>10000
-//                ],
-//                1=>[
-//                    "uidtu"=>"8907550c-9e9a-11e4-9c77-001e8c2d263f",
-//                    "indications"=>12000
-//                ]
-//            ]
-//        ];
-        //var_dump($data);
-       // die();
+//        var_dump($data);
+//        die();
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('POST')
@@ -144,6 +132,49 @@ class AjaxController extends Controller
         } else {
             return 'Не удалось связаться БД - повторите попытку позже.';
         }
+
+    }
+    public function actionReconciliation ()
+    {
+
+
+        $data = \Yii::$app->request->post();
+
+        $filename = "act.xlsx";
+
+        $header = array("string");
+        $row1 = array();
+        $row2 = array('','','','АКТ');
+        $row3 = array('','','','фиксации показаний приборов учета электрической энергии');
+        $row4 = array('','','','расчетный период май 2021');
+        $row5 = array('Договор энергоснабжения № 9771 от 20.01.2017 г.');
+        $row6 = array('ООО "РН-Сервис Рязань"');
+        $row7 = array('№
+пп
+', '№
+объекта', 'Наименование объекта', 'Адрес
+местонахождения объекта', 'Акт/
+реакт', 'Номер прибора
+учета', 'Показание  на начало
+расчетного периода', 'Показание  на конец
+расчетного периода', 'Дата записи показаний
+(число, месяц, год)');
+        $row8 = array('1', '2', '3');
+        $sheet_name = 'Sheet1';
+        $writer = new XLSXWriter();
+        $writer->writeSheetHeader($sheet_name, $header, $col_options = ['widths'=>[6,10,31,31,10,20,17,17,17], 'suppress_row'=>true]);
+        $writer->writeSheetRow($sheet_name, $row1);
+        $writer->writeSheetRow($sheet_name, $row2, ['height'=>22, 'font-style'=>'bold', 'font-size'=>12, 'halign'=>'center']);
+        $writer->writeSheetRow($sheet_name, $row3, ['height'=>22, 'font-style'=>'bold', 'font-size'=>12, 'halign'=>'center']);
+        $writer->writeSheetRow($sheet_name, $row4, ['height'=>22, 'font-size'=>12, 'halign'=>'center']);
+        $writer->writeSheetRow($sheet_name, $row5, ['height'=>22, 'font-size'=>12, 'color'=>'#FF0000']);
+        $writer->writeSheetRow($sheet_name, $row6, ['height'=>16, 'font-size'=>12, 'color'=>'#FF0000']);
+        $writer->writeSheetRow($sheet_name, []);
+        $writer->writeSheetRow($sheet_name, $row7, ['height'=>51, 'font-size'=>10, 'wrap_text'=>true, 'halign'=>'center', 'valign'=>'center', 'border'=>'left,right,top,bottom', 'border-style'=>'medium']);
+        $writer->writeSheetRow($sheet_name, $row8, ['font-size'=>10, 'border'=>'left,right,top,bottom', 'border-style'=>'thin']);
+        //$writer->markMergedCell($sheet_name, $start_row = 0, $start_col = 0, $end_row = 0, $end_col = 4);
+
+        return \Yii::$app->response->sendContentAsFile($writer->writeToString(), $filename);
 
     }
 }

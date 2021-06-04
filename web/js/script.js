@@ -34,6 +34,12 @@ $(function() {
 	});
 
 	/*tin*/
+	//формирование Акта фиксации
+	$('.get-act').on('click', function(){
+
+		//return false;
+	});
+
 	//рассчет показаний ПУ
 	$('.computation-pu').on('click', function () {
 		var blockPU = $(this).closest('.wrap-pu');
@@ -82,7 +88,7 @@ $(function() {
 
 	//отправка показаний объекта
 	$('.transfer-object').on('click', function () {
-		if ($('.wrap-pu.no-result').length > 0){
+		if ($(this).closest('.wrap-object').find('.wrap-pu.no-result').length > 0){
 			var firstNorersult = $('.wrap-pu.no-result:first');
 			if (!firstNorersult.hasClass('active')){
 				firstNorersult.children('.collapse-btn').addClass('active');
@@ -99,7 +105,7 @@ $(function() {
 			$.ajax({
 				type: 'POST',
 				url: '/ajax/transfer',
-				data: 'uidcontract='+$('.sidebar-menu-fw a.active').attr('data-uid')+ '&id='+$('.uid-d').attr('data-uid')+'&tu='+JSON.stringify(puArr),
+				data: 'uidobject='+$(this).closest('.wrap-object').attr('data-id')+'&uidcontract='+$('.sidebar-menu-fw a.active').attr('data-uid')+ '&id='+$('.uid-d').attr('data-uid')+'&tu='+JSON.stringify(puArr),
 				//data: '{"id":"c222afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
 				success: function (msg){
 					$('.transfer-indication-popup h3').text(msg);
