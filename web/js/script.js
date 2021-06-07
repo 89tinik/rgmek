@@ -36,8 +36,24 @@ $(function() {
 	/*tin*/
 	//формирование Акта фиксации
 	$('.get-act').on('click', function(){
-
-		//return false;
+        if ($(this).closest('.wrap-object').find('.wrap-pu.no-result').length > 0){
+            var firstNorersult = $('.wrap-pu.no-result:first');
+            if (!firstNorersult.hasClass('active')){
+                firstNorersult.children('.collapse-btn').addClass('active');
+                firstNorersult.children('.collapse-content').attr('style', '');
+            }
+            firstNorersult.find('.label-error').show();
+            $('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
+            return false;
+        } else {
+            var indications = '?uidcontracts='+$('.sidebar-menu-fw a.active').attr('data-uid')+'&uidobject='+$(this).closest('.wrap-object').attr('data-id');
+            $(this).closest('.wrap-object').find('.wrap-pu').each(function(){
+                indications += '&'+$(this).attr('data-id')+'='+$(this).attr('data-idication');
+            });
+			var hrefArr = $(this).attr('href').split('?');
+            $(this).attr('href', hrefArr[0]+indications);
+            // return false;
+        }
 	});
 
 	//рассчет показаний ПУ

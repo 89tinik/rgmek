@@ -138,18 +138,40 @@ class AjaxController extends Controller
     {
 
 
-        $data = \Yii::$app->request->post();
+        $data = \Yii::$app->request->get();
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list_ind')
+            ->setData(['uidcontracts'=>$data['uidcontracts']])
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            $responseArr = $xml->parse($response);
 
-        $filename = "act.xlsx";
+            if ($responseArr['Object']['UIDObject'] == $data['uidobject']) {
+                $outputArr = $responseArr['Object'];
+            } else {
+                foreach ($responseArr['Object'] as $object){
+                    if ($object['UIDObject'] == $data['uidobject']){
+                        $outputArr = $object;
+                        break;
+                    }
+                }
+            }
+            if (!empty($outputArr)) {
 
-        $header = array("string");
-        $row1 = array();
-        $row2 = array('','','','АКТ');
-        $row3 = array('','','','фиксации показаний приборов учета электрической энергии');
-        $row4 = array('','','','расчетный период май 2021');
-        $row5 = array('Договор энергоснабжения № 9771 от 20.01.2017 г.');
-        $row6 = array('ООО "РН-Сервис Рязань"');
-        $row7 = array('№
+
+                $filename = "act.xlsx";
+
+                $header = array("string");
+                $row1 = array();
+                $row2 = array('', '', '', 'АКТ');
+                $row3 = array('', '', '', 'фиксации показаний приборов учета электрической энергии');
+                $row4 = array('', '', '', 'расчетный период '.$outputArr['ActDate']);
+                $row5 = array($outputArr['ActContract']);
+                $row6 = array($outputArr['ActСontractor']);
+                $row7 = array('№
 пп
 ', '№
 объекта', 'Наименование объекта', 'Адрес
@@ -159,22 +181,34 @@ class AjaxController extends Controller
 расчетного периода', 'Показание  на конец
 расчетного периода', 'Дата записи показаний
 (число, месяц, год)');
-        $row8 = array('1', '2', '3');
-        $sheet_name = 'Sheet1';
-        $writer = new XLSXWriter();
-        $writer->writeSheetHeader($sheet_name, $header, $col_options = ['widths'=>[6,10,31,31,10,20,17,17,17], 'suppress_row'=>true]);
-        $writer->writeSheetRow($sheet_name, $row1);
-        $writer->writeSheetRow($sheet_name, $row2, ['height'=>22, 'font-style'=>'bold', 'font-size'=>12, 'halign'=>'center']);
-        $writer->writeSheetRow($sheet_name, $row3, ['height'=>22, 'font-style'=>'bold', 'font-size'=>12, 'halign'=>'center']);
-        $writer->writeSheetRow($sheet_name, $row4, ['height'=>22, 'font-size'=>12, 'halign'=>'center']);
-        $writer->writeSheetRow($sheet_name, $row5, ['height'=>22, 'font-size'=>12, 'color'=>'#FF0000']);
-        $writer->writeSheetRow($sheet_name, $row6, ['height'=>16, 'font-size'=>12, 'color'=>'#FF0000']);
-        $writer->writeSheetRow($sheet_name, []);
-        $writer->writeSheetRow($sheet_name, $row7, ['height'=>51, 'font-size'=>10, 'wrap_text'=>true, 'halign'=>'center', 'valign'=>'center', 'border'=>'left,right,top,bottom', 'border-style'=>'medium']);
-        $writer->writeSheetRow($sheet_name, $row8, ['font-size'=>10, 'border'=>'left,right,top,bottom', 'border-style'=>'thin']);
-        //$writer->markMergedCell($sheet_name, $start_row = 0, $start_col = 0, $end_row = 0, $end_col = 4);
+                $sheet_name = 'Sheet1';
+                $writer = new XLSXWriter();
+                $writer->writeSheetHeader($sheet_name, $header, $col_options = ['widths' => [6, 10, 31, 31, 10, 20, 17, 17, 17], 'suppress_row' => true]);
+                $writer->writeSheetRow($sheet_name, $row1);
+                $writer->writeSheetRow($sheet_name, $row2, ['height' => 22, 'font-style' => 'bold', 'font-size' => 12, 'halign' => 'center']);
+                $writer->writeSheetRow($sheet_name, $row3, ['height' => 22, 'font-style' => 'bold', 'font-size' => 12, 'halign' => 'center']);
+                $writer->writeSheetRow($sheet_name, $row4, ['height' => 22, 'font-size' => 12, 'halign' => 'center']);
+                $writer->writeSheetRow($sheet_name, $row5, ['height' => 22, 'font-size' => 12, 'color' => '#FF0000']);
+                $writer->writeSheetRow($sheet_name, $row6, ['height' => 16, 'font-size' => 12, 'color' => '#FF0000']);
+                $writer->writeSheetRow($sheet_name, []);
+                $writer->writeSheetRow($sheet_name, $row7, ['height' => 51, 'font-size' => 10, 'wrap_text' => true, 'halign' => 'center', 'valign' => 'center', 'border' => 'left,right,top,bottom', 'border-style' => 'medium']);
+                $row=[];
+                if ($outputArr['Expand']['PU']['FullName']){
+                    $indications = (!empty($outputArr['PU']['Indications']))?$outputArr['Expand']['PU']['Indications']:0;
+                    $row = ['1', $outputArr['Expand']['PU']['ActNumber'], $outputArr['Expand']['PU']['ActName'], $outputArr['Expand']['PU']['ActAddress'], 'А', $outputArr['Expand']['PU']['Name'], $indications, $data[$outputArr['Expand']['PU']['UIDTU']], date('d.m.Y')];
+                    $writer->writeSheetRow($sheet_name, $row, ['font-size' => 10, 'border' => 'left,right,top,bottom', 'border-style' => 'thin', 'wrap_text' => true]);
+                } else {
+                    foreach ($outputArr['Expand']['PU'] as $pu){
+                        $indications = (!empty($pu['Indications']))?$pu['Indications']:0;
+                        $row = ['1', $pu['ActNumber'], $pu['ActName'], $pu['ActAddress'], 'А', $pu['Name'], $indications, $data[$pu['UIDTU']], date('d.m.Y')];
+                        $writer->writeSheetRow($sheet_name, $row, ['font-size' => 10, 'border' => 'left,right,top,bottom', 'border-style' => 'thin', 'wrap_text' => true]);
+                    }
+                }
 
-        return \Yii::$app->response->sendContentAsFile($writer->writeToString(), $filename);
+                //$writer->markMergedCell($sheet_name, $start_row = 0, $start_col = 0, $end_row = 0, $end_col = 4);
 
+                return \Yii::$app->response->sendContentAsFile($writer->writeToString(), $filename);
+            }
+        }
     }
 }

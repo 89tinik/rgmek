@@ -7,7 +7,8 @@ use yii\helpers\Html;
 ?>
 
 <div class="objects-item wrap-object" data-id="<?= $object['UIDObject'] ?>"
-     data-act-contract="<?= $object['ActContract'] ?>" data-act-contractor="<?= $object['ActСontractor'] ?>"
+     data-act-contract="<?= $object['ActContract'] ?>"
+     data-act-contractor="<?= $object['ActСontractor'] ?>"
      data-act-date="<?= $object['ActDate'] ?>">
     <div class="objects-head">
         <!--div class="subname">3 прибора учета</div-->
