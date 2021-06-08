@@ -2627,6 +2627,9 @@ a.lnk, .lnk {
   width:100%;
   min-height: 110px;
 }
+.ui-datepicker-calendar {
+  display: none;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

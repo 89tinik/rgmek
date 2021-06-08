@@ -9,7 +9,7 @@ use yii\helpers\Html;
 <li>
     <div class="name">
         <?=$penalty['FullName']?>
-        <strong><?=$penalty['Contractor']?></strong>
+        <!--strong><?=$penalty['Contractor']?></strong-->
     </div>
     <div class="price">
 

@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 /* @var $result */
+/* @var $resultApp */
 
 use yii\helpers\Html;
 
@@ -19,14 +20,15 @@ $this->title = 'Счета |  ЛК РГМЭК';
     <form class="get-order-form">
         <div class="group small">
             <div class="field">
-                <div class="label">Выбрать тип отчета:</div>
+                <div class="label">Выбрать документ:</div>
                 <div class="value">
                     <select class="styler select__default type-order" required="required">
                         <option></option>
-                        <option value="detail">Отчет детализация</option>
-                        <option value="invoices">Счета</option>
-                        <option value="odn">Отчет По Расчету ОДН</option>
-                        <option value="aktpp">Акт приема передачи</option>
+                        <option value="detail">Детализация отчёта</option>
+                        <option value="aktpp">Акт приема передачи э/э</option>
+                        <option value="odn">Отчет по расчету ОДН</option>
+                        <option value="penalty">Расчет пени</option>
+                        <!--option value="invoices">Счета</option-->
                     </select>
                 </div>
             </div>
@@ -56,10 +58,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
     <div class="payment-item">
 
         <div class="pack-report-wrap report-item white-box">
-            <div class="white-box-title">Пакет расчётных документов за
-                <span><?= \Yii::$app->request->get('dateFrom'); ?>-<?= \Yii::$app->request->get('dateBy'); ?></span>
-                период
-            </div>
+            <div class="white-box-title">Пакет расчётных документов</div>
             <div class="invoice-table">
                 <table>
 
@@ -162,15 +161,22 @@ $this->title = 'Счета |  ЛК РГМЭК';
         </div>
 
 
-        <div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: none;">
+        <!--div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: none;">
             <div class="white-box-title">Счета</div>
             <div class="list">
                 <ul>
 
                 </ul>
             </div>
-        </div>
+        </div-->
+        <div class="arrear-lists white-box penalty-report-wrap report-item  big-name" style="display: none;">
+            <div class="white-box-title">Пени</div>
+            <div class="list">
+                <ul>
 
+                </ul>
+            </div>
+        </div>
 
         <div class="payment-info border-box detail-report-wrap report-item" style="display: none">
             <div class="title">Детализация счета по договору<br/><span class="name-sidebar"></span><br/>за

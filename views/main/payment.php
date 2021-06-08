@@ -10,7 +10,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
 
 <div class="page-heading">
     <div class="breadcrumbs">
-        <strong>Начисление и платежи</strong><span class="sep"></span>
+        <strong>Начисления и платежи</strong><span class="sep"></span>
         <span>Договор <span class="name-sidebar"></span></span>
     </div>
 </div>
@@ -19,15 +19,15 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
     <form class="get-order-form">
     <div class="group small">
         <div class="field">
-            <div class="label">Выбрать тип отчета:</div>
+            <div class="label">Выбрать документ:</div>
             <div class="value">
                 <select class="styler select__default type-order" required="required">
                     <option></option>
-                    <option value="detail">Отчет детализация</option>
+                    <option value="accruedpaid">Отчет о начислениях и платежах</option>
+                    <option value="detail">отчёт Детализация отчёта</option>
+                    <option value="aktpp">Акт приема-передачи э/энергии</option>
                     <option value="penalty">Расчет пени</option>
-                    <option value="odn">Отчет По Расчету ОДН</option>
-                    <option value="accruedpaid">Отчет Начислено Оплачено</option>
-                    <option value="aktpp">Акт приема передачи</option>
+                    <option value="odn">Отчет по расчету ОДН</option>
                 </select>
             </div>
         </div>

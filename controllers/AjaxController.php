@@ -83,7 +83,7 @@ class AjaxController extends Controller
             ->send();
         if ($response->isOk) {
             $xml = new XmlParser();
-            return $this->render('accruedPaid', ['result' => $xml->parse($response)]);
+            return $this->render('accruedPaid', ['result' => $xml->parse($response), 'query'=>$data]);
         } else {
             return json_encode(['error' => 'Не удалось связаться БД - повторите попытку позже.']);
         }

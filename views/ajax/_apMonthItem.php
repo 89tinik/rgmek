@@ -10,7 +10,7 @@
             <?php
             if ($apMonth['Accrual']) {
                 if ($apMonth['Accrual']['Number']) {
-                    echo '<tr><td>Начисленно</td><td>' . $apMonth['Accrual']['Date'] . '</td> <td>' . $apMonth['Accrual']['Number'] . ' руб.</td><td>' . $apMonth['Accrual']['Value'] . '</td></tr>';
+                    echo '<tr><td>Начислено</td><td>' . $apMonth['Accrual']['Date'] . '</td> <td>' . $apMonth['Accrual']['Number'] . ' руб.</td><td>' . $apMonth['Accrual']['Value'] . '</td></tr>';
                 } else {
                     $outputAccrualArr = [];
                     foreach ($apMonth['Accrual'] as $arr) {
@@ -18,7 +18,7 @@
                         $outputAccrualArr['Date'][] = $arr['Date'];
                         $outputAccrualArr['Number'][] = $arr['Number'];
                     }
-                    echo '<tr><td>Начисленно</td><td>' . implode('<br/>', $outputAccrualArr['Date']) . '</td> <td>' . implode(' руб.<br/>', $outputAccrualArr['Number']) . ' руб.</td><td>' . implode('<br/>', $outputAccrualArr['Value']) . '</td></tr>';
+                    echo '<tr><td>Начислено</td><td>' . implode('<br/>', $outputAccrualArr['Date']) . '</td> <td>' . implode(' руб.<br/>', $outputAccrualArr['Number']) . ' руб.</td><td>' . implode('<br/>', $outputAccrualArr['Value']) . '</td></tr>';
 
                 }
 
@@ -26,7 +26,7 @@
 
             if ($apMonth['Payment']) {
                 if ($apMonth['Payment']['Number']) {
-                    echo '<tr><td>Начисленно</td><td>' . $apMonth['Payment']['Date'] . '</td> <td>' . $apMonth['Payment']['Number'] . ' руб.</td><td>' . $apMonth['Payment']['Value'] . '</td></tr>';
+                    echo '<tr><td>Оплачено</td><td>' . $apMonth['Payment']['Date'] . '</td> <td>' . $apMonth['Payment']['Number'] . ' руб.</td><td>' . $apMonth['Payment']['Value'] . '</td></tr>';
                 } else {
                     $outputPaymentArr = [];
                     foreach ($apMonth['Payment'] as $arr) {

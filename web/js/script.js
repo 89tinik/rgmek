@@ -820,7 +820,11 @@ function styler_func() {
 		defaultDate: "+1w",
 		changeMonth: true,
 		numberOfMonths: 1,
-			regional: "ru"
+			regional: "ru",
+			showButtonPanel: true,
+			onClose: function(dateText, inst) {
+				$(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+			}
 	})
 	.on( "change", function() {
 		to.datepicker( "option", "minDate", getDate( this ) );
@@ -831,7 +835,10 @@ function styler_func() {
 		defaultDate: "+1w",
 		changeMonth: true,
 		numberOfMonths: 1,
-		regional: "ru"
+		regional: "ru",
+		onClose: function(dateText, inst) {
+			$(this).datepicker('setDate', new Date(inst.selectedYear, parseInt(inst.selectedMonth)+1, 0));
+		}
 	})
 	.on( "change", function() {
 		from.datepicker( "option", "maxDate", getDate( this ) );

@@ -1,6 +1,7 @@
 <div class="info-bottom">
+    <h3>Отчёт о начислениях и платежах за период с <?=$query['withdate']?> по <?=$query['bydate']?></h3>
     <div class="title">
-        <div class="label">Долг на начало периода</div>
+        <div class="label">Сальдо на начало периода</div>
         <div class="value"><?=$result['DebtStart']?>  руб.</div>
     </div>
     <div class="list">
@@ -16,7 +17,7 @@
         </ul>
     </div>
     <div class="title">
-        <div class="label">Задолжность на конец периода</div>
+        <div class="label">Сальдо на конец периода</div>
         <div class="value"><?=$result['DebtEnd']?>  руб.</div>
     </div>
 </div>
