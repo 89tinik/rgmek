@@ -927,7 +927,7 @@ a.lnk, .lnk {
     height: 220px;
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain/*cover*/;
     border-radius: 12px;
     -moz-border-radius: 12px;
     -webkit-border-radius: 12px;
@@ -2630,6 +2630,11 @@ a.lnk, .lnk {
 .ui-datepicker-calendar {
   display: none;
 }
+a.btn.small.pu-ask{
+  padding: 0 12px;
+  line-height: 27px;
+  height: 30px;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {
@@ -3444,7 +3449,14 @@ a.lnk, .lnk {
     left: 50%;
     border: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #FCFCFC; } }
+    border-top: 10px solid #FCFCFC; }
+
+/*tin*/
+  .bg{
+    height: 100vh;/*не отображается выход в бургере при малом контенте*/
+  }
+/*ENDtin*/
+}
 
 @media screen and (max-width: 350px) {
   .profile-status .status-control .label span {

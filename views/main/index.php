@@ -13,32 +13,32 @@ $this->title = 'Сводка | ЛК РГМЭК';
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <a href="#">
+                <a href="https://www.rgmek.ru/" target="_blank">
                     <span class="slide" style="background-image: url(images/main_slide1.jpg);"></span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="#">
+                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">
                     <span class="slide" style="background-image: url(images/main_slide2.jpg);"></span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="#">
+                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">
                     <span class="slide" style="background-image: url(images/main_slide3.jpg);"></span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="#">
+                <a href="https://www.rgmek.ru/">
                     <span class="slide" style="background-image: url(images/main_slide1.jpg);"></span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="#">
+                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">
                     <span class="slide" style="background-image: url(images/main_slide2.jpg);"></span>
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="#">
+                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">
                     <span class="slide" style="background-image: url(images/main_slide3.jpg);"></span>
                 </a>
             </div>

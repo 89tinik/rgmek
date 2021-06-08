@@ -24,7 +24,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                 <div class="value">
                     <select class="styler select__default type-order" required="required">
                         <option></option>
-                        <option value="detail">Детализация отчёта</option>
+                        <option value="detail">Детализация счёта</option>
                         <option value="aktpp">Акт приема передачи э/э</option>
                         <option value="odn">Отчет по расчету ОДН</option>
                         <option value="penalty">Расчет пени</option>
@@ -39,14 +39,14 @@ $this->title = 'Счета |  ЛК РГМЭК';
                 <div class="value">
                     <span>с</span>
                     <input type="text" value="<?= \Yii::$app->request->get('dateFrom'); ?>" id="from_dialog"
-                           required="required"/>
+                           required="required"  autocomplete="off"/>
                 </div>
             </div>
             <div class="field">
                 <div class="value">
                     <span>По</span>
                     <input type="text" value="<?= \Yii::$app->request->get('dateBy'); ?>" id="to_dialog"
-                           required="required"/>
+                           required="required"  autocomplete="off"/>
                 </div>
             </div>
             <input type="submit" class="btn submit-btn get-report" value="Сформировать"/>

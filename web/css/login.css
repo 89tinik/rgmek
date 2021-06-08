@@ -189,17 +189,30 @@ input, textarea, button {
 		float: none;
 	}
 	.login-header .group {
-		display: none;
+	/*display: none;*/
+		margin: 0;
 	}
 	.login-form {
-		margin: 0 30px;
-		width: 100%;
+	margin: 0 30px;
+	width: 100%;
 	}
 	.login-form .wrong-link a{
-		font-size:13px;
+	font-size:13px;
 	}
 	.top-menu{
-		margin-top:30px;
+	margin-top:30px;
 	}
+	/*tin*/
+	.login-header .group {
+		float: right;
+	}
+	.login-header .group:last-child {
+		float: left;
+	}
+
+	.login-header .group a{
+		font-size: 15px;
+	}
+	/*ENDtin*/
 }
 

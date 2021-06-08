@@ -34,6 +34,22 @@ $(function() {
 	});
 
 	/*tin*/
+	//разворачивание объекта по клику на заголовок
+	$('.trigger-more').on('click', function(){
+		$(this).siblings('.contracts-more').children('.more-link').trigger('click');
+	});
+	//информация по ценовым категориям
+	$('.price-category-btn').on('click', function(){
+		$('.price-category-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		$('.contracts-devices-popup-overlay').fadeIn(250);
+		return false;
+	});
+	//подсказка о просмотре информации ПУ
+	$('.pu-ask-btn').on('click', function(){
+		$('.information-pu-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		$('.contracts-devices-popup-overlay').fadeIn(250);
+		return false;
+	});
 	//формирование Акта фиксации
 	$('.get-act').on('click', function(){
         if ($(this).closest('.wrap-object').find('.wrap-pu.no-result').length > 0){
@@ -381,7 +397,8 @@ $(function() {
 		Main Carousel
 	**/
 	var main_carousel = new Swiper('.main-carousel .swiper-container', {
-		slidesPerView: 'auto',
+		slidesPerView: 1,
+		spaceBetween:10,
 		loop: false,
 		speed: 1000,
 		pagination: {
@@ -391,7 +408,13 @@ $(function() {
 		navigation: {
 			nextEl: '.main-carousel .swiper-button-next',
 			prevEl: '.main-carousel .swiper-button-prev',
-		}
+		},
+		breakpoints: {
+			// when window width is >= 640px
+			640: {
+				slidesPerView: 'auto'
+			}
+			}
 	});
 
 	/**
@@ -600,9 +623,10 @@ $(function() {
 
 	if(width < 1200) {
 	$('.sidebar-menu ul li a').on('click', function(){
+		$('.popup-box.sidebar-mobile-popup').fadeOut();
 		$(this).closest('li').find('.popup-box.sidebar-mobile-popup').fadeIn();
 		$('.overlay').fadeIn(250);
-		return false;
+		//return false; не работаю переходы по ссылкам
 	});
 	}
 
@@ -835,6 +859,7 @@ function styler_func() {
 		defaultDate: "+1w",
 		changeMonth: true,
 		numberOfMonths: 1,
+		showButtonPanel: true,
 		regional: "ru",
 		onClose: function(dateText, inst) {
 			$(this).datepicker('setDate', new Date(inst.selectedYear, parseInt(inst.selectedMonth)+1, 0));

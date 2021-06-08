@@ -24,7 +24,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
                 <select class="styler select__default type-order" required="required">
                     <option></option>
                     <option value="accruedpaid">Отчет о начислениях и платежах</option>
-                    <option value="detail">отчёт Детализация отчёта</option>
+                    <option value="detail">Детализация счёта</option>
                     <option value="aktpp">Акт приема-передачи э/энергии</option>
                     <option value="penalty">Расчет пени</option>
                     <option value="odn">Отчет по расчету ОДН</option>
@@ -37,13 +37,13 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
         <div class="field">
             <div class="value">
                 <span>с</span>
-                <input type="text" value="<?=\Yii::$app->request->get('dateFrom');?>" id="from_dialog" required="required"/>
+                <input type="text" value="<?=\Yii::$app->request->get('dateFrom');?>" id="from_dialog" required="required" autocomplete="off"/>
             </div>
         </div>
         <div class="field">
             <div class="value">
                 <span>По</span>
-                <input type="text" value="<?=\Yii::$app->request->get('dateBy');?>" id="to_dialog" required="required"/>
+                <input type="text" value="<?=\Yii::$app->request->get('dateBy');?>" id="to_dialog" required="required" autocomplete="off"/>
             </div>
         </div>
         <input type="submit" class="btn submit-btn get-report" value="Сформировать" />

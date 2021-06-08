@@ -7,8 +7,8 @@ use yii\helpers\Html;
 ?>
 
 <div class="contracts-item">
-    <div class="contracts-head">
-        <div class="subname"><?= $object['NameContracts'] ?></div>
+    <div class="contracts-head trigger-more">
+        <!--div class="subname"><?= $object['NameContracts'] ?></div-->
         <div class="name"><?= $object['Name'] ?></div>
     </div>
     <div class="contracts-body">
@@ -110,7 +110,7 @@ use yii\helpers\Html;
                                 </span>
                                 <span class="list-value">
                                     <span><?= $object['Expand']['PriceCategory'] ?></span><br>
-                                    <a class="btn small border btn-contracts-ask">?</a>
+                                    <a class="btn small border btn-contracts-ask price-category-btn">?</a>
                                     <a class="btn small border btn-contracts-edit">Изменить</a>
                                 </span>
                             </li>
@@ -121,7 +121,9 @@ use yii\helpers\Html;
             <div class="contracts-col contracts-col-2">
                 <div class="contracts-devices white-box">
                     <?php if(isset($object['Expand']['PU'])){?>
-                    <div class="title">Приборы учета электроэнергии:</div>
+                    <div class="title">Сведения по приборам учета:
+                        <a class="btn small border pu-ask pu-ask-btn">?</a>
+                    </div>
                     <div class="devices-links">
 
                         <?php
@@ -137,6 +139,7 @@ use yii\helpers\Html;
                             }
                         }
                         ?>
+
                     </div>
                     <?php } else {?>
                         <div class="title">Приборы учета отсутствуют</div>
@@ -147,7 +150,7 @@ use yii\helpers\Html;
     </div>
     <div class="contracts-more">
         <a href="#" class="more-link" data-text-open="Развернуть договор" data-text-close="Свернуть объект">
-            <span>Развернуть договор</span>
+            <span>Развернуть</span>
         </a>
     </div>
 </div>

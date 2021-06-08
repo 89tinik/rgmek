@@ -12,35 +12,6 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
     </div>
 </div>
 
-<div class="arrear-right">
-    <div class="payment-form white-box">
-        <form class="pay-form">
-        <div class="title">Оплата</div>
-        <div class="group">
-            <div class="field">
-                <div class="label">Электроэнергия:</div>
-                <div class="value">
-                    <input type="text" placeholder="Введите" value="<?= (!empty($result['Contract']['Expand']['ElectricityDebt'])) ? str_replace(' ', '', $result['Contract']['Expand']['ElectricityDebt']) : 0; ?>"/>
-                </div>
-            </div>
-        </div>
-        <div class="group">
-            <div class="field">
-                <div class="label">Пени:</div>
-                <div class="value ruble">
-                    <input type="text"
-                           value="<?= (!empty($result['Contract']['Expand']['CurrentPenalty'])) ? str_replace(' ', '', $result['Contract']['Expand']['CurrentPenalty']) : 0; ?>"/>
-                </div>
-            </div>
-        </div>
-        <div class="group-price">
-            <div class="label">Итого:</div>
-            <div class="price"><?= (!empty($result['Contract']['TotalDebt'])) ? $result['Contract']['TotalDebt'] . ' ₽' : 0; ?></div>
-        </div>
-        <input type="submit" class="btn submit-btn" value="Перейти к оплате"/>
-        </form>
-    </div>
-</div>
 
 <div class="arrear-left">
     <div class="arrear-summary border-box">
@@ -122,5 +93,35 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
     <div class="bts">
         <a href="#" class="btn border full aj-all-invoice" data-uid="<?= $result['Contract']['UID'] ?>">Все выставленные
             счета</a>
+    </div>
+</div>
+
+<div class="arrear-right">
+    <div class="payment-form white-box">
+        <form class="pay-form">
+            <div class="title">Оплата</div>
+            <div class="group">
+                <div class="field">
+                    <div class="label">Электроэнергия:</div>
+                    <div class="value">
+                        <input type="text" placeholder="Введите" value="<?= (!empty($result['Contract']['Expand']['ElectricityDebt'])) ? str_replace(' ', '', $result['Contract']['Expand']['ElectricityDebt']) : 0; ?>"/>
+                    </div>
+                </div>
+            </div>
+            <div class="group">
+                <div class="field">
+                    <div class="label">Пени:</div>
+                    <div class="value ruble">
+                        <input type="text"
+                               value="<?= (!empty($result['Contract']['Expand']['CurrentPenalty'])) ? str_replace(' ', '', $result['Contract']['Expand']['CurrentPenalty']) : 0; ?>"/>
+                    </div>
+                </div>
+            </div>
+            <div class="group-price">
+                <div class="label">Итого:</div>
+                <div class="price"><?= (!empty($result['Contract']['TotalDebt'])) ? $result['Contract']['TotalDebt'] . ' ₽' : 0; ?></div>
+            </div>
+            <input type="submit" class="btn submit-btn" value="Перейти к оплате"/>
+        </form>
     </div>
 </div>
