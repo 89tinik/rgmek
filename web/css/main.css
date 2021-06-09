@@ -421,11 +421,12 @@ a.lnk, .lnk {
 .c-form .group {
   margin-bottom: 30px;
   position: relative; }
-  .c-form .group .label {
+  .c-form .group .label, .c-form .group .label label {
     margin-bottom: 10px;
     font-size: 14px;
     line-height: 24px;
-    color: #5E676F; }
+    color: #5E676F;
+  padding-left:0;}
 
 .c-form .field {
   position: relative; }
@@ -2634,6 +2635,33 @@ a.btn.small.pu-ask{
   padding: 0 12px;
   line-height: 27px;
   height: 30px;
+}
+textarea {
+  padding: 0 20px;
+  width: 100%;
+  line-height: 58px;
+  font-size: 14px;
+  color: #1C2834;
+  background: #FFFFFF;
+  border: 1px solid #EFF0F0;
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -khtml-border-radius: 12px;
+}
+.wrap-polit-checkbox{
+  float: left;
+}
+.polit-label{
+  font-size: 10px;
+  overflow: hidden;
+}
+.help-block{
+  font-size: 12px;
+  text-align: center;
+  color: red;
+  position: absolute;
+  width: 100%;
 }
 /*ENDtin*/
 

@@ -73,7 +73,7 @@ IeAssets::register($this);
                             </ul>
                         </li>
                         <li><a href="#">Помощь</a></li>
-                        <li><a href="#">Диалоги <span>12</span></a></li>
+                        <li><?= Html::a('Написать обращение', ['inner/fos']) ?></li>
                     </ul>
                 </div>
 

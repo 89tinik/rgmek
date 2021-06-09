@@ -34,6 +34,14 @@ $(function() {
 	});
 
 	/*tin*/
+	//политика
+	$('input.polit').bind('change', function(){
+		if($(this).prop("checked")) {
+			$(this).closest('form').find('button').removeAttr('disabled');
+		} else {
+			$(this).closest('form').find('button').attr('disabled', 'disabled');
+		}
+	});
 	//разворачивание объекта по клику на заголовок
 	$('.trigger-more').on('click', function(){
 		$(this).siblings('.contracts-more').children('.more-link').trigger('click');
