@@ -25,19 +25,19 @@ use yii\helpers\Html;
                         $outputCurrent = '';
 
                         for ($i=0;$i<$pu['Discharge']-strlen($indicationArr[0]);$i++){
-                            $outputOld .= '<input type="text" class="inputs old-num" value="0" maxlength="1" />';
-                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"  />';
+                            $outputOld .= '<input type="phone" class="inputs old-num" value="0" maxlength="1" />';
+                            $outputCurrent .= '<input type="phone" class="inputs curr-num" maxlength="1"  />';
                         }
 
                         foreach(str_split($indicationArr[0]) as $n){
                             $outputOld .= '<input type="text" class="inputs old-num" value="'.$n.'" maxlength="1"  />';
-                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"  />';
+                            $outputCurrent .= '<input type="phone" class="inputs curr-num" maxlength="1"  />';
                         }
 
                     } else {
                         for ($i=0;$i<$pu['Discharge'];$i++){
-                            $outputOld .= '<input type="text" class="inputs old-num" value="0" maxlength="1" />';
-                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"  />';
+                            $outputOld .= '<input type="phone" class="inputs old-num" value="0" maxlength="1" />';
+                            $outputCurrent .= '<input type="phone" class="inputs curr-num" maxlength="1"  />';
                         }
                     }
                     ?>

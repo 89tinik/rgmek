@@ -190,7 +190,7 @@ a.lnk, .lnk {
 /*Wrapper*/
 .bg {
   position: relative;
-  overflow: hidden; }
+ /* overflow: hidden; не работает прокрутка*/ }
 
 .wrapper {
   padding-top: 80px;
