@@ -43,7 +43,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $this->temp = \Yii::$app->security->generatePasswordHash($password);
     }
 
-    public function setIdDb()
+    public function setIdDb()//удалить
     {
         $newIdDb = base64_encode($this->username);
         if ($newIdDb == $this->id_db) {
@@ -93,8 +93,26 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             if ($result['Error']) {
                 return ['error' => $result['Error']['Message']];
             } else {
-                return ['success' => $result['Value']];
+                return ['success' => $result['Value'], 'ID' => $result['ID']];
             }
+        } else {
+            return ['error' => 'Не удалось связаться БД - повторите попытку пзже.'];
+        }
+
+
+    }
+    static public function validateFromDBnew($data)
+    {
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/registration')
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            return $xml->parse($response);
+
         } else {
             return ['error' => 'Не удалось связаться БД - повторите попытку пзже.'];
         }
@@ -146,7 +164,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
                 ->setFrom('noreply@send.rgmek.ru')
-                ->setTo($this->email)
+//                ->setTo($this->email)
+                ->setTo('89.tinik@gmail.com')
                 ->setSubject('Подтверждение почты')
                 ->setTextBody('Код:' . $vCode)
                 ->send();

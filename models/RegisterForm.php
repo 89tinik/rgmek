@@ -5,6 +5,7 @@ namespace app\models;
 
 
 use yii\base\Model;
+use yii\helpers\Html;
 
 class RegisterForm extends Model
 {
@@ -101,6 +102,62 @@ class RegisterForm extends Model
             }
 
         }
+    }
+    public function Registrnew($type)
+    {
+        $id_db = base64_encode($this->inn.'-'.$this->contract);
+            $data = [
+                'id' => $id_db,
+                'inn' => $this->inn,
+                'contract' => $this->contract,
+                'method' => $this->method
+            ];
+
+            if ($this->method == 1) {
+                $data['value'] = $this->phone;
+            } else {
+                $data['value'] = $this->email;
+            }
+
+            $validate = User::validateFromDBnew($data);
+
+            if ($validate['Error']) {
+                return ['error' => $validate['Error']];
+            } else {
+                if (!empty($validate['ID'])){
+                    if ($type != 'new') {
+                        $user = User::findOne(['id_db' => $validate['ID']]);
+                    } else {
+                        return ['error' => $validate['message'].' Попробуйте '. Html::a('восстановить пароль',['login/repassword']) . '.'];
+                    }
+                } else {
+                    $user = new User();
+                    $user->id_db = $id_db;
+                    //$user->setIdDb();
+                }
+                $user->username = $this->inn . '-' . $this->contract;
+                $user->email = $this->email;
+                $user->phone = $this->phone;
+                $user->inn = $this->inn;
+                $user->contract = $this->contract;
+                $user->kpp = $this->kpp;
+                $user->setPassword(mb_strtolower($this->password, 'UTF-8'));
+                $user->generateAuthKey();
+
+                if ($user->save()) {
+                    $sendCode = $user->setVerification($this->method);
+                    if ($sendCode === true) {
+                        $uMethod = ($this->method==1) ? 'телефон' : 'e-mail';
+                        return ['uMethod' => $uMethod];
+                    }// else {
+                    //  return $sendCode;
+                    //}
+                } else {
+                    return ['error' => 'Не удалось зарегистрироваться - повторите попытку позже.'];
+                }
+            }
+
+
     }
 
     public function setKPP()

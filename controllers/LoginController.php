@@ -41,7 +41,8 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
-        $registerForm = $this->generateForm(['error' => 'Ошибка регистрации!!!']);
+//        $registerForm = $this->generateForm(['error' => 'Ошибка регистрации!!!']);
+        $registerForm = $this->generateFormNew('new');
 
         return $this->render('registration', compact('registerForm'));
     }
@@ -52,7 +53,8 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
-        $registerForm = $this->generateForm(['error' => 'Ошибка восстановления пароля!!!']);
+        //$registerForm = $this->generateForm(['error' => 'Ошибка восстановления пароля!!!']);
+        $registerForm = $this->generateFormNew('repass');
 
         return $this->render('repassword', compact('registerForm'));
     }
@@ -150,6 +152,29 @@ class LoginController extends Controller
         }
         if (!is_null($registerForm->kpp)) {
             $registerForm->setKPP();
+        }
+
+        return $registerForm;
+    }
+    protected function generateFormNew($type)
+    {
+        $registerForm = new RegisterForm();
+        if ($registerForm->load(Yii::$app->request->post())) {
+
+            if ($registerForm->validate()) {
+                $register = $registerForm->Registrnew($type);
+                if ($register['uMethod']) {
+                    $this->redirect('/verification');
+                } else {
+                    $message = ($type== 'new')?'Ошибка регистрации!!!'. '<br/>' . $register['error']:'Ошибка восстановления пароля!!!'. '<br/>' . $register['error']['Message'];
+                    Yii::$app->session->setFlash('error', $message );
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Ошибка валидации!!!');
+            }
+        }
+        if (is_null($registerForm->method)) {
+            $registerForm->method = 0;
         }
 
         return $registerForm;
