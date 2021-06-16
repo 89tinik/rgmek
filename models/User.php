@@ -164,8 +164,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
                 ->setFrom('noreply@send.rgmek.ru')
-//                ->setTo($this->email)
-                ->setTo('89.tinik@gmail.com')
+                ->setTo($this->email)
                 ->setSubject('Подтверждение почты')
                 ->setTextBody('Код:' . $vCode)
                 ->send();
