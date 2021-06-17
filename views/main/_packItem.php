@@ -13,7 +13,7 @@ use yii\helpers\Html;
         </div>
     </td>
     <td>
-        <?php if ($pack['TotalDebt']) echo '<div class="price">'. $pack['TotalDebt'] .'руб.</div>';?>
+        <?php if ($pack['TotalDebt']) echo '<div class="price">'. $pack['TotalDebt'] .' руб.</div>';?>
     </td>
     <td>
         <!--a href="#" class="btn small border right">Просмотр</a-->

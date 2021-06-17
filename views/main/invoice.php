@@ -18,7 +18,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
 
 <div class="payment-filter white-box">
     <form class="get-order-form">
-        <div class="group small">
+        <div class="group">
             <div class="field">
                 <div class="label">Выбрать документ:</div>
                 <div class="value">

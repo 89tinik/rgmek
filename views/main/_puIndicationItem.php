@@ -11,7 +11,7 @@ use yii\helpers\Html;
     </div>
     <div class="sub-objects-content collapse-content" style="display: none;">
         <div class="info">
-            <div class="label  consumed-wrap" style="display: none">Показания сохранены объем <span><span  class="result-pu"></span> кВтч</span></div>
+            <div class="label  consumed-wrap" style="display: none">Показание сохранено, объем <span><span  class="result-pu"></span> кВтч</span></div>
             <div class="notice">Срок проверки счетчика <?=$pu['VerificationYear']?>г.</div>
             <a href="#" class="btn border">История показаний</a>
         </div>
@@ -50,7 +50,7 @@ use yii\helpers\Html;
                         </div>
                     </div>
                     <div class="group">
-                        <div class="label">Введите показания от <?=date('d.m.Y')?></div>
+                        <div class="label">Введите показание от <?=date('d.m.Y')?></div>
                         <div class="field">
                             <?=$outputCurrent;?>
                         </div>
@@ -61,7 +61,7 @@ use yii\helpers\Html;
                     <div class="mounth-value consumed-wrap" style="display: none">
                         Потреблено за месяц:
                         <div class="value"><strong class="result-pu">120</strong> кВтч</div>
-                        <em>(с учетом коифицентом трансформации без учёта транзитных ПУ и потерь)</em>
+                        <em>(С УЧЕТОМ КОЭФИЦЕНТА ТРАНСФОРМАЦИИ, БЕЗ УЧЁТА ТРАНЗИТНЫХ ПУ И ПОТЕРЬ)</em>
                     </div>
                 </div>
                 <div class="col">

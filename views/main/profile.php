@@ -91,9 +91,9 @@ $this->title = 'Профиль';
 			<?php endif;?>
 			<?php if (!empty($result['Additional'])):?>
             <li class="last">
-                <span class="label">Ответственные лица по стороны Потребителя:</span>
+                <span class="label">Ответственные лица Потребителя:</span>
                 <div class="more-list">
-                    <div class="btn small border">Свернуть список</div>
+                    <div class="btn small border">Посмотреть список</div>
                     <div class="more-list-popup" style="display: none;">
                         <?php
                         //var_dump($result['Additional']['ProfileAdditional']);
@@ -154,7 +154,15 @@ $this->title = 'Профиль';
             <?php if (!empty($result['Specifications']['EDO'])):?>
                 <div class="label active">Статус: <span>Активно</span></div>
                 <div class="bts">
-                    <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_1'],['class'=>'lnk'])?>
+                    <?php
+                    if (!empty($result['Specifications']['EmailAccount1'])) {
+                        Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_1'],['class'=>'lnk']);
+                    } else {
+                        Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_1'],['class'=>'lnk']);
+                    }
+
+                    ?>
+
                 </div>
             <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>

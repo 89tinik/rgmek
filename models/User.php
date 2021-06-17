@@ -101,6 +101,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
 
     }
+
     static public function validateFromDBnew($data)
     {
         $client = new Client();
@@ -125,7 +126,12 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         Yii::$app->session->set('vCode', rand(1000, 9999));
         Yii::$app->session->set('uId', $this->id);
         Yii::$app->session->set('vMethod', $method);
-		return true;
+        if ($method == 1) {
+            Yii::$app->session->set('contact', substr_replace($this->phone, '****', 5, 4));
+        } else {
+            Yii::$app->session->set('contact', substr_replace($this->email, '****', 1, 4));
+        }
+        return true;
     }
 
     public function sendVerification()
@@ -133,7 +139,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         //return true; закоментировать
 
         $vCode = Yii::$app->session->get('vCode');
-        if ( Yii::$app->session->get('vMethod') == 1) {
+        if (Yii::$app->session->get('vMethod') == 1) {
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
@@ -164,9 +170,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
                 ->setFrom('noreply@send.rgmek.ru')
-                ->setTo($this->email)
+                ->setTo('89.tinik@gmail.com')
+                //->setTo($this->email)
                 ->setSubject('Подтверждение почты')
-                ->setTextBody('Код:' . $vCode)
+                ->setHtmlBody('<h2>Добрый день!</h2><p>Вы получили настоящее письмо так как указали этот адрес электронной почты при регистрации в личном кабинете небытовых потребителей компании ООО «РГМЭК».</p><p>Код подтверждения:<b>' . $vCode . '</b>.</p><p>Если Вы не отправляли запрос на регистрацию просто удалите это письмо.</p>')
                 ->send();
             if (!$mail) {
                 return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
@@ -217,7 +224,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $this->delete();
         }
     }
-	public static function showAll()
+
+    public static function showAll()
     {
         $client = new Client();
         $response = $client->createRequest()
@@ -225,11 +233,12 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/accounts')
             ->send();
         if ($response->isOk) {
-           $xml = new XmlParser();
-           return  $xml->parse($response);
+            $xml = new XmlParser();
+            return $xml->parse($response);
         }
-    
-	}
+
+    }
+
     /**
      * {@inheritdoc}
      */

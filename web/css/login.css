@@ -167,6 +167,73 @@ input, textarea, button {
 .register-polit{
 	font-size: 10px;
 }
+.c-form .field {
+	position: relative; }
+.c-form .field input[type="text"].error, .c-form .field input[type="tel"].error, .c-form .field input[type="email"].error, .c-form .field input[type="number"].error, .c-form .field input[type="address"].error {
+	border: 1px solid #FF4949; }
+
+.c-form .label-error {
+	padding: 15px 20px;
+	position: absolute;
+	left: 35px;
+	bottom: 45px;
+	max-width: 210px;
+	font-weight: 300;
+	font-size: 13px;
+	line-height: 20px;
+	color: #FF4949;
+	background: #FFFFFF;
+	border: 1px solid #EFF0F0;
+	box-shadow: 0px 24px 60px rgba(0, 0, 0, 0.06);
+	-webkit-box-shadow: 0px 24px 60px rgba(0, 0, 0, 0.06);
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-khtml-border-radius: 12px; }
+.c-form .label-error:before {
+	margin-left: -10px;
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: -20px;
+	border: 10px solid transparent;
+	border-top: 10px solid #fff; }
+.c-form .label-error .close {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	width: 12px;
+	height: 12px;
+	background: url(../images/small_close.svg) no-repeat;
+	background-size: contain;
+	cursor: pointer; }
+
+.c-form .label-info {
+	position: absolute;
+	top: 18px;
+	right: 15px;
+	width: 26px;
+	height: 26px;
+	background: url(../images/info_ic.svg) no-repeat;
+	background-size: contain;
+	cursor: pointer; }
+.c-form .eye {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background: url("../images/i-eye.png") no-repeat center center;
+	background-size: contain;
+	right: 15px;
+	top: 22px;
+}
+.c-form .eye.left {
+	right: 50px;
+}
+.c-form .eye.active {
+	background: url("../images/i-eye-c.png") no-repeat center center;
+	background-size: contain;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {
@@ -213,6 +280,7 @@ input, textarea, button {
 	.login-header .group a{
 		font-size: 15px;
 	}
+
 	/*ENDtin*/
 }
 

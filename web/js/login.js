@@ -15,7 +15,29 @@ $(function () {
      Form Styler
      **/
     styler_func();
+    /**
+     Label info
+     **/
+    $('.c-form').on('click', '.label-info', function(){
+        $(this).parent().find('.label-error').fadeIn();
+
+        return false;
+    });
+    $('.label-error').on('click', '.close', function(){
+        $(this).closest('.label-error').fadeOut();
+
+        return false;
+    });
     /*tin*/
+    $('.eye').on('click', function(){
+        var field = $(this).siblings('input');
+        if($(this).hasClass('active')) {
+            field.attr('type', 'password');
+        } else {
+            field.attr('type', 'text');
+        }
+        $(this).toggleClass('active');
+    });
     $('a.resend').on('click', function () {
         if (!$(this).hasClass('disable')) {
             $(this).addClass('disable').attr('title', 'прошло менее минуты, с момента запроса');

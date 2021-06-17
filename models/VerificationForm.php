@@ -32,7 +32,7 @@ class VerificationForm extends Model
     {
         if (!$this->hasErrors()) {
             if ($this->code != Yii::$app->session->get('vCode')) {
-                $this->addError($attribute, 'Не верно введён код');
+                $this->addError($attribute, 'Неверно введён код');
             }
         }
     }

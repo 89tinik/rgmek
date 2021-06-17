@@ -19,21 +19,21 @@ $this->title = 'Подтверждение контактных данных';
 						</div>",
             ]
         ]); ?>
-        <div class="title">Проверочный код</div>
+        <div class="title"><?= Yii::$app->session->getFlash('title') ?></div>
         <div class="message">
-        <?php
-        if (Yii::$app->session->hasFlash('success')) {
-			echo Yii::$app->session->getFlash('success');
-        }
-        if (Yii::$app->session->hasFlash('error')) {
-            echo Yii::$app->session->getFlash('error');
-        }
-        ?>
+            <?php
+            if (Yii::$app->session->hasFlash('message')) {
+                echo Yii::$app->session->getFlash('message');
+            }
+            if (Yii::$app->session->hasFlash('error')) {
+                echo '<br/>' . Yii::$app->session->getFlash('error');
+            }
+            ?>
         </div>
 
         <?= $form->field($verificationForm, 'code')->textInput(['placeholder' => 'Код', 'autofocus' => true]) ?>
         <?= Html::submitButton('Проверить') ?>
-        <p>Если код не пришел в течении 1 минуты - повторно <a href="#" class="resend">отправьте запрос</a>.</p>
+        <p>Если код не пришел в течение 1 минуты - повторно <a href="#" class="resend">отправьте запрос</a>.</p>
         <div class="wrong-link">
             <?= Html::a('Зарегистрироваться', ['login/registration']) ?>
             <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>

@@ -30,6 +30,9 @@ $this->title = 'Авторизация';
         if (Yii::$app->session->hasFlash('error')) {
             echo Yii::$app->session->getFlash('error');
         }
+        if (Yii::$app->session->hasFlash('login')) {
+            $loginForm->username = Yii::$app->session->getFlash('login');
+        }
         ?>
 
         <?= $form->field($loginForm, 'username')->textInput(['placeholder' => 'Логин', 'autofocus' => true]) ?>
