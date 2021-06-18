@@ -190,7 +190,7 @@ a.lnk, .lnk {
 /*Wrapper*/
 .bg {
   position: relative;
- /* overflow: hidden; не работает прокрутка*/ }
+  overflow-x: hidden; /*не работает прокрутка*/ }
 
 .wrapper {
   padding-top: 80px;
@@ -1946,7 +1946,7 @@ a.lnk, .lnk {
       position: relative;
       display: block;
       clear: both; }
-    .testimony-box .group .field input {
+    /*.testimony-box .group .field input {
       margin-right: 10px;
       padding: 0;
       float: left;
@@ -1963,7 +1963,7 @@ a.lnk, .lnk {
       -webkit-border-radius: 0;
       -khtml-border-radius: 0; }
       .testimony-box .group .field input:last-child {
-        margin-right: 0; }
+        margin-right: 0; }*/
 
 .testimony-box .ratio-value {
   margin-bottom: 40px;
@@ -2662,6 +2662,49 @@ textarea {
   color: red;
   position: absolute;
   width: 100%;
+}
+input[type="text"].indication{
+  background-color: #fff;
+  vertical-align: top;
+  outline: none;
+  padding: 0;
+  height: 40px;
+  line-height: 40px;
+  font-variant-numeric: tabular-nums;
+  text-indent: 5px;
+  box-sizing: border-box;
+  font-size: 40px;
+  color: #494E52;
+  border: none;
+  letter-spacing: 20px;
+  background: url(../images/border-6.jpg) repeat-x;
+  background-position: left bottom;
+  font-family: 'PT Mono', monospace;
+  padding-bottom: 10px;
+  border-radius: 0;
+}
+input[type="text"].indication.co-4{
+  width:176px;
+}
+input[type="text"].indication.co-5{
+  width:220px;
+}
+input[type="text"].indication.co-6{
+  width:264px;
+}
+input[type="text"].indication.co-7{
+  width: 266px;
+  letter-spacing: 15px;
+  font-size: 38px;
+  background: url(../images/border-7.jpg) repeat-x left bottom;
+  text-indent: 1px;
+}
+input[type="text"].indication.co-8{
+  width:264px;
+  letter-spacing: 15px;
+  font-size: 30px;
+  background: url(../images/border-8.jpg) repeat-x left bottom;
+  text-indent: 4px;
 }
 /*ENDtin*/
 

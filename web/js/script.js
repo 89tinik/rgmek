@@ -91,16 +91,21 @@ $(function() {
 		blockPU.attr('data-result', '0');
 		errorBlock.hide();
 		wrapResultBlock.hide();
-		var old = '';
-		var curr = '';
-		blockPU.find('.old-num').each(function () {
-			old += $(this).val();
-		});
-		blockPU.find('.curr-num').each(function () {
-			curr += $(this).val();
-		});
-		old = parseInt(old);
-		curr = parseInt(curr);
+
+		// var old = '';
+		// var curr = '';
+		// blockPU.find('.old-num').each(function () {
+		// 	old += $(this).val();
+		// });
+		// blockPU.find('.curr-num').each(function () {
+		// 	curr += $(this).val();
+		// // });
+		// old = parseInt(old);
+		// curr = parseInt(curr);
+
+		var old =  parseInt(blockPU.find('.old-val').val());
+		var curr =  parseInt(blockPU.find('.curr-val').val());
+
 
 		if(old > curr){
 			errorBlock.text('Введённое показание меньше предыдущего!');

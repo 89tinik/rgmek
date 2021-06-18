@@ -19,40 +19,52 @@ use yii\helpers\Html;
             <div class="cols">
                 <div class="col">
                     <?php
+//                    if(!empty($pu['Indications'])){
+//                        $indicationArr = explode(',', $pu['Indications']);
+//                        $outputOld = '';
+//                        $outputCurrent = '';
+//
+//                        for ($i=0;$i<$pu['Discharge']-strlen($indicationArr[0]);$i++){
+//                            $outputOld .= '<input type="text" class="inputs old-num" value="0" maxlength="1" />';
+//                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"  inputmode="numeric"/>';
+//                        }
+//
+//                        foreach(str_split($indicationArr[0]) as $n){
+//                            $outputOld .= '<input type="text" class="inputs old-num" value="'.$n.'" maxlength="1"  />';
+//                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"   inputmode="numeric"/>';
+//                        }
+//
+//                    } else {
+//                        for ($i=0;$i<$pu['Discharge'];$i++){
+//                            $outputOld .= '<input type="text" class="inputs old-num" value="0" maxlength="1" />';
+//                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"   inputmode="numeric"/>';
+//                        }
+//                    }
+//                    ?>
+                    <?php
                     if(!empty($pu['Indications'])){
                         $indicationArr = explode(',', $pu['Indications']);
-                        $outputOld = '';
-                        $outputCurrent = '';
-
-                        for ($i=0;$i<$pu['Discharge']-strlen($indicationArr[0]);$i++){
-                            $outputOld .= '<input type="text" class="inputs old-num" value="0" maxlength="1" />';
-                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"  inputmode="numeric"/>';
+                        $oldValue = '';
+                        for ($i=0;$i<$pu['Discharge']-strlen($indicationArr[0]);$i++) {
+                            $outputOld .= '0';
                         }
-
-                        foreach(str_split($indicationArr[0]) as $n){
-                            $outputOld .= '<input type="text" class="inputs old-num" value="'.$n.'" maxlength="1"  />';
-                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"   inputmode="numeric"/>';
-                        }
-
-                    } else {
-                        for ($i=0;$i<$pu['Discharge'];$i++){
-                            $outputOld .= '<input type="text" class="inputs old-num" value="0" maxlength="1" />';
-                            $outputCurrent .= '<input type="text" class="inputs curr-num" maxlength="1"   inputmode="numeric"/>';
-                        }
+                        $outputOld .= $indicationArr[0];
                     }
                     ?>
+
+
                     <div class="group disable">
                         <?php if(!empty($pu['DateInd'])):?>
                         <div class="label">Начальное показание от <?=$pu['DateInd']?> </div>
                         <?php endif;?>
                         <div class="field">
-                            <?=$outputOld;?>
+                            <input type="text" maxlength="<?=$pu['Discharge']?>" value="<?=$outputOld?>" class="old-val indication co-<?=$pu['Discharge']?>">
                         </div>
                     </div>
                     <div class="group">
                         <div class="label">Введите показание от <?=date('d.m.Y')?></div>
                         <div class="field">
-                            <?=$outputCurrent;?>
+                            <input type="text" maxlength="<?=$pu['Discharge']?>" value="" class="curr-val indication co-<?=$pu['Discharge']?>">
                         </div>
                     </div>
                 </div>

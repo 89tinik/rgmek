@@ -152,6 +152,7 @@ IeAssets::register($this);
             <div class="close"></div>
         </div>
         <div class="price-category-popup custom-popup">
+            <ul>
             <li>Первая ценовая категория - для объемов покупки электрической энергии (мощности), учет которых
                 осуществляется в целом за расчетный период;
             </li>

@@ -12,6 +12,7 @@ class DefaultAssets extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         '//fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap',
+        '//fonts.googleapis.com/css2?family=PT+Mono&display=swap',
        'css/fancybox.css',
 	'css/animate.css',
 	'css/form-styler.css',
