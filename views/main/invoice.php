@@ -3,7 +3,8 @@
 /* @var $this yii\web\View */
 
 /* @var $result */
-/* @var $resultApp */
+/* @var $withDate */
+/* @var $byDate */
 
 use yii\helpers\Html;
 
@@ -38,14 +39,14 @@ $this->title = 'Счета |  ЛК РГМЭК';
             <div class="field">
                 <div class="value">
                     <span>с</span>
-                    <input type="text" value="<?= \Yii::$app->request->get('dateFrom'); ?>" id="from_dialog"
+                    <input type="text" value="<?= $withDate ?>" id="from_dialog"
                            required="required"  autocomplete="off"/>
                 </div>
             </div>
             <div class="field">
                 <div class="value">
                     <span>По</span>
-                    <input type="text" value="<?= \Yii::$app->request->get('dateBy'); ?>" id="to_dialog"
+                    <input type="text" value="<?= $byDate ?>" id="to_dialog"
                            required="required"  autocomplete="off"/>
                 </div>
             </div>
@@ -110,16 +111,16 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'print' => 'true',
                                     'action' => 'download_report_detal',
                                     'uid' => \Yii::$app->request->get('uid'),
-                                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                    'withdate' => $withDate,
+                                    'bydate' => $byDate
                                 ], ['class' => 'btn small right print']) ?>
                                 <?= Html::a('Скачать', [
                                     'main/access-file',
                                     'print' => 'false',
                                     'action' => 'download_report_detal',
                                     'uid' => \Yii::$app->request->get('uid'),
-                                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                    'withdate' => $withDate,
+                                    'bydate' => $byDate
                                 ], ['class' => 'btn small right download']) ?>
                             </div>
                         </td>
@@ -140,16 +141,16 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'print' => 'true',
                                     'action' => 'download_counting',
                                     'uid' => \Yii::$app->request->get('uid'),
-                                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                    'withdate' => $withDate,
+                                    'bydate' => $byDate
                                 ], ['class' => 'btn small right print']) ?>
                                 <?= Html::a('Скачать', [
                                     'main/access-file',
                                     'print' => 'false',
                                     'action' => 'download_counting',
                                     'uid' => \Yii::$app->request->get('uid'),
-                                    'withdate' => \Yii::$app->request->get('dateFrom'),
-                                    'bydate' => \Yii::$app->request->get('dateBy')
+                                    'withdate' => $withDate,
+                                    'bydate' => $byDate
                                 ], ['class' => 'btn small right download']) ?>
                             </div>
                         </td>
@@ -180,7 +181,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
 
         <div class="payment-info border-box detail-report-wrap report-item" style="display: none">
             <div class="title">Детализация счета по договору<br/><span class="name-sidebar"></span><br/>за
-                период <?= \Yii::$app->request->get('dateFrom'); ?>-<?= \Yii::$app->request->get('dateBy'); ?></div>
+                период <?= $withDate ?>-<?= $byDate ?></div>
             <div class="bts">
                 <!--a href="#" class="btn small border">Просмотр</a-->
                 <?= Html::a('Печать', [
@@ -201,7 +202,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
 
         <div class="payment-info border-box odn-report-wrap report-item" style="display: none">
             <div class="title">Отчёт по расчёту ОДН <br/> за период за период
-                <?= \Yii::$app->request->get('dateFrom'); ?>-<?= \Yii::$app->request->get('dateBy'); ?></div>
+                <?= $withDate ?>-<?= $byDate ?></div>
             <div class="bts">
                 <!--a href="#" class="btn small border">Просмотр</a-->
                 <?= Html::a('Печать', [

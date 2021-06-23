@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\Contract;
 use app\models\User;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
@@ -210,5 +211,41 @@ class AjaxController extends Controller
                 return \Yii::$app->response->sendContentAsFile($writer->writeToString(), $filename);
             }
         }
+    }
+
+    public function actionUpdateContracts()
+    {
+
+        $users = User::find()->all();
+        foreach ($users as $user) {
+            $contracts = new Client();
+            $response = $contracts->createRequest()
+                ->setMethod('GET')
+                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
+                ->setData([
+                    'id' => $user->id_db
+                ])
+                ->send();
+            if ($response->isOk) {
+                $xml = new XmlParser();
+                $result = $xml->parse($response);
+                if ($result['Contract']) {
+                    Contract::updateAllContract($user, $result['Contract']);
+                    $user->with_date = $result['Withdate'];
+                    $user->by_date = $result['Bydate'];
+                    $user->full_name = $result['Name'];
+                    $user->save();
+                } else {
+                    Contract::removeAllUserContract($user->id);
+                }
+            } else {
+                Yii::error('Не удалось связаться БД - повторите попытку позже.');
+            }
+
+
+        }
+    }
+    public function actionClose(){
+        return 'Сайт обновляется!';
     }
 }

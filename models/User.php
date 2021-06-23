@@ -239,6 +239,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     }
 
+    public function getContracts(){
+        $this->hasMany(Contract::class, ['user_id'=>'id']);
+    }
+
     /**
      * {@inheritdoc}
      */

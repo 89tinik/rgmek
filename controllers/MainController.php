@@ -4,7 +4,9 @@
 namespace app\controllers;
 
 
+use app\models\Contract;
 use app\models\InstallESForm;
+use app\models\User;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use yii\web\Controller;
@@ -17,6 +19,12 @@ class MainController extends Controller
 {
 
     public $layout = 'default';
+    public $userName = '';
+    public $withDate = '';
+    public $byDate = '';
+    public $listContract = '';
+    public $currentContract = '';
+
     public function behaviors()
     {
         return [
@@ -32,13 +40,30 @@ class MainController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+
+        $this->userName = \Yii::$app->user->identity->full_name;
+        $curentContract = Contract::find()->where(['uid'=> \Yii::$app->request->get('uid')])->one();
+        $this->currentContract =$curentContract->full_name;
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
+        $this->withDate = \Yii::$app->user->identity->with_date;
+        $this->byDate = \Yii::$app->user->identity->by_date;
+
         $data = ['id' => \Yii::$app->user->identity->id_db];
         //$data = ['id' => 'NjIyODAwMDM1MS02Mg=='];
         $profileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
         if (isset($profileInfo['success'])){
-            return $this->render('index', ['result'=>$profileInfo['success']]);
+            return $this->render('index', [
+                'result'=>$profileInfo['success'],
+                'withDate'=>\Yii::$app->user->identity->with_date,
+                'byDate'=>\Yii::$app->user->identity->by_date
+            ]);
         } else {
             return $profileInfo['error'];
         }
@@ -59,6 +84,9 @@ class MainController extends Controller
 
     public function actionEdo()
     {
+
+        $this->listContract = Contract::getListContracts(\Yii::$app->user->identity->id);
+
         $installESForm = new InstallESForm();
 
         $buttonText = 'Подписаться';
@@ -191,7 +219,9 @@ class MainController extends Controller
     public function actionPayment()
     {
 
-        return $this->render('payment');
+        return $this->render('payment',[
+            'withDate'=>\Yii::$app->user->identity->with_date,
+            'byDate'=>\Yii::$app->user->identity->by_date]);
     }
 
     public function actionIndication()
@@ -199,7 +229,9 @@ class MainController extends Controller
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $indicationData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list_ind', $data);
         if (isset($indicationData['success'])){
-            return $this->render('indication', ['result'=>$indicationData['success']]);
+            return $this->render('indication', [
+                'result'=>$indicationData['success']
+            ]);
         } else {
             return $indicationData['error'];
         }
@@ -211,7 +243,11 @@ class MainController extends Controller
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $invoiceData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/package_documents', $data);
         if (isset($invoiceData['success'])){
-            return $this->render('invoice', ['result'=>$invoiceData['success']]);
+            return $this->render('invoice', [
+                'result'=>$invoiceData['success'],
+                'withDate'=>\Yii::$app->user->identity->with_date,
+                'byDate'=>\Yii::$app->user->identity->by_date
+            ]);
         } else {
             return $invoiceData['error'];
         }

@@ -7,8 +7,12 @@
 
 namespace app\commands;
 
+use app\models\Contract;
+use app\models\User;
 use yii\console\Controller;
 use yii\console\ExitCode;
+use yii\httpclient\Client;
+use yii\httpclient\XmlParser;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -28,7 +32,40 @@ class HelloController extends Controller
     public function actionIndex($message = 'hello world')
     {
         echo $message . "\n";
+        return ExitCode::OK;
+    }
+    public function actionUpdate($message = 'hello world')
+    {
+        echo time() . "\n";
+        $users = User::find()->all();
+        foreach ($users as $user) {
+            $contracts = new Client();
+            $response = $contracts->createRequest()
+                ->setMethod('GET')
+                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
+                ->setData([
+                    'id' => $user->id_db
+                ])
+                ->send();
+            if ($response->isOk) {
+                $xml = new XmlParser();
+                $result = $xml->parse($response);
+                if ($result['Contract']) {
+                    Contract::updateAllContract($user, $result['Contract']);
+                    $user->with_date = $result['Withdate'];
+                    $user->by_date = $result['Bydate'];
+                    $user->full_name = $result['Name'];
+                    $user->save();
+                } else {
+                    Contract::removeAllUserContract($user->id);
+                }
+            } else {
+                Yii::error('Не удалось связаться БД - повторите попытку позже.');
+            }
 
+
+        }
+        echo time() . "\n";
         return ExitCode::OK;
     }
 }

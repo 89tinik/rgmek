@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 /* @var $result */
+/* @var $withDate */
+/* @var $byDate */
 
 use yii\helpers\Html;
 
@@ -11,7 +13,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
 <div class="page-heading">
     <div class="breadcrumbs">
         <strong>Начисления и платежи</strong><span class="sep"></span>
-        <span>Договор <span class="name-sidebar"></span></span>
+        <span>Договор <?= $this->context->currentContract; ?></span>
     </div>
 </div>
 
@@ -37,13 +39,13 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
         <div class="field">
             <div class="value">
                 <span>с</span>
-                <input type="text" value="<?=\Yii::$app->request->get('dateFrom');?>" id="from_dialog" required="required" autocomplete="off"/>
+                <input type="text" value="<?=$withDate?>" id="from_dialog" required="required" autocomplete="off"/>
             </div>
         </div>
         <div class="field">
             <div class="value">
                 <span>По</span>
-                <input type="text" value="<?=\Yii::$app->request->get('dateBy');?>" id="to_dialog" required="required" autocomplete="off"/>
+                <input type="text" value="<?=$byDate?>" id="to_dialog" required="required" autocomplete="off"/>
             </div>
         </div>
         <input type="submit" class="btn submit-btn get-report" value="Сформировать" />

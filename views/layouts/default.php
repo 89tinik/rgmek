@@ -33,9 +33,6 @@ IeAssets::register($this);
 
     <body>
     <?php $this->beginBody() ?>
-    <?php
-    $sidebar = explode('||--||', \app\components\Summary::widget());
-    ?>
     <div class="bg">
 
         <!-- Preloader -->
@@ -58,7 +55,7 @@ IeAssets::register($this);
                     </a>
                 </div>
 
-                <div class="h-label"><?= Yii::$app->session->get('fullUserName') ?></div>
+                <div class="h-label"><?\Yii::$app->controller->userName?></div>
 
                 <!-- menu -->
                 <div class="top-menu">
@@ -80,7 +77,7 @@ IeAssets::register($this);
                 <!-- login -->
                 <div class="h-login">
 
-                    <?= Html::a(Yii::$app->session->get('fullUserName'), ['login/logout'], ['class' => 'h-login-btn']) ?>
+                    <?= Html::a(\Yii::$app->controller->userName, ['login/logout'], ['class' => 'h-login-btn']) ?>
                     <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']) ?>
                 </div>
 
@@ -101,7 +98,7 @@ IeAssets::register($this);
                         <a href="<?= \yii\helpers\Url::base(true); ?>">Сводка</a>
 
                     </li>
-                    <?= $sidebar[0] ?>
+                    <?= \app\components\Summary::widget() ?>
 
                 </ul>
             </div>
@@ -130,9 +127,8 @@ IeAssets::register($this);
         </div>
         <div class="contracts-edo-popup custom-popup">
             <h2>Выберите договор</h2>
-            <ul>
-                <?= $sidebar[1] ?>
-            </ul>
+
+                <?=\Yii::$app->controller->listContract?>
             <div class="close"></div>
         </div>
         <div class="loading-report-popup custom-popup">

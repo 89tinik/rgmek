@@ -13,6 +13,7 @@ $config = [
     ],
     'language' => 'ru',
     'layout' => 'default',
+    'catchAll' => ['ajax/close'],
 //    'defaultRoute' => 'main',
     'components' => [
         'request' => [
