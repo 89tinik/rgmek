@@ -47,6 +47,7 @@ class HelloController extends Controller
                     'id' => $user->id_db
                 ])
                 ->send();
+            echo time() . "\n";
             if ($response->isOk) {
                 $xml = new XmlParser();
                 $result = $xml->parse($response);
@@ -60,7 +61,8 @@ class HelloController extends Controller
                     Contract::removeAllUserContract($user->id);
                 }
             } else {
-                Yii::error('Не удалось связаться БД - повторите попытку позже.');
+                \Yii::error('Не удалось связаться БД - повторите попытку позже.uid-'.$user->id_db.'\n');
+                echo 'Не удалось связаться БД - повторите попытку позже.uid-'.$user->id_db;
             }
 
 

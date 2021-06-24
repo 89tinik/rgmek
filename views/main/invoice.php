@@ -13,7 +13,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
 <div class="page-heading">
     <div class="breadcrumbs">
         <strong>Счета</strong><span class="sep"></span>
-        <span>Договор <span class="name-sidebar"></span></span>
+        <span>Договор <?= $result['Contract']['FullName'] ?></span>
     </div>
 </div>
 
@@ -98,7 +98,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                     <tr>
                         <td>
                             <div class="checkbox-item">
-                                <strong>Детализация счета по договору<br/><span class="name-sidebar"></span></strong>
+                                <strong>Детализация счета по договору<br/><?= $result['Contract']['FullName'] ?></strong>
                             </div>
                         </td>
                         <td>
@@ -180,7 +180,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
         </div>
 
         <div class="payment-info border-box detail-report-wrap report-item" style="display: none">
-            <div class="title">Детализация счета по договору<br/><span class="name-sidebar"></span><br/>за
+            <div class="title">Детализация счета по договору<br/><?= $result['Contract']['FullName'] ?><br/>за
                 период <?= $withDate ?>-<?= $byDate ?></div>
             <div class="bts">
                 <!--a href="#" class="btn small border">Просмотр</a-->

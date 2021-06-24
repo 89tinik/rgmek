@@ -144,7 +144,12 @@ class LoginController extends Controller
                 if ($register['uMethod']) {
                     $this->redirect('/verification');
                 } else {
-                    $message = ($type == 'new') ? 'Ошибка регистрации!!!' . '<br/>' . $register['error'] : 'Ошибка восстановления пароля!!!' . '<br/>' . $register['error']['Message'];
+                    if (is_array($register['error'])){
+                        $message = $register['error']['Message'];
+                    } else {
+                        $message = $register['error'];
+                    }
+                    $message = ($type == 'new') ? 'Ошибка регистрации!!!' . '<br/>' . $message : 'Ошибка восстановления пароля!!!' . '<br/>' . $message;
                     Yii::$app->session->setFlash('error', $message);
                 }
             } else {

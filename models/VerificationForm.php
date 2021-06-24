@@ -20,6 +20,7 @@ class VerificationForm extends Model
     {
         return [
             ['code', 'validateCode'],
+            ['code', 'required'],
         ];
     }
 

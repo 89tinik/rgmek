@@ -170,8 +170,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем почту
             $mail = Yii::$app->mailer->compose()
                 ->setFrom('noreply@send.rgmek.ru')
-                ->setTo('89.tinik@gmail.com')
-                //->setTo($this->email)
+                ->setTo($this->email)
                 ->setSubject('Подтверждение почты')
                 ->setHtmlBody('<h2>Добрый день!</h2><p>Вы получили настоящее письмо так как указали этот адрес электронной почты при регистрации в личном кабинете небытовых потребителей компании ООО «РГМЭК».</p><p>Код подтверждения:<b>' . $vCode . '</b>.</p><p>Если Вы не отправляли запрос на регистрацию просто удалите это письмо.</p>')
                 ->send();
