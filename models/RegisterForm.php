@@ -128,7 +128,7 @@ class RegisterForm extends Model
                     if ($type != 'new') {
                         $user = User::findOne(['id_db' => $validate['ID']]);
                     } else {
-                        return ['error' => $validate['message'].' Попробуйте '. Html::a('восстановить пароль',['login/repassword']) . '.'];
+                        return ['error' => 'Пользователь зарегистрирован. Попробуйте '. Html::a('восстановить пароль',['login/repassword']) . '.'];
                     }
                 } else {
                     $user = new User();

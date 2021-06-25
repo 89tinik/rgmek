@@ -72,7 +72,32 @@ class LoginForm extends Model
 //                ->setData(['id'=>$user->id_db])
 //                ->send();
 
-            return Yii::$app->user->login($user, 0);
+
+            $contracts = new Client();
+            $response = $contracts->createRequest()
+                ->setMethod('GET')
+                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
+                ->setData([
+                    'id' => $user->id_db
+                ])
+                ->send();
+            if ($response->isOk) {
+                $xml = new XmlParser();
+                $result = $xml->parse($response);
+                if ($result['Contract']) {
+                    Contract::updateAllContract($user, $result['Contract']);
+                    $user->with_date = $result['Withdate'];
+                    $user->by_date = $result['Bydate'];
+                    $user->full_name = $result['Name'];
+                    $user->save();
+                } else {
+                    Contract::removeAllUserContract($user->id);
+                }
+            } else {
+                Yii::error('Не удалось связаться БД - повторите попытку позже.');
+            }
+
+            return Yii::$app->user->login($user, 36);
         }
         return false;
     }

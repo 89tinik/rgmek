@@ -23,7 +23,8 @@ class AjaxController extends Controller
         $user = User::findOne(['id' => Yii::$app->session->get('uId')]);
         $outputArr = [];
         if ($user) {
-            if ($send = $user->sendVerification() === true) {
+            $send = $user->sendVerification();
+            if ($send === true) {
                 $uMethod = (Yii::$app->session->get('vMethod') == 1) ? 'телефон' : 'e-mail';
                 $outputArr['success'] = 'Проверьте Ваш ' . $uMethod . '.';
             } else {
@@ -213,38 +214,6 @@ class AjaxController extends Controller
         }
     }
 
-    public function actionUpdateContracts()
-    {
-
-        $users = User::find()->all();
-        foreach ($users as $user) {
-            $contracts = new Client();
-            $response = $contracts->createRequest()
-                ->setMethod('GET')
-                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
-                ->setData([
-                    'id' => $user->id_db
-                ])
-                ->send();
-            if ($response->isOk) {
-                $xml = new XmlParser();
-                $result = $xml->parse($response);
-                if ($result['Contract']) {
-                    Contract::updateAllContract($user, $result['Contract']);
-                    $user->with_date = $result['Withdate'];
-                    $user->by_date = $result['Bydate'];
-                    $user->full_name = $result['Name'];
-                    $user->save();
-                } else {
-                    Contract::removeAllUserContract($user->id);
-                }
-            } else {
-                Yii::error('Не удалось связаться БД - повторите попытку позже.');
-            }
-
-
-        }
-    }
     public function actionClose(){
         return 'Сайт обновляется!';
     }

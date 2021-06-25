@@ -97,7 +97,8 @@ class LoginController extends Controller
         } else {
             $user = User::findOne(['id' => Yii::$app->session->get('uId')]);
             if ($user) {
-                if ($send = $user->sendVerification() === true) {
+                $send = $user->sendVerification();
+                if ($send  === true) {
                     if (Yii::$app->session->get('vMethod') == 1) {
                         Yii::$app->session->setFlash('title', 'Введите код из SMS');
                         Yii::$app->session->setFlash('message', 'Код отправлен на номер ' . Yii::$app->session->get('contact') . '<br/>Его нужно использовать в течение 10 минут');
