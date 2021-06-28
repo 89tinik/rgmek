@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\Contract;
 use app\models\FeedbackForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -14,6 +15,9 @@ class InnerController extends Controller
 {
 
     public $layout = 'default';
+    public $userName = '';
+    public $listContract = '';
+
     public function behaviors()
     {
         return [
@@ -29,7 +33,16 @@ class InnerController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+
+        $this->userName = \Yii::$app->user->identity->full_name;
+
+        return parent::beforeAction($action);
+    }
+
     public function actionFos (){
+       // $this->listContract = Contract::getListContracts(\Yii::$app->user->identity->id);
         $model = new FeedbackForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()){
