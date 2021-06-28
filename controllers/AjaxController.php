@@ -185,7 +185,7 @@ class AjaxController extends Controller
 (число, месяц, год)');
                 $sheet_name = 'Sheet1';
                 $writer = new XLSXWriter();
-                $writer->writeSheetHeader($sheet_name, $header, $col_options = ['widths' => [6, 10, 31, 31, 10, 20, 17, 17, 17], 'suppress_row' => true]);
+                $writer->writeSheetHeader($sheet_name, $header, $col_options = ['widths' => [5, 8, 25, 25, 9, 18, 16, 16, 17], 'suppress_row' => true]);
                 $writer->writeSheetRow($sheet_name, $row1);
                 $writer->writeSheetRow($sheet_name, $row2, ['height' => 22, 'font-style' => 'bold', 'font-size' => 12, 'halign' => 'center']);
                 $writer->writeSheetRow($sheet_name, $row3, ['height' => 22, 'font-style' => 'bold', 'font-size' => 12, 'halign' => 'center']);

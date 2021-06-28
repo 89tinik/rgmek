@@ -842,8 +842,8 @@ a.lnk, .lnk {
               background: none; }
 
 @media screen and (min-width: 1200px) {
- /* .sidebar-menu .sidebar-menu-fw ul li:hover > a {
-    background: #4475F2; } косячит левое меню при наведении на ПК*/
+  .sidebar-menu .sidebar-menu-fw > ul > li:hover > a {
+    background: #4475F2; } /*косячит левое меню при наведении на ПК*/
     .sidebar-menu .sidebar-menu-fw ul li:hover > a span {
       color: #FFF; }
   .sidebar-menu .sidebar-menu-fw ul li:hover ul {
@@ -1920,7 +1920,7 @@ a.lnk, .lnk {
     display: block;
     clear: both; }
   .testimony-box .cols .col {
-    padding: 0 25px;
+    padding: 0 10px;
     display: inline-block;
     vertical-align: top;
     width: 35%;
@@ -2626,7 +2626,7 @@ a.lnk, .lnk {
 }
 .testimony-box .wrap-error{
   width:100%;
-  min-height: 110px;
+  /*min-height: 110px;*/
 }
 .ui-datepicker-calendar {
   display: none;
@@ -2683,28 +2683,58 @@ input[type="text"].indication{
   padding-bottom: 10px;
   border-radius: 0;
 }
-input[type="text"].indication.co-4{
+.testimony-box .group .field::after{
+  content: ',0';
+  vertical-align: top;
+  outline: none;
+  padding: 0;
+  height: 40px;
+  line-height: 28px;
+  font-variant-numeric: tabular-nums;
+  text-indent: 5px;
+  box-sizing: border-box;
+  font-size: 40px;
+  color: #494E52;
+  letter-spacing: 0;
+  display: inline-block;
+  margin-left: -19px;
+
+}
+.co-4 input[type="text"].indication{
   width:176px;
 }
-input[type="text"].indication.co-5{
+.co-5 input[type="text"].indication{
   width:220px;
 }
-input[type="text"].indication.co-6{
+.co-6 input[type="text"].indication{
   width:264px;
 }
-input[type="text"].indication.co-7{
+.co-7 input[type="text"].indication{
   width: 266px;
   letter-spacing: 15px;
   font-size: 38px;
   background: url(../images/border-7.jpg) repeat-x left bottom;
   text-indent: 1px;
 }
-input[type="text"].indication.co-8{
+.testimony-box .group .co-7.field::after{
+  font-size: 38px;}
+.co-8 input[type="text"].indication{
   width:264px;
   letter-spacing: 15px;
   font-size: 30px;
   background: url(../images/border-8.jpg) repeat-x left bottom;
   text-indent: 4px;
+}
+.testimony-box .group .co-8.field::after{
+  font-size: 30px;}
+.testimony-box .cols .col:first-child{
+  width:40%;
+}
+.testimony-box .cols .col:last-child{
+  width:25%;
+}
+.sidebar-menu .sidebar-menu-fw ul li a.active {
+  background: #4475F2;
 }
 /*ENDtin*/
 
@@ -3419,10 +3449,11 @@ input[type="text"].indication.co-8{
     display: block;
     top: auto;
     bottom: 20px;
-    left: 20px;
-    right: 20px;
+    left: 5px;
+    right: 5px;
     height: 44px;
-    line-height: 42px; }
+    line-height: 42px;
+  z-index: 1;}
   .testimony-box {
     padding: 20px 0;
     padding-bottom: 60px;
@@ -3433,19 +3464,19 @@ input[type="text"].indication.co-8{
   .testimony-box .cols .col {
     width: 100%;
     font-size: 12px; }
-  .testimony-box .cols .col:last-child {
+  .testimony-box .cols .col:last-child, .testimony-box .cols .col:first-child {
     width: 100%; }
   .testimony-box .group {
     margin-bottom: 20px; }
   .testimony-box .group .label {
     font-size: 12px;
     color: #959CA3; }
-  .testimony-box .group .field input {
+  /*.testimony-box .group .field input {
     margin-right: 8px;
     padding: 0;
     width: 36px;
     height: 42px;
-    font-size: 32px; }
+    font-size: 32px; }*/
   .testimony-box .ratio-value {
     margin-bottom: 20px;
     margin-top: 20px;
@@ -3525,6 +3556,10 @@ input[type="text"].indication.co-8{
 /*tin*/
   .bg{
     height: 100vh;/*не отображается выход в бургере при малом контенте*/
+  }
+  .sub-objects-summary .bts .btn{
+    padding: 0 10px;
+    font-size: 14px;
   }
 /*ENDtin*/
 }

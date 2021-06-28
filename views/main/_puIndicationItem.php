@@ -1,15 +1,16 @@
 <?php
 
 /* @var $pu */
+/* @var $onePU */
 
 use yii\helpers\Html;
 ?>
-<div class="sub-objects-item collapse-item no-result wrap-pu" data-id="<?=$pu['UIDTU']?>">
+<div class="sub-objects-item collapse-item no-result wrap-pu <?=($onePU)?'active':''?>" data-id="<?=$pu['UIDTU']?>"  data-k="<?=$pu['KTT']?>">
     <div class="sub-objects-btn collapse-btn">
         <?=$pu['FullName']?>
         <!--span class="tip" style="display:none;">Показания переданы объем <span class="result-pu"></span>кВтч</span-->
     </div>
-    <div class="sub-objects-content collapse-content" style="display: none;">
+    <div class="sub-objects-content collapse-content" style="display: <?=($onePU)?'block':'none'?>;">
         <div class="info">
             <div class="label  consumed-wrap" style="display: none">Показание сохранено, объем <span><span  class="result-pu"></span> кВтч</span></div>
             <div class="notice">Срок проверки счетчика <?=$pu['VerificationYear']?>г.</div>
@@ -42,6 +43,8 @@ use yii\helpers\Html;
 //                    }
 //                    ?>
                     <?php
+
+                    //$pu['Discharge']=8;
                     if(!empty($pu['Indications'])){
                         $indicationArr = explode(',', $pu['Indications']);
                         $oldValue = '';
@@ -50,6 +53,7 @@ use yii\helpers\Html;
                         }
                         $outputOld .= $indicationArr[0];
                     }
+
                     ?>
 
 
@@ -57,14 +61,17 @@ use yii\helpers\Html;
                         <?php if(!empty($pu['DateInd'])):?>
                         <div class="label">Начальное показание от <?=$pu['DateInd']?> </div>
                         <?php endif;?>
-                        <div class="field">
-                            <input type="text" maxlength="<?=$pu['Discharge']?>" value="<?=$outputOld?>" class="old-val indication co-<?=$pu['Discharge']?>">
+                        <div class="field co-<?=$pu['Discharge']?>">
+                            <input type="text" maxlength="<?=$pu['Discharge']?>" value="<?=$outputOld?>" class="old-val indication">
                         </div>
                     </div>
                     <div class="group">
                         <div class="label">Введите показание от <?=date('d.m.Y')?></div>
-                        <div class="field">
-                            <input type="text" maxlength="<?=$pu['Discharge']?>" value="" class="curr-val indication co-<?=$pu['Discharge']?>">
+                        <div class="field co-<?=$pu['Discharge']?>">
+                            <div class="wrap-error">
+                                <div class="label-error" style="display: none">Не заполнено текущее показание!</div>
+                            </div>
+                            <input type="text" maxlength="<?=$pu['Discharge']?>" value="" class="curr-val indication">
                         </div>
                     </div>
                 </div>
@@ -77,11 +84,9 @@ use yii\helpers\Html;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="wrap-error">
-                        <div class="label-error" style="display: none">Не заполнено текущее показание!</div>
-                    </div>
+
                     <div class="bts">
-                        <a href="#" class="btn submit-btn left computation-pu" data-k="<?=$pu['KTT']?>">Расчитать</a>
+<!--                        <a href="#" class="btn submit-btn left computation-pu">Расчитать</a>-->
                         <!--a href="#" class="attach-lnk"></a-->
                         <div class="clear"></div>
                     </div>

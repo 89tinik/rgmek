@@ -1,12 +1,13 @@
 <?php
 
 /* @var $object */
+/* @var $one */
 
 use yii\helpers\Html;
 
 ?>
 
-<div class="objects-item wrap-object" data-id="<?= $object['UIDObject'] ?>"
+<div class="objects-item wrap-object <?=($one)?'open':''?>" data-id="<?= $object['UIDObject'] ?>"
      data-act-contract="<?= $object['ActContract'] ?>"
      data-act-contractor="<?= $object['ActСontractor'] ?>"
      data-act-date="<?= $object['ActDate'] ?>">
@@ -15,7 +16,7 @@ use yii\helpers\Html;
         <div class="name"><a href="#"><?= $object['Name'] ?></a></div>
         <!--div class="info">Системное сообщение по объекту (Срок проверки счетчика №___12.12.2020</div-->
     </div>
-    <div class="objects-body" style="display: none;">
+    <div class="objects-body" style="display: <?=($one)?'block':'none'?>;">
         <?php if (isset($object['Expand']['PU'])) { ?>
             <!-- sub obj items -->
             <div class="sub-objects-items collapse-items">
@@ -23,13 +24,15 @@ use yii\helpers\Html;
                 <?php
                 if (isset($object['Expand']['PU']['FullName'])) {
                     echo $this->render('_puIndicationItem', [
-                        'pu' => $object['Expand']['PU']
+                        'pu' => $object['Expand']['PU'],
+                        'onePU' => true
                     ]);
                 } else {
                     foreach ($object['Expand']['PU'] as $arr) {
                         if (!empty($arr['FullName'])) {
                             echo $this->render('_puIndicationItem', [
-                                'pu' => $arr
+                                'pu' => $arr,
+                                'onePU' => false
                             ]);
                         }
                     }
@@ -61,7 +64,7 @@ use yii\helpers\Html;
     </div>
     <div class="objects-more">
         <a href="#" class="more-link" data-text-open="Развернуть объект" data-text-close="Свернуть объект">
-            <span>Развернуть объект</span>
+            <span><?=($one)?'Свернуть объект':'Развернуть объект'?></span>
         </a>
     </div>
 </div>

@@ -81,55 +81,58 @@ $(function() {
 	});
 
 	//рассчет показаний ПУ
-	$('.computation-pu').on('click', function () {
-		var blockPU = $(this).closest('.wrap-pu');
-		blockPU.addClass('no-result');
-		var errorBlock = blockPU.find('.label-error');
-		var wrapResultBlock = blockPU.find('.consumed-wrap');
-		var resultBlock = blockPU.find('.result-pu');
-		resultBlock.text('0');
-		blockPU.attr('data-result', '0');
-		errorBlock.hide();
-		wrapResultBlock.hide();
+	$('.curr-val.indication').on('input', function () {
+	// $('.computation-pu').on('click', function () {
+		if ($(this).val().length == $(this).attr('maxlength')) {
+			var blockPU = $(this).closest('.wrap-pu');
+			blockPU.addClass('no-result');
+			var errorBlock = blockPU.find('.label-error');
+			var wrapResultBlock = blockPU.find('.consumed-wrap');
+			var resultBlock = blockPU.find('.result-pu');
+			resultBlock.text('0');
+			blockPU.attr('data-result', '0');
+			errorBlock.hide();
+			wrapResultBlock.hide();
 
-		// var old = '';
-		// var curr = '';
-		// blockPU.find('.old-num').each(function () {
-		// 	old += $(this).val();
-		// });
-		// blockPU.find('.curr-num').each(function () {
-		// 	curr += $(this).val();
-		// // });
-		// old = parseInt(old);
-		// curr = parseInt(curr);
-		var old = 0;
-		if (blockPU.find('.old-val').val()!== ""){
-			old =  parseInt(blockPU.find('.old-val').val());
+			// var old = '';
+			// var curr = '';
+			// blockPU.find('.old-num').each(function () {
+			// 	old += $(this).val();
+			// });
+			// blockPU.find('.curr-num').each(function () {
+			// 	curr += $(this).val();
+			// // });
+			// old = parseInt(old);
+			// curr = parseInt(curr);
+			var old = 0;
+			if (blockPU.find('.old-val').val() !== "") {
+				old = parseInt(blockPU.find('.old-val').val());
+			}
+			var curr = parseInt(blockPU.find('.curr-val').val());
+
+
+			if (old > curr) {
+				errorBlock.text('Введённое показание меньше предыдущего!');
+				errorBlock.show();
+			} else if (isNaN(curr)) {
+				errorBlock.text('Не заполнено текущее показание!');
+				errorBlock.show();
+			} else {
+				var consumed = (curr - old) * parseInt(blockPU.attr('data-k'));
+				resultBlock.text(consumed);
+				blockPU.attr('data-result', consumed);
+				blockPU.attr('data-idication', curr);
+				wrapResultBlock.show();
+				blockPU.removeClass('no-result');
+
+			}
+			var objectResult = 0;
+			$(this).closest('.wrap-object').find('.wrap-pu:not(.no-result)').each(function () {
+				objectResult += parseInt($(this).attr('data-result'));
+			});
+
+			$(this).closest('.wrap-object').find('.object-result').text(objectResult);
 		}
-		var curr =  parseInt(blockPU.find('.curr-val').val());
-
-
-		if(old > curr){
-			errorBlock.text('Введённое показание меньше предыдущего!');
-			errorBlock.show();
-		} else if(isNaN(curr)) {
-			errorBlock.text('Не заполнено текущее показание!');
-			errorBlock.show();
-		} else {
-			var consumed = (curr - old)*parseInt($(this).attr('data-k'));
-			resultBlock.text(consumed);
-			blockPU.attr('data-result', consumed);
-			blockPU.attr('data-idication', curr);
-			wrapResultBlock.show();
-			blockPU.removeClass('no-result');
-
-		}
-		var objectResult = 0;
-		$(this).closest('.wrap-object').find('.wrap-pu:not(.no-result)').each(function () {
-			objectResult += parseInt($(this).attr('data-result'));
-		});
-
-		$(this).closest('.wrap-object').find('.object-result').text(objectResult);
 		return false;
 	});
 

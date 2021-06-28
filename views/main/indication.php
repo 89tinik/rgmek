@@ -17,12 +17,14 @@ $this->title = 'Передать показания | ЛК РГМЭК';
     if (isset($result['Object'])){
         if (isset($result['Object']['Name'])){
             echo $this->render('_objectIndicationItem', [
-                'object' => $result['Object']
+                'object' => $result['Object'],
+                'one' => true
             ]);
         } else {
             foreach ($result['Object'] as $arr) {
                 echo $this->render('_objectIndicationItem', [
-                    'object' => $arr
+                    'object' => $arr,
+                    'one' => false
                 ]);
             }
         }
