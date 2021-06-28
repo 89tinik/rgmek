@@ -7,7 +7,7 @@ $this->title = 'Передать показания | ЛК РГМЭК';
 <div class="page-heading">
     <div class="breadcrumbs">
         <strong>Передать показания приборов учета</strong><span class="sep"></span>
-        <span>Договор <?= $result['Contract']['FullName'] ?></span>
+        <span>Договор <?= $this->context->currentContract; ?></span>
     </div>
 </div>
 

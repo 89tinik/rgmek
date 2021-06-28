@@ -8,7 +8,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
 <div class="page-heading">
     <div class="breadcrumbs">
         <strong>Узнать задолжность, оплатить</strong><span class="sep"></span>
-        <span>	Договор  <?= $result['Contract']['FullName'] ?></span>
+        <span>	Договор  <?= $this->context->currentContract; ?></span>
     </div>
 </div>
 

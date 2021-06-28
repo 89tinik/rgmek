@@ -13,7 +13,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
 <div class="page-heading">
     <div class="breadcrumbs">
         <strong>Счета</strong><span class="sep"></span>
-        <span>Договор <?= $result['Contract']['FullName'] ?></span>
+        <span>Договор <?= $this->context->currentContract; ?></span>
     </div>
 </div>
 

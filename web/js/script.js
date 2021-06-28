@@ -102,8 +102,10 @@ $(function() {
 		// // });
 		// old = parseInt(old);
 		// curr = parseInt(curr);
-
-		var old =  parseInt(blockPU.find('.old-val').val());
+		var old = 0;
+		if (blockPU.find('.old-val').val()!== ""){
+			var old =  parseInt(blockPU.find('.old-val').val());
+		}
 		var curr =  parseInt(blockPU.find('.curr-val').val());
 
 
