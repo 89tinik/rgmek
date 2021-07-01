@@ -842,7 +842,7 @@ a.lnk, .lnk {
               background: none; }
 
 @media screen and (min-width: 1200px) {
-  .sidebar-menu .sidebar-menu-fw > ul > li:hover > a {
+  .sidebar-menu .sidebar-menu-fw > ul > .h-loginli:hover > a {
     background: #4475F2; } /*косячит левое меню при наведении на ПК*/
     .sidebar-menu .sidebar-menu-fw ul li:hover > a span {
       color: #FFF; }
@@ -2735,6 +2735,9 @@ input[type="text"].indication{
 }
 .sidebar-menu .sidebar-menu-fw ul li a.active {
   background: #4475F2;
+}
+.h-login {
+  max-width: 360px;
 }
 /*ENDtin*/
 

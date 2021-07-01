@@ -162,14 +162,14 @@ $this->title = 'Счета |  ЛК РГМЭК';
         </div>
 
 
-        <!--div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: none;">
+        <div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: none;">
             <div class="white-box-title">Счета</div>
             <div class="list">
                 <ul>
 
                 </ul>
             </div>
-        </div-->
+        </div>
         <div class="arrear-lists white-box penalty-report-wrap report-item  big-name" style="display: none;">
             <div class="white-box-title">Пени</div>
             <div class="list">

@@ -48,33 +48,57 @@ use yii\helpers\Html;
                                 </span>
                             </li>
                         <?php endif; ?>
-                        <?php if (!empty($object['Expand']['TariffGroup']['Name'])): ?>
+
+
+
+                        <?php
+                        $valTP = '';
+                        $info = true;
+                        if (!empty($object['Expand']['TariffGroup']['Name'])) {
+                            $valTP = $object['Expand']['TariffGroup']['Name'];
+                            if ($object['Expand']['TariffGroup']['Name'] == 'Население') {
+                                $info = false;
+                            }
+                        } elseif (!empty($object['Expand']['TariffGroup'][0]['Name'])) {
+                            $arrName = [];
+                            foreach ($object['Expand']['TariffGroup'] as $arr) {
+                                $arrName[] = $arr['Name'];
+                            }
+                            if (in_array('Население', $arrName)) {
+                                $info = false;
+                            }
+                            $valTP = implode(',', $arrName);
+                        }
+                        if (!empty($object['Expand']['PriceCategory'])) {
+                            if ($valTP != '') {
+                                $valTP .= '/';
+                            }
+                            $valTP .= $object['Expand']['PriceCategory'];
+                        }
+                        ?>
+
+
+
+
+
+                        <?php if (!empty($valTP)): ?>
                             <li>
-								<span class="list-label">
+                                <span class="list-label">
                                     <span>Тарифная группа/ценовая категория</span>
                                 </span>
                                 <span class="list-value">
-                                    <span><?= $object['Expand']['TariffGroup']['Name'] ?></span>
-                                </span>
-                            </li>
-                        <?php elseif (!empty($object['Expand']['TariffGroup'][0]['Name'])): ?>
-                            <li>
-								<span class="list-label">
-                                    <span>Тарифная группа/ценовая категория</span>
-                                </span>
-                                <span class="list-value">
-                                    <span>
-                                        <?php
-                                        $arrName = [];
-                                        foreach ($object['Expand']['TariffGroup'] as $arr) {
-                                            $arrName[] = $arr['Name'];
-                                        }
-                                        echo implode(',', $arrName);
-                                        ?>
-                                    </span>
+                                    <span><?= $valTP ?></span><br>
+                                    <?php if ($info): ?>
+                                        <a class="btn small border btn-contracts-ask price-category-btn">?</a>
+                                        <a class="btn small border btn-contracts-edit">Изменить</a>
+                                    <?php endif; ?>
                                 </span>
                             </li>
                         <?php endif; ?>
+
+
+
+
 
                         <?php if (!empty($object['Expand']['VoltageLevel']['Name'])): ?>
                             <li>
@@ -103,47 +127,36 @@ use yii\helpers\Html;
                                 </span>
                             </li>
                         <?php endif; ?>
-                        <?php if (!empty($object['Expand']['PriceCategory'])): ?>
-                            <li>
-                                <span class="list-label">
-                                    <span>Ценовая категория</span>
-                                </span>
-                                <span class="list-value">
-                                    <span><?= $object['Expand']['PriceCategory'] ?></span><br>
-                                    <a class="btn small border btn-contracts-ask price-category-btn">?</a>
-                                    <a class="btn small border btn-contracts-edit">Изменить</a>
-                                </span>
-                            </li>
-                        <?php endif; ?>
+
                     </ul>
                 </div>
             </div>
             <div class="contracts-col contracts-col-2">
                 <div class="contracts-devices white-box">
-                    <?php if(isset($object['Expand']['PU'])){?>
-                    <div class="title">Сведения по приборам учета:
-                        <a class="btn small border pu-ask pu-ask-btn">?</a>
-                    </div>
-                    <div class="devices-links">
+                    <?php if (isset($object['Expand']['PU'])) { ?>
+                        <div class="title">Сведения по приборам учета:
+                            <a class="btn small border pu-ask pu-ask-btn">?</a>
+                        </div>
+                        <div class="devices-links">
 
-                        <?php
-                        if (isset($object['Expand']['PU']['Name'])) {
-                            echo $this->render('_puItem', [
-                                'pu' => $object['Expand']['PU']
-                            ]);
-                        } else {
-                            foreach ($object['Expand']['PU'] as $arr) {
+                            <?php
+                            if (isset($object['Expand']['PU']['Name'])) {
                                 echo $this->render('_puItem', [
-                                    'pu' => $arr
+                                    'pu' => $object['Expand']['PU']
                                 ]);
+                            } else {
+                                foreach ($object['Expand']['PU'] as $arr) {
+                                    echo $this->render('_puItem', [
+                                        'pu' => $arr
+                                    ]);
+                                }
                             }
-                        }
-                        ?>
+                            ?>
 
-                    </div>
-                    <?php } else {?>
+                        </div>
+                    <?php } else { ?>
                         <div class="title">Приборы учета отсутствуют</div>
-                    <?php }?>
+                    <?php } ?>
                 </div>
             </div>
         </div>

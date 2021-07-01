@@ -65,12 +65,12 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             $user = $this->getUser();
-//            $client = new Client();
-//            $client->createRequest()
-//                ->setMethod('GET')
-//                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
-//                ->setData(['id'=>$user->id_db])
-//                ->send();
+            $client = new Client();
+            $client->createRequest()
+                ->setMethod('GET')
+                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
+                ->setData(['id'=>$user->id_db])
+                ->send();
 
 
             $contracts = new Client();

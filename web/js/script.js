@@ -150,7 +150,7 @@ $(function() {
 			ajaxPreloaderOn();
 			var puArr = [];
 			$(this).closest('.wrap-object').find('.wrap-pu').each(function () {
-				puArr.push({'indications':$(this).attr('data-idication'),'uidtu':$(this).attr('data-id')});
+				puArr.push({'indications':$(this).attr('data-idication'),'uidtu':$(this).attr('data-id'),'uidpu':$(this).attr('data-puid')});
 			});
 			$.ajax({
 				type: 'POST',
