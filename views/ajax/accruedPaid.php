@@ -7,7 +7,7 @@
     <div class="list">
         <ul>
             <li>
-                <span class="name">Начисленно</span>
+                <span class="name">Начислено</span>
                 <span class="value"><?=$result['AllAccrual']?> руб.</span>
             </li>
             <li>

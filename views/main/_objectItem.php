@@ -51,7 +51,7 @@ use yii\helpers\Html;
                         <?php if (!empty($object['Expand']['TariffGroup']['Name'])): ?>
                             <li>
 								<span class="list-label">
-                                    <span>Тарифная группа</span>
+                                    <span>Тарифная группа/ценовая категория</span>
                                 </span>
                                 <span class="list-value">
                                     <span><?= $object['Expand']['TariffGroup']['Name'] ?></span>
@@ -60,7 +60,7 @@ use yii\helpers\Html;
                         <?php elseif (!empty($object['Expand']['TariffGroup'][0]['Name'])): ?>
                             <li>
 								<span class="list-label">
-                                    <span>Тарифная группа</span>
+                                    <span>Тарифная группа/ценовая категория</span>
                                 </span>
                                 <span class="list-value">
                                     <span>
@@ -88,7 +88,7 @@ use yii\helpers\Html;
                         <?php elseif (!empty($object['Expand']['VoltageLevel'][0]['Name'])): ?>
                             <li>
 								<span class="list-label">
-                                    <span>Тарифная группа</span>
+                                    <span>Уровень напряжения для применения тарифа</span>
                                 </span>
                                 <span class="list-value">
                                     <span>

@@ -18,7 +18,7 @@
                         $outputAccrualArr['Date'][] = $arr['Date'];
                         $outputAccrualArr['Number'][] = $arr['Number'];
                     }
-                    echo '<tr><td>Начислено</td><td>' . implode('<br/>', $outputAccrualArr['Date']) . '</td> <td>' . implode(' руб.<br/>', $outputAccrualArr['Number']) . ' руб.</td><td>' . implode('<br/>', $outputAccrualArr['Value']) . '</td></tr>';
+                    echo '<tr><td>Начислено</td><td>' . implode('<br/>', $outputAccrualArr['Value']) . '</td><td>' . implode('<br/>', $outputAccrualArr['Date']) . '</td> <td>' . implode(' руб.<br/>', $outputAccrualArr['Number']) . ' руб.</td></tr>';
 
                 }
 
@@ -34,7 +34,7 @@
                         $outputPaymentArr['Date'][] = $arr['Date'];
                         $outputPaymentArr['Number'][] = $arr['Number'];
                     }
-                    echo '<tr><td>Оплаченно</td><td>' . implode('<br/>', $outputPaymentArr['Date']) . '</td> <td>' . implode(' руб.<br/>', $outputPaymentArr['Number']) . ' руб.</td><td>' . implode('<br/>', $outputPaymentArr['Value']) . '</td></tr>';
+                    echo '<tr><td>Оплачено</td><td>' . implode('<br/>', $outputPaymentArr['Value']) . '</td><td>' . implode('<br/>', $outputPaymentArr['Date']) . '</td> <td>' . implode(' руб.<br/>', $outputPaymentArr['Number']) . ' руб.</td></tr>';
 
                 }
 

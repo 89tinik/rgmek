@@ -18,7 +18,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         <div class="info-top">
             <div class="title">
                 <!--Какой-то текст ни кому не известно-->
-                <strong><?= $result['Contract']['FullName'] ?></strong>
+                <strong>ДОГОВОР <?= $this->context->currentContract; ?></strong>
             </div>
         </div>
         <div class="info-bottom">

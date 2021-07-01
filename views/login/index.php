@@ -13,6 +13,9 @@ $this->title = 'Авторизация';
 <div class="login-form-fw">
     <div class="login-form">
         <?php $form = ActiveForm::begin([
+            'options' => [
+                'class' => 'c-form'
+            ],
             'fieldConfig' => [
                 'template' => "<div class=\"field \">
 							{input}{error}
@@ -36,7 +39,12 @@ $this->title = 'Авторизация';
         ?>
 
         <?= $form->field($loginForm, 'username')->textInput(['placeholder' => 'Логин', 'autofocus' => true]) ?>
-        <?= $form->field($loginForm, 'password')->passwordInput(['placeholder' => 'Пароль']) ?>
+        <?= $form->field($loginForm, 'password', ['template' => '<div class="field ">
+							{input}
+							<div class="eye"></div>	
+                            
+							{error}
+						</div>'])->passwordInput(['placeholder' => 'Пароль']) ?>
         <?= Html::submitButton('Войти') ?>
         <div class="wrong-link">
             <?= Html::a('Зарегистрироваться', ['login/registration']) ?>

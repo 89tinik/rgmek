@@ -7,7 +7,7 @@ $this->title = 'Действующие договоры, объекты, при�
 
 <div class="page-heading">
     <div class="breadcrumbs">
-        <strong>Действующие договоры, объекты, приборы учета</strong><span class="sep"></span>
+        <strong>Действующие объекты и приборы учета</strong><span class="sep"></span>
         <span><?= (isset($result['Object']['NameContracts'])) ? $result['Object']['NameContracts'] :  $result['Object'][0]['NameContracts']; ?></span>
     </div>
 </div>
