@@ -124,10 +124,11 @@ class MainController extends Controller
             if ($edoInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
             }
-            $file_name = \Yii::$app->user->identity->id.'_'.$edoInfo['success']['Name'];
-            if ($this->decodingToDocSave($edoInfo['success']['File'], $file_name)){
-                return $this->redirect(Url::home(true).'web/temp_edo/'.$file_name, 301);
-            }
+//            $file_name = \Yii::$app->user->identity->id.'_'.$edoInfo['success']['Name'];
+//            if ($this->decodingToDocSave($edoInfo['success']['File'], $file_name)){
+//                return $this->redirect(Url::home(true).'web/temp_edo/'.$file_name, 301);
+//            }
+            return \Yii::$app->response->sendContentAsFile(base64_decode ($edoInfo['success']['File']), $edoInfo['success']['Name']);
         } else {
             return $edoInfo['error'];
         }
