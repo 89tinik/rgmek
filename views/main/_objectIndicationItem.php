@@ -50,6 +50,13 @@ use yii\helpers\Html;
                     <div class="value"><strong class="object-result">0</strong> кВтч</div>
                 </div>
                 <div class="bts">
+                        <div class="label-error" style="display: none">
+                            Вы не передали показания по счётчикам:
+                            <div class="empty-pu"></div>
+                            <a href="#" class="btn tranfer-empty">Продолжить</a>
+                            <br>
+                            <a href="#" class="back-empty">Вернуться и внести</a>
+                        </div>
                     <a href="#" class="btn full transfer-object">Передать показания</a>
                     <!--a href="#" class="btn full border">Сформировать акт фиксации</a-->
                     <?= Html::a('Сформировать акт фиксации', ['ajax/reconciliation', 'uid' => $object['UID']], ['class' => 'btn full border get-act']) ?>

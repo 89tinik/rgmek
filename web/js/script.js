@@ -137,36 +137,62 @@ $(function() {
 	});
 
 	//отправка показаний объекта
+	function transferIndication(btn){
+		ajaxPreloaderOn();
+		var puArr = [];
+		btn.closest('.wrap-object').find('.wrap-pu:not(.no-result)').each(function () {
+			puArr.push({'indications':$(this).attr('data-idication'),'uidtu':$(this).attr('data-id'),'uidpu':$(this).attr('data-puid')});
+		});
+		$.ajax({
+			type: 'POST',
+			url: '/ajax/transfer',
+			data: 'uidobject='+btn.closest('.wrap-object').attr('data-id')+'&uidcontract='+$('.sidebar-menu-fw a.active').attr('data-uid')+ '&id='+$('.uid-d').attr('data-uid')+'&tu='+JSON.stringify(puArr),
+			//data: '{"id":"c222afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
+			success: function (msg){
+				$('.transfer-indication-popup h3').text(msg);
+				$('.transfer-indication-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+				$('.contracts-devices-popup-overlay').fadeIn(250);
+				ajaxPreloaderOff();
+			}
+		});
+	}
+
 	$('.transfer-object').on('click', function () {
 		if ($(this).closest('.wrap-object').find('.wrap-pu.no-result').length > 0){
-			var firstNorersult = $('.wrap-pu.no-result:first');
-			if (!firstNorersult.hasClass('active')){
-				firstNorersult.children('.collapse-btn').addClass('active');
-				firstNorersult.children('.collapse-content').attr('style', '');
-			}
-			firstNorersult.find('.label-error').show();
-			$('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
+			// var firstNorersult = $('.wrap-pu.no-result:first');
+			// if (!firstNorersult.hasClass('active')){
+			// 	firstNorersult.children('.collapse-btn').addClass('active');
+			// 	firstNorersult.children('.collapse-content').attr('style', '');
+			// }
+			// firstNorersult.find('.label-error').show();
+			// $('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
+			var emptyPu = '';
+			$(this).closest('.wrap-object').find('.wrap-pu.no-result').each(function () {
+				emptyPu = emptyPu + $(this).find('.sub-objects-btn').text() + '</br>';
+			});
+			$(this).prev().find('.empty-pu').html(emptyPu);
+			$(this).prev().show();
 		} else {
-			ajaxPreloaderOn();
-			var puArr = [];
-			$(this).closest('.wrap-object').find('.wrap-pu').each(function () {
-				puArr.push({'indications':$(this).attr('data-idication'),'uidtu':$(this).attr('data-id'),'uidpu':$(this).attr('data-puid')});
-			});
-			$.ajax({
-				type: 'POST',
-				url: '/ajax/transfer',
-				data: 'uidobject='+$(this).closest('.wrap-object').attr('data-id')+'&uidcontract='+$('.sidebar-menu-fw a.active').attr('data-uid')+ '&id='+$('.uid-d').attr('data-uid')+'&tu='+JSON.stringify(puArr),
-				//data: '{"id":"c222afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
-				success: function (msg){
-					$('.transfer-indication-popup h3').text(msg);
-					$('.transfer-indication-popup').animate({'top': $(window).scrollTop() + 50}, 450);
-					$('.contracts-devices-popup-overlay').fadeIn(250);
-					ajaxPreloaderOff();
-				}
-			});
+			transferIndication($(this));
 		}
 
 		return false;
+	});
+
+	$('.tranfer-empty').on('click', function(){
+		transferIndication($(this));
+		$(this).parent().hide();
+	});
+
+	$('.back-empty').on('click', function(){
+		var firstNorersult = $(this).closest('.wrap-object').find('.wrap-pu.no-result:first');
+		if (!firstNorersult.hasClass('active')){
+			firstNorersult.children('.collapse-btn').addClass('active');
+			firstNorersult.children('.collapse-content').attr('style', '');
+		}
+		firstNorersult.find('.label-error').show();
+		$('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
+		$(this).parent().hide();
 	});
 
 	//обработка формы перехода на оплату

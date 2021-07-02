@@ -2739,6 +2739,46 @@ input[type="text"].indication{
 .h-login {
   max-width: 360px;
 }
+
+.sub-objects-summary .label-error {
+  margin-bottom: 5px;
+  padding: 15px 20px;
+  position: relative;
+  max-width: 100%;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000;
+  background: #FFFFFF;
+  border: 1px solid #EFF0F0;
+  box-shadow: 0px 24px 60px rgba(0, 0, 0, 0.06);
+  -webkit-box-shadow: 0px 24px 60px rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -khtml-border-radius: 12px;
+  text-align: center;}
+.sub-objects-summary .label-error:before {
+  margin-left: -10px;
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -20px;
+  border: 10px solid transparent;
+  border-top: 10px solid #fff; }
+.sub-objects-summary .label-error .empty-pu{
+  text-align: left;
+  font-weight: bold;
+}
+.sub-objects-summary .label-error a {
+  color: #4475F2;
+  text-decoration: underline; }
+.sub-objects-summary .label-error a:hover {
+  text-decoration: none; }
+.sub-objects-summary .label-error a.btn {
+  color:#fff;
+  text-decoration: none;
+  margin-bottom:10px;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

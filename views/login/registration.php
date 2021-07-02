@@ -57,12 +57,7 @@ $this->title = 'Регистрация';
 						</div>'])->passwordInput(['placeholder' => 'Пароль', 'autocomplete' => 'off']) ?>
         <?= $form->field($registerForm, 'rePassword', ['template' => '<div class="field ">
 							{input}
-							<div class="eye left"></div>
-							<div class="label-info"></div>
-                            <div class="label-error" style="display: none;">
-                                Этот вопрос необходим для того, чтобы предотвратить автоматические
-                                <div class="close"></div>
-                            </div>	
+							<div class="eye "></div>
 							{error}
 						</div>'])->passwordInput(['placeholder' => 'Повторите пароль', 'autocomplete' => 'off']) ?>
 
