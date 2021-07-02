@@ -174,7 +174,7 @@ $this->title = 'Профиль';
     <div class="profile-status white-box">
         <div class="white-box-title">Получение счетов по электроной почте</div>
         <div class="status-text">
-            Вы можете настроить уведомления по электронной почте с ООО “РГМЭК” через специализированных операторов.
+            Вы можете подписаться на рассылку документов по договору энергоснабжения с ООО «РГМЭК» на адрес электронной почты
         </div>
         <div class="status-control">
             <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
