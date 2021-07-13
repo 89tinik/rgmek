@@ -10,7 +10,7 @@
             <?php
             if ($apMonth['Accrual']) {
                 if ($apMonth['Accrual']['Number']) {
-                    echo '<tr><td>Начислено</td><td>' . $apMonth['Accrual']['Date'] . '</td> <td>' . $apMonth['Accrual']['Number'] . ' руб.</td><td>' . $apMonth['Accrual']['Value'] . '</td></tr>';
+                    echo '<tr><td>Начислено</td><td>' . $apMonth['Accrual']['Value'] . '</td><td>' . $apMonth['Accrual']['Date'] . '</td> <td>' . $apMonth['Accrual']['Number'] . ' руб.</td></tr>';
                 } else {
                     $outputAccrualArr = [];
                     foreach ($apMonth['Accrual'] as $arr) {
@@ -26,7 +26,7 @@
 
             if ($apMonth['Payment']) {
                 if ($apMonth['Payment']['Number']) {
-                    echo '<tr><td>Оплачено</td><td>' . $apMonth['Payment']['Date'] . '</td> <td>' . $apMonth['Payment']['Number'] . ' руб.</td><td>' . $apMonth['Payment']['Value'] . '</td></tr>';
+                    echo '<tr><td>Оплачено</td><td>' . $apMonth['Payment']['Value'] . '</td><td>' . $apMonth['Payment']['Date'] . '</td> <td>' . $apMonth['Payment']['Number'] . ' руб.</td></tr>';
                 } else {
                     $outputPaymentArr = [];
                     foreach ($apMonth['Payment'] as $arr) {

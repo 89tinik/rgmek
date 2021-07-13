@@ -162,7 +162,7 @@ use yii\helpers\Html;
         </div>
     </div>
     <div class="contracts-more">
-        <a href="#" class="more-link" data-text-open="Развернуть договор" data-text-close="Свернуть объект">
+        <a href="#" class="more-link" data-text-open="Развернуть" data-text-close="Свернуть">
             <span>Развернуть</span>
         </a>
     </div>

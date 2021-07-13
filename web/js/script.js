@@ -54,7 +54,12 @@ $(function() {
 	});
 	//подсказка о просмотре информации ПУ
 	$('.pu-ask-btn').on('click', function(){
-		$('.information-pu-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		if ($(window).scrollTop() > $('.bg').scrollTop()){
+			var topPos = $(window).scrollTop() + 50;
+		} else {
+			var topPos = $('.bg').scrollTop() + 50;
+		}
+		$('.information-pu-popup').animate({'top': topPos}, 450);
 		$('.contracts-devices-popup-overlay').fadeIn(250);
 		return false;
 	});
@@ -197,7 +202,12 @@ $(function() {
 
 	//обработка формы перехода на оплату
 	$('.pay-form').on('submit', function(){
-		$('.warning-pay-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		if ($(window).scrollTop() > $('.bg').scrollTop()){
+			var topPos = $(window).scrollTop() + 50;
+		} else {
+			var topPos = $('.bg').scrollTop() + 50;
+		}
+		$('.warning-pay-popup').animate({'top': topPos}, 450);
 		$('.contracts-devices-popup-overlay').fadeIn(250);
 		return false;
 	});
@@ -425,8 +435,13 @@ $(function() {
 
 	/*contracts popup*/
 	$('.contracts-devices .devices-link').on('click', function(){
+		if ($(window).scrollTop() > $('.bg').scrollTop()){
+			var topPos = $(window).scrollTop() + 50;
+		} else {
+			var topPos = $('.bg').scrollTop() + 50;
+		}
 		$('.contracts-devices-popup .table').html($(this).next('div').html());
-		$('.contracts-devices-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+		$('.contracts-devices-popup').animate({'top': topPos}, 450);
 		$('.contracts-devices-popup-overlay').fadeIn(250);
 		return false;
 	});

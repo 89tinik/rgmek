@@ -70,8 +70,8 @@ use yii\helpers\Html;
         ?>
     </div>
     <div class="objects-more">
-        <a href="#" class="more-link" data-text-open="Развернуть объект" data-text-close="Свернуть объект">
-            <span><?=($one)?'Свернуть объект':'Развернуть объект'?></span>
+        <a href="#" class="more-link" data-text-open="Развернуть" data-text-close="Свернуть">
+            <span><?=($one)?'Свернуть':'Развернуть'?></span>
         </a>
     </div>
 </div>
