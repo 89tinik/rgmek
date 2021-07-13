@@ -244,9 +244,20 @@ class MainController extends Controller
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $invoiceData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/package_documents', $data);
         if (isset($invoiceData['success'])){
+            $withDateArr = explode('.', \Yii::$app->user->identity->with_date);
+            $mounth = $withDateArr[1] - 1;
+            if($mounth == 0){
+                $mounth = 12;
+                $year = $withDateArr[2] - 1;
+            } else {
+                $year = $withDateArr[2];
+            }
+            $mounth = ($mounth < 10)?'0'.$mounth:$mounth;
+            $withDateDetail = '01.'.$mounth.'.'.$year;
             return $this->render('invoice', [
                 'result'=>$invoiceData['success'],
                 'withDate'=>\Yii::$app->user->identity->with_date,
+                'withDateDetail'=>$withDateDetail,
                 'byDate'=>\Yii::$app->user->identity->by_date
             ]);
         } else {

@@ -31,10 +31,18 @@ use yii\helpers\Html;
                         <span class="name">Электроэнергия</span>
                         <span class="value"><?= (!empty($contract['Expand']['ElectricityDebt'])) ? $contract['Expand']['ElectricityDebt'].' руб.' : 0 ;?></span>
                     </li>
+                    <?php if(!empty($contract['Expand']['CurrentPenalty'])):?>
                     <li>
                         <span class="name">Пени</span>
-                        <span class="value"><?= (!empty($contract['Expand']['CurrentPenalty'])) ? $contract['Expand']['CurrentPenalty'].' руб.' : 0 ;?></span>
+                        <span class="value"><?= $contract['Expand']['CurrentPenalty'].' руб.';?></span>
                     </li>
+                    <?php endif;?>
+                    <?php if(!empty($contract['Expand']['Duty'])):?>
+                    <li>
+                        <span class="name">Госпошлина</span>
+                        <span class="value"><?= $contract['Expand']['Duty'].' руб.';?></span>
+                    </li>
+                    <?php endif;?>
                 </ul>
             </div>
             <div class="title">

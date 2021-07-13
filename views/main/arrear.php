@@ -32,10 +32,18 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                         <span class="name">Электроэнергия</span>
                         <span class="value"><?= (!empty($result['Contract']['Expand']['ElectricityDebt'])) ? $result['Contract']['Expand']['ElectricityDebt'] . ' руб.' : 0; ?></span>
                     </li>
+                    <?php if(!empty($result['Contract']['Expand']['CurrentPenalty'])) : ?>
                     <li>
                         <span class="name">Пени</span>
-                        <span class="value"><?= (!empty($result['Contract']['Expand']['CurrentPenalty'])) ? $result['Contract']['Expand']['CurrentPenalty'] . ' руб.' : 0; ?></span>
+                        <span class="value"><?= $result['Contract']['Expand']['CurrentPenalty'] . ' руб.'; ?></span>
                     </li>
+                    <?php endif;?>
+                    <?php if(!empty($result['Contract']['Expand']['Duty'])) : ?>
+                    <li>
+                        <span class="name">Госпошлина</span>
+                        <span class="value"><?= $result['Contract']['Expand']['Duty'] . ' руб.'; ?></span>
+                    </li>
+                    <?php endif;?>
                 </ul>
             </div>
             <div class="title">

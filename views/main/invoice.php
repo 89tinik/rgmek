@@ -4,6 +4,7 @@
 
 /* @var $result */
 /* @var $withDate */
+/* @var $withDateDetail */
 /* @var $byDate */
 
 use yii\helpers\Html;
@@ -111,7 +112,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'print' => 'true',
                                     'action' => 'download_report_detal',
                                     'uid' => \Yii::$app->request->get('uid'),
-                                    'withdate' => $withDate,
+                                    'withdate' => $withDateDetail,
                                     'bydate' => $byDate
                                 ], ['class' => 'btn small right print']) ?>
                                 <?= Html::a('Скачать', [
