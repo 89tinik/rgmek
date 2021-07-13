@@ -40,14 +40,14 @@ $this->title = 'Счета |  ЛК РГМЭК';
                 <div class="value">
                     <span>с</span>
                     <input type="text" value="<?= $withDate ?>" id="from_dialog"
-                           required="required"  autocomplete="off"/>
+                           required="required"  autocomplete="off" readonly="readonly"/>
                 </div>
             </div>
             <div class="field">
                 <div class="value">
                     <span>По</span>
                     <input type="text" value="<?= $byDate ?>" id="to_dialog"
-                           required="required"  autocomplete="off"/>
+                           required="required"  autocomplete="off" readonly="readonly"/>
                 </div>
             </div>
             <input type="submit" class="btn submit-btn get-report" value="Сформировать"/>

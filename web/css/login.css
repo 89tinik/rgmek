@@ -282,9 +282,13 @@ input, textarea, button {
 	}
 	.login-form-fw {
 		align-items: end;
+		height: auto;
 	}
 	.login-header .logo{
 		margin-bottom: 0;
+	}
+	.login-header{
+		position: relative;
 	}
 	/*ENDtin*/
 }

@@ -3607,6 +3607,9 @@ margin-bottom:10px;
     padding: 0 10px;
     font-size: 14px;
   }
+  .mobile-popup .btn.small{
+    padding: 0 10px;
+  }
 /*ENDtin*/
 }
 
