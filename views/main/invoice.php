@@ -221,7 +221,14 @@ $this->title = 'Счета |  ЛК РГМЭК';
                 <div class="clear"></div>
             </div>
         </div>
+        <div class="arrear-lists white-box aktpp-report-wrap report-item big-name" style="display: none;">
+            <div class="white-box-title">Акт приема передачи</div>
+            <div class="list">
+                <ul>
 
+                </ul>
+            </div>
+        </div>
 
         </div>
 
