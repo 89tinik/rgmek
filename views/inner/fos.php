@@ -62,7 +62,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
                             </div-->
 
                             <div class="group-col">
-                                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+                                <?= $form->field($model, 'name') ?>
                                 <?= $form->field($model, 'patronymic')?>
                                 <?= $form->field($model, 'surname')?>
 
