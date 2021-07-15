@@ -69,7 +69,7 @@ use yii\helpers\Html;
                             }
                             $valTP = implode(',', $arrName);
                         }
-                        if (!empty($object['Expand']['PriceCategory'])) {
+                        if (!empty($object['Expand']['PriceCategory']) && $info) {
                             if ($valTP != '') {
                                 $valTP .= '/';
                             }
@@ -84,7 +84,7 @@ use yii\helpers\Html;
                         <?php if (!empty($valTP)): ?>
                             <li>
                                 <span class="list-label">
-                                    <span>Тарифная группа/ценовая категория</span>
+                                    <span>Тарифная группа <?php if ($info): ?>/ценовая категория<?php endif; ?></span>
                                 </span>
                                 <span class="list-value">
                                     <span><?= $valTP ?></span><br>

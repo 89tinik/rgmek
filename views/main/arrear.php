@@ -47,7 +47,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                 </ul>
             </div>
             <div class="title">
-                <div class="label">Предстоящие платежи текущего месяца</div>
+                <div class="label">Предстоящие платежи</div>
                 <div class="value"><?= (!empty($result['Contract']['Expand']['UpcomingDebt'])) ? $result['Contract']['Expand']['UpcomingDebt'] . ' руб.' : 0; ?></div>
             </div>
             <!--div class="list">

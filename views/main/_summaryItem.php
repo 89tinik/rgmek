@@ -46,7 +46,7 @@ use yii\helpers\Html;
                 </ul>
             </div>
             <div class="title">
-                <div class="label">Предстоящие платежи текущего месяца</div>
+                <div class="label">Предстоящие платежи</div>
                 <div class="value"><?= (!empty($contract['Expand']['UpcomingDebt'])) ? $contract['Expand']['UpcomingDebt'].' руб.' : 0 ;?></div>
             </div>
             <!--div class="list">
