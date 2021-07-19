@@ -155,7 +155,12 @@ $(function() {
 			//data: '{"id":"c222afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
 			success: function (msg){
 				$('.transfer-indication-popup h3').text(msg);
-				$('.transfer-indication-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+				if ($(window).scrollTop() > $('.bg').scrollTop()){
+					var topPos = $(window).scrollTop() + 50;
+				} else {
+					var topPos = $('.bg').scrollTop() + 50;
+				}
+				$('.transfer-indication-popup').animate({'top': topPos}, 450);
 				$('.contracts-devices-popup-overlay').fadeIn(250);
 				ajaxPreloaderOff();
 			}

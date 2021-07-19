@@ -196,7 +196,7 @@ class AjaxController extends Controller
                 $writer->writeSheetRow($sheet_name, $row7, ['height' => 51, 'font-size' => 10, 'wrap_text' => true, 'halign' => 'center', 'valign' => 'center', 'border' => 'left,right,top,bottom', 'border-style' => 'medium']);
                 $row=[];
                 if ($outputArr['Expand']['PU']['FullName']){
-                    $indications = (!empty($outputArr['PU']['Indications']))?$outputArr['Expand']['PU']['Indications']:0;
+                    $indications = (!empty($outputArr['Expand']['PU']['Indications']))?$outputArr['Expand']['PU']['Indications']:0;
                     $row = ['1', $outputArr['Expand']['PU']['ActNumber'], $outputArr['Expand']['PU']['ActName'], $outputArr['Expand']['PU']['ActAddress'], 'А', $outputArr['Expand']['PU']['Name'], $indications, $data[$outputArr['Expand']['PU']['UIDTU']], date('d.m.Y')];
                     $writer->writeSheetRow($sheet_name, $row, ['font-size' => 10, 'border' => 'left,right,top,bottom', 'border-style' => 'thin', 'wrap_text' => true]);
                 } else {

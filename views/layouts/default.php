@@ -64,7 +64,7 @@ IeAssets::register($this);
                         <li class="children">
                             <a href="#">Заключение/изменение договора</a>
                             <ul>
-                                <li><a href="#">Заключить договор</a></li>
+                                <li><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключить договор</a></li>
                                 <li><a href="#">Внести изменения в договор</a></li>
                                 <li><a href="#">Ранее поданные заявки</a></li>
                             </ul>
@@ -182,6 +182,9 @@ IeAssets::register($this);
         <div class="transfer-indication-popup custom-popup">
             <h3></h3>
             <div class="close"></div>
+        </div>
+        <div id="hidden-content" style="display: none">
+            <h2>Функционал находится в разработке!</h2>
         </div>
     </div>
 
