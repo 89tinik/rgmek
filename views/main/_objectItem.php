@@ -1,17 +1,18 @@
 <?php
 
 /* @var $object */
+/* @var $one */
 
 use yii\helpers\Html;
 
 ?>
 
-<div class="contracts-item">
+<div class="contracts-item <?=($one)?'open':''?>">
     <div class="contracts-head trigger-more">
         <!--div class="subname"><?= $object['NameContracts'] ?></div-->
         <div class="name"><?= $object['Name'] ?></div>
     </div>
-    <div class="contracts-body">
+    <div class="contracts-body" style="display: <?=($one)?'block':'none'?>;">
         <div class="contracts-row">
             <div class="contracts-col contracts-col-1">
                 <div class="contracts-list">
@@ -84,7 +85,7 @@ use yii\helpers\Html;
                         <?php if (!empty($valTP)): ?>
                             <li>
                                 <span class="list-label">
-                                    <span>Тарифная группа <?php if ($info): ?>/ценовая категория<?php endif; ?></span>
+                                    <span>Тариф <?php if ($info): ?>/ценовая категория<?php endif; ?></span>
                                 </span>
                                 <span class="list-value">
                                     <span><?= $valTP ?></span><br>
@@ -163,7 +164,7 @@ use yii\helpers\Html;
     </div>
     <div class="contracts-more">
         <a href="#" class="more-link" data-text-open="Развернуть" data-text-close="Свернуть">
-            <span>Развернуть</span>
+            <span><?=($one)?'Свернуть':'Развернуть'?></span>
         </a>
     </div>
 </div>

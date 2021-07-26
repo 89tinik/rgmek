@@ -75,6 +75,7 @@ $(function() {
             $('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
             return false;
         } else {
+			//ajaxPreloaderOn();
             var indications = '?uidcontracts='+$('.sidebar-menu-fw a.active').attr('data-uid')+'&uidobject='+$(this).closest('.wrap-object').attr('data-id');
             $(this).closest('.wrap-object').find('.wrap-pu').each(function(){
                 indications += '&'+$(this).attr('data-id')+'='+$(this).attr('data-idication');

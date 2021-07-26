@@ -17,12 +17,14 @@ $this->title = 'Действующие договоры, объекты, при�
     <?php
     if (isset($result['Object']['Name'])) {
         echo $this->render('_objectItem', [
-            'object' => $result['Object']
+            'object' => $result['Object'],
+            'one' => true
         ]);
     } else {
         foreach ($result['Object'] as $arr) {
             echo $this->render('_objectItem', [
-                'object' => $arr
+                'object' => $arr,
+                'one' => false
             ]);
         }
     }

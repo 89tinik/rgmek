@@ -59,7 +59,7 @@ use yii\helpers\Html;
                         </div>
                     <a href="#" class="btn full transfer-object">Передать показания</a>
                     <!--a href="#" class="btn full border">Сформировать акт фиксации</a-->
-                    <?= Html::a('Сформировать акт фиксации', ['ajax/reconciliation', 'uid' => $object['UID']], ['class' => 'btn full border get-act']) ?>
+                    <?= Html::a('Сформировать акт фиксации', ['ajax/reconciliation', 'uid' => $object['UID']], ['class' => 'btn full border get-act', 'target'=>'_blank']) ?>
 
                 </div>
             </div>
