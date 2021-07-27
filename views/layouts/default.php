@@ -70,7 +70,7 @@ IeAssets::register($this);
                             </ul>
                         </li>
                         <li><a href="#">Помощь</a></li>
-                        <li><?= Html::a('Написать обращение', ['inner/fos']) ?></li>
+                        <li><?= Html::a('Написать обращение', ['inner/fos'], ['class' => 'ploader']) ?></li>
                     </ul>
                 </div>
 
@@ -121,6 +121,12 @@ IeAssets::register($this);
         <div class="contracts-devices-popup-overlay"></div>
         <div class="contracts-devices-popup">
             <div class="table">
+
+            </div>
+            <div class="close"></div>
+        </div>
+        <div class="attach-popup custom-popup">
+            <div class="message">
 
             </div>
             <div class="close"></div>

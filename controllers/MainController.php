@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\AttachForm;
 use app\models\Contract;
 use app\models\InstallESForm;
 use app\models\User;
@@ -13,6 +14,7 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\HttpException;
 use yii\helpers\Url;
+use yii\web\UploadedFile;
 
 
 class MainController extends Controller
@@ -227,11 +229,14 @@ class MainController extends Controller
 
     public function actionIndication()
     {
+        $model = new AttachForm();
+
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $indicationData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list_ind', $data);
         if (isset($indicationData['success'])){
             return $this->render('indication', [
-                'result'=>$indicationData['success']
+                'result'=>$indicationData['success'],
+                'model'=>$model
             ]);
         } else {
             return $indicationData['error'];

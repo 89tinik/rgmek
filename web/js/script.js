@@ -34,6 +34,63 @@ $(function() {
 	});
 
 	/*tin*/
+	//прелоадер на ссылки
+	$('a.ploader').on('click', function(){
+		ajaxPreloaderOn();
+	});
+	//прикрепление фото ПУ
+	$('label.computation-pu').on('click', function () {
+		if ($(this).hasClass('disabled')){
+			return false;
+		}
+		var puid = $(this).closest('.wrap-pu').attr('data-puid');
+		if ($('#attachFormPu .puidInput').val() != puid) {
+			$('#attachFormPu')[0].reset();
+			$('#attachFormPu .puidInput').val(puid);
+		}
+	});
+
+	//отправка фото ПУ
+	$('button.computation-pu').on('click', function () {
+		if ($(window).scrollTop() > $('.bg').scrollTop()){
+			var topPos = $(window).scrollTop() + 50;
+		} else {
+			var topPos = $('.bg').scrollTop() + 50;
+		}
+		var puid = $(this).closest('.wrap-pu').attr('data-puid');
+		if ($('#attachFormPu .puidInput').val() != puid) {
+			$('#attachFormPu')[0].reset();
+		}
+
+		if ($('#attachform-photo').val() == ''){
+			$('.attach-popup .message').text('Прикрепите фото ПУ');
+
+			$('.attach-popup').animate({'top': topPos}, 450);
+			$('.contracts-devices-popup-overlay').fadeIn(250);
+		} else {
+			ajaxPreloaderOn();
+			var formData = new FormData($('#attachFormPu')[0]);
+			$.ajax({
+				type: 'POST',
+				url: '/ajax/attach',
+				data: formData,
+				async: false,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (msg) {
+					ajaxPreloaderOff();
+					$('.attach-popup .message').text(msg);
+
+					$('.attach-popup').animate({'top': topPos}, 450);
+					$('.contracts-devices-popup-overlay').fadeIn(250);
+				}
+			});
+
+		}
+
+	});
+
 	//политика
 	$('input.polit').bind('change', function(){
 		if($(this).prop("checked")) {
@@ -88,7 +145,6 @@ $(function() {
 
 	//рассчет показаний ПУ
 	$('.curr-val.indication').on('input', function () {
-	// $('.computation-pu').on('click', function () {
 		if ($(this).val().length == $(this).attr('maxlength')) {
 			var blockPU = $(this).closest('.wrap-pu');
 			blockPU.addClass('no-result');

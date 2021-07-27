@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\AttachForm;
 use app\models\Contract;
 use app\models\User;
 use yii\httpclient\Client;
@@ -11,6 +12,7 @@ use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use Yii;
 use XLSXWriter;
+use yii\web\UploadedFile;
 
 
 class AjaxController extends Controller
@@ -214,6 +216,26 @@ class AjaxController extends Controller
         }
     }
 
+    public function actionAttach(){
+        $model = new AttachForm();
+        if ($model->load(\Yii::$app->request->post())) {
+            if ($model->validate()){
+                $model->photo = UploadedFile::getInstances($model, 'photo');
+                $photo = $model->photo;
+                $model->time = UploadedFile::getInstances($model, 'time');
+                $time = $model->time;
+
+                if ($model->sendMail(['89.tinik@gmail.com','dronp@rgmek.ru'], $photo[0], $time[0])) {
+                    return 'Ваши данные успешно отправлены!';
+                } else {
+                    return 'Что-то пошло не так - повторите попытку позже!';
+                }
+            } else {
+                return 'Ошибка валидации - проверьте Ваши данные!';
+            }
+
+        }
+    }
     public function actionClose(){
         return 'Сайт обновляется!';
     }

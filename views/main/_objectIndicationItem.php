@@ -25,14 +25,16 @@ use yii\helpers\Html;
                 if (isset($object['Expand']['PU']['FullName'])) {
                     echo $this->render('_puIndicationItem', [
                         'pu' => $object['Expand']['PU'],
-                        'onePU' => true
+                        'onePU' => true,
+                        'model'=>$model
                     ]);
                 } else {
                     foreach ($object['Expand']['PU'] as $arr) {
                         if (!empty($arr['FullName'])) {
                             echo $this->render('_puIndicationItem', [
                                 'pu' => $arr,
-                                'onePU' => false
+                                'onePU' => false,
+                                'model'=> $model
                             ]);
                         }
                     }

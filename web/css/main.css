@@ -2781,6 +2781,31 @@ color:#fff;
 text-decoration: none;
 margin-bottom:10px;
 }
+#attachFormPu {
+  display:none;
+}
+.attach-form .attach-file{
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  position:absolute;
+}
+.testimony-box .attach-form .btn{
+  width: 100%;
+  margin-top: 10px;
+  margin-right: 0;
+  font-size: 14px;
+  padding: 0 20px;
+  float: none;
+}
+.testimony-box .attach-form .btn.disabled{
+  cursor:default;
+  display: block;
+}
+.testimony-box .attach-form .btn.disabled:hover{
+  box-shadow:none;
+}
+
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {
@@ -3543,7 +3568,7 @@ margin-bottom:10px;
     padding: 0 20px;
     font-size: 14px;
     float: left;
-    width: 75%;
+    /*width: 75%;*/
     height: 44px;
     line-height: 44px; }
   .testimony-box .attach-lnk {
