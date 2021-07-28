@@ -91,7 +91,7 @@ use yii\helpers\Html;
                                     <span><?= $valTP ?></span><br>
                                     <?php if ($info): ?>
                                         <a class="btn small border btn-contracts-ask price-category-btn">?</a>
-                                       <?= Html::a('Изменить', ['inner/fos'],['class'=>'btn small border btn-contracts-edit'])?>
+                                       <?= Html::a('Изменить', ['inner/fos'],['class'=>'btn small border btn-contracts-edit ploader'])?>
                                     <?php endif; ?>
                                 </span>
                             </li>

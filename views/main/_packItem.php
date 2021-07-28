@@ -18,8 +18,8 @@ use yii\helpers\Html;
     <td>
         <!--a href="#" class="btn small border right">Просмотр</a-->
         <div class="bts">
-            <?=Html::a('Печать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'true', 'action'=>$action],['class'=>'btn small border right'])?>
-            <?=Html::a('Скачать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'false', 'action'=>$action],['class'=>'btn small border right'])?>
+            <?=Html::a('Печать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'true', 'action'=>$action],['class'=>'btn small border right', 'target'=>'_blank'])?>
+            <?=Html::a('Скачать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'false', 'action'=>$action],['class'=>'btn small border right', 'target'=>'_blank'])?>
 
         </div>
     </td>

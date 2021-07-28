@@ -60,7 +60,7 @@ IeAssets::register($this);
                 <!-- menu -->
                 <div class="top-menu">
                     <ul>
-                        <li><?= Html::a('Профиль потребителя', ['main/profile']) ?></li> <!-- class="active" -->
+                        <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li> <!-- class="active" -->
                         <li class="children">
                             <a href="#">Заключение/изменение договора</a>
                             <ul>

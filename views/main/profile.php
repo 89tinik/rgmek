@@ -138,7 +138,7 @@ $this->title = 'Профиль';
     </div>
     <div class="info-warning">
         <strong>Внимание!</strong>
-        В случае обнаружения ошибок, а также при изменении контактной информации сообщить об этом в разделе <?=Html::a('«Написать обращения»', ['inner/fos']);?>
+        В случае обнаружения ошибок, а также при изменении контактной информации сообщить об этом в разделе <?=Html::a('«Написать обращения»', ['inner/fos'], ['class'=>'ploader']);?>
     </div>
 </div>
 
@@ -155,9 +155,9 @@ $this->title = 'Профиль';
                 <div class="bts">
                     <?php
                     if (!empty($result['Specifications']['EmailAccount1'])) {
-                        Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_1'],['class'=>'lnk']);
+                        Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_1'],['class'=>'lnk ploader']);
                     } else {
-                        Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_1'],['class'=>'lnk']);
+                        Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_1'],['class'=>'lnk ploader']);
                     }
 
                     ?>
@@ -166,7 +166,7 @@ $this->title = 'Профиль';
             <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>
                 <div class="bts">
-                    <?=Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_1'],['class'=>'lnk'])?>
+                    <?=Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_1'],['class'=>'lnk ploader'])?>
                 </div>
             <?php endif; ?>
         </div>
@@ -180,12 +180,12 @@ $this->title = 'Профиль';
             <?php if (!empty($result['Specifications']['EmailAccount1'])):?>
                 <div class="label active">Статус: <span>Активно</span> (<?=$result['Specifications']['EmailAccount1']?>)</div>
                 <div class="bts">
-                    <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_2'],['class'=>'lnk'])?>
+                    <?=Html::a('Подробнее', ['main/edo','currentEmail' =>$result['Specifications']['EmailAccount1'], '#'=>'doc_tab_2'],['class'=>'lnk ploader'])?>
                 </div>
             <?php else:?>
                 <div class="label">Статус: <span>Не активно</span></div>
                 <div class="bts">
-                    <?=Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_2'],['class'=>'lnk'])?>
+                    <?=Html::a('Подробнее', ['main/edo', '#'=>'doc_tab_2'],['class'=>'lnk ploader'])?>
                 </div>
             <?php endif; ?>
         </div>
