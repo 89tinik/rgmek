@@ -47,9 +47,9 @@ $this->title = 'Авторизация';
 						</div>'])->passwordInput(['placeholder' => 'Пароль']) ?>
         <?= Html::submitButton('Войти') ?>
         <div class="wrong-link">
-            <?= Html::a('Зарегистрироваться', ['login/registration']) ?>
+            <?= Html::a('Зарегистрироваться', ['login/registration'],['class'=>'ploader']) ?>
             <span>&nbsp; &nbsp; </span>
-            <?= Html::a('Восстановить пароль', ['login/repassword']) ?>
+            <?= Html::a('Восстановить пароль', ['login/repassword'],['class'=>'ploader']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

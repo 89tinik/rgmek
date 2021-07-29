@@ -64,7 +64,7 @@ class Contract extends ActiveRecord
         if (!empty($contracts = static::find()->where(['user_id'=>$userId])->asArray()->all())) {
             $links = [];
             foreach ($contracts as $contract) {
-                $links []= Html::a($contract['full_name'], ['main/downloadedo', 'uid' => $contract['uid']]);
+                $links []= Html::a($contract['full_name'], ['main/downloadedo', 'uid' => $contract['uid']],['target'=>'_blank']);
 
             }
             return Html::ul($links,['encode'=>false]);

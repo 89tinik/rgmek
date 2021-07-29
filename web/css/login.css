@@ -26,6 +26,40 @@ input, textarea, button {
 ::-moz-placeholder		{color: rgba(0,0,0,0.2);}
 :-moz-placeholder		{color: rgba(0,0,0,0.2);}
 :-ms-input-placeholder	{color: rgba(0,0,0,0.2);}
+.centrize {
+	display: table !important;
+	table-layout: fixed !important;
+	height: 100% !important;
+	position: relative !important; }
+.centrize.full-width {
+	width: 100% !important; }
+
+.vertical-center {
+	display: table-cell !important;
+	vertical-align: middle !important; }
+
+.mobile-hide {
+	display: block !important; }
+
+.mobile-show {
+	display: none !important; }
+/*Preloader*/
+.preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: #FFF;
+	z-index: 1000; }
+.preloader .spinner {
+	width: 64px;
+	height: 64px;
+	display: inline-block;
+	position: relative;
+	background: url(../images/preloader.gif) no-repeat;
+	background-size: 100% 100%; }
 
 .login-fw {
 	margin: 0 auto;

@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\Contract;
 use app\models\LoginForm;
 use app\models\RegisterForm;
 use app\models\User;
@@ -125,7 +126,7 @@ class LoginController extends Controller
     public function actionRemove()
     {
         $user = User::findOne(['id_db' => Yii::$app->request->get('id')]);
-
+        Contract::deleteAll(['user_id'=>$user->id]);
         return $user->remove();
     }
 

@@ -50,7 +50,7 @@ IeAssets::register($this);
 
                 <!-- logo -->
                 <div class="h-logo">
-                    <a href="<?= \yii\helpers\Url::base(true); ?>">
+                    <a href="<?= \yii\helpers\Url::base(true); ?>" class="ploader">
                         <img src="/images/logo.png" alt=""/>
                     </a>
                 </div>
@@ -95,7 +95,7 @@ IeAssets::register($this);
             <div class="sidebar-menu-fw">
                 <ul>
                     <li>
-                        <a href="<?= \yii\helpers\Url::base(true); ?>">Сводка</a>
+                        <a href="<?= \yii\helpers\Url::base(true); ?>" class="ploader">Сводка</a>
 
                     </li>
                     <?= \app\components\Summary::widget() ?>

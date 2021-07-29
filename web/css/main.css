@@ -3387,13 +3387,18 @@ margin-bottom:10px;
   .c-form .group-row .group-col.small {
     width: 100%; }
   .summary-item.notice .info .notice {
-    display: none; }
+    /*display: none;*/
+  bottom:auto;
+    top:0;
+    border-radius: 5px 5px 0 0;
+  }
   .summary-item.notice .info {
     border: none; }
   .summary-item.notice .info .show-btn {
     bottom: 0; }
   .summary-item.notice .info {
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+  paddding-top:45px;}
   .sidebar-menu:after {
     pointer-events: none; }
   .contracts-head .subname, .contracts-list li .list-label {

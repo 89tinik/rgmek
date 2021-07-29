@@ -29,6 +29,15 @@ $(function () {
         return false;
     });
     /*tin*/
+    //показать прелоадер
+    function ajaxPreloaderOn(){
+        $('.preloader').css({'display':'block', 'opacity':'0.5'});
+        $('.preloader .spinner').css('display', 'inline-block');
+    }
+    //прелоадер на ссылки
+    $('.ploader').on('click', function(){
+        ajaxPreloaderOn();
+    });
     $('.eye').on('click', function(){
         var field = $(this).siblings('input');
         if($(this).hasClass('active')) {

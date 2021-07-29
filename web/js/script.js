@@ -35,7 +35,7 @@ $(function() {
 
 	/*tin*/
 	//прелоадер на ссылки
-	$('a.ploader').on('click', function(){
+	$('.ploader').on('click', function(){
 		ajaxPreloaderOn();
 	});
 	//прикрепление фото ПУ

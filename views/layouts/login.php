@@ -44,13 +44,14 @@ IeAssets::register($this);
         </div>
     </div>
 
+
     <!-- Header -->
     <div class="login-header">
         <div class="login-fw">
 
             <!-- logo -->
             <div class="logo">
-                <a href="/login/"><img src="images/logo.png" alt="" /></a>
+                <a href="/login/" class="ploader"><img src="images/logo.png" alt="" /></a>
             </div>
 
             <!-- group -->
