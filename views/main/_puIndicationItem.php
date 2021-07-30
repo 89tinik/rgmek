@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 ?>
-<div class="sub-objects-item collapse-item no-result wrap-pu <?= ($onePU) ? 'active' : '' ?>"
+<div class="sub-objects-item collapse-item no-result wrap-pu <?= ($onePU) ? 'active' : '' ?> <?=($pu['AIISKUE'] == 'Да') ? 'aiiskue' : '' ?>"
      data-id="<?= $pu['UIDTU'] ?>" data-puid="<?= $pu['UIDPU'] ?>" data-k="<?= $pu['KTT'] ?>">
     <div class="sub-objects-btn collapse-btn">
         <?= $pu['FullName'] ?>
@@ -73,6 +73,9 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
                     <div class="group">
+                        <?php if($pu['AIISKUE'] == 'Да'):?>
+                            <div class="label">Приборы учета подключены к системе дистанционного сбора данных. Передача показаний не требуется.</div>
+                        <?php else: ?>
                         <div class="label">Введите показание от <?= date('d.m.Y') ?></div>
                         <div class="field co-<?= $pu['Discharge'] ?>">
                             <div class="wrap-error">
@@ -80,6 +83,7 @@ use yii\widgets\ActiveForm;
                             </div>
                             <input type="text" maxlength="<?= $pu['Discharge'] ?>" value="" class="curr-val indication">
                         </div>
+                        <?php endif;?>
                     </div>
                 </div>
                 <div class="col">

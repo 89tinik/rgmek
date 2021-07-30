@@ -122,7 +122,7 @@ $(function() {
 	});
 	//формирование Акта фиксации
 	$('.get-act').on('click', function(){
-        if ($(this).closest('.wrap-object').find('.wrap-pu.no-result').length > 0){
+        if ($(this).closest('.wrap-object').find('.wrap-pu.no-result:not(.aiiskue)').length > 0){
             var firstNorersult = $('.wrap-pu.no-result:first');
             if (!firstNorersult.hasClass('active')){
                 firstNorersult.children('.collapse-btn').addClass('active');
@@ -134,7 +134,7 @@ $(function() {
         } else {
 			//ajaxPreloaderOn();
             var indications = '?uidcontracts='+$('.sidebar-menu-fw a.active').attr('data-uid')+'&uidobject='+$(this).closest('.wrap-object').attr('data-id');
-            $(this).closest('.wrap-object').find('.wrap-pu').each(function(){
+            $(this).closest('.wrap-object').find('.wrap-pu:not(.aiiskue)').each(function(){
                 indications += '&'+$(this).attr('data-id')+'='+$(this).attr('data-idication');
             });
 			var hrefArr = $(this).attr('href').split('?');
@@ -202,7 +202,7 @@ $(function() {
 	function transferIndication(btn){
 		ajaxPreloaderOn();
 		var puArr = [];
-		btn.closest('.wrap-object').find('.wrap-pu:not(.no-result)').each(function () {
+		btn.closest('.wrap-object').find('.wrap-pu:not(.no-result, .aiiskue)').each(function () {
 			puArr.push({'indications':$(this).attr('data-idication'),'uidtu':$(this).attr('data-id'),'uidpu':$(this).attr('data-puid')});
 		});
 		$.ajax({
@@ -225,7 +225,7 @@ $(function() {
 	}
 
 	$('.transfer-object').on('click', function () {
-		if ($(this).closest('.wrap-object').find('.wrap-pu.no-result').length > 0){
+		if ($(this).closest('.wrap-object').find('.wrap-pu.no-result:not(.aiiskue)').length > 0){
 			// var firstNorersult = $('.wrap-pu.no-result:first');
 			// if (!firstNorersult.hasClass('active')){
 			// 	firstNorersult.children('.collapse-btn').addClass('active');
@@ -234,7 +234,7 @@ $(function() {
 			// firstNorersult.find('.label-error').show();
 			// $('html, body').animate({ scrollTop: firstNorersult.offset().top }, 500);
 			var emptyPu = '';
-			$(this).closest('.wrap-object').find('.wrap-pu.no-result').each(function () {
+			$(this).closest('.wrap-object').find('.wrap-pu.no-result:not(.aiiskue)').each(function () {
 				emptyPu = emptyPu + $(this).find('.sub-objects-btn').text() + '</br>';
 			});
 			$(this).prev().find('.empty-pu').html(emptyPu);
