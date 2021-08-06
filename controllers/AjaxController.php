@@ -6,17 +6,24 @@ namespace app\controllers;
 
 use app\models\AttachForm;
 use app\models\Contract;
+use app\models\InvoiceSber;
+use pantera\yii2\pay\sberbank\Module;
 use app\models\User;
+use pantera\yii2\pay\sberbank\models\Invoice;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use Yii;
 use XLSXWriter;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 
 class AjaxController extends Controller
 {
+
+    /* @var Module */
+    public $module;
 
     public $layout = 'ajax';
 
@@ -41,7 +48,6 @@ class AjaxController extends Controller
     public function actionListPenalty()
     {
         $data = \Yii::$app->request->post();
-        //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -60,7 +66,6 @@ class AjaxController extends Controller
     public function actionListAktpp()
     {
         $data = \Yii::$app->request->post();
-        //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -78,7 +83,6 @@ class AjaxController extends Controller
     public function actionAccruedPaid()
     {
         $data = \Yii::$app->request->post();
-        //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -97,7 +101,6 @@ class AjaxController extends Controller
     {
         $data = \Yii::$app->request->post();
         $data['quantity'] = 'full';
-        //$data['uidcontracts']='b95aa4a7-9f5e-11e4-9c77-001e8c2d263f';
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -116,8 +119,6 @@ class AjaxController extends Controller
     {
         $data = \Yii::$app->request->post();
         $data['tu'] = json_decode($data['tu'], true);
-//        var_dump($data);
-//        die();
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('POST')
@@ -236,7 +237,25 @@ class AjaxController extends Controller
 
         }
     }
+
+    public function actionCreateSberInvoice (){
+        // ...здесь какая-то ваша логика по сохранению заказа, например это объект $order
+
+// создаем и сохраняем инвойс, передаем в него номер и сумму вашего заказа
+
+        $data = \Yii::$app->request->post();
+        $ee = str_replace(',', '.',  $data['InvoiceSberForm']['ee']);
+        $penalty = str_replace(',', '.',  $data['InvoiceSberForm']['penalty']);
+        $price =  $ee + $penalty;
+        $invoice = InvoiceSber::addSberbank($data['InvoiceSberForm']['invoice'], $price, NULL, ['penalty'=>$penalty, 'ee'=>$ee]);
+        $this->redirect(['/sberbank/default/create', 'id' => $invoice->id]);
+
+    }
+
+
+
     public function actionClose(){
         return 'Сайт обновляется!';
     }
+
 }

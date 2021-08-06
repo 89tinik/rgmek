@@ -64,4 +64,15 @@ class InnerController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionHelp(){
+        return $this->render('help');
+    }
+
+    public function actionPaySuccess(){
+        return $this->render('paySuccess');
+    }
+    public function actionPayFail(){
+        return $this->render('payFail');
+    }
 }

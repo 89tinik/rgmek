@@ -7,6 +7,7 @@ namespace app\controllers;
 use app\models\AttachForm;
 use app\models\Contract;
 use app\models\InstallESForm;
+use app\models\InvoiceSberForm;
 use app\models\User;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
@@ -139,13 +140,15 @@ class MainController extends Controller
 
     public function actionArrear()
     {
+        $model = new InvoiceSberForm();
+
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_account/', $data);
         if (isset($arrearInfo['success'])){
             if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
             }
-            return $this->render('arrear', ['result'=>$arrearInfo['success']]);
+            return $this->render('arrear', ['result'=>$arrearInfo['success'], 'model'=>$model]);
         } else {
             return $arrearInfo['error'];
         }

@@ -25,7 +25,7 @@ $this->title = 'Авторизация';
 //                ]
             ]
         ]); ?>
-        <div class="title">Войти</div>
+        <div class="title">Войти в личный кабинет небытового потребителя</div>
         <?php
         if (Yii::$app->session->hasFlash('success')) {
             echo Yii::$app->session->getFlash('success');
@@ -46,6 +46,7 @@ $this->title = 'Авторизация';
 							{error}
 						</div>'])->passwordInput(['placeholder' => 'Пароль']) ?>
         <?= Html::submitButton('Войти') ?>
+
         <div class="wrong-link">
             <?= Html::a('Зарегистрироваться', ['login/registration'],['class'=>'ploader']) ?>
             <span>&nbsp; &nbsp; </span>

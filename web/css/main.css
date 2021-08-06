@@ -2805,7 +2805,9 @@ margin-bottom:10px;
 .testimony-box .attach-form .btn.disabled:hover{
   box-shadow:none;
 }
-
+.payment-form .label{
+  padding-left: 0;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

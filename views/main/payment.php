@@ -21,7 +21,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
     <form class="get-order-form">
     <div class="group">
         <div class="field">
-            <div class="label">Выбрать документ:</div>
+            <div class="label">Выбрать отчет / документ:</div>
             <div class="value">
                 <select class="styler select__default type-order" required="required">
                     <option></option>

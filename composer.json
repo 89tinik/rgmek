@@ -21,7 +21,8 @@
         "linslin/yii2-curl": "*",
         "yiisoft/yii2-httpclient": "^2.0",
         "moonlandsoft/yii2-phpexcel": "*",
-        "mk-j/php_xlsxwriter": "*"
+        "mk-j/php_xlsxwriter": "*",
+        "pantera-digital/yii2-sberbank-pay": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

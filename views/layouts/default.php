@@ -61,15 +61,16 @@ IeAssets::register($this);
                 <div class="top-menu">
                     <ul>
                         <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li> <!-- class="active" -->
-                        <li class="children">
-                            <a href="#">Заключение/изменение договора</a>
-                            <ul>
-                                <li><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключить договор</a></li>
-                                <li><a href="#">Внести изменения в договор</a></li>
-                                <li><a href="#">Ранее поданные заявки</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Помощь</a></li>
+<!--                        <li class="children">-->
+<!--                            <a href="#">Заключение/изменение договора</a>-->
+<!--                            <ul>-->
+<!--                                <li><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключить договор</a></li>-->
+<!--                                <li><a href="#">Внести изменения в договор</a></li>-->
+<!--                                <li><a href="#">Ранее поданные заявки</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+                        <li class="children"><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение договора</a></li>
+                        <li><?= Html::a('Помощь', ['inner/help'], ['class' => 'ploader']) ?></li>
                         <li><?= Html::a('Написать обращение', ['inner/fos'], ['class' => 'ploader']) ?></li>
                     </ul>
                 </div>
@@ -84,7 +85,7 @@ IeAssets::register($this);
                 <!-- menu btn -->
                 <a href="#" class="menu-btn">
                     <span class="lines"></span>
-                    <span class="num">12</span>
+<!--                    <span class="num">12</span>-->
                 </a>
 
             </div>
@@ -145,8 +146,12 @@ IeAssets::register($this);
             <div class="close"></div>
         </div>
         <div class="warning-pay-popup custom-popup">
-            <h2>Функционал находится в разработке!</h2>
-            <p>Оплатите на сайте банка.</p>
+            <h2>Уважаемый пользователь ЛК!</h2>
+            <p>В настоящее время выполняется тестирование функционала оплаты!<br/>Вы можете оплатить одним из способов:</p>
+            <ul>
+                <li>через Сбербанк ОнЛ@йн, (для ИП и физических лиц);</li>
+                <li>с использованием систем дистанционного банковского обслуживания по реквизитам, указанным в счете на оплату.</li>
+            </ul>
             <div class="close"></div>
         </div>
         <div class="information-pu-popup custom-popup">
@@ -190,7 +195,19 @@ IeAssets::register($this);
             <div class="close"></div>
         </div>
         <div id="hidden-content" style="display: none">
-            <h2>Функционал находится в разработке!</h2>
+            <h2>Уважаемый пользователь ЛК! Данный раздел находится в разработке.</h2>
+            <p>Информацию по этой теме Вы можете получить:</p>
+            <ul>
+                <li>на сайте, в разделе <a href="https://www.rgmek.ru/business-clients/contracts.html" target="_blank">Как заключить/изменить договор</a></li>
+                <li>по телефонам контактного центра +7 (4912) 90-87-90 или 8-800-250-50-78 (звонок бесплатный).</li>
+            </ul>
+            <p>Заявление и сканированные копии документов для заключения договора можно направить:</p>
+            <ul>
+                <li>в разделе <?= Html::a('"Написать обращение"', ['inner/fos'], ['class' => 'ploader']) ?>, выбрав тему «Заключить/изменить договор»;</li>
+                <li>посредством электронного документооборота Диадок,СБИС;</li>
+                <li>по адресу эл. почты dronp@rgmek.ru с темой письма «Заключить/изменить договор».</li>
+            </ul>
+
         </div>
     </div>
 

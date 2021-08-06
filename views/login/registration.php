@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
 use yii\helpers\Html;
 
-$this->title = 'Регистрация';
+$this->title = 'Регистрация в личном кабинете небытового потребителя';
 ?>
 
 <!-- Login Form -->
@@ -50,7 +50,7 @@ $this->title = 'Регистрация';
 							<div class="eye left"></div>	
 							<div class="label-info"></div>
                             <div class="label-error" style="display: none;">
-                                Запомните или сохраните пароль. Он будет использоваться при входе в личны кабинет.
+                                Запомните или сохраните пароль. Он будет использоваться при входе в личный кабинет.
                                 <div class="close"></div>
                             </div>
 							{error}

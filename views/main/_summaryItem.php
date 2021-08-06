@@ -12,6 +12,7 @@ use yii\helpers\Html;
         <div class="info-top">
             <div class="name">
                 <!--Какой-то текст никому не известно-->
+                Договор
                 <span class="value"><?=$contract['FullName']?></span>
             </div>
             <div class="price">

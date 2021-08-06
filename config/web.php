@@ -85,6 +85,67 @@ $config = [
         ],
 
     ],
+    'modules' => [
+        'sberbank' => [
+            'class' => 'pantera\yii2\pay\sberbank\Module',
+            'components' => [
+                'sberbank' => [
+                    'class' => pantera\yii2\pay\sberbank\components\Sberbank::class,
+
+                    // время жизни инвойса в секундах (по умолчанию 20 минут - см. документацию Сбербанка)
+                    // в этом примере мы ставим время 1 неделю, т.е. в течение этого времени покупатель может
+                    // произвести оплату по выданной ему ссылке
+                    'sessionTimeoutSecs' => 60 * 60 * 24 * 7,
+
+                    // логин api мерчанта
+                    'login' => 'T597168285295-api',
+
+                    // пароль api мерчанта
+                    'password' => 'T597168285295',
+
+                    // использовать тестовый режим (по умолчанию - нет)
+                    'testServer' => true,
+
+                    // использовать двухстадийную оплату (по умолчанию - нет)
+                    'registerPreAuth' => false
+                ],
+            ],
+
+            // страница вашего сайта с информацией об успешной оплате
+            'successUrl' => '/inner/pay-success',
+
+            // страница вашего сайта с информацией о НЕуспешной оплате
+            'failUrl' => '/inner/pay-fail',
+
+            // обработчик, вызываемый по факту успешной оплаты
+            'successCallback' => function($invoice) {
+                \app\models\InvoiceSber::sendToServer($invoice);
+                // какая-то ваша логика, например
+                //$order = \your\models\Order::findOne($invoice->order_id);
+                //$client = $order->getClient();
+                //$client->sendEmail('Зачислена оплата по вашему заказу №' . $order->id);
+                // .. и т.д.
+            },
+
+            // обработчик, вызываемый по факту НЕуспешной оплаты
+            //'failCallback' => function($invoice) {
+                // какая-то ваша логика, например
+                //$order = \your\models\Order::findOne($invoice->order_id);
+                //$client = $order->getClient();
+                //$client->sendEmail('Ошибка при оплате по вашему заказу №' . $order->id);
+                // .. и т.д.
+            //},
+
+            // необязательный callback для генерации uniqid инвойса, необходим
+            // в том случае, если по каким-то причинам используемый по умолчанию
+            // формат `#invoice_id#-#timestamp#` вам не подходит
+            //'idGenerator' => function(Invoice $invoice, int $id) {
+                // $id - это uniqid, сгенерированный по умолчанию
+                // вместо него используем собственный алгоритм, например такой
+                //return '000-AAA-' . $invoice->id;
+            //},
+        ],
+    ],
     'params' => $params,
 ];
 

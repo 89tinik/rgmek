@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71bbe1c2f277e813c81537da761d9aa9",
+    "content-hash": "8f90b0c81c93ca11d891893b84231fe8",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -818,6 +818,44 @@
                 }
             ],
             "time": "2021-02-15T16:11:48+00:00"
+        },
+        {
+            "name": "pantera-digital/yii2-sberbank-pay",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pantera-digital/yii2-sberbank-pay.git",
+                "reference": "3c82babeffde860075d9b89b958b72075f5de372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pantera-digital/yii2-sberbank-pay/zipball/3c82babeffde860075d9b89b958b72075f5de372",
+                "reference": "3c82babeffde860075d9b89b958b72075f5de372",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "pantera\\yii2\\pay\\sberbank\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "webmayak",
+                    "email": "web-mayak@mail.ru"
+                },
+                {
+                    "name": "singletonn",
+                    "email": "sopranowest@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/pantera-digital/yii2-sberbank-pay/issues",
+                "source": "https://github.com/pantera-digital/yii2-sberbank-pay/tree/master"
+            },
+            "time": "2020-10-30T05:23:21+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -6091,7 +6129,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "pantera-digital/yii2-sberbank-pay": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

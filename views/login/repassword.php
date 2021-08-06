@@ -49,7 +49,7 @@ $this->title = 'Восстановление пароля';
 							<div class="eye left"></div>	
 							<div class="label-info"></div>
                             <div class="label-error" style="display: none;">
-                                Запомните или сохраните пароль. Он будет использоваться при входе в личны кабинет.
+                                Запомните или сохраните пароль. Он будет использоваться при входе в личный кабинет.
                                 <div class="close"></div>
                             </div>
 							{error}

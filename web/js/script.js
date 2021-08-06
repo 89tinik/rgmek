@@ -34,6 +34,21 @@ $(function() {
 	});
 
 	/*tin*/
+	//пересчёт в форме оплаты
+	$('.sber-form .value input').on('change', function(){
+		if (parseFloat($(this).val()) > parseFloat($(this).attr('max'))){
+			$(this).val($(this).attr('max'));
+		}
+		var all = 0;
+		$('.sber-form .value input').each(function(){
+			all = all + parseFloat($(this).val());
+		});
+		if (all > 0) {
+			$('.all-price').html(all.toLocaleString() + '₽');
+		} else {
+			$('.all-price').html('0');
+		}
+	});
 	//прелоадер на ссылки
 	$('.ploader').on('click', function(){
 		ajaxPreloaderOn();
@@ -264,14 +279,17 @@ $(function() {
 
 	//обработка формы перехода на оплату
 	$('.pay-form').on('submit', function(){
-		if ($(window).scrollTop() > $('.bg').scrollTop()){
-			var topPos = $(window).scrollTop() + 50;
-		} else {
-			var topPos = $('.bg').scrollTop() + 50;
+		if ($(this).hasClass('testing')) {
+			if ($(window).scrollTop() > $('.bg').scrollTop()) {
+				var topPos = $(window).scrollTop() + 50;
+			} else {
+				var topPos = $('.bg').scrollTop() + 50;
+			}
+			$('.warning-pay-popup').animate({'top': topPos}, 450);
+			$('.contracts-devices-popup-overlay').fadeIn(250);
+
+			return false;
 		}
-		$('.warning-pay-popup').animate({'top': topPos}, 450);
-		$('.contracts-devices-popup-overlay').fadeIn(250);
-		return false;
 	});
 
 	//показать прелоадер
@@ -279,7 +297,7 @@ $(function() {
 		$('.preloader').css({'display':'block', 'opacity':'0.5'});
 		$('.preloader .spinner').css('display', 'inline-block');
 	}
-	//показать прелоадер
+	//скрыть прелоадер
 	function ajaxPreloaderOff() {
 		var preload = $('.preloader');
 		preload.find('.spinner').fadeOut(function(){

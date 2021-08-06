@@ -72,7 +72,7 @@ use yii\helpers\Html;
                         }
                         if (!empty($object['Expand']['PriceCategory']) && $info) {
                             if ($valTP != '') {
-                                $valTP .= '/';
+                                $valTP .= ' / ';
                             }
                             $valTP .= $object['Expand']['PriceCategory'];
                         }

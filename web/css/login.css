@@ -126,8 +126,8 @@ input, textarea, button {
 .login-form	.title {
 	margin-bottom: 35px;
 	font-weight: 500;
-	font-size: 45px;
-	line-height: 52px;
+	font-size: 30px;
+	line-height: 30px;
 	color: #1C2834;
 	text-align: center;
 }
@@ -281,8 +281,8 @@ input, textarea, button {
 	}
 	.login-form .title {
 		margin-bottom: 30px;
-		font-size: 35px;
-		line-height: 35px;
+		font-size: 25px;
+		line-height: 25px;
 	}
 	.login-header .logo {
 		margin: 0 auto;
