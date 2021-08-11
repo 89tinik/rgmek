@@ -54,21 +54,22 @@ use yii\helpers\Html;
 
                         <?php
                         $valTP = '';
-                        $info = true;
+                        $info = false;
                         if (!empty($object['Expand']['TariffGroup']['Name'])) {
-                            $valTP = $object['Expand']['TariffGroup']['Name'];
-                            if ($object['Expand']['TariffGroup']['Name'] == 'Население') {
-                                $info = false;
+                            $valTP = $object['Expand']['TariffGroup']['Value'];
+                            if ($object['Expand']['TariffGroup']['Name'] == 'Прочие') {
+                                $info = true;
                             }
                         } elseif (!empty($object['Expand']['TariffGroup'][0]['Name'])) {
                             $arrName = [];
                             foreach ($object['Expand']['TariffGroup'] as $arr) {
                                 $arrName[] = $arr['Name'];
+                                $arrNameVal[] = $arr['Value'];
                             }
-                            if (in_array('Население', $arrName)) {
-                                $info = false;
+                            if (in_array('Прочие', $arrName)) {
+                                $info = true;
                             }
-                            $valTP = implode(',', $arrName);
+                            $valTP = implode(',', $arrNameVal);
                         }
                         if (!empty($object['Expand']['PriceCategory']) && $info) {
                             if ($valTP != '') {
@@ -85,7 +86,7 @@ use yii\helpers\Html;
                         <?php if (!empty($valTP)): ?>
                             <li>
                                 <span class="list-label">
-                                    <span>Тариф <?php if ($info): ?>/ценовая категория<?php endif; ?></span>
+                                    <span>Тариф /ценовая категория</span>
                                 </span>
                                 <span class="list-value">
                                     <span><?= $valTP ?></span><br>
