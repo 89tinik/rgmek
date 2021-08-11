@@ -38,8 +38,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
 
         <div class="title">Оплата</div>
         <?php
-       $ee = (!empty($result['Payment']['ElectricityDebt']))? str_replace(',', '.', $result['Payment']['ElectricityDebt']) : 0;
-        
+        $ee = (!empty($result['Payment']['ElectricityDebt']))? str_replace(',', '.', $result['Payment']['ElectricityDebt']): 0;
         $disabledEe = ($ee) ? ' ' : ['diasbled' => 'diasabled'];
         ?>
         <?= $form->field($model, 'ee', ['template' => '<div class="group">
