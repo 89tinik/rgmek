@@ -123,6 +123,11 @@ class LoginController extends Controller
         return $this->render('verification', compact('verificationForm'));
     }
 
+    public function actionInformation()
+    {
+        return $this->render('information');
+    }
+
     public function actionRemove()
     {
         $user = User::findOne(['id_db' => Yii::$app->request->get('id')]);

@@ -34,6 +34,35 @@ $(function() {
 	});
 
 	/*tin*/
+	//тип ответа на ФОС
+	function setAnswerType(i) {
+		if (i == 'phone') {
+			$('#feedbackForm input.phone').closest('.group').css('display', 'block');
+			$('#feedbackForm input.email').closest('.group').css('display', 'none');
+		} else {
+			$('#feedbackForm input.phone').closest('.group').css('display', 'none');
+			$('#feedbackForm input.email').closest('.group').css('display', 'block');
+		}
+	}
+
+	$('#feedbackForm .type-answer input[type=radio]').on('change', function () {
+		setAnswerType($(this).val());
+	});
+	setAnswerType($('#feedbackForm .type-answer input[type=radio]:checked').val());
+
+	//попап История показаний
+	$('.history').on('click', function(){
+		if ($(window).scrollTop() > $('.bg').scrollTop()){
+			var topPos = $(window).scrollTop() + 50;
+		} else {
+			var topPos = $('.bg').scrollTop() + 50;
+		}
+		$('.link-invoice').attr('href', $('.link-invoice').attr('href')+'?uid='+$(this).attr('data-uidcontract'));
+		$('.history-popup').animate({'top': topPos}, 450);
+		$('.contracts-devices-popup-overlay').fadeIn(250);
+		return false;
+	});
+
 	//пересчёт в форме оплаты
 	$('.sber-form .value input').on('change', function(){
 		if (parseFloat($(this).val()) > parseFloat($(this).attr('max'))){
@@ -58,13 +87,29 @@ $(function() {
 		if ($(this).hasClass('disabled')){
 			return false;
 		}
+		$(this).addClass('current-label-attach');
 		var puid = $(this).closest('.wrap-pu').attr('data-puid');
 		if ($('#attachFormPu .puidInput').val() != puid) {
 			$('#attachFormPu')[0].reset();
 			$('#attachFormPu .puidInput').val(puid);
 		}
 	});
-
+	$('#attachform-photo').on('change', function() {
+		var file = $('#attachform-photo')[0].files[0];
+		if (file) {
+			$('span.photo-name').remove();
+			$('.current-label-attach').after('<span class="photo-name">'+file.name+'</span>');
+			$('.current-label-attach').removeClass('current-label-attach');
+		}
+	});
+	$('#attachform-time').on('change', function() {
+		var file = $('#attachform-time')[0].files[0];
+		if (file) {
+			$('span.photo-time').remove();
+			$('.current-label-attach').after('<span class="photo-time">'+file.name+'</span>');
+			$('.current-label-attach').removeClass('current-label-attach');
+		}
+	});
 	//отправка фото ПУ
 	$('button.computation-pu').on('click', function () {
 		if ($(window).scrollTop() > $('.bg').scrollTop()){
@@ -982,6 +1027,7 @@ function styler_func() {
 	var dateFormat = "dd.mm.yy", from = $( "#from_dialog" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: true,
+			changeYear: true,
 		numberOfMonths: 1,
 			regional: "ru",
 			showButtonPanel: true,
@@ -997,6 +1043,7 @@ function styler_func() {
 	to = $( "#to_dialog" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: true,
+		changeYear: true,
 		numberOfMonths: 1,
 		showButtonPanel: true,
 		regional: "ru",

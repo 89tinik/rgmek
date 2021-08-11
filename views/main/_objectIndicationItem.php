@@ -2,6 +2,7 @@
 
 /* @var $object */
 /* @var $one */
+/* @var $UIDContract */
 
 use yii\helpers\Html;
 
@@ -26,6 +27,7 @@ use yii\helpers\Html;
                     echo $this->render('_puIndicationItem', [
                         'pu' => $object['Expand']['PU'],
                         'onePU' => true,
+                        'UIDContract'=>$UIDContract,
                         'model'=>$model
                     ]);
                 } else {
@@ -34,6 +36,7 @@ use yii\helpers\Html;
                             echo $this->render('_puIndicationItem', [
                                 'pu' => $arr,
                                 'onePU' => false,
+                                'UIDContract'=>$UIDContract,
                                 'model'=> $model
                             ]);
                         }

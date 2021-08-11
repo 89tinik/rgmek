@@ -50,6 +50,7 @@ $this->title = 'Передать показания | ЛК РГМЭК';
         if (isset($result['Object']['Name'])){
             echo $this->render('_objectIndicationItem', [
                 'object' => $result['Object'],
+                'UIDContract' => $result['UIDContract'],
                 'one' => true,
                 'model' => $model
             ]);
@@ -57,6 +58,7 @@ $this->title = 'Передать показания | ЛК РГМЭК';
             foreach ($result['Object'] as $arr) {
                 echo $this->render('_objectIndicationItem', [
                     'object' => $arr,
+                    'UIDContract' => $result['UIDContract'],
                     'one' => false,
                     'model' => $model
                 ]);

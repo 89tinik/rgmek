@@ -2675,7 +2675,8 @@ input[type="text"].indication{
   box-sizing: border-box;
   font-size: 40px;
 /*color: #494E52;*/
-  color: #CCCCCC;
+/*  color: #CCCCCC;*/
+  color: #959CA4;
   border: none;
   letter-spacing: 20px;
   background: url(../images/border-6.jpg) repeat-x;
@@ -2696,7 +2697,8 @@ text-indent: 5px;
 box-sizing: border-box;
 font-size: 40px;
 /*color: #494E52;*/
-color: #CCCCCC;
+/*color: #CCCCCC;*/
+color: #959CA4;
 letter-spacing: 0;
 display: inline-block;
 margin-left: -19px;
@@ -3641,6 +3643,9 @@ margin-bottom:10px;
   }
   .mobile-popup .btn.small{
     padding: 0 10px;
+  }
+  a.btn.small.pu-ask{
+    float:right;
   }
 /*ENDtin*/
 }

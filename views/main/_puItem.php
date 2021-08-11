@@ -2,7 +2,7 @@
 
 /* @var $pu */
 ?>
-<div class="device-wrap"><a href="#" class="devices-link"><?= $pu['Name'] ?></a>
+<div class="device-wrap"><a href="#" class="devices-link">заводской №<?= $pu['Name'] ?></a>
     <div style="display: none">
         <table>
 

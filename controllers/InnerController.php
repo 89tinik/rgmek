@@ -49,7 +49,7 @@ class InnerController extends Controller
                 $model->file = UploadedFile::getInstances($model, 'file');
                 $files = $model->file;
 
-                if ($model->sendMail(Yii::$app->params['adminEmail'], $files)) {
+                if ($model->sendMail(['89.tinik@gmail.com',Yii::$app->params['adminEmail']], $files)) {
                     Yii::$app->session->setFlash('success', 'Ваши данные успешно отправлены!');
                     return $this->refresh();
                 } else {

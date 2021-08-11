@@ -9,19 +9,17 @@ use Yii;
 
 class FeedbackForm extends Model
 {
+    public $user;
     public $name;
-    public $surname;
-    public $patronymic;
+
+    public $type_answer;
 
     public $email;
     public $phone;
 
-    public $contract;
-    public $entity;
     public $subject;
 
     public $body;
-    public $polit;
     public $file;
 
 
@@ -31,11 +29,9 @@ class FeedbackForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'subject', 'body', 'polit'], 'required', 'message' => 'Заполните поле'],
-            // email has to be a valid email address
+            [['name', 'subject', 'body', 'type_answer','user'], 'required', 'message' => 'Заполните поле'],
             ['email', 'email'],
-            [['phone', 'surname', 'patronymic', 'contract', 'entity', 'file'], 'trim'],
+            [['phone', 'file'], 'trim'],
         ];
     }
 
@@ -45,9 +41,10 @@ class FeedbackForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'Имя',
+            'name' => 'Как к вам обращаться?',
             'subject' => 'Тема сообщения',
             'body' => 'Сообщение',
+            'type_answer' => 'Укажите желаемый способ получения ответа',
             'email' => 'E-mail',
             'phone' => 'Телефон',
             'surname' => 'Фамилия',
@@ -99,10 +96,7 @@ class FeedbackForm extends Model
                 'body' => $this->body,
                 'email' => $this->email,
                 'phone' => $this->phone,
-                'surname' => $this->surname,
-                'patronymic' => $this->patronymic,
-                'contract' => $this->contract,
-                'entity' => $this->entity]
+                'user' => $this->user]
         ]);
 
         foreach ($files as $file) {

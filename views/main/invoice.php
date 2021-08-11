@@ -18,49 +18,13 @@ $this->title = 'Счета |  ЛК РГМЭК';
     </div>
 </div>
 
-<div class="payment-filter white-box">
-    <form class="get-order-form">
-        <div class="group">
-            <div class="field">
-                <div class="label">Выбрать документ:</div>
-                <div class="value">
-                    <select class="styler select__default type-order" required="required">
-                        <option></option>
-                        <option value="detail">Детализация счёта</option>
-                        <option value="aktpp">Акт приема передачи э/э</option>
-                        <option value="odn">Отчет по расчету ОДН</option>
-                        <option value="penalty">Расчет пени</option>
-                        <!--option value="invoices">Счета</option-->
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="group large">
-            <div class="label">Выбрать период:</div>
-            <div class="field">
-                <div class="value">
-                    <span>с</span>
-                    <input type="text" value="<?= $withDate ?>" id="from_dialog"
-                           required="required"  autocomplete="off" readonly="readonly"/>
-                </div>
-            </div>
-            <div class="field">
-                <div class="value">
-                    <span>По</span>
-                    <input type="text" value="<?= $byDate ?>" id="to_dialog"
-                           required="required"  autocomplete="off" readonly="readonly"/>
-                </div>
-            </div>
-            <input type="submit" class="btn submit-btn get-report" value="Сформировать"/>
-        </div>
-    </form>
-</div>
+
 
 <div class="payment-items">
     <div class="payment-item">
 
         <div class="pack-report-wrap report-item white-box">
-            <div class="white-box-title">Пакет расчётных документов</div>
+            <div class="white-box-title">Текущие счета и расчетные документы</div>
             <div class="invoice-table">
                 <table>
 
@@ -233,5 +197,42 @@ $this->title = 'Счета |  ЛК РГМЭК';
         </div>
 
     </div>
-</div>
 
+
+<div class="payment-filter white-box">
+    <form class="get-order-form">
+        <div class="group">
+            <div class="field">
+                <div class="label">Счета и расчетные документы за предыдущие периоды:</div>
+                <div class="value">
+                    <select class="styler select__default type-order" required="required">
+                        <option></option>
+                        <option value="detail">Детализация счёта</option>
+                        <option value="aktpp">Акт приема передачи э/э</option>
+                        <option value="odn">Отчет по расчету ОДН</option>
+                        <option value="penalty">Расчет пени</option>
+                        <!--option value="invoices">Счета</option-->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="group large">
+            <div class="label">Выбрать период:</div>
+            <div class="field">
+                <div class="value">
+                    <span>с</span>
+                    <input type="text" value="<?= $withDate ?>" id="from_dialog"
+                           required="required"  autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="value">
+                    <span>По</span>
+                    <input type="text" value="<?= $byDate ?>" id="to_dialog"
+                           required="required"  autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+            <input type="submit" class="btn submit-btn get-report" value="Сформировать"/>
+        </div>
+    </form>
+</div>

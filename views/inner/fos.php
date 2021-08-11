@@ -48,7 +48,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
                                         </div>
                                     </div>',
                             'options' => [
-                             //   'tag' => false
+                                //   'tag' => false
                             ]
                         ]
                     ]); ?>
@@ -62,46 +62,59 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
                             </div-->
 
                             <div class="group-col">
-                                <?= $form->field($model, 'name') ?>
-                                <?= $form->field($model, 'patronymic')?>
-                                <?= $form->field($model, 'surname')?>
+                                <?=$form->field($model, 'user',['template' => '{input}'])->hiddenInput(['value' => \Yii::$app->controller->userName]);?>
+                                <?= $form->field($model, 'name')->textInput(['placeholder' => 'Имя']) ?>
+
+                                <div class="radio-items type-answer">
+                                    <?php
+
+                                    $model->type_answer = (!empty($model->type_answer)) ? $model->type_answer : 'phone';
+                                    ?>
+                                    <?= $form->field($model, 'type_answer')->radioList(['phone' => 'Телефон', 'email' => 'E-mail'],
+                                        [
+                                            'item' => function ($index, $label, $name, $checked, $value) {
+                                                $checked = ($checked) ? 'checked="checked"' : '';
+                                                $return = '<div class="radio-item"> <label>';
+                                                $return .= '<input type="radio" class="styler" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                                                $return .= ucwords($label);
+                                                $return .= '</label></div>';
+
+                                                return $return;
+                                            }
+                                        ]) ?>
+                                </div>
+
 
                                 <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), [
                                     'mask' => '89999999999',
-                                ])->textInput(['class' => 'phone form-control']) ?>
-                                <?= $form->field($model, 'email') ?>
-                                <?=$form->field($model, 'polit',['template' => ' <div class="group">
- <div class="wrap-polit-checkbox">{input}</div>
- <p class="polit-label">Нажимая кнопку «Регистрация», я принимаю условия Пользовательского соглашения и даю согласие ООО «РГМЭК» на обработку моих персональных данных на условиях, определенных '.Html::a('Пользовательским соглашением', ['/'],['class'=>'ploader']).'.</p>
- </div>'])->checkbox([ 'value' => '1', 'checked ' => true, 'class'=>'styler polit', 'label' => null]);?>
+                                ])->textInput(['class' => 'phone']) ?>
+                                <?= $form->field($model, 'email')->textInput(['class' => 'email']) ?>
+
 
 
                             </div>
 
                             <div class="group-col">
-                                <?= $form->field($model, 'contract')->widget(\yii\widgets\MaskedInput::className(), [
-                                    'mask' => '9{1,}',
-                                ])->textInput(['autocomplete' => 'off']) ?>
 
-                                <?= $form->field($model, 'entity') ?>
                                 <?= $form->field($model, 'subject')->dropdownList([
-                                    'Электронный документооборот'=>'Электронный документооборот',
-                                    'Прибор учета, заявка на замену'=>'Прибор учета, заявка на замену',
-                                    'Заключить/изменить договор'=>'Заключить/изменить договор',
-                                    'Взаиморасчеты, показания'=>'Взаиморасчеты, показания',
-                                    'Задолженность, ограничения'=>'Задолженность, ограничения',
-                                    'Предложения и жалобы по качеству эл.энергии'=>'Предложения и жалобы по качеству эл.энергии',
-                                    'Обслуживание и общие вопросы'=>'Обслуживание и общие вопросы'
+                                    'Электронный документооборот' => 'Электронный документооборот',
+                                    'Прибор учета, заявка на замену' => 'Прибор учета, заявка на замену',
+                                    'Заключить/изменить договор' => 'Заключить/изменить договор',
+                                    'Взаиморасчеты, показания' => 'Взаиморасчеты, показания',
+                                    'Задолженность, ограничения' => 'Задолженность, ограничения',
+                                    'Предложения и жалобы по качеству эл.энергии' => 'Предложения и жалобы по качеству эл.энергии',
+                                    'Обслуживание и общие вопросы' => 'Обслуживание и общие вопросы'
                                 ],
                                     [
-                                            'class'=>'styler select__default',
-                                        'prompt'=>'Выберите...'
+                                        'class' => 'styler select__default',
+                                        'prompt' => 'Выберите...'
 
                                     ]); ?>
 
 
                                 <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-                                <?= $form->field($model, 'file[]')->fileInput(['multiple'=>'multiple']) ?>
+                                <?= $form->field($model, 'file[]')->fileInput(['multiple' => 'multiple']) ?>
+                                <?= Html::submitButton('Отправить', ['class' => 'btn full']) ?>
                             </div>
 
                         </div>
@@ -110,7 +123,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
                     </div>
                     <div class="group-row">
                         <div class="group-col">
-                            <?= Html::submitButton('Отправить', ['class' => 'btn full']) ?>
+
                         </div>
                     </div>
 
