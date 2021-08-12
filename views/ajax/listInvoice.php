@@ -1,11 +1,11 @@
 <?php
-if (isset($result['Account'])) {
-    if (isset($result['Account']['FullName'])) {
+if (isset($result['Invoice'])) {
+    if (isset($result['Invoice']['FullName'])) {
         echo $this->render('_invoiceItem', [
             'account' => $result['Account']
         ]);
     } else {
-        foreach ($result['Account'] as $arr) {
+        foreach ($result['Invoice'] as $arr) {
             echo $this->render('_invoiceItem', [
                 'account' => $arr
             ]);

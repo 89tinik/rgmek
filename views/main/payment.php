@@ -4,6 +4,7 @@
 /* @var $result */
 /* @var $withDate */
 /* @var $byDate */
+/* @var $typeOrder */
 
 use yii\helpers\Html;
 
@@ -26,7 +27,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
                 <select class="styler select__default type-order" required="required">
                     <option></option>
                     <option value="accruedpaid">Отчет о начислениях и платежах</option>
-                    <option value="detail">Детализация счёта</option>
+                    <option value="detail" <?=($typeOrder == 'detail')?'selected="selected"':'';?>>Детализация счёта</option>
                     <option value="aktpp">Акт приема-передачи э/энергии</option>
                     <option value="penalty">Расчет пени</option>
                     <option value="odn">Отчет по расчету ОДН</option>
@@ -74,8 +75,8 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
             </div>
         </div>
 
-        <div class="payment-info border-box detail-report-wrap report-item" style="display: none">
-            <div class="title"></div>
+        <div class="payment-info border-box detail-report-wrap report-item" style="display: <?=($typeOrder == 'detail')?'block':'none';?>">
+            <div class="title">Детализация счета по договору<br/><?= $this->context->currentContract; ?><br/>за период <?=$withDate?>-<?=$byDate?></div>
             <div class="bts">
                 <!--a href="#" class="btn small border">Просмотр</a-->
                 <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right print', 'target'=>'_blank'])?>

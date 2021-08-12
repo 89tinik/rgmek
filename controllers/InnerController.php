@@ -14,7 +14,7 @@ use yii\web\UploadedFile;
 class InnerController extends Controller
 {
 
-    public $layout = 'default';
+    public $layout = 'inner';
     public $userName = '';
     public $listContract = '';
 

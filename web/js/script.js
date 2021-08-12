@@ -57,7 +57,7 @@ $(function() {
 		} else {
 			var topPos = $('.bg').scrollTop() + 50;
 		}
-		$('.link-invoice').attr('href', $('.link-invoice').attr('href')+'?uid='+$(this).attr('data-uidcontract'));
+		$('.link-invoice').attr('href', $('.link-invoice').attr('href')+'&uid='+$(this).attr('data-uidcontract'));
 		$('.history-popup').animate({'top': topPos}, 450);
 		$('.contracts-devices-popup-overlay').fadeIn(250);
 		return false;
@@ -499,6 +499,10 @@ $(function() {
 
 		return false;
 	});
+
+	// if ($('.type-order option:selected').val()!=''){
+	// 	$('.get-order-form').submit();
+	// }
 
 	//переключение типа получения счетов
 	function subscribeType () {

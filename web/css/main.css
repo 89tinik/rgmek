@@ -2810,6 +2810,9 @@ margin-bottom:10px;
 .payment-form .label{
   padding-left: 0;
 }
+.wrapper.text {
+  color:#000;
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {

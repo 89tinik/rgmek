@@ -184,7 +184,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         <!--        <a href="#" class="btn border full aj-all-invoice" data-uid="-->
         <? //= $result['Contract']['UID'] ?><!--">Все выставленные счета</a>-->
         <p>Все выставленные счета находятся в
-            разделе <?= Html::a('"Счета"', ['main/invoice', 'uid' => $result['Contract']['UID']], ['class' => 'ploader']) ?></p>
+            разделе <?= Html::a('"Счета"', ['main/invoice', 'uid' => $result['Contract']['UID'], 'type-order'=>'invoices'], ['class' => 'ploader']) ?></p>
 
     </div>
 </div>

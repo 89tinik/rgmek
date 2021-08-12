@@ -153,21 +153,7 @@ class MainController extends Controller
             return $arrearInfo['error'];
         }
     }
-    public function actionAllArrear()
-    {
-        $this->layout = 'ajax';
-        $data = ['uidcontracts' => \Yii::$app->request->get('uid'), 'quantity' => 'full'];
-        $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_account/', $data);
 
-        if (isset($arrearInfo['success'])){
-            if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
-                throw new HttpException(403, 'Доступ запрещён');
-            }
-            return $this->render('allArrear', ['result'=>$arrearInfo['success']['Account']]);
-        } else {
-            return $arrearInfo['error'];
-        }
-    }
 
     public function actionObjects()
     {
@@ -227,7 +213,8 @@ class MainController extends Controller
 
         return $this->render('payment',[
             'withDate'=>\Yii::$app->user->identity->with_date,
-            'byDate'=>\Yii::$app->user->identity->by_date]);
+            'byDate'=>\Yii::$app->user->identity->by_date,
+            'typeOrder'=>\Yii::$app->request->get('type-order')]);
     }
 
     public function actionIndication()
@@ -262,16 +249,32 @@ class MainController extends Controller
             }
             $mounth = ($mounth < 10)?'0'.$mounth:$mounth;
             $withDateDetail = '01.'.$mounth.'.'.$year;
+
+            if (\Yii::$app->request->get('type-order') == 'invoices'){
+                $data['withdate']=\Yii::$app->user->identity->with_date;
+                $data['bydate']=\Yii::$app->user->identity->by_date;
+                $invoicesList = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/invoices', $data);
+                if ($invoicesList['success']){
+                    $invoices = $invoicesList['success'];
+                } else {
+                    $invoices = $invoicesList['error'];
+                }
+            }
+
+
             return $this->render('invoice', [
                 'result'=>$invoiceData['success'],
                 'withDate'=>\Yii::$app->user->identity->with_date,
                 'withDateDetail'=>$withDateDetail,
-                'byDate'=>\Yii::$app->user->identity->by_date
+                'byDate'=>\Yii::$app->user->identity->by_date,
+                'invoices'=>$invoices,
+                'typeOrder'=>\Yii::$app->request->get('type-order')
             ]);
         } else {
             return $invoiceData['error'];
         }
     }
+
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
         $client = new Client();
@@ -291,6 +294,8 @@ class MainController extends Controller
             return ['error'=>'Не удалось связаться БД - повторите попытку позже.'];
         }
     }
+
+
 
 //    private function decodingToPdf ($base_64){
 //        // Real date format (xxx-xx-xx)

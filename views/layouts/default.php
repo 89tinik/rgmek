@@ -205,7 +205,7 @@ IeAssets::register($this);
         </div>
         <div class="history-popup custom-popup">
             <p>История показаний будет доступна уже скоро. Показания за каждый расчетный период можно увидеть,
-                сформировав "Детализацию счета" в разделе ЛК <?= Html::a('"Счета"', ['main/invoice'], ['class' => 'ploader link-invoice']) ?></p>
+                сформировав "Детализацию счета" в разделе ЛК <?= Html::a('"Начисления и платежи"', ['main/payment', 'type-order'=>'detail'], ['class' => 'ploader link-invoice']) ?></p>
             <div class="close"></div>
         </div>
         <div id="hidden-content" style="display: none">

@@ -100,11 +100,10 @@ class AjaxController extends Controller
     public function actionListInvoice()
     {
         $data = \Yii::$app->request->post();
-        $data['quantity'] = 'full';
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
-            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_account')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/invoices')
             ->setData($data)
             ->send();
         if ($response->isOk) {

@@ -5,7 +5,10 @@
 /* @var $result */
 /* @var $withDate */
 /* @var $withDateDetail */
+
 /* @var $byDate */
+/* @var $typeOrder */
+/* @var $invoices */
 
 use yii\helpers\Html;
 
@@ -19,11 +22,10 @@ $this->title = 'Счета |  ЛК РГМЭК';
 </div>
 
 
-
 <div class="payment-items">
     <div class="payment-item">
 
-        <div class="pack-report-wrap report-item white-box">
+        <div class="pack-report-wrap white-box">
             <div class="white-box-title">Текущие счета и расчетные документы</div>
             <div class="invoice-table">
                 <table>
@@ -63,7 +65,8 @@ $this->title = 'Счета |  ЛК РГМЭК';
                     <tr>
                         <td>
                             <div class="checkbox-item">
-                                <strong>Детализация счета по договору<br/><?= $result['Contract']['FullName'] ?></strong>
+                                <strong>Детализация счета по договору<br/><?= $result['Contract']['FullName'] ?>
+                                </strong>
                             </div>
                         </td>
                         <td>
@@ -78,7 +81,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'uid' => \Yii::$app->request->get('uid'),
                                     'withdate' => $withDateDetail,
                                     'bydate' => $byDate
-                                ], ['class' => 'btn small right print', 'target'=>'_blank']) ?>
+                                ], ['class' => 'btn small right print', 'target' => '_blank']) ?>
                                 <?= Html::a('Скачать', [
                                     'main/access-file',
                                     'print' => 'false',
@@ -86,7 +89,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'uid' => \Yii::$app->request->get('uid'),
                                     'withdate' => $withDate,
                                     'bydate' => $byDate
-                                ], ['class' => 'btn small right download', 'target'=>'_blank']) ?>
+                                ], ['class' => 'btn small right download', 'target' => '_blank']) ?>
                             </div>
                         </td>
                     </tr>
@@ -108,7 +111,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'uid' => \Yii::$app->request->get('uid'),
                                     'withdate' => $withDate,
                                     'bydate' => $byDate
-                                ], ['class' => 'btn small right print', 'target'=>'_blank']) ?>
+                                ], ['class' => 'btn small right print', 'target' => '_blank']) ?>
                                 <?= Html::a('Скачать', [
                                     'main/access-file',
                                     'print' => 'false',
@@ -116,7 +119,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'uid' => \Yii::$app->request->get('uid'),
                                     'withdate' => $withDate,
                                     'bydate' => $byDate
-                                ], ['class' => 'btn small right download', 'target'=>'_blank']) ?>
+                                ], ['class' => 'btn small right download', 'target' => '_blank']) ?>
                             </div>
                         </td>
                     </tr>
@@ -125,13 +128,76 @@ $this->title = 'Счета |  ЛК РГМЭК';
             </div>
 
         </div>
+    </div>
+
+</div>
 
 
-        <div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: none;">
+<div class="payment-filter white-box">
+    <form class="get-order-form">
+        <div class="group">
+            <div class="field">
+                <div class="label">Счета и расчетные документы за предыдущие периоды:</div>
+                <div class="value">
+                    <select class="styler select__default type-order" required="required">
+                        <option></option>
+                        <option value="detail">Детализация счёта</option>
+                        <option value="aktpp">Акт приема передачи э/э</option>
+                        <option value="odn">Отчет по расчету ОДН</option>
+                        <option value="penalty">Расчет пени</option>
+                        <option value="invoices"  <?=($typeOrder == 'invoices')?'selected="selected"':'';?>>Счета</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="group large">
+            <div class="label">Выбрать период:</div>
+            <div class="field">
+                <div class="value">
+                    <span>с</span>
+                    <input type="text" value="<?= $withDate ?>" id="from_dialog"
+                           required="required" autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="value">
+                    <span>По</span>
+                    <input type="text" value="<?= $byDate ?>" id="to_dialog"
+                           required="required" autocomplete="off" readonly="readonly"/>
+                </div>
+            </div>
+            <input type="submit" class="btn submit-btn get-report" value="Сформировать"/>
+        </div>
+    </form>
+</div>
+
+<div class="payment-items">
+    <div class="payment-item">
+
+
+
+
+        <div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: <?=(!empty($invoices))?'block':'none';?>;">
             <div class="white-box-title">Счета</div>
             <div class="list">
                 <ul>
-
+                    <?php
+                    if (isset($invoices['Invoice'])) {
+                        if (isset($invoices['Invoice']['FullName'])) {
+                            echo $this->render('_invoiceItem', [
+                                'invoice' => $invoices['Account']
+                            ]);
+                        } else {
+                            foreach ($invoices['Invoice'] as $arr) {
+                                echo $this->render('_invoiceItem', [
+                                    'invoice' => $arr
+                                ]);
+                            }
+                        }
+                    } else {
+                        echo '<li><h3>За выбранный период документы отсутствуют.</h3></li>';
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -154,13 +220,13 @@ $this->title = 'Счета |  ЛК РГМЭК';
                     'print' => 'true',
                     'action' => 'download_report_detal',
                     'uid' => \Yii::$app->request->get('uid')
-                ], ['class' => 'btn small right print', 'target'=>'_blank']) ?>
+                ], ['class' => 'btn small right print', 'target' => '_blank']) ?>
                 <?= Html::a('Скачать', [
                     'main/access-file',
                     'print' => 'false',
                     'action' => 'download_report_detal',
                     'uid' => \Yii::$app->request->get('uid')
-                ], ['class' => 'btn small right download', 'target'=>'_blank']) ?>
+                ], ['class' => 'btn small right download', 'target' => '_blank']) ?>
                 <div class="clear"></div>
             </div>
         </div>
@@ -175,13 +241,13 @@ $this->title = 'Счета |  ЛК РГМЭК';
                     'print' => 'true',
                     'action' => 'download_counting',
                     'uid' => \Yii::$app->request->get('uid')
-                ], ['class' => 'btn small right print', 'target'=>'_blank']) ?>
+                ], ['class' => 'btn small right print', 'target' => '_blank']) ?>
                 <?= Html::a('Скачать', [
                     'main/access-file',
                     'print' => 'false',
                     'action' => 'download_counting',
                     'uid' => \Yii::$app->request->get('uid')
-                ], ['class' => 'btn small right download', 'target'=>'_blank']) ?>
+                ], ['class' => 'btn small right download', 'target' => '_blank']) ?>
                 <div class="clear"></div>
             </div>
         </div>
@@ -194,45 +260,6 @@ $this->title = 'Счета |  ЛК РГМЭК';
             </div>
         </div>
 
-        </div>
-
     </div>
 
-
-<div class="payment-filter white-box">
-    <form class="get-order-form">
-        <div class="group">
-            <div class="field">
-                <div class="label">Счета и расчетные документы за предыдущие периоды:</div>
-                <div class="value">
-                    <select class="styler select__default type-order" required="required">
-                        <option></option>
-                        <option value="detail">Детализация счёта</option>
-                        <option value="aktpp">Акт приема передачи э/э</option>
-                        <option value="odn">Отчет по расчету ОДН</option>
-                        <option value="penalty">Расчет пени</option>
-                        <!--option value="invoices">Счета</option-->
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="group large">
-            <div class="label">Выбрать период:</div>
-            <div class="field">
-                <div class="value">
-                    <span>с</span>
-                    <input type="text" value="<?= $withDate ?>" id="from_dialog"
-                           required="required"  autocomplete="off" readonly="readonly"/>
-                </div>
-            </div>
-            <div class="field">
-                <div class="value">
-                    <span>По</span>
-                    <input type="text" value="<?= $byDate ?>" id="to_dialog"
-                           required="required"  autocomplete="off" readonly="readonly"/>
-                </div>
-            </div>
-            <input type="submit" class="btn submit-btn get-report" value="Сформировать"/>
-        </div>
-    </form>
 </div>
