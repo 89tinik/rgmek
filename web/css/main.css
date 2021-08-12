@@ -2682,7 +2682,7 @@ input[type="text"].indication{
   background: url(../images/border-6.jpg) repeat-x;
   background-position: left bottom;
   font-family: 'PT Mono', monospace;
-  padding-bottom: 10px;
+ /* padding-bottom: 10px;*/
   border-radius: 0;
 }
 .testimony-box .group .field::after{
@@ -2691,7 +2691,7 @@ vertical-align: top;
 outline: none;
 padding: 0;
 height: 40px;
-line-height: 28px;
+line-height: 40px;
 font-variant-numeric: tabular-nums;
 text-indent: 5px;
 box-sizing: border-box;
@@ -3647,6 +3647,15 @@ margin-bottom:10px;
   a.btn.small.pu-ask{
     float:right;
   }
+  input[type="text"].indication{
+  background: url(../images/border-6-m.png) repeat-x  left bottom;
+  }
+  .co-7 input[type="text"].indication{
+background: url(../images/border-7-m.png) repeat-x left bottom;
+}
+.co-8 input[type="text"].indication{
+background: url(../images/border-8-m.png) repeat-x left bottom;
+}
 /*ENDtin*/
 }
 

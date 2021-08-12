@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="sub-objects-item collapse-item no-result wrap-pu <?= ($onePU) ? 'active' : '' ?> <?=($pu['AIISKUE'] == 'Да') ? 'aiiskue' : '' ?>"
      data-id="<?= $pu['UIDTU'] ?>" data-puid="<?= $pu['UIDPU'] ?>" data-k="<?= $pu['KTT'] ?>">
-    <div class="sub-objects-btn collapse-btn">
+    <div class="sub-objects-btn collapse-btn <?= ($onePU) ? 'active' : '' ?>">
         <?= $pu['FullName'] ?>
         <!--span class="tip" style="display:none;">Показания переданы объем <span class="result-pu"></span>кВтч</span-->
     </div>
