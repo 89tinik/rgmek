@@ -379,7 +379,7 @@ $(function() {
 			var Date1 = new Date (dateFromArr[2], dateFromArr[1], dateFromArr[0]);
 			var Date2 = new Date (dateToArr[2], dateToArr[1], dateToArr[0]);
 			var Days = Math.floor((Date2.getTime() - Date1.getTime())/(1000*60*60*24));
-			if (Days > 60) {
+			if (Days > 125) {
 				$('.loading-report-popup').addClass('open');
 				$('.loading-report-popup').animate({'top': $(window).scrollTop() + 50}, 450);
 				$('.contracts-devices-popup-overlay').fadeIn(250);

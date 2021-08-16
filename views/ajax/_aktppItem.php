@@ -9,7 +9,6 @@ use yii\helpers\Html;
 <li>
     <div class="name">
         <?=$act['FullName']?>
-        <strong><?=$act['Contractor']?></strong>
     </div>
     <div class="price">
 

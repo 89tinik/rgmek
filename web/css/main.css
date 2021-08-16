@@ -3659,6 +3659,34 @@ background: url(../images/border-7-m.png) repeat-x left bottom;
 .co-8 input[type="text"].indication{
 background: url(../images/border-8-m.png) repeat-x left bottom;
 }
+  .invoice-table table tr:first-child{
+    overflow:hidden;
+  }
+  .invoice-table table tr:first-child td{
+display:block;
+    float:right;
+    width:50%;
+    text-align:right;
+  }
+  .invoice-table table tr:first-child td:first-child{
+    float:left;
+    text-align: left;
+  }
+  .invoice-table table tr:first-child td:last-child{
+    clear:both;
+    width: 100%;
+  }
+  .invoice-table table td .price{
+    padding-left:0;
+  }
+  .arrear-lists.big-name .list ul li .name{
+    max-width:50%;
+    float:left;
+  }
+  .arrear-lists .list ul li .price{
+    margin:0;
+    text-align: right;
+  }
 /*ENDtin*/
 }
 

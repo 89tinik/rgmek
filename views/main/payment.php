@@ -31,6 +31,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
                     <option value="aktpp">Акт приема-передачи э/энергии</option>
                     <option value="penalty">Расчет пени</option>
                     <option value="odn">Отчет по расчету ОДН</option>
+                    <option value="invoices">Счета</option>
                 </select>
             </div>
         </div>
@@ -98,7 +99,14 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
         <div class="payment-content border-box accruedpaid-report-wrap report-item" style="display: none;">
 
         </div>
+        <div class="arrear-lists white-box invoices-report-wrap report-item big-name" style="display: <?=(!empty($invoices))?'block':'none';?>;">
+            <div class="white-box-title">Счета</div>
+            <div class="list">
+                <ul>
 
+                </ul>
+            </div>
+        </div>
     </div>
 
 </div>
