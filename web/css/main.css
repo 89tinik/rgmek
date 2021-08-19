@@ -2813,6 +2813,54 @@ margin-bottom:10px;
 .wrapper.text {
   color:#000;
 }
+.testimony-box .attach-form .photo-name,
+.testimony-box .attach-form .photo-time{
+  padding-right: 20px;
+  position: relative;
+  display: block;}
+.testimony-box .attach-form .photo-name span,
+.testimony-box .attach-form .photo-time span{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: none;}
+
+.testimony-box .attach-form .photo-name span:after,
+.testimony-box .attach-form .photo-time span:after {
+  content: '×';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  font: 30px/20px Arial,"Helvetica Neue",Helvetica,sans-serif;
+  color: #FF4949;
+  text-align: center;
+  z-index: 2;
+}
+
+.testimony-box .attach-form .photo-name:hover span,
+.testimony-box .attach-form .photo-time:hover span{
+  display:block;
+}
+.form-message{
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+@media screen and (max-width: 1350px) {
+  .arrear-left{
+    width:580px;
+  }
+  .arrear-right{
+    width: 350px;
+  }
+}
 /*ENDtin*/
 
 @media screen and (max-width: 1200px) {
@@ -3431,8 +3479,8 @@ margin-bottom:10px;
   .invoice-table table tr {
     padding: 15px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-  .invoice-table table tr:first-child td {
-    display: none; }
+  /*.invoice-table table tr:first-child td {
+    display: none; }*/
   .invoice-table table tr:first-child td:first-child {
     display: block; }
   .invoice-table table td {
@@ -3659,20 +3707,20 @@ background: url(../images/border-7-m.png) repeat-x left bottom;
 .co-8 input[type="text"].indication{
 background: url(../images/border-8-m.png) repeat-x left bottom;
 }
-  .invoice-table table tr:first-child{
+  .invoice-table table tr{
     overflow:hidden;
   }
-  .invoice-table table tr:first-child td{
+  .invoice-table table tr td{
 display:block;
     float:right;
     width:50%;
     text-align:right;
   }
-  .invoice-table table tr:first-child td:first-child{
+  .invoice-table table tr td:first-child{
     float:left;
     text-align: left;
   }
-  .invoice-table table tr:first-child td:last-child{
+  .invoice-table table tr td:last-child{
     clear:both;
     width: 100%;
   }
@@ -3686,6 +3734,9 @@ display:block;
   .arrear-lists .list ul li .price{
     margin:0;
     text-align: right;
+  }
+  .arrear-lists .list ul li .bts{
+    clear:both;
   }
 /*ENDtin*/
 }

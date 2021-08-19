@@ -25,6 +25,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
         <div class="tab-items">
             <div class="tab-item">
                 <div class="c-form anketa-form">
+                    <div class="form-message">
                     <?php
                     if (Yii::$app->session->hasFlash('success')) {
                         echo Yii::$app->session->getFlash('success');
@@ -33,6 +34,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
                         echo Yii::$app->session->getFlash('error');
                     }
                     ?>
+                    </div>
                     <?php $form = ActiveForm::begin([
                         'options' => [
                             'id' => 'feedbackForm',

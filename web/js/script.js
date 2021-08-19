@@ -39,9 +39,13 @@ $(function() {
 		if (i == 'phone') {
 			$('#feedbackForm input.phone').closest('.group').css('display', 'block');
 			$('#feedbackForm input.email').closest('.group').css('display', 'none');
+			$('#feedbackForm input.phone').attr('required', 'required');
+			$('#feedbackForm input.email').removeAttr('required');
 		} else {
 			$('#feedbackForm input.phone').closest('.group').css('display', 'none');
 			$('#feedbackForm input.email').closest('.group').css('display', 'block');
+			$('#feedbackForm input.phone').removeAttr('required');
+			$('#feedbackForm input.email').attr('required', 'required');
 		}
 	}
 
@@ -98,7 +102,7 @@ $(function() {
 		var file = $('#attachform-photo')[0].files[0];
 		if (file) {
 			$('span.photo-name').remove();
-			$('.current-label-attach').after('<span class="photo-name">'+file.name+'</span>');
+			$('.current-label-attach').after('<span class="photo-name">'+file.name+'<span data-input="field-attachform-photo"></span></span>');
 			$('.current-label-attach').removeClass('current-label-attach');
 		}
 	});
@@ -106,7 +110,7 @@ $(function() {
 		var file = $('#attachform-time')[0].files[0];
 		if (file) {
 			$('span.photo-time').remove();
-			$('.current-label-attach').after('<span class="photo-time">'+file.name+'</span>');
+			$('.current-label-attach').after('<span class="photo-time">'+file.name+'<span data-input="field-attachform-time"></span></span>');
 			$('.current-label-attach').removeClass('current-label-attach');
 		}
 	});
@@ -122,8 +126,8 @@ $(function() {
 			$('#attachFormPu')[0].reset();
 		}
 
-		if ($('#attachform-photo').val() == ''){
-			$('.attach-popup .message').text('Прикрепите фото ПУ');
+		if ($('#attachform-photo').val() == '' && $('#attachform-time').val() == ''){
+			$('.attach-popup .message').text('Прикрепите фото ПУ или Почасовые объемы');
 
 			$('.attach-popup').animate({'top': topPos}, 450);
 			$('.contracts-devices-popup-overlay').fadeIn(250);
@@ -149,6 +153,13 @@ $(function() {
 
 		}
 
+	});
+	//удаление прикреплённого фото ПУ
+	$('.attach-form').on('click', 'span span', function(){
+		var el = '#attachFormPu .'+$(this).attr('data-input');
+		$(el).wrap('<form>').closest('form').get(0).reset();
+		$(el).unwrap();
+		$(this).parent().remove();
 	});
 
 	//политика
@@ -381,7 +392,12 @@ $(function() {
 			var Days = Math.floor((Date2.getTime() - Date1.getTime())/(1000*60*60*24));
 			if (Days > 125) {
 				$('.loading-report-popup').addClass('open');
-				$('.loading-report-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+				if ($(window).scrollTop() > $('.bg').scrollTop()) {
+					var topPos = $(window).scrollTop() + 50;
+				} else {
+					var topPos = $('.bg').scrollTop() + 50;
+				}
+				$('.loading-report-popup').animate({'top': topPos}, 450);
 				$('.contracts-devices-popup-overlay').fadeIn(250);
 				return false;
 			}

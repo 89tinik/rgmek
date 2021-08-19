@@ -18,85 +18,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
     </div>
 </div>
 
-<div class="arrear-right">
-    <div class="payment-form white-box">
-        <?php $form = ActiveForm::begin([
-            'method' => 'post',
-            'action' => ['ajax/create-sber-invoice'],
-            'fieldConfig' => [
-                'template' => "{input}{error}",
-                'options' => [
-                    // 'tag' => false
-                ],
-            ],
-            'options' => [
-                'class' => 'sber-form testing pay-form',
-            ]
-        ]); ?>
-
-        <?= $form->field($model, 'invoice')->hiddenInput(['value' => $result['Contract']['UID'] . '|' . time()]); ?>
-
-        <div class="title">Оплата</div>
-        <?php
-        $ee = (!empty($result['Payment']['ElectricityDebt']))? str_replace(',', '.', $result['Payment']['ElectricityDebt']): 0;
-
-        $disabledEe = ($ee) ? ' ' : ['diasbled' => 'diasabled'];
-        ?>
-        <?= $form->field($model, 'ee', ['template' => '<div class="group">
-                                                                            <div class="field ">
-                                                                                {label}
-                                                                                <div class="value ruble">
-                                                                                    {input}
-                                                                                    {error}
-                                                                                </div>
-						                                                    </div>
-						                                                </div>'])->
-        widget(\yii\widgets\MaskedInput::className(), [
-            'mask' => '9{1,}.9{1,}',
-            'clientOptions' => [
-                'placeholder' => ''
-            ]
-        ])->
-        textInput(['class' => 'value ruble', 'value' => $ee, 'max' => $ee, $disabledPenalty])->
-        label('Электроэнергия:', [
-            'class' => 'label'
-        ]) ?>
-
-        <?php
-		 $penalty = (!empty($result['Payment']['CurrentPenalty']))? str_replace(',', '.', $result['Payment']['CurrentPenalty']): 0;
-        $disabledPenalty = ($penalty) ? ' ' : ['diasbled' => 'diasabled'];
-        ?>
-        <?= $form->field($model, 'penalty', ['template' => '<div class="group">
-                                                                            <div class="field ">
-                                                                                {label}
-                                                                                <div class="value ruble">
-                                                                                    {input}
-                                                                                    {error}
-                                                                                </div>
-						                                                    </div>
-						                                                </div>'])->
-        widget(\yii\widgets\MaskedInput::className(), [
-            'mask' => '9{1,}.9{1,}',
-            'clientOptions' => [
-                'placeholder' => ''
-            ]
-        ])->
-        textInput(['class' => 'value ruble', 'value' => $penalty, 'max' => $penalty, $disabledPenalty])->
-        label('Пени:', [
-            'class' => 'label'
-        ]) ?>
-        <div class="group-price">
-            <div class="label">Итого:</div>
-
-            <div class="price all-price"><?= (!empty($all = $ee + $penalty)) ? number_format($all, 2, ',', ' ') . ' ₽' : 0; ?></div>
-        </div>
-        <?= Html::submitButton('Перейти к оплате', ['class' => 'btn submit-btn']) ?>
-        <?php ActiveForm::end(); ?>
-    </div>
-</div>
-
-<div class="arrear-left">
-    <div class="arrear-summary border-box">
+    <div class="arrear-left arrear-summary border-box">
         <div class="info-top">
             <div class="title">
                 <!--Какой-то текст ни кому не известно-->
@@ -156,8 +78,88 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         <?php endif; ?>
 
     </div>
+
+
+<div class="arrear-right">
+    <div class="payment-form white-box">
+        <?php $form = ActiveForm::begin([
+            'method' => 'post',
+            'action' => ['ajax/create-sber-invoice'],
+            'fieldConfig' => [
+                'template' => "{input}{error}",
+                'options' => [
+                    // 'tag' => false
+                ],
+            ],
+            'options' => [
+                'class' => 'sber-form testing pay-form',
+            ]
+        ]); ?>
+
+        <?= $form->field($model, 'invoice')->hiddenInput(['value' => $result['Contract']['UID'] . '|' . time()]); ?>
+
+        <div class="title">Оплата</div>
+        <?php
+        $ee = (!empty($result['Payment']['ElectricityDebt']))? str_replace(',', '.', $result['Payment']['ElectricityDebt']): 0;
+
+        $disabledEe = ($ee) ? ' ' : ['diasbled' => 'diasabled'];
+        ?>
+        <?= $form->field($model, 'ee', ['template' => '<div class="group">
+                                                                            <div class="field ">
+                                                                                {label}
+                                                                                <div class="value ruble">
+                                                                                    {input}
+                                                                                    {error}
+                                                                                </div>
+						                                                    </div>
+						                                                </div>'])->
+        widget(\yii\widgets\MaskedInput::className(), [
+            'mask' => '9{1,}.9{1,}',
+            'clientOptions' => [
+                'placeholder' => ''
+            ]
+        ])->
+        textInput(['class' => 'value ruble', 'value' => $ee, 'max' => $ee, $disabledPenalty])->
+        label('Электроэнергия:', [
+            'class' => 'label'
+        ]) ?>
+
+        <?php
+        $penalty = (!empty($result['Payment']['CurrentPenalty']))? str_replace(',', '.', $result['Payment']['CurrentPenalty']): 0;
+        $disabledPenalty = ($penalty) ? ' ' : ['diasbled' => 'diasabled'];
+        ?>
+        <?= $form->field($model, 'penalty', ['template' => '<div class="group">
+                                                                            <div class="field ">
+                                                                                {label}
+                                                                                <div class="value ruble">
+                                                                                    {input}
+                                                                                    {error}
+                                                                                </div>
+						                                                    </div>
+						                                                </div>'])->
+        widget(\yii\widgets\MaskedInput::className(), [
+            'mask' => '9{1,}.9{1,}',
+            'clientOptions' => [
+                'placeholder' => ''
+            ]
+        ])->
+        textInput(['class' => 'value ruble', 'value' => $penalty, 'max' => $penalty, $disabledPenalty])->
+        label('Пени:', [
+            'class' => 'label'
+        ]) ?>
+        <div class="group-price">
+            <div class="label">Итого:</div>
+
+            <div class="price all-price"><?= (!empty($all = $ee + $penalty)) ? number_format($all, 2, ',', ' ') . ' ₽' : 0; ?></div>
+        </div>
+        <?= Html::submitButton('Перейти к оплате', ['class' => 'btn submit-btn']) ?>
+        <?php ActiveForm::end(); ?>
+    </div>
+</div>
+
+
     <?php if (isset($result['Account'])) : ?>
-        <div class="arrear-lists white-box">
+        <div class="arrear-left arrear-lists white-box">
             <div class="white-box-title">Счета текущего расчетного периода</div>
             <div class="list">
                 <ul class="wrap-invoice">
@@ -180,12 +182,12 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
             </div>
         </div>
     <?php endif; ?>
-    <div class="bts">
+    <div class="arrear-left bts">
         <!--        <a href="#" class="btn border full aj-all-invoice" data-uid="-->
         <? //= $result['Contract']['UID'] ?><!--">Все выставленные счета</a>-->
         <p>Все выставленные счета находятся в
             разделе <?= Html::a('"Счета"', ['main/invoice', 'uid' => $result['Contract']['UID'], 'type-order'=>'invoices'], ['class' => 'ploader']) ?></p>
 
     </div>
-</div>
+
 

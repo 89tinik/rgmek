@@ -59,15 +59,17 @@ use yii\helpers\Html;
                             $valTP = $object['Expand']['TariffGroup']['Value'];
                             if ($object['Expand']['TariffGroup']['Name'] == 'Прочие') {
                                 $info = true;
+                            } else {
+                                $valTP = $object['Expand']['TariffGroup']['Value'];
                             }
                         } elseif (!empty($object['Expand']['TariffGroup'][0]['Name'])) {
-                            $arrName = [];
+                            $arrNameVal = [];
                             foreach ($object['Expand']['TariffGroup'] as $arr) {
-                                $arrName[] = $arr['Name'];
-                                $arrNameVal[] = $arr['Value'];
-                            }
-                            if (in_array('Прочие', $arrName)) {
-                                $info = true;
+                                if($arr['Name'] == 'Прочие'){
+                                    $info = true;
+                                } else {
+                                    $arrNameVal[] = $arr['Value'];
+                                }
                             }
                             $valTP = implode(',', $arrNameVal);
                         }

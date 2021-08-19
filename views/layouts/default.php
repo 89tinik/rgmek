@@ -22,6 +22,8 @@ IeAssets::register($this);
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="HandheldFriendly" content="true">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="x-rim-auto-match" content="none">
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
 
@@ -70,7 +72,7 @@ IeAssets::register($this);
                         <!--                                <li><a href="#">Ранее поданные заявки</a></li>-->
                         <!--                            </ul>-->
                         <!--                        </li>-->
-                        <li class="children"><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение
+                        <li class=""><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение
                                 договора</a></li>
                         <li><?= Html::a('Помощь', ['inner/help'], ['class' => 'ploader']) ?></li>
                         <li><?= Html::a('Написать обращение', ['inner/fos'], ['class' => 'ploader']) ?></li>
@@ -216,14 +218,14 @@ IeAssets::register($this);
                         заключить/изменить договор</a></li>
                 <li>по телефонам контактного центра +7 (4912) 90-87-90 или 8-800-250-50-78 (звонок бесплатный).</li>
             </ul>
-            <p>Заявление и сканированные копии документов для заключения договора можно направить:</p>
+            <!--p>Заявление и сканированные копии документов для заключения договора можно направить:</p>
             <ul>
                 <li>в разделе <?= Html::a('"Написать обращение"', ['inner/fos'], ['class' => 'ploader']) ?>, выбрав тему
                     «Заключить/изменить договор»;
                 </li>
                 <li>посредством электронного документооборота Диадок,СБИС;</li>
                 <li>по адресу эл. почты dronp@rgmek.ru с темой письма «Заключить/изменить договор».</li>
-            </ul>
+            </ul-->
 
         </div>
     </div>

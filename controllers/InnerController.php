@@ -50,7 +50,7 @@ class InnerController extends Controller
                 $files = $model->file;
 
                 if ($model->sendMail(['89.tinik@gmail.com',Yii::$app->params['adminEmail']], $files)) {
-                    Yii::$app->session->setFlash('success', 'Ваши данные успешно отправлены!');
+                    Yii::$app->session->setFlash('success', 'Ваше сообщение успешно отправлено!');
                     return $this->refresh();
                 } else {
                     Yii::$app->session->setFlash('error', 'Что-то пошло не так - повторите попытку позже!');
