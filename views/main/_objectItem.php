@@ -56,7 +56,6 @@ use yii\helpers\Html;
                         $valTP = '';
                         $info = false;
                         if (!empty($object['Expand']['TariffGroup']['Name'])) {
-                            $valTP = $object['Expand']['TariffGroup']['Value'];
                             if ($object['Expand']['TariffGroup']['Name'] == 'Прочие') {
                                 $info = true;
                             } else {
@@ -71,11 +70,11 @@ use yii\helpers\Html;
                                     $arrNameVal[] = $arr['Value'];
                                 }
                             }
-                            $valTP = implode(',', $arrNameVal);
+                            $valTP = implode('<br>', $arrNameVal);
                         }
                         if (!empty($object['Expand']['PriceCategory']) && $info) {
                             if ($valTP != '') {
-                                $valTP .= ' / ';
+                                $valTP .= '<br>';
                             }
                             $valTP .= $object['Expand']['PriceCategory'];
                         }

@@ -115,7 +115,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
 
 
                                 <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-                                <?= $form->field($model, 'file[]')->fileInput(['multiple' => 'multiple']) ?>
+                                <?= $form->field($model, 'file[]')->fileInput(['multiple' => 'multiple', 'class' => 'fos-files']) ?>
                                 <?= Html::submitButton('Отправить', ['class' => 'btn full']) ?>
                             </div>
 

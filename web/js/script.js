@@ -34,6 +34,18 @@ $(function() {
 	});
 
 	/*tin*/
+	//удаление файлов из ФОС
+	$('#feedbackform-file').on('change', function() {
+		if ($(this).parent().siblings('.fos-file-close').length == 0) {
+			$(this).parent().after('<span class="fos-file-close"></span>');
+		}
+	});
+	$('#feedbackForm').on('click', '.fos-file-close', function(){
+		var el = $(this).parent();
+		el.wrap('<form>').closest('form').get(0).reset();
+		el.unwrap();
+		$(this).remove();
+	});
 	//тип ответа на ФОС
 	function setAnswerType(i) {
 		if (i == 'phone') {

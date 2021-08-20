@@ -2852,6 +2852,32 @@ margin-bottom:10px;
   margin-bottom: 20px;
 }
 
+.field-feedbackform-file .group {
+  padding-right: 25px;
+}
+.field-feedbackform-file .field{
+  overflow: hidden;
+}
+.fos-file-close{
+  position:absolute;
+  right: 0;
+  bottom:5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.fos-file-close:after {
+  content: '×';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  font: 30px/20px Arial,"Helvetica Neue",Helvetica,sans-serif;
+  color: #FF4949;
+  text-align: center;
+  z-index: 2;
+}
 
 @media screen and (max-width: 1350px) {
   .arrear-left{
