@@ -119,10 +119,10 @@ $config = [
 
             // обработчик, вызываемый по факту успешной оплаты
             'successCallback' => function($invoice) {
-                \app\models\InvoiceSber::sendToServer($invoice);
                 // какая-то ваша логика, например
-                //$order = \your\models\Order::findOne($invoice->order_id);
-                //$client = $order->getClient();
+                $receipt = \app\models\Receipt::findOne($invoice->order_id);
+                $receipt->setStatus('pay',$receipt->id);
+                $receipt->sendToServer();
                 //$client->sendEmail('Зачислена оплата по вашему заказу №' . $order->id);
                 // .. и т.д.
             },

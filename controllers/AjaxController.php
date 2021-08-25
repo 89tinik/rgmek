@@ -7,6 +7,7 @@ namespace app\controllers;
 use app\models\AttachForm;
 use app\models\Contract;
 use app\models\InvoiceSber;
+use app\models\ReceiptForm;
 use pantera\yii2\pay\sberbank\Module;
 use app\models\User;
 use pantera\yii2\pay\sberbank\models\Invoice;
@@ -236,21 +237,6 @@ class AjaxController extends Controller
 
         }
     }
-
-    public function actionCreateSberInvoice (){
-        // ...здесь какая-то ваша логика по сохранению заказа, например это объект $order
-
-// создаем и сохраняем инвойс, передаем в него номер и сумму вашего заказа
-
-        $data = \Yii::$app->request->post();
-        $ee = str_replace(',', '.',  $data['InvoiceSberForm']['ee']);
-        $penalty = str_replace(',', '.',  $data['InvoiceSberForm']['penalty']);
-        $price =  $ee + $penalty;
-        $invoice = InvoiceSber::addSberbank($data['InvoiceSberForm']['invoice'], $price, NULL, ['penalty'=>$penalty, 'ee'=>$ee]);
-        $this->redirect(['/sberbank/default/create', 'id' => $invoice->id]);
-
-    }
-
 
 
     public function actionClose(){

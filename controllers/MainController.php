@@ -7,7 +7,7 @@ namespace app\controllers;
 use app\models\AttachForm;
 use app\models\Contract;
 use app\models\InstallESForm;
-use app\models\InvoiceSberForm;
+use app\models\ReceiptForm;
 use app\models\User;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
@@ -140,7 +140,16 @@ class MainController extends Controller
 
     public function actionArrear()
     {
-        $model = new InvoiceSberForm();
+        $model = new ReceiptForm();
+
+
+        if ($model->load(\Yii::$app->request->post()) && $receipt=$model->addReceipt()) {
+            $price = $receipt->ee + $receipt->penalty;
+            $invoice = \pantera\yii2\pay\sberbank\models\Invoice::addSberbank($receipt->id, $price);
+            $this->redirect(['/sberbank/default/create', 'id' => $invoice->id]);
+        }
+
+
 
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_account/', $data);

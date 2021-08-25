@@ -7,8 +7,11 @@ namespace app\controllers;
 use app\models\Contract;
 use app\models\FeedbackForm;
 use yii\filters\AccessControl;
+use yii\httpclient\Client;
+use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use Yii;
+use yii\web\HttpException;
 use yii\web\UploadedFile;
 
 class InnerController extends Controller
@@ -74,5 +77,44 @@ class InnerController extends Controller
     }
     public function actionPayFail(){
         return $this->render('payFail');
+    }
+
+    public function actionDownloadReceipt()
+    {
+
+        $data = ['uidpaydoc' => \Yii::$app->request->get('uidpaydoc')];
+        $edoInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_pay_document', $data);
+        if (isset($edoInfo['success'])){
+            if ($edoInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+                throw new HttpException(403, 'Доступ запрещён');
+            }
+//            $file_name = \Yii::$app->user->identity->id.'_'.$edoInfo['success']['Name'];
+//            if ($this->decodingToDocSave($edoInfo['success']['File'], $file_name)){
+//                return $this->redirect(Url::home(true).'web/temp_edo/'.$file_name, 301);
+//            }
+            return \Yii::$app->response->sendContentAsFile(base64_decode ($edoInfo['success']['File']), $edoInfo['success']['Name']);
+        } else {
+            return $edoInfo['error'];
+        }
+
+    }
+
+    private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod($method)
+            ->setUrl($url)
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            if ($toArray){
+                $xml = new XmlParser();
+                return ['success' => $xml->parse($response)];
+            }else{
+                return ['success' => $response];
+            }
+        } else {
+            return ['error'=>'Не удалось связаться БД - повторите попытку позже.'];
+        }
     }
 }

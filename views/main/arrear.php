@@ -82,9 +82,15 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
 
 <div class="arrear-right">
     <div class="payment-form white-box">
-        <?php $form = ActiveForm::begin([
+        <?php
+        if($_GET['test'] == true){
+            $testing = 'go';
+        }else {
+            $testing = 'testing';
+        }
+        $form = ActiveForm::begin([
             'method' => 'post',
-            'action' => ['ajax/create-sber-invoice'],
+           // 'action' => ['ajax/create-sber-invoice'],
             'fieldConfig' => [
                 'template' => "{input}{error}",
                 'options' => [
@@ -92,11 +98,11 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                 ],
             ],
             'options' => [
-                'class' => 'sber-form testing pay-form',
+                'class' => 'sber-form pay-form '.$testing,
             ]
         ]); ?>
 
-        <?= $form->field($model, 'invoice')->hiddenInput(['value' => $result['Contract']['UID'] . '|' . time()]); ?>
+        <?= $form->field($model, 'contract')->hiddenInput(['value' => $result['Contract']['UID']]); ?>
 
         <div class="title">Оплата</div>
         <?php
