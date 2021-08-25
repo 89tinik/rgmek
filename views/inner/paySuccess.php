@@ -14,7 +14,7 @@ $receiptUID = Yii::$app->session->getFlash('receiptUID');
     <div class="h-subtitle">
         Информация о платеже отразится в Личном кабинете в течении часа.
     </div>
-    <p>Квитанция об оплате <?= Yii::$app->session->getFlash('NumberPayDoc') ?>
+    <p>Квитанция об оплате <?= Yii::$app->session->getFlash('receiptN1C') ?>
 
         <?= Html::a('Печать', ['inner/download-receipt', 'uidpaydoc' => $receiptUID, 'print' => 'true'], ['class' => 'btn small border', 'target' => '_blank', 'style' => 'margin-top: -13px;']) ?>
         <?= Html::a('Скачать', ['inner/download-receipt', 'uidpaydoc' => $receiptUID, 'print' => 'false'], ['class' => 'btn small border', 'target' => '_blank', 'style' => 'margin-top: -13px;']) ?>

@@ -83,18 +83,20 @@ class InnerController extends Controller
     {
 
         $data = ['uidpaydoc' => \Yii::$app->request->get('uidpaydoc')];
-        $edoInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_pay_document', $data);
-        if (isset($edoInfo['success'])){
-            if ($edoInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        $receiptInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_pay_document', $data);
+        if (isset($receiptInfo['success'])){
+            if ($receiptInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
                 throw new HttpException(403, 'Доступ запрещён');
             }
-//            $file_name = \Yii::$app->user->identity->id.'_'.$edoInfo['success']['Name'];
-//            if ($this->decodingToDocSave($edoInfo['success']['File'], $file_name)){
-//                return $this->redirect(Url::home(true).'web/temp_edo/'.$file_name, 301);
-//            }
-            return \Yii::$app->response->sendContentAsFile(base64_decode ($edoInfo['success']['File']), $edoInfo['success']['Name']);
+
+            $options=[];
+            if( \Yii::$app->request->get('print') == 'true'){
+                $options=['inline' => true, 'mimeType' => 'application/pdf'];
+            }
+
+            return \Yii::$app->response->sendContentAsFile(base64_decode ($receiptInfo['success']['File']), $receiptInfo['success']['Name'], $options);
         } else {
-            return $edoInfo['error'];
+            return $receiptInfo['error'];
         }
 
     }

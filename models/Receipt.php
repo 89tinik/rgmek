@@ -42,7 +42,7 @@ class Receipt extends ActiveRecord
         if ($response->isOk) {
             $xml = new XmlParser();
             $responseArr = $xml->parse($response);
-            if ($responseArr['Successful'] || $responseArr['Error']['UIDPayDoc']){
+            if (!empty($responseArr['Successful']) || !empty($responseArr['Error']['UIDPayDoc'])){
                 if($this->setStatus('send', $responseArr['Successful']['Number'], $responseArr['Successful']['UIDPayDoc'] )){
                     if ($responseArr['Error']['UIDPayDoc']) {
                         \Yii::$app->session->setFlash('receiptUID',$responseArr['Error']['UIDPayDoc']);
