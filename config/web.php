@@ -104,7 +104,7 @@ $config = [
                     'password' => 'T597168285295',
 
                     // использовать тестовый режим (по умолчанию - нет)
-                    'testServer' => true,
+                    'testServer' => false,
 
                     // использовать двухстадийную оплату (по умолчанию - нет)
                     'registerPreAuth' => false

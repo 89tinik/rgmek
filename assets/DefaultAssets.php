@@ -28,7 +28,8 @@ class DefaultAssets extends AssetBundle
         'js/jquery-ui.js',
         'js/datepicker-ru.js',
         'js/swiper.min.js',
-        'js/script.js?v=0.2',
+        'js/Cleave.js',
+        'js/script.js?v=0.3',
     ];
     public $depends = [
         'yii\web\YiiAsset',

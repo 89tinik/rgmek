@@ -106,7 +106,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
 
         <div class="title">Оплата</div>
         <?php
-        $ee = (!empty($result['Payment']['ElectricityDebt']))? str_replace(',', '.', $result['Payment']['ElectricityDebt']): 0;
+        $ee = (!empty($result['Payment']['ElectricityDebt']))? str_replace('.', ',', $result['Payment']['ElectricityDebt']): 0;
 
         $disabledEe = ($ee) ? ' ' : ['diasbled' => 'diasabled'];
         ?>
@@ -119,19 +119,13 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                                                                                 </div>
 						                                                    </div>
 						                                                </div>'])->
-        widget(\yii\widgets\MaskedInput::className(), [
-            'mask' => '9{1,}.9{1,}',
-            'clientOptions' => [
-                'placeholder' => ''
-            ]
-        ])->
-        textInput(['class' => 'value ruble', 'value' => $ee, 'max' => $ee, $disabledPenalty])->
+        textInput(['class' => 'value ruble', 'value' => $ee, $disabledPenalty])->
         label('Электроэнергия:', [
             'class' => 'label'
         ]) ?>
 
         <?php
-        $penalty = (!empty($result['Payment']['CurrentPenalty']))? str_replace(',', '.', $result['Payment']['CurrentPenalty']): 0;
+        $penalty = (!empty($result['Payment']['CurrentPenalty']))? str_replace('.', ',', $result['Payment']['CurrentPenalty']): 0;
         $disabledPenalty = ($penalty) ? ' ' : ['diasbled' => 'diasabled'];
         ?>
         <?= $form->field($model, 'penalty', ['template' => '<div class="group">
@@ -143,12 +137,6 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                                                                                 </div>
 						                                                    </div>
 						                                                </div>'])->
-        widget(\yii\widgets\MaskedInput::className(), [
-            'mask' => '9{1,}.9{1,}',
-            'clientOptions' => [
-                'placeholder' => ''
-            ]
-        ])->
         textInput(['class' => 'value ruble', 'value' => $penalty, 'max' => $penalty, $disabledPenalty])->
         label('Пени:', [
             'class' => 'label'
@@ -156,7 +144,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
         <div class="group-price">
             <div class="label">Итого:</div>
 
-            <div class="price all-price"><?= (!empty($all = $ee + $penalty)) ? number_format($all, 2, ',', ' ') . ' ₽' : 0; ?></div>
+            <div class="price all-price"><?= (!empty($all = str_replace(',', '.', $ee) + str_replace(',', '.', $penalty))) ? number_format($all, 2, ',', ' ') . ' ₽' : 0; ?></div>
         </div>
         <?= Html::submitButton('Перейти к оплате', ['class' => 'btn submit-btn']) ?>
         <?php ActiveForm::end(); ?>

@@ -34,6 +34,12 @@ $(function() {
 	});
 
 	/*tin*/
+
+	new Cleave('#receiptform-ee, #receiptform-penalty', {
+		numeral: true,
+		numeralDecimalMark: ',',
+		delimiter: ''
+	});
 	//удаление файлов из ФОС
 	$('#feedbackform-file').on('change', function() {
 		if ($(this).parent().siblings('.fos-file-close').length == 0) {
@@ -86,7 +92,7 @@ $(function() {
 		}
 		var all = 0;
 		$('.sber-form .value input').each(function(){
-			all = all + parseFloat($(this).val());
+			all = all + parseFloat($(this).val().replace(',', '.'));
 		});
 		if (all > 0) {
 			$('.all-price').html(all.toLocaleString() + '₽');
