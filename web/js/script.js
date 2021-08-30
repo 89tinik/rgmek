@@ -35,11 +35,13 @@ $(function() {
 
 	/*tin*/
 
+if ($('#receiptform-ee, #receiptform-penalty').length > 0){
 	new Cleave('#receiptform-ee, #receiptform-penalty', {
 		numeral: true,
 		numeralDecimalMark: ',',
 		delimiter: ''
 	});
+}
 	//удаление файлов из ФОС
 	$('#feedbackform-file').on('change', function() {
 		if ($(this).parent().siblings('.fos-file-close').length == 0) {
