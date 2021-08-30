@@ -80,8 +80,8 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
             <div class="title">Детализация счета по договору<br/><?= $this->context->currentContract; ?><br/>за период <?=$withDate?>-<?=$byDate?></div>
             <div class="bts">
                 <!--a href="#" class="btn small border">Просмотр</a-->
-                <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right print', 'target'=>'_blank'])?>
-                <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_report_detal'],['class'=>'btn small right download', 'target'=>'_blank'])?>
+                <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right border print', 'target'=>'_blank'])?>
+                <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_report_detal'],['class'=>'btn small right border download', 'target'=>'_blank'])?>
                 <div class="clear"></div>
             </div>
         </div>

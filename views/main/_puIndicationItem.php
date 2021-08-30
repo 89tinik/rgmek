@@ -104,12 +104,12 @@ use yii\widgets\ActiveForm;
 
 
 
-                            <label class="btn  left computation-pu" for="attachform-photo">Фото
+                            <label class="btn  left border computation-pu" for="attachform-photo">Фото
                                 счётчика</label>
 
-                            <label class="btn  left computation-pu <?=($pu['DisplayHV'] == 'Нет' ? 'disabled' : '')?>" for="attachform-time">Почасовые
+                            <label class="btn  left border computation-pu <?=($pu['DisplayHV'] == 'Нет' ? 'disabled' : '')?>" for="attachform-time">Почасовые
                                 объемы</label>
-                            <button type="submit" class="btn submit-btn left computation-pu">Отправить</button>
+                            <button type="submit" class="btn submit-btn left border computation-pu">Отправить</button>
                             <div class="clear"></div>
                     </div>
                 </div>

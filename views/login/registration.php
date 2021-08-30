@@ -84,7 +84,7 @@ $this->title = 'Регистрация в личном кабинете небы
         ])->textInput(['placeholder' => 'Телефон', 'class' => 'phone form-control']) ?>
         <?= Html::submitButton('Регистрация') ?>
 
-
+        <div  class="instruction"><a href="/web/doc/rukovodstvo-po-registracii.pdf" target="_blank">Инструкция по регистрации</a></div>
         <p class="register-polit"> Нажимая кнопку «Регистрация», я принимаю условия Пользовательского соглашения и даю
             согласие ООО «РГМЭК» на обработку моих персональных данных на условиях, определенных
             <?= Html::a('Пользовательским соглашением', ['login/information'],['target'=>'_blank']) ?>.</p>

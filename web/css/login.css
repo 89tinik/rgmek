@@ -271,6 +271,18 @@ input, textarea, button {
 .information {
 	padding: 90px 20px 40px;
 }
+.instruction{
+	text-align: center;
+	margin: 5px 0;
+}
+.instruction a{
+	color: #5E676F;
+	text-decoration: underline;
+}
+.instruction a:hover{
+	color: #4475F2;
+	text-decoration: none;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {
