@@ -2034,9 +2034,12 @@ a.lnk, .lnk {
     vertical-align: middle;
     width: 24px;
     height: 24px;
-    background: url(../images/save_ic.svg) no-repeat;
+    background: url(../images/save_ic_b.svg) no-repeat;
     background-size: contain; }
 
+.testimony-box .btn.submit-btn:hover:before {
+  background: url(../images/save_ic.svg) no-repeat;
+}
 .testimony-box .attach-lnk {
   position: relative;
   float: right;

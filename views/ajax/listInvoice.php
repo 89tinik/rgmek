@@ -2,7 +2,7 @@
 if (isset($result['Invoice'])) {
     if (isset($result['Invoice']['FullName'])) {
         echo $this->render('_invoiceItem', [
-            'account' => $result['Account']
+            'account' => $result['Invoice']
         ]);
     } else {
         foreach ($result['Invoice'] as $arr) {
