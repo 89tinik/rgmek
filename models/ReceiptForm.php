@@ -40,8 +40,8 @@ class ReceiptForm extends Model // устарело
     }
 
     public function noEmptyPay ($attr){
-        $ee = (empty($this->ee))?0:$this->ee;
-        $penalty = (empty($this->penalty))?0:$this->penalty;
+        $ee = (empty($this->ee))?0:str_replace(',', '.', $this->ee);
+        $penalty = (empty($this->penalty))?0:str_replace(',', '.', $this->penalty);
         if ($ee + $penalty == 0){
             $this->addError($this->$attr, 'Нельзя оплачивать 0 РУБ.!');
         }
