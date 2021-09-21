@@ -35,8 +35,15 @@ $(function() {
 
 	/*tin*/
 
-if ($('#receiptform-ee, #receiptform-penalty').length > 0){
-	new Cleave('#receiptform-ee, #receiptform-penalty', {
+if ($('#receiptform-ee').length > 0){
+	new Cleave('#receiptform-ee', {
+		numeral: true,
+		numeralDecimalMark: ',',
+		delimiter: ''
+	});
+}
+if ($('#receiptform-penalty').length > 0){
+	new Cleave('#receiptform-penalty', {
 		numeral: true,
 		numeralDecimalMark: ',',
 		delimiter: ''
@@ -97,7 +104,11 @@ if ($('#receiptform-ee, #receiptform-penalty').length > 0){
 			all = all + parseFloat($(this).val().replace(',', '.'));
 		});
 		if (all > 0) {
-			$('.all-price').html(all.toLocaleString() + '₽');
+			var op = {};
+			if ((all ^ 0) !== all){
+				op = { minimumFractionDigits: 2 };
+			}
+			$('.all-price').html(all.toLocaleString('ru-RU',op) + '₽');
 		} else {
 			$('.all-price').html('0');
 		}
