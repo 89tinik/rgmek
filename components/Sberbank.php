@@ -14,16 +14,18 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
     {
         $reciept = Receipt::findOne($model->order_id);
         $post['orderNumber'] = $model->data['uniqid'];
-        $post['amount'] = $model->sum * 100;
+        $post['amount'] = (int) round($model->sum * 100, 0);
         $post['returnUrl'] = Url::to($this->returnUrl, true);
         $post['sessionTimeoutSecs'] = $this->sessionTimeoutSecs;
 
         $cart = [];
         $position = 1;
-//        var_dump($reciept->ee * 100);
-//        var_dump($reciept->penalty * 100);
-//        var_dump($model->sum * 100);
-//        var_dump(($reciept->ee * 100 + $reciept->penalty * 100) == $model->sum * 100);
+        var_dump($reciept->ee * 100);
+        var_dump($reciept->penalty * 100);
+        var_dump(intval($reciept->ee * 100));
+        var_dump(intval($reciept->penalty * 100));
+        var_dump($model->sum * 100);
+        var_dump(($reciept->ee * 100 + $reciept->penalty * 100) == $model->sum * 100);
         if (!empty($reciept->ee)) {
             $cart[] = array(
                 'positionId' => $position,
@@ -32,9 +34,9 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
                     'value' => 1,
                     'measure' => 'шт'
                 ),
-                'itemAmount' => intval(1 * ($reciept->ee * 100)),
+                'itemAmount' => (int) round(1 * ($reciept->ee * 100),0),
                 'itemCode' => 'ee',
-                'itemPrice' => intval($reciept->ee * 100),
+                'itemPrice' => (int) round($reciept->ee * 100,0),
             );
             $position++;
         }
@@ -47,12 +49,12 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
                     'value' => 1,
                     'measure' => 'шт'
                 ),
-                'itemAmount' => intval(1 * ($reciept->penalty * 100)),
+                'itemAmount' => (int) round(1 * ($reciept->penalty * 100),0),
                 'itemCode' => 'penalty',
                 'tax' => array(
                     'taxType' => 0
                 ),
-                'itemPrice' => intval($reciept->penalty * 100),
+                'itemPrice' => (int) round($reciept->penalty * 100,0),
 
             );
         }
@@ -65,7 +67,8 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
             ),
             JSON_UNESCAPED_UNICODE
         );
-
+var_dump($post);
+die();
 
         if (array_key_exists('comment', $model->data)) {
             $post['description'] = $model->data['comment'];
