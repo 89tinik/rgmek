@@ -33,6 +33,7 @@ class Receipt extends ActiveRecord
         $data['date']=date("Y-m-d H:i:s");
         $dataSend['pay_documents'][]=$data;
         $client = new Client();
+
         $response = $client->createRequest()
             ->setMethod('POST')
             ->setFormat(Client::FORMAT_JSON)

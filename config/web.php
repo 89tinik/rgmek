@@ -99,10 +99,10 @@ $config = [
                     'sessionTimeoutSecs' => 60 * 60 * 24 * 7,
 
                     // логин api мерчанта
-                    'login' => 'T597168285295-api',
+                    'login' => 'T6229054695_6055-api',//'T6229054695_6055-api | P6229054695_1083-api',
 
                     // пароль api мерчанта
-                    'password' => 'T597168285295',
+                    'password' => 'T6229054695_6055',//'T6229054695_6055 | KndhG5GF69nFdz',
 
                     // использовать тестовый режим (по умолчанию - нет)
                     'testServer' => true,
@@ -145,6 +145,10 @@ $config = [
                 // вместо него используем собственный алгоритм, например такой
                 //return '000-AAA-' . $invoice->id;
             //},
+        ],
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'layout' => 'admin',
         ],
     ],
     'params' => $params,

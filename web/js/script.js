@@ -96,6 +96,9 @@ if ($('#receiptform-penalty').length > 0){
 
 	//пересчёт в форме оплаты
 	$('.sber-form .value input').on('change', function(){
+		if($(this).val() == ''){
+			$(this).val('0');
+		}
 		if (parseFloat($(this).val()) > parseFloat($(this).attr('max'))){
 			$(this).val($(this).attr('max'));
 		}
