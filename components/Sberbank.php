@@ -20,12 +20,7 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
 
         $cart = [];
         $position = 1;
-        var_dump($reciept->ee * 100);
-        var_dump($reciept->penalty * 100);
-        var_dump(intval($reciept->ee * 100));
-        var_dump(intval($reciept->penalty * 100));
-        var_dump($model->sum * 100);
-        var_dump(($reciept->ee * 100 + $reciept->penalty * 100) == $model->sum * 100);
+
         if (!empty($reciept->ee)) {
             $cart[] = array(
                 'positionId' => $position,
@@ -67,8 +62,6 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
             ),
             JSON_UNESCAPED_UNICODE
         );
-var_dump($post);
-die();
 
         if (array_key_exists('comment', $model->data)) {
             $post['description'] = $model->data['comment'];

@@ -18,7 +18,19 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
         // custom initialization code goes here
+
+        \Yii::$app->setComponents(
+            [
+                'user' => [
+                    'class' => 'yii\web\User',
+                    'identityClass' => 'app\modules\admin\models\User',
+                    'loginUrl' => ['admin/default/login'],
+                    'authTimeout' => 60,
+                ],
+            ]
+        );
+
+
     }
 }
