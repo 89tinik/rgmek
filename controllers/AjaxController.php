@@ -226,7 +226,7 @@ class AjaxController extends Controller
                 $model->time = UploadedFile::getInstances($model, 'time');
                 $time = $model->time;
 
-                if ($model->sendMail(['89.tinik@gmail.com','dronp@rgmek.ru'], $photo[0], $time[0])) {
+                if ($model->sendMail(['89.tinik@gmail.com','sev@rgmek.ru'], $photo[0], $time[0])) {
                     return 'Ваши данные успешно отправлены!';
                 } else {
                     return 'Что-то пошло не так - повторите попытку позже!';

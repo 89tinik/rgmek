@@ -83,11 +83,11 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
 <div class="arrear-right">
     <div class="payment-form white-box">
         <?php
-        if($_GET['test'] == true){
-            $testing = 'go';
-        }else {
-            $testing = 'testing';
-        }
+//        if($_GET['test'] == true){
+//            $testing = 'go';
+//        }else {
+//            $testing = 'testing';
+//        }
         $form = ActiveForm::begin([
             'method' => 'post',
            // 'action' => ['ajax/create-sber-invoice'],
@@ -98,7 +98,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
                 ],
             ],
             'options' => [
-                'class' => 'sber-form pay-form '.$testing,
+                'class' => 'sber-form pay-form '//.$testing,
             ]
         ]); ?>
 
