@@ -27,7 +27,6 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => false,
-            'authTimeout' => 3600,
             'loginUrl' => ['login'],
         ],
         'errorHandler' => [
@@ -80,6 +79,7 @@ $config = [
                 'verification'=>'login/verification',
                 'profile'=>'main/profile',
                 'payment'=>'main/payment',
+                'admin/<action:(login|update|as-user|delete|index|logout)>'=>'admin/default/<action>'
                 //'<action:(profile | payment)>'=>'main/<action>',
             ],
         ],
@@ -99,13 +99,13 @@ $config = [
                     'sessionTimeoutSecs' => 60 * 60 * 24 * 7,
 
                     // логин api мерчанта
-                    'login' => 'T6229054695_6055-api',//'T6229054695_6055-api | P6229054695_1083-api',
+                    'login' => 'P6229054695_1083-api',//'T6229054695_6055-api | P6229054695_1083-api',
 
                     // пароль api мерчанта
-                    'password' => 'T6229054695_6055',//'T6229054695_6055 | KndhG5GF69nFdz',
+                    'password' => 'KndhG5GF69nFdz',//'T6229054695_6055 | KndhG5GF69nFdz',
 
                     // использовать тестовый режим (по умолчанию - нет)
-                    'testServer' => true,
+                    'testServer' => false,
 
                     // использовать двухстадийную оплату (по умолчанию - нет)
                     'registerPreAuth' => false

@@ -88,10 +88,12 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        //curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
 
         $out = curl_exec($curl);
+        curl_close($curl);
         if ($out) {
             return Json::decode($out);
         } else {
@@ -100,7 +102,7 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
                 ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
                 ->setTo(['89.tinik@gmail.com','mapurian@gmail.com'])
                 ->setSubject('Ошибка при переходе на шлюз Сбера!!!')
-                ->setHtmlBody('Время ошибки:' . date("Y-m-d H:i:s") . '.<br/> Данные:<br>' . $dataMess)
+                ->setHtmlBody('Время ошибки:' . date("Y-m-d H:i:s") . '.<br/> Данные:<br>' . $dataMess . '<br/>Ошибка curl: ' . curl_error($out))
                 ->send();
             die('Ошибка');
         }

@@ -24,9 +24,9 @@ class Module extends \yii\base\Module
             [
                 'user' => [
                     'class' => 'yii\web\User',
-                    'identityClass' => 'app\modules\admin\models\User',
+                    'identityClass' => 'app\modules\admin\models\Admin',
                     'loginUrl' => ['admin/default/login'],
-                    'authTimeout' => 60,
+                    'authTimeout' => 3600,
                 ],
             ]
         );

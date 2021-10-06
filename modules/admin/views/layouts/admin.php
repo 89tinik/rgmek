@@ -33,78 +33,65 @@ IeAssets::register($this);
         <?php $this->head() ?>
     </head>
 
-    <body>
+    <body class="operator">
     <?php $this->beginBody() ?>
     <div class="bg">
-
-        <!-- Preloader -->
-        <div class="preloader">
-            <div class="centrize full-width">
-                <div class="vertical-center">
-                    <div class="spinner"></div>
+        <div class="fw">
+            <!-- Preloader -->
+            <div class="preloader">
+                <div class="centrize full-width">
+                    <div class="vertical-center">
+                        <div class="spinner"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Header -->
-        <header class="header">
-            <div class="fw">
+            <!-- Header -->
+            <header class="header">
+                <div class="fw">
 
-                <!-- logo -->
-                <div class="h-logo">
-                    <a href="#" class="ploader">
-                        <img src="/images/logo.png" alt=""/>
-                    </a>
+                    <!-- logo -->
+                    <div class="h-logo">
+                        <a href="<?=\yii\helpers\Url::to(['/admin'])?>" class="ploader">
+                            <img src="/images/logo.png" alt=""/>
+                        </a>
+                    </div>
+
+                    <div class="h-label"><? \Yii::$app->controller->userName ?></div>
+
+                    <!-- menu -->
+
+
+                    <!-- login -->
+                    <div class="h-login">
+
+                        <?= Html::a(\Yii::$app->controller->userName, ['/admin/logout'], ['class' => 'h-login-btn']) ?>
+                        <?= Html::a('Выйти из аккаунта', ['/admin/logout'], ['class' => 'h-login-btn-mobile']) ?>
+                    </div>
+
+                    <!-- menu btn -->
+
+
                 </div>
-
-                <div class="h-label"><? \Yii::$app->controller->userName ?></div>
-
-                <!-- menu -->
+            </header>
 
 
-                <!-- login -->
-                <div class="h-login">
+            <!-- Wrapper -->
+            <div class="wrapper">
 
-                    <?= Html::a(\Yii::$app->controller->userName, ['login/logout'], ['class' => 'h-login-btn']) ?>
-                    <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']) ?>
-                </div>
+                <?= $content ?>
 
-                <!-- menu btn -->
-
-
+                <div class="clear"></div>
             </div>
-        </header>
 
-        <!-- Sidebar -->
-        <div class="sidebar-menu">
-            <div class="sidebar-menu-fw">
-                <ul>
-                    <li>
-                        <a href="<?= \yii\helpers\Url::base(true); ?>" class="ploader">Главная</a>
+            <!-- Footer -->
+            <div class="footer"></div>
 
-                    </li>
+            <!-- Popups -->
+            <div class="overlay"></div>
 
-
-                </ul>
-            </div>
+            <div class="contracts-devices-popup-overlay"></div>
         </div>
-
-        <!-- Wrapper -->
-        <div class="wrapper">
-
-            <?= $content ?>
-
-            <div class="clear"></div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer"></div>
-
-        <!-- Popups -->
-        <div class="overlay"></div>
-
-        <div class="contracts-devices-popup-overlay"></div>
-
     </div>
 
 

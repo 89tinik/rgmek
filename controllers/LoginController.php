@@ -9,6 +9,7 @@ use app\models\LoginForm;
 use app\models\RegisterForm;
 use app\models\User;
 use app\models\VerificationForm;
+use app\modules\admin\models\Admin;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -62,8 +63,16 @@ class LoginController extends Controller
 
     public function actionLogout()
     {
-        Yii::$app->user->logout();
-        return $this->redirect('/login');
+        if (Yii::$app->session->get('admin')){
+            $url = ['admin/'];
+            if (\Yii::$app->user->login(Admin::findIdentity(Yii::$app->session->get('admin')))){
+                Admin::setSessionAdmin(false);
+            }
+        } else {
+            Yii::$app->user->logout();
+            $url = '/login';
+        }
+        return $this->redirect($url);
     }
 
     public function actionVerification()
@@ -126,13 +135,6 @@ class LoginController extends Controller
     public function actionInformation()
     {
         return $this->render('information');
-    }
-
-    public function actionRemove()
-    {
-        $user = User::findOne(['id_db' => Yii::$app->request->get('id')]);
-        Contract::deleteAll(['user_id'=>$user->id]);
-        return $user->remove();
     }
 
     public function actionAll()//удалить после разработки

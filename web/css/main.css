@@ -2881,7 +2881,15 @@ margin-bottom:10px;
   text-align: center;
   z-index: 2;
 }
+.operator .fw{
+  width:1200px;
+  margin: 0 auto;
+}
 
+.operator .fw .wrapper{
+  margin:0;
+  max-width: 100%;
+}
 @media screen and (max-width: 1350px) {
   .arrear-left{
     width:580px;

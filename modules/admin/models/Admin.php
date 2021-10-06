@@ -5,7 +5,7 @@ namespace app\modules\admin\models;
 use yii\base\BaseObject;
 use yii\web\IdentityInterface;
 
-class User extends BaseObject implements IdentityInterface
+class Admin extends BaseObject implements IdentityInterface
 {
     public $id;
     public $username;
@@ -103,5 +103,9 @@ class User extends BaseObject implements IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public static function setSessionAdmin($value){
+        \Yii::$app->session->set('admin', $value);
     }
 }
