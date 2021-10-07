@@ -7,9 +7,12 @@
 use yii\helpers\Html;
 use app\assets\DefaultAssets;
 use app\assets\IeAssets;
+use app\modules\admin\assets\AdminAssets;
 
 DefaultAssets::register($this);
 IeAssets::register($this);
+AdminAssets::register($this);
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -60,7 +63,13 @@ IeAssets::register($this);
                     <div class="h-label"><? \Yii::$app->controller->userName ?></div>
 
                     <!-- menu -->
+                    <!-- menu -->
+                    <div class="top-menu">
+                        <ul>
+                            <li><?= Html::a('Пользователи', ['/admin'], ['class' => 'ploader']) ?></li>
 
+                        </ul>
+                    </div>
 
                     <!-- login -->
                     <div class="h-login">

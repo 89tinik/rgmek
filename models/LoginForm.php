@@ -65,39 +65,43 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             $user = $this->getUser();
-            $client = new Client();
-            $client->createRequest()
-                ->setMethod('GET')
-                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
-                ->setData(['id'=>$user->id_db])
-                ->send();
+            if ($user->blocked != 1) {
+                $client = new Client();
+                $client->createRequest()
+                    ->setMethod('GET')
+                    ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
+                    ->setData(['id' => $user->id_db])
+                    ->send();
 
 
-            $contracts = new Client();
-            $response = $contracts->createRequest()
-                ->setMethod('GET')
-                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
-                ->setData([
-                    'id' => $user->id_db
-                ])
-                ->send();
-            if ($response->isOk) {
-                $xml = new XmlParser();
-                $result = $xml->parse($response);
-                if ($result['Contract']) {
-                    Contract::updateAllContract($user, $result['Contract']);
-                    $user->with_date = $result['Withdate'];
-                    $user->by_date = $result['Bydate'];
-                    $user->full_name = $result['Name'];
-                    $user->save();
+                $contracts = new Client();
+                $response = $contracts->createRequest()
+                    ->setMethod('GET')
+                    ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
+                    ->setData([
+                        'id' => $user->id_db
+                    ])
+                    ->send();
+                if ($response->isOk) {
+                    $xml = new XmlParser();
+                    $result = $xml->parse($response);
+                    if ($result['Contract']) {
+                        Contract::updateAllContract($user, $result['Contract']);
+                        $user->with_date = $result['Withdate'];
+                        $user->by_date = $result['Bydate'];
+                        $user->full_name = $result['Name'];
+                        $user->save();
+                    } else {
+                        Contract::removeAllUserContract($user->id);
+                    }
                 } else {
-                    Contract::removeAllUserContract($user->id);
+                    Yii::error('Не удалось связаться БД - повторите попытку позже.');
                 }
-            } else {
-                Yii::error('Не удалось связаться БД - повторите попытку позже.');
-            }
 
-            return Yii::$app->user->login($user, 36);
+                return Yii::$app->user->login($user);
+            } else {
+                Yii::$app->session->setFlash('error', 'Вы заблокированы!');
+            }
         }
         return false;
     }

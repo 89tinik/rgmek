@@ -1,0 +1,44 @@
+.operator .fw{
+    width: 80%;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.operator .fw .wrapper{
+    margin:0;
+    max-width: 100%;
+}
+body.operator {
+    color:#111;
+}
+
+.pagination {
+    margin: 100px 0 0 0;
+    float: right;
+}
+.pagination li{
+    display: block;
+    float: left;
+    margin: 5px 10px;
+}
+.pagination li.active{
+}
+
+.pagination li a{
+    text-decoration: underline;
+}
+.pagination li.active a{
+    text-decoration: none;
+    color: #111;
+}
+.user-index tr{
+    height: 50px;
+}
+.user-index th{text-align: left;}
+.user-index td {text-align: left;border-bottom: 1px solid #e3e3e3;}
+.user-index td a{
+    display: block;
+    margin: 0 5px;
+    float: left;
+}
+.user-index td input {height:40px;}

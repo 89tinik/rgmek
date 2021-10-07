@@ -84,6 +84,7 @@ class DefaultController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = ['pageSize' => 200,];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

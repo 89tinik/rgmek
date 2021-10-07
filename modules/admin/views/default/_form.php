@@ -10,16 +10,14 @@ use yii\widgets\ActiveForm;
 
 <div class="user-form">
 
-    <?php $form = ActiveForm::begin([
-//        'action' => ['/admin'],
-    ]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
 <!--    --><?//= $form->field($model, 'id')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'user_id')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'username')->textInput() ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password')->textInput() ?>
 
     <?= $form->field($model, 'blocked')->radioList(['0' => 'Нет', '1' => 'Да'],
         [
