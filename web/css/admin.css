@@ -42,3 +42,14 @@ body.operator {
     float: left;
 }
 .user-index td input {height:40px;}
+
+.operator header {
+    background: #fafafa;
+}
+#login-form .help-block{
+    margin:0;
+}
+
+#login-form .btn {
+    margin-top: 10px;
+}

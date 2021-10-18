@@ -36,10 +36,16 @@ $this->title = 'Пользователи';
             'kpp:ntext',
             'email:email',
             'phone',
-            'contract',
+            [
+                'label' => 'Договор',
+                'attribute' => 'contract',
+            ],
 //            'id_db',
 //            'temp',
-            'full_name',
+            [
+                'label' => 'Наименование',
+                'attribute' => 'full_name',
+            ],
 //            'with_date',
 //            'by_date',
         ['attribute'=>'blocked', 'value'=>function($model){
