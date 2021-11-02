@@ -132,7 +132,7 @@ class AjaxController extends Controller
             if (isset($responseArr['Error'])){
                 return $responseArr['Error']['Message'];
             } else {
-                return 'Ваши данные успешно переданны!';
+                return 'Ваши данные успешно переданы!';
             }
         } else {
             return 'Не удалось связаться БД - повторите попытку позже.';
