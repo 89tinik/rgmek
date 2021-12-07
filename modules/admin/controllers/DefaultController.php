@@ -11,6 +11,7 @@ use app\modules\admin\models\Admin;
 use app\modules\admin\models\LoginForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -187,10 +188,16 @@ class DefaultController extends Controller
 
     public function actionAsUser($id){
         $adminId = Yii::$app->user->id;
-        if (Yii::$app->user->login(User::findOne($id))){
+        $user = User::findOne($id);
+        if (Yii::$app->user->login($user)){
             Admin::setSessionAdmin($adminId);
+            $client = new Client();
+            $client->createRequest()
+                ->setMethod('GET')
+                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
+                ->setData(['id' => $user->id_db])
+                ->send();
         }
-        //die( '123');
         return $this->redirect(['/login/index']);
     }
 
