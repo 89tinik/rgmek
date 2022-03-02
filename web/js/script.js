@@ -150,11 +150,11 @@ if ($('#receiptform-penalty').length > 0){
 	});
 	//отправка фото ПУ
 	$('button.computation-pu').on('click', function () {
+        var topPos = $('.bg').scrollTop() + 50;
 		if ($(window).scrollTop() > $('.bg').scrollTop()){
-			var topPos = $(window).scrollTop() + 50;
-		} else {
-			var topPos = $('.bg').scrollTop() + 50;
+			topPos = $(window).scrollTop() + 50;
 		}
+
 		var puid = $(this).closest('.wrap-pu').attr('data-puid');
 		if ($('#attachFormPu .puidInput').val() != puid) {
 			$('#attachFormPu')[0].reset();
@@ -166,24 +166,31 @@ if ($('#receiptform-penalty').length > 0){
 			$('.attach-popup').animate({'top': topPos}, 450);
 			$('.contracts-devices-popup-overlay').fadeIn(250);
 		} else {
-			ajaxPreloaderOn();
-			var formData = new FormData($('#attachFormPu')[0]);
-			$.ajax({
-				type: 'POST',
-				url: '/ajax/attach',
-				data: formData,
-				async: false,
-				cache: false,
-				contentType: false,
-				processData: false,
-				success: function (msg) {
-					ajaxPreloaderOff();
-					$('.attach-popup .message').text(msg);
+		    if ($(this).hasClass('load')){
+                ajaxPreloaderOn();
+                var formData = new FormData($('#attachFormPu')[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajax/attach',
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (msg) {
+                        ajaxPreloaderOff();
+                        $('.attach-popup .message').text(msg);
 
-					$('.attach-popup').animate({'top': topPos}, 450);
-					$('.contracts-devices-popup-overlay').fadeIn(250);
-				}
-			});
+                        $('.attach-popup').animate({'top': topPos}, 450);
+                        $('.contracts-devices-popup-overlay').fadeIn(250);
+                    }
+                });
+            } else {
+                $('.attach-popup .message').text('Вначале нужно отправить показания!');
+
+                $('.attach-popup').animate({'top': topPos}, 450);
+                $('.contracts-devices-popup-overlay').fadeIn(250);
+            }
 
 		}
 
@@ -309,6 +316,7 @@ if ($('#receiptform-penalty').length > 0){
 		var puArr = [];
 		btn.closest('.wrap-object').find('.wrap-pu:not(.no-result, .aiiskue)').each(function () {
 			puArr.push({'indications':$(this).attr('data-idication'),'uidtu':$(this).attr('data-id'),'uidpu':$(this).attr('data-puid')});
+			$(this).find('.computation-pu').addClass('load');
 		});
 		$.ajax({
 			type: 'POST',
@@ -317,10 +325,9 @@ if ($('#receiptform-penalty').length > 0){
 			//data: '{"id":"c222afaaff-9e30-11e4-9c77-001e8c2d263f","uidcontract":"b95aa4a7-9f5e-11e4-9c77-001e8c2d263f","tu":[{"uidtu":"a383457f-19a8-41bd-99af-44c19f7afdb3", "indications":10000},{"uidtu":"8907550c-9e9a-11e4-9c77-001e8c2d263f", "indications":12000}]}',
 			success: function (msg){
 				$('.transfer-indication-popup h3').text(msg);
+                var topPos = $('.bg').scrollTop() + 50;
 				if ($(window).scrollTop() > $('.bg').scrollTop()){
-					var topPos = $(window).scrollTop() + 50;
-				} else {
-					var topPos = $('.bg').scrollTop() + 50;
+					topPos = $(window).scrollTop() + 50;
 				}
 				$('.transfer-indication-popup').animate({'top': topPos}, 450);
 				$('.contracts-devices-popup-overlay').fadeIn(250);
