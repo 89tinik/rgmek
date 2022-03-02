@@ -60,6 +60,14 @@ use yii\widgets\ActiveForm;
                         }
                         $outputOld .= $indicationArr[0];
                     }
+                    $currentValue = '';
+                    if (!empty($pu['IndicationsСurrent']) && $pu['IndicationsСurrent'] != $pu['Indications']) {
+                        $indicationCurrentArr = explode(',', $pu['IndicationsСurrent']);
+                        for ($i = 0; $i < $pu['Discharge'] - strlen($indicationCurrentArr[0]); $i++) {
+                            $currentValue .= '0';
+                        }
+                        $currentValue .= $indicationCurrentArr[0];
+                    }
 
                     ?>
 
@@ -82,7 +90,7 @@ use yii\widgets\ActiveForm;
                             <div class="wrap-error">
                                 <div class="label-error" style="display: none">Не заполнено текущее показание!</div>
                             </div>
-                            <input type="text" maxlength="<?= $pu['Discharge'] ?>" value="" class="curr-val indication">
+                            <input type="text" maxlength="<?= $pu['Discharge'] ?>" value="<?=$currentValue?>" class="curr-val indication">
                         </div>
                         <?php endif;?>
                     </div>
