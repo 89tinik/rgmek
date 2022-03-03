@@ -78,7 +78,7 @@ use yii\widgets\ActiveForm;
                         <?php endif; ?>
                         <div class="field co-<?= $pu['Discharge'] ?>">
                             <input type="text" maxlength="<?= $pu['Discharge'] ?>" value="<?= $outputOld ?>"
-                                   class="old-val indication">
+                                   class="old-val indication"/>
                         </div>
                     </div>
                     <div class="group">
@@ -90,7 +90,9 @@ use yii\widgets\ActiveForm;
                             <div class="wrap-error">
                                 <div class="label-error" style="display: none">Не заполнено текущее показание!</div>
                             </div>
-                            <input type="text" maxlength="<?= $pu['Discharge'] ?>" value="<?=$currentValue?>" class="curr-val indication">
+                            <input type="text" maxlength="<?= $pu['Discharge'] ?>" value="<?=$currentValue?>" class="curr-val indication"
+                                <?php if (date('j') > 1 && date('j') < 19) :?>disabled="disabled"<?php endif;?>
+                            />
                         </div>
                         <?php endif;?>
                     </div>

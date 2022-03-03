@@ -13,6 +13,7 @@ $this->title = 'Передать показания | ЛК РГМЭК';
     <div class="breadcrumbs">
         <strong>Передать показания приборов учета</strong><span class="sep"></span>
         <span>Договор <?= $this->context->currentContract; ?></span>
+        <p style="color:red;">Срок передачи показаний приборов учета  с <?=$result['Withdate']?> по <?=$result['Bydate']?> число текущего месяца.</p>
     </div>
 </div>
 
