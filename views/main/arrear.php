@@ -8,12 +8,12 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-$this->title = 'Узнать задолжность, оплатить | ЛК РГМЭК';
+$this->title = 'Узнать задолженность, оплатить | ЛК РГМЭК';
 ?>
 
 <div class="page-heading">
     <div class="breadcrumbs">
-        <strong>Узнать задолжность, оплатить</strong><span class="sep"></span>
+        <strong>Узнать задолженность, оплатить</strong><span class="sep"></span>
         <span>	Договор  <?= $this->context->currentContract; ?></span>
     </div>
 </div>
