@@ -1899,10 +1899,13 @@ a.lnk, .lnk {
       line-height: 24px;
       color: #5E676F;
       max-width: 620px; }
+    .sub-objects-content .info .position {
+      color:#4475F2;
+    }
     .sub-objects-content .info .notice {
       font-size: 16px;
       line-height: 24px;
-      color: #FF4949;
+      color: #1C2834;
       max-width: 620px; }
     .sub-objects-content .info .btn {
       position: absolute;
@@ -3604,7 +3607,7 @@ margin-bottom:10px;
     top: 42px;
     pointer-events: none; }
   .sub-objects-content .info .notice {
-    display: none; }
+    color: #fff; }
   .sub-objects-content .info .btn {
     display: block;
     top: auto;

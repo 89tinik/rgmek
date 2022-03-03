@@ -21,6 +21,7 @@ use yii\widgets\ActiveForm;
             <div class="label  consumed-wrap" style="display: none">Показание сохранено, объем <span><span
                             class="result-pu"></span> кВтч</span></div>
             <div class="notice">Срок поверки счетчика <?= $pu['VerificationYear'] ?>г.</div>
+            <div class="position">Место установки: <?= $pu['PlaceInstallation'] ?></div>
             <a href="#" class="btn border history" data-uidcontract="<?=$UIDContract?>">История показаний</a>
         </div>
         <div class="testimony-box white-box">
