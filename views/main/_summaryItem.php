@@ -61,7 +61,7 @@ use yii\helpers\Html;
 
             <?php if (!empty($contract['Expand']['Overpayment'])):?>
                 <div class="title">
-                    <div class="label">Преплата</div>
+                    <div class="label">Переплата</div>
                     <div class="value"><?= $contract['Expand']['Overpayment'].' руб.'?></div>
                 </div>
             <?php endif;?>

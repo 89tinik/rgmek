@@ -64,7 +64,7 @@ $this->title = 'Узнать задолжность, оплатить | ЛК Р�
             </div-->
             <?php if (!empty($result['Expand']['Overpayment'])): ?>
                 <div class="title">
-                    <div class="label">Преплата</div>
+                    <div class="label">Переплата</div>
                     <div class="value"><?= $result['Expand']['Overpayment'] . ' руб.' ?></div>
                 </div>
             <?php endif; ?>
