@@ -10,6 +10,7 @@ use Yii;
 class FeedbackForm extends Model
 {
     public $user;
+    public $contracts;
     public $name;
 
     public $type_answer;
@@ -31,7 +32,7 @@ class FeedbackForm extends Model
         return [
             [['name', 'subject', 'body', 'type_answer','user'], 'required', 'message' => 'Заполните поле'],
             ['email', 'email'],
-            [['phone', 'file'], 'trim'],
+            [['phone', 'contracts', 'file'], 'trim'],
         ];
     }
 
@@ -96,6 +97,7 @@ class FeedbackForm extends Model
                 'body' => $this->body,
                 'email' => $this->email,
                 'phone' => $this->phone,
+                'contracts' => $this->contracts,
                 'user' => $this->user]
         ]);
 

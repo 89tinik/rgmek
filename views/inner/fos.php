@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 /* @var $result */
+/* @var $contracts */
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
@@ -65,6 +66,7 @@ $this->title = 'Написать обращение | ЛК РГМЭК';
 
                             <div class="group-col">
                                 <?=$form->field($model, 'user',['template' => '{input}'])->hiddenInput(['value' => \Yii::$app->controller->userName]);?>
+                                <?=$form->field($model, 'contracts',['template' => '{input}'])->hiddenInput(['value' => $contracts]);?>
                                 <?= $form->field($model, 'name')->textInput(['placeholder' => 'Имя']) ?>
 
                                 <div class="radio-items type-answer">

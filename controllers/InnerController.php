@@ -63,8 +63,19 @@ class InnerController extends Controller
             }
 
         }
+        $contracts = '';
+        if (!empty($contractsArr = Contract::find()->where(['user_id'=>\Yii::$app->user->identity->id])->asArray()->all())){
+            foreach ($contractsArr as $contract){
+                if(empty($contracts)){
+                    $contracts = $contract['full_name'];
+                } else {
+                    $contracts .= ';'.$contract['full_name'];
+                }
+            }
+        }
         return $this->render('fos', [
             'model' => $model,
+            'contracts' => $contracts
         ]);
     }
 
