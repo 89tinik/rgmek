@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\AttachForm;
 use app\models\Contract;
+use app\models\HistoryForm;
 use app\models\InstallESForm;
 use app\models\ReceiptForm;
 use app\models\User;
@@ -48,6 +49,10 @@ class MainController extends Controller
 
         $this->userName = \Yii::$app->user->identity->full_name;
         $curentContract = Contract::find()->where(['uid'=> \Yii::$app->request->get('uid')])->one();
+        if (empty($curentContract)){
+            $historyForm = \Yii::$app->request->get('HistoryForm');
+            $curentContract = Contract::find()->where(['uid'=> $historyForm['uid']])->one();
+        }
         $this->currentContract =$curentContract->full_name;
 
         return parent::beforeAction($action);
@@ -203,6 +208,26 @@ class MainController extends Controller
         }
 
     }
+    
+    public function actionAccessHistoryFile()
+    {
+
+        $data = \Yii::$app->request->get();
+        $historyInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/'.\Yii::$app->request->get('action'), $data);
+        if (isset($historyInfo['success'])){
+            if ($historyInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+                throw new HttpException(403, 'Доступ запрещён');
+            }
+            if ($data['print'] == 'true'){
+                return \Yii::$app->response->sendContentAsFile(base64_decode ($historyInfo['success']['FilePDF']), $historyInfo['success']['Name'].'.pdf', ['inline' => true, 'mimeType' => 'application/pdf']);
+            } else {
+                return \Yii::$app->response->sendContentAsFile(base64_decode ($historyInfo['success']['FileXLS']), $historyInfo['success']['Name'].'.xls');
+            }
+        } else {
+            return $historyInfo['error'];
+        }
+
+    }
 
 //    public function actionDecoding()
 //    {
@@ -284,6 +309,44 @@ class MainController extends Controller
         }
     }
 
+    public function actionHistory()
+    {
+        //http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/history_ind?uidobject=ceaffecb-9e7c-11e4-9c77-001e8c2d263f&uidtu=896f5aff-9f8e-11e4-9c77-001e8c2d263f&withdate=01.10.2021&bydate=13.05.2022
+        $model = new HistoryForm();
+        if (!$model->load(\Yii::$app->request->get())) {
+            $model->uidobject = \Yii::$app->request->get('uidobject');
+            $model->uidtu = \Yii::$app->request->get('uidtu');
+            $model->uid = \Yii::$app->request->get('uid');
+        }
+        if (empty( $model->bydate = \Yii::$app->request->get('HistoryForm')['bydate'])) {
+            $bydateArr = explode('.', \Yii::$app->user->identity->by_date);
+            $model->bydate = '01.' . $bydateArr[1] .'.'. $bydateArr[2];
+        }
+        if (empty($model->withdate)) {
+            $bydateArr = explode('.', $model->bydate);
+            $Y = $bydateArr[2] - 1;
+            $model->withdate = '01.' . $bydateArr[1] . '.' . $Y;
+        }
+        if ($model->validate()) {
+            $data = [
+                'uidobject' => $model->uidobject,
+                'withdate' => $model->withdate,
+                'bydate' => $model->bydate
+            ];
+            $historyData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/history_ind', $data);
+            if (isset($historyData['success'])) {
+                return $this->render('history', [
+                    'result' => $historyData['success'],
+                    'currentTU' => $model->uidtu,
+                    'model' => $model
+                ]);
+            } else {
+                return $historyData['error'];
+            }
+        } else {
+            return 'Ошибка валидации - проверьте Ваши данные!';
+        }
+    }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
         $client = new Client();

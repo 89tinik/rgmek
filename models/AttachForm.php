@@ -9,8 +9,11 @@ use yii\base\Model;
 class AttachForm extends Model
 {
     public $puid;
+    public $objectid;
+    public $contract;
     public $photo;
     public $time;
+    public $num;
 
 
     /**
@@ -22,6 +25,9 @@ class AttachForm extends Model
             [['photo'], 'file', 'extensions' => 'png, jpg'],
             [['time'], 'file', 'extensions' => 'xls, xlsx'],
             ['puid', 'required'],
+            ['objectid', 'required'],
+            ['contract', 'required'],
+            ['num', 'required'],
         ];
     }
 
@@ -32,6 +38,9 @@ class AttachForm extends Model
     {
         return [
             'puid' => 'ID счетчика',
+            'num' => 'Номер счетчика',
+            'objectid' => 'ID объекта',
+            'contract' => 'Договор',
             'photo' => 'Фото счетчика',
             'time' => 'Почасовые объемы'
         ];
@@ -46,7 +55,12 @@ class AttachForm extends Model
     {
         $result = \Yii::$app->mailer->compose([
             'html' => 'attach-html'], [
-            'fields' => ['puid' => $this->puid]
+            'fields' => [
+                'puid' => $this->puid,
+                'objectid' => $this->objectid,
+                'contract' => $this->contract,
+                'num' => $this->num
+                ]
         ]);
         if ($photo->tempName) {
             $content_photo = file_get_contents($photo->tempName);

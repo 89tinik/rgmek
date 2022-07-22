@@ -87,6 +87,7 @@ class LoginController extends Controller
         $verificationForm = new VerificationForm();
         if ($verificationForm->load(Yii::$app->request->post())) {
             $activationResult = $verificationForm->activate();
+           // var_dump($activationResult);
             if ($activationResult['uName']) {
                 $messageF = '';
                 if ($prevAction == 'registration') {
@@ -94,6 +95,7 @@ class LoginController extends Controller
                 } elseif ($prevAction == 'repassword') {
                     $messageF = 'Пароль успешно изменён. ';
                 }
+                //die('66');
                 Yii::$app->session->setFlash('success', $messageF . 'Логин для входа <b>' . $activationResult['uName'] . '</b>.');
                 Yii::$app->session->setFlash('login', $activationResult['uName']);
                 Yii::$app->session->remove('vCode');
@@ -102,8 +104,10 @@ class LoginController extends Controller
                 Yii::$app->session->remove('contact');
                 return $this->redirect('/login');
             } else {
+                //die('55');
                 Yii::$app->session->setFlash('error', $activationResult['error']);
             }
+           //die('22');
         } else {
             $user = User::findOne(['id' => Yii::$app->session->get('uId')]);
             if ($user) {
@@ -139,7 +143,7 @@ class LoginController extends Controller
 
     public function actionAll()//удалить после разработки
     {
-        var_dump(User::showAll());
+        //var_dump(User::showAll());
         die();
     }
 

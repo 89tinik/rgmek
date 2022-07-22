@@ -31,8 +31,13 @@ class VerificationForm extends Model
 
     public function validateCode($attribute, $params)
     {
+         Yii::error('Это начало валидэйт код \n');
         if (!$this->hasErrors()) {
+            
+         Yii::error('нет до этого ошибок валидэйт код \n');
             if ($this->code != Yii::$app->session->get('vCode')) {
+                
+         Yii::error('невалиден код \n');
                 $this->addError($attribute, 'Неверно введён код');
             }
         }
@@ -40,11 +45,21 @@ class VerificationForm extends Model
 
     public function activate()
     {
+        
+         Yii::error('Это начало активэйт код \n');
         if ($this->validate()) {
+            
+         Yii::error('прошло валидэйт \n');
             $user = User::findOne(['id' => Yii::$app->session->get('uId')]);
+            
+         Yii::error('Искали юзера \n');
             if ($result = $user->activation() === true){
+                
+         Yii::error('нашли \n');
                 return ['uName' => $user->username];
             } else {
+                
+         Yii::error('не нашли \n');
                 return $result;
             }
         }

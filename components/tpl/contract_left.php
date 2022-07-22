@@ -22,8 +22,8 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
-        <li><?= Html::a('Начисления  и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
-        <li><?= Html::a('Действующие объекты  и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
+        <li><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
+        <li><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
     </ul>
     <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
         <div class="title">Выбрать действие</div>

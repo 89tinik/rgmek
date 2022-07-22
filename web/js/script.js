@@ -127,10 +127,17 @@ if ($('#receiptform-penalty').length > 0){
 		}
 		$(this).addClass('current-label-attach');
 		var puid = $(this).closest('.wrap-pu').attr('data-puid');
+		var num = $(this).closest('.wrap-pu').find('.sub-objects-btn').text();
+		var contract = $('.sidebar-menu-fw a.active').text();
+		var objectid = $(this).closest('.wrap-object').find('.objects-head').find('.name').find('a').text();
 		if ($('#attachFormPu .puidInput').val() != puid) {
 			$('#attachFormPu')[0].reset();
 			$('#attachFormPu .puidInput').val(puid);
+			$('#attachFormPu .numInput').val(num);
+			$('#attachFormPu .contractInput').val(contract);
+			$('#attachFormPu .objectidInput').val(objectid);
 		}
+
 	});
 	$('#attachform-photo').on('change', function() {
 		var file = $('#attachform-photo')[0].files[0];
@@ -186,7 +193,7 @@ if ($('#receiptform-penalty').length > 0){
                     }
                 });
             } else {
-                $('.attach-popup .message').text('Вначале нужно отправить показания!');
+                $('.attach-popup .message').text('Для передачи показаний необходимо ввести данные в окно ввода показаний');
 
                 $('.attach-popup').animate({'top': topPos}, 450);
                 $('.contracts-devices-popup-overlay').fadeIn(250);
@@ -337,6 +344,7 @@ if ($('#receiptform-penalty').length > 0){
 	}
 
 	$('.transfer-object').on('click', function () {
+		if ($(this).hasClass('disabled')) return false;
 		if ($(this).closest('.wrap-object').find('.wrap-pu.no-result:not(.aiiskue)').length > 0){
 			// var firstNorersult = $('.wrap-pu.no-result:first');
 			// if (!firstNorersult.hasClass('active')){
@@ -1091,6 +1099,7 @@ function styler_func() {
 			changeYear: true,
 		numberOfMonths: 1,
 			regional: "ru",
+		minDate: new Date(2020, 1 - 1, 1),
 			showButtonPanel: true,
 			onClose: function(dateText, inst) {
 				$(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
@@ -1108,6 +1117,7 @@ function styler_func() {
 		numberOfMonths: 1,
 		showButtonPanel: true,
 		regional: "ru",
+		minDate: new Date(2020, 1 - 1, 1),
 		onClose: function(dateText, inst) {
 			$(this).datepicker('setDate', new Date(inst.selectedYear, parseInt(inst.selectedMonth)+1, 0));
 		}

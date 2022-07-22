@@ -13,7 +13,7 @@ $this->title = 'Передать показания | ЛК РГМЭК';
     <div class="breadcrumbs">
         <strong>Передать показания приборов учета</strong><span class="sep"></span>
         <span>Договор <?= $this->context->currentContract; ?></span>
-        <p style="color:red;">Срок передачи показаний приборов учета  с <?=$result['Withdate']?> по <?=$result['Bydate']?> число текущего месяца.</p>
+        <p style="color:red;">Срок передачи показаний приборов учета  с <?=strstr($result['Withdate'], '.', true)?> по <?=strstr($result['Bydate'], '.', true)?> число текущего месяца.</p>
     </div>
 </div>
 
@@ -42,6 +42,9 @@ $this->title = 'Передать показания | ЛК РГМЭК';
     ?>
 
     <?= $form->field($model, 'puid')->textInput(['class'=>'puidInput']) ?>
+    <?= $form->field($model, 'num')->textInput(['class'=>'numInput']) ?>
+    <?= $form->field($model, 'objectid')->textInput(['class'=>'objectidInput']) ?>
+    <?= $form->field($model, 'contract')->textInput(['class'=>'contractInput']) ?>
     <?= $form->field($model, 'photo')->fileInput(['accept'=>'.png, .jpg, .jpeg']) ?>
     <?= $form->field($model, 'time')->fileInput(['accept'=>'.xls, .xlsx']) ?>
     <?= Html::submitButton('Отправить', ['class' => 'btn full']) ?>

@@ -53,7 +53,7 @@ IeAssets::register($this);
                 <!-- logo -->
                 <div class="h-logo">
                     <a href="<?= \yii\helpers\Url::base(true); ?>" class="ploader">
-                        <img src="/images/logo.png" alt=""/>
+                        <img src="/images/logo.svg" alt=""/>
                     </a>
                 </div>
 

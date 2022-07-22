@@ -88,7 +88,8 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'action' => 'download_report_detal',
                                     'uid' => \Yii::$app->request->get('uid'),
                                     'withdate' => $withDate,
-                                    'bydate' => $byDate
+                                    'bydate' => $byDate,
+                                    'test' => '.pdf'
                                 ], ['class' => 'btn small right border download', 'target' => '_blank']) ?>
                             </div>
                         </td>

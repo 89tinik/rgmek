@@ -5,6 +5,7 @@
 /* @var $onePU */
 /* @var $model*/
 /* @var $UIDContract*/
+/* @var $UIDObject*/
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -22,6 +23,7 @@ use yii\widgets\ActiveForm;
                             class="result-pu"></span> кВтч</span></div>
             <div class="notice">Срок поверки счетчика <?= $pu['VerificationYear'] ?>г.</div>
             <div class="position">Место установки: <?= $pu['PlaceInstallation'] ?></div>
+            <?= Html::a('История показаний', ['main/history', 'uidtu' => $pu['UIDTU'], 'uidobject' => $UIDObject, 'uid'=> \Yii::$app->request->get('uid')], ['class' => 'btn border ploader history-test', 'data-uidcontract' => $UIDContract]) ?>
             <a href="#" class="btn border history" data-uidcontract="<?=$UIDContract?>">История показаний</a>
         </div>
         <div class="testimony-box white-box">

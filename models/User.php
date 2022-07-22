@@ -157,8 +157,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
-            $username = '0ec34eb3a1';
-            $password = 'caa4011422';
+            $username = '5b503501ef';
+            $password = '95f1345b6a';
             $data = [
                 'msisdn' => $phone,
                 'shortcode' => 'rgmek',
@@ -199,6 +199,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     { //@return true or array('error'=>'error message')
 
         $data = ['id' => $this->id_db];
+        
+         Yii::error('id user = ' .$this->id_db);
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -209,6 +211,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $xml = new XmlParser();
             $result = $xml->parse($response);
 
+         //var_dump($result);
+         //die('00');
             if ($result['Error']) {
                 return ['error' => $result['Error']['Message']];
             } else {
@@ -220,6 +224,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 }
             }
         } else {
+         //die('--');
             return ['error' => 'Не удалось связаться БД - повторите попытку регистрации позже.'];
         }
     }

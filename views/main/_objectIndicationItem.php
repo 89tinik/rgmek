@@ -2,6 +2,7 @@
 
 /* @var $object */
 /* @var $one */
+/* @var $model */
 /* @var $UIDContract */
 
 use yii\helpers\Html;
@@ -10,7 +11,7 @@ use yii\helpers\Html;
 
 <div class="objects-item wrap-object <?=($one)?'open':''?>" data-id="<?= $object['UIDObject'] ?>"
      data-act-contract="<?= $object['ActContract'] ?>"
-     data-act-contractor="<?= $object['ActСontractor'] ?>"
+     data-act-contractor="<?= str_replace('"', '\'', $object['ActСontractor']) ?>"
      data-act-date="<?= $object['ActDate'] ?>">
     <div class="objects-head">
         <!--div class="subname">3 прибора учета</div-->
@@ -28,6 +29,7 @@ use yii\helpers\Html;
                         'pu' => $object['Expand']['PU'],
                         'onePU' => true,
                         'UIDContract'=>$UIDContract,
+                        'UIDObject'=>$object['UIDObject'],
                         'model'=>$model
                     ]);
                 } else {
@@ -37,6 +39,7 @@ use yii\helpers\Html;
                                 'pu' => $arr,
                                 'onePU' => false,
                                 'UIDContract'=>$UIDContract,
+                                'UIDObject'=>$object['UIDObject'],
                                 'model'=> $model
                             ]);
                         }
@@ -62,7 +65,7 @@ use yii\helpers\Html;
                             <br>
                             <a href="#" class="back-empty">Вернуться и внести</a>
                         </div>
-                    <a href="#" class="btn full transfer-object">Передать показания</a>
+                    <a href="#" class="btn full transfer-object <?php if (date('j') > 1 && date('j') < 19) :?>disabled<?php endif;?>">Передать показания</a>
                     <!--a href="#" class="btn full border">Сформировать акт фиксации</a-->
                     <?= Html::a('Сформировать акт фиксации', ['ajax/reconciliation', 'uid' => $object['UID']], ['class' => 'btn full border get-act', 'target'=>'_blank']) ?>
 

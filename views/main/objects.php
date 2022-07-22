@@ -15,17 +15,19 @@ $this->title = 'Действующие договоры, объекты, при�
 <div class="contracts-items">
 
     <?php
-    if (isset($result['Object']['Name'])) {
-        echo $this->render('_objectItem', [
-            'object' => $result['Object'],
-            'one' => true
-        ]);
-    } else {
-        foreach ($result['Object'] as $arr) {
+    if (isset($result['Object'])){
+        if (isset($result['Object']['Name'])) {
             echo $this->render('_objectItem', [
-                'object' => $arr,
-                'one' => false
+                'object' => $result['Object'],
+                'one' => true
             ]);
+        } else {
+            foreach ($result['Object'] as $arr) {
+                echo $this->render('_objectItem', [
+                    'object' => $arr,
+                    'one' => false
+                ]);
+            }
         }
     }
     ?>
