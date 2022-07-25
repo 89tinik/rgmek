@@ -257,6 +257,32 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     }
 
+    public function setDataContracts(){
+        $contracts = new Client();
+        $response = $contracts->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
+            ->setData([
+                'id' => $this->id_db
+            ])
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            $result = $xml->parse($response);
+            if ($result['Contract']) {
+                Contract::updateAllContract($this, $result['Contract']);
+                $this->with_date = $result['Withdate'];
+                $this->by_date = $result['Bydate'];
+                $this->full_name = $result['Name'];
+                $this->save();
+            } else {
+                Contract::removeAllUserContract($this->id);
+            }
+        } else {
+            Yii::error('Не удалось связаться БД - повторите попытку позже.');
+        }
+    }
+
     public function getContracts(){
         $this->hasMany(Contract::class, ['user_id'=>'id']);
     }

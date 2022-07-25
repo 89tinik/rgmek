@@ -14,8 +14,8 @@ class Admin extends BaseObject implements IdentityInterface
     public $accessToken;
 
     private static $users = [
-        '100' => [
-            'id' => '100',
+        '1001' => [
+            'id' => '1001',
             'username' => 'admin',
             'password' => 'r@&hXR$X8G',
             'authKey' => 'test100key',

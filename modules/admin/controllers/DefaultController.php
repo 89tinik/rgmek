@@ -189,16 +189,20 @@ class DefaultController extends Controller
     public function actionAsUser($id){
         $adminId = Yii::$app->user->id;
         $user = User::findOne($id);
-        if (Yii::$app->user->login($user)){
-            Admin::setSessionAdmin($adminId);
-            $client = new Client();
-            $client->createRequest()
-                ->setMethod('GET')
-                ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
-                ->setData(['id' => $user->id_db])
-                ->send();
+        if ($user){
+            $user->setDataContracts();
+            if (Yii::$app->user->login($user)){
+                Admin::setSessionAdmin($adminId);
+                $client = new Client();
+                $client->createRequest()
+                    ->setMethod('GET')
+                    ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
+                    ->setData(['id' => $user->id_db])
+                    ->send();
+            }
+            return $this->redirect(['/login/index']);
         }
-        return $this->redirect(['/login/index']);
+
     }
 
     public function actionLogout()
