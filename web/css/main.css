@@ -2894,6 +2894,11 @@ margin-bottom:10px;
     right: 50px;
     opacity: 0;
 }
+.summary-item .controls ul li.item-6{
+  margin-left:50px;
+  width:1%;
+  border: 0;
+}
 
 @media screen and (max-width: 1350px) {
   .arrear-left{

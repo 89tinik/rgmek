@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\models\AttachForm;
+use app\models\ConsumptionForm;
 use app\models\Contract;
 use app\models\HistoryForm;
 use app\models\InstallESForm;
@@ -50,8 +51,8 @@ class MainController extends Controller
         $this->userName = \Yii::$app->user->identity->full_name;
         $curentContract = Contract::find()->where(['uid'=> \Yii::$app->request->get('uid')])->one();
         if (empty($curentContract)){
-            $historyForm = \Yii::$app->request->get('HistoryForm');
-            $curentContract = Contract::find()->where(['uid'=> $historyForm['uid']])->one();
+            $requestForm = \Yii::$app->request->get();
+            $curentContract = Contract::find()->where(['uid'=> $requestForm[array_key_first($requestForm)]['uid']])->one();
         }
         $this->currentContract =$curentContract->full_name;
 
@@ -345,6 +346,36 @@ class MainController extends Controller
             }
         } else {
             return 'Ошибка валидации - проверьте Ваши данные!';
+        }
+    }
+
+    public function actionConsumption (){
+        $model = new ConsumptionForm();
+        if (!$model->load(\Yii::$app->request->get())) {
+            $model->uidtu = \Yii::$app->request->get('uidtu');
+            $model->uid = \Yii::$app->request->get('uid');
+        }
+        if (empty( $model->bydate = \Yii::$app->request->get('Consumption')['bydate'])) {
+            $model->bydate = '01.12.'. date('Y');
+        }
+        if (empty($model->withdate)) {
+            $bydateArr = explode('.', $model->bydate);
+            $Y = $bydateArr[2] - 1;
+            $model->withdate = '01.01.'. date('Y');
+        }
+        $data = [
+            'uidcontract' => $model->uid,
+            'withdate' => $model->withdate,
+            'bydate' => $model->bydate
+        ];
+        $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/report_consumption', $data);
+        if (isset($objectsData['success'])){
+            return $this->render('consumption', [
+            'objectsData' => $objectsData['success'],
+                'model' => $model
+            ]);
+        } else {
+            return $objectsData['error'];
         }
     }
 
