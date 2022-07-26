@@ -15,15 +15,16 @@ use yii\helpers\Html;
         <div class="name"><a href="#"><?= $pu['FullName'] ?></a></div>
         <div class="date-install"><b>Дата установки: <?= $pu['InstallationDate'] ?></b></div>
         <div class="info"><?= $pu['Purpose'] ?></div>
-        <div class="info blue">Расход с учётом коэффициента трансформации тока (КТТ=<?= $pu['KTT'] ?>) и потерь</div>
+        <div class="info blue"><?= $pu['KTTName'] ?></div>
     </div>
+    <?php if (isset($pu['Line'])) {?>
     <div class="objects-body" style="display: <?= ($currentTU == $pu['UIDTU']) ? 'block' : 'none' ?>;">
         <div class="invoice-table">
             <table>
                 <tbody>
                 <?php
-                if (isset($pu['Line'])) {
-                    if (isset($pu['Line']['Name'])) {
+
+                    if (isset($pu['Line']['Date'])) {
                         echo $this->render('_historyLine', [
                             'line' => $pu['Line']
                         ]);
@@ -34,8 +35,6 @@ use yii\helpers\Html;
                             ]);
                         }
                     }
-
-                }
                 ?>
                 </tbody>
             </table>
@@ -66,4 +65,5 @@ use yii\helpers\Html;
             <span><?= ($currentTU == $pu['UIDTU']) ? 'Свернуть' : 'Развернуть' ?></span>
         </a>
     </div>
+    <?php } ?>
 </div>
