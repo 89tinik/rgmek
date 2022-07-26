@@ -78,30 +78,24 @@ $this->title = 'Информация об электропотреблении |
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<!--<h1 class="object-name-history">--><?//= $result['FullName'] ?><!--</h1>-->
+
 <?php
-//if (!empty($result['CalculationAlgorithm'])) {
-//    echo '<h3 class="colculation-history">' . $result['CalculationAlgorithm'] . '</h3>';
-//}
-//?>
-<!---->
-<?php
-//if (isset($result['PU'])) {
-//    if (isset($result['PU']['Name'])) {
-//        echo $this->render('_historyIndicationItem', [
-//            'pu' => $result['PU'],
+if (isset($objectsData['Object'])) {
+    if (isset($objectsData['Object']['FullName'])) {
+        echo $this->render('_consumptionObject', [
+            'object' => $objectsData['Odject']
 //            'currentTU' => $currentTU,
 //            'model' => $model
-//        ]);
-//    } else {
-//        foreach ($result['PU'] as $arr) {
-//            echo $this->render('_historyIndicationItem', [
-//                'pu' => $arr,
+        ]);
+    } else {
+        foreach ($objectsData['Object'] as $arr) {
+            echo $this->render('_consumptionObject', [
+                'object' => $arr
 //                'currentTU' => $currentTU,
 //                'model' => $model
-//            ]);
-//        }
-//    }
-//
-//}
+            ]);
+        }
+    }
+
+}
 //?>
