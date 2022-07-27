@@ -2900,6 +2900,15 @@ margin-bottom:10px;
   border: 0;
 }
 
+.top-chart{
+  padding:0;
+  overflow: hidden;
+}
+
+.top-chart figure{
+  margin:0;
+}
+
 @media screen and (max-width: 1350px) {
   .arrear-left{
     width:580px;
