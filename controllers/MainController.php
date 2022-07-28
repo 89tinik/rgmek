@@ -52,7 +52,9 @@ class MainController extends Controller
         $curentContract = Contract::find()->where(['uid'=> \Yii::$app->request->get('uid')])->one();
         if (empty($curentContract)){
             $requestForm = \Yii::$app->request->get();
-            $curentContract = Contract::find()->where(['uid'=> $requestForm[array_key_first($requestForm)]['uid']])->one();
+            if (is_array($requestForm[array_key_first($requestForm)])){
+                $curentContract = Contract::find()->where(['uid'=> $requestForm[array_key_first($requestForm)]['uid']])->one();
+            }
         }
         $this->currentContract =$curentContract->full_name;
 
