@@ -10,7 +10,9 @@ use yii\helpers\Html;
 
 $this->title = 'Информация об электропотреблении |  ЛК РГМЭК';
 \app\assets\ConsumptionAssets::register($this);
-
+$chartDataArr = array_fill(1, 12, 0);
+$chartYarsDataArr = [];
+$seriesArr = [];
 ?>
 
 <div class="page-heading">
@@ -36,15 +38,29 @@ $this->title = 'Информация об электропотреблении |
                 <?php
                 if (isset($objectsData['Total']['Line'])) {
                     if (isset($objectsData['Total']['Line']['Date'])) {
+                        $dateArr = explode('.', $objectsData['Total']['Line']['Date']);
+                        $chartDataArr[intval($dateArr['1'])] = $objectsData['Total']['Line']['Volume'];
+                        $seriesArr[] = "{name: '".$objectsData['Total']['Line']['Year']."', data: [".implode(',', $chartDataArr)."]}";
                         echo $this->render('_consumptionTop', [
                             'month' => $objectsData['Total']['Line']
                         ]);
                     } else {
+                        $currentYear = $objectsData['Total']['Line'][0]['Year'];
                         foreach ($objectsData['Total']['Line'] as $arr) {
+                            if ($currentYear != $arr['Year']) {
+                                //$chartYarsDataArr[$currentYear] = $chartDataArr;
+                                $seriesArr[] = "{name: '".$currentYear."', data: [".implode(',', $chartDataArr)."]}";
+                                $chartDataArr = array_fill(1, 12, 0);
+                                $currentYear = $arr['Year'];
+                            }
+                            $dateArr = explode('.', $arr['Date']);
+                            $chartDataArr[intval($dateArr['1'])] = $arr['Volume'];
+
                             echo $this->render('_consumptionTop', [
                                 'month' => $arr
                             ]);
                         }
+                        $seriesArr[] = "{name: '".$currentYear."', data: [".implode(',', $chartDataArr)."]}";
                     }
 
                 }
@@ -85,6 +101,7 @@ $xMonth = "xAxis: {
             ],
             crosshair: true
         },";
+$series = implode(',', $seriesArr);
 $js = "Highcharts.chart('container', {
         chart: {
             type: 'column'
@@ -96,7 +113,7 @@ $js = "Highcharts.chart('container', {
         yAxis: {
             min: 0,
             title: {
-                text: 'кВт'
+                text: 'кВт ч'
             }
         },
         $tooltip
@@ -106,10 +123,7 @@ $js = "Highcharts.chart('container', {
                 borderWidth: 0
             }
         },
-        series: [{
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-        }]
+        series: [$series]
     });";
 $this->registerJs($js);
 
