@@ -200,7 +200,7 @@ $this->registerJs($js);
 if (isset($objectsData['Object'])) {
     if (isset($objectsData['Object']['FullName'])) {
         echo $this->render('_consumptionObject', [
-            'object' => $objectsData['Odject']
+            'object' => $objectsData['Object']
 //            'currentTU' => $currentTU,
 //            'model' => $model
         ]);
