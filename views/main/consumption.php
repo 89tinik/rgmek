@@ -167,8 +167,12 @@ $this->registerJs($js);
     <?= $form->field($model, 'uid', ['template' => '{input}'])->hiddenInput(); ?>
     <?php
     $objectOptionArr = [];
-    foreach ($objectsData['Objects']['Line'] as $object) {
-        $objectOptionArr[$object['UIDObject']] = $object['FullName'];
+    if (isset($objectsData['Objects']['Line']['UIDObject'])){
+        $objectOptionArr[$objectsData['Objects']['Line']['UIDObject']] = $objectsData['Objects']['Line']['FullName'];
+    } else {
+        foreach ($objectsData['Objects']['Line'] as $object) {
+            $objectOptionArr[$object['UIDObject']] = $object['FullName'];
+        }
     }
     ?>
     <div class="group large">
