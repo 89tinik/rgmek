@@ -48,7 +48,6 @@ $seriesArr = [];
                         $currentYear = $objectsData['Total']['Line'][0]['Year'];
                         foreach ($objectsData['Total']['Line'] as $arr) {
                             if ($currentYear != $arr['Year']) {
-                                //$chartYarsDataArr[$currentYear] = $chartDataArr;
                                 $seriesArr[] = "{name: '".$currentYear."', data: [".implode(',', $chartDataArr)."]}";
                                 $chartDataArr = array_fill(1, 12, 0);
                                 $currentYear = $arr['Year'];
@@ -198,19 +197,23 @@ $this->registerJs($js);
 
 <?php
 if (isset($objectsData['Object'])) {
+    $i=1;
     if (isset($objectsData['Object']['FullName'])) {
         echo $this->render('_consumptionObject', [
-            'object' => $objectsData['Object']
-//            'currentTU' => $currentTU,
-//            'model' => $model
+            'object' => $objectsData['Object'],
+            'i' => $i,
+            'ooltip' => $tooltip,
+            'xMonth' => $xMonth
         ]);
     } else {
         foreach ($objectsData['Object'] as $arr) {
             echo $this->render('_consumptionObject', [
-                'object' => $arr
-//                'currentTU' => $currentTU,
-//                'model' => $model
+                'object' => $arr,
+                'i' => $i,
+                'ooltip' => $tooltip,
+                'xMonth' => $xMonth
             ]);
+            $i++;
         }
     }
 
