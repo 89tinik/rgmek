@@ -90,9 +90,9 @@ $(function () {
     /*ENDtin*/
 
     $('.remove-akk').on('click', function(){
-        $.fancybox.open('<div class="message-del"><h2>Delete the account permanently?</h2>' +
-            '<p>You want to permanently delete your account, your accaunt will be permanently deleted without the possibility of recovery!</p>' +
-            '<a href="#" class="del">Delete</a><a href="#" class="can">Cancel</a></div>');
+        $.fancybox.open('<div class="message-del"><h2>Удалить ваш аккаунт?</h2>' +
+            '<p>Вы хотите удалить ваш аккаунт безвозвратно?</p>' +
+            '<a href="#" class="del">Удалить</a><a href="#" class="can">Отмена</a></div>');
         return false;
     });
 
