@@ -89,7 +89,17 @@ $(function () {
 
     /*ENDtin*/
 
+    $('.remove-akk').on('click', function(){
+        $.fancybox.open('<div class="message-del"><h2>Delete the account permanently?</h2>' +
+            '<p>You want to permanently delete your account, your accaunt will be permanently deleted without the possibility of recovery!</p>' +
+            '<a href="#" class="del">Delete</a><a href="#" class="can">Cancel</a></div>');
+        return false;
+    });
 
+    $('body').on('click', '.message-del a', function(){
+        $.fancybox.close();
+        return false;
+    });
     /*
     *
     * Validation Forms
