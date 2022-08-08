@@ -17,11 +17,66 @@ use yii\helpers\Html;
         <div class="info"><?= $pu['Purpose'] ?></div>
         <div class="info blue"><?= $pu['KTTName'] ?></div>
     </div>
+    
+    <style>
+        .invoice-table{
+        	overflow-x:auto;
+        }	
+        table.tab-invoice {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+        }
+        table.tab-invoice tr {
+        }
+        table.tab-invoice th, table.tab-invoice td {
+        	text-align: left;
+            padding: 8px;
+        }
+        
+        table.tab-invoice th{
+        	font-weight: bold;
+        }
+        .invoice-table table tr td{
+            display:table-cell;
+        }
+        .invoice-table table, .invoice-table table tbody, .invoice-table table tr, .invoice-table table td{
+            display:revert;
+        }
+        .invoice-table table tr td{
+            float:none;
+            font-size:12px;
+        }
+        .invoice-table table td .price{
+            font-size:12px;
+        }
+        .checkbox-item strong{
+            font-size:12px;
+        }
+        .kvt{
+            display:none;
+        }
+        .checkbox-item span{
+            font-size:12px;
+        }
+        @media screen and (min-width: 1200px){
+            .invoice-table table tr td{
+             width:33%;   
+            }
+            
+        }
+    </style>
+    
     <?php if (isset($pu['Line'])) {?>
     <div class="objects-body" style="display: <?= ($currentTU == $pu['UIDTU']) ? 'block' : 'none' ?>;">
         <div class="invoice-table">
-            <table>
+            <table class="tab-invoice">
                 <tbody>
+                    <tr>
+                        <td>Месяц</td>
+                        <td>Показание/источник показаний</td>
+                        <td>Расход, кВт ч</td>
+                    </tr>
                 <?php
 
                     if (isset($pu['Line']['Date'])) {

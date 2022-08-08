@@ -3,10 +3,7 @@
 ?>
 <tr class="line">
     <td>
-        <div class="price"><?=$line['Month']?></div>
-    </td>
-    <td>
-        <div class="price"><?=$line['Year']?></div>
+        <div class="price"><?=$line['Month'] . ' ' . $line['Year']?></div>
     </td>
     <td>
         <div class="checkbox-item">
@@ -15,7 +12,7 @@
         </div>
     </td>
     <td>
-        <div class="price"><?=$line['Volume']?> <?=(is_numeric($line['Volume'])) ? 'кВт ч' : ''?></div>
+        <div class="price"><?=$line['Volume']?> <?=(is_numeric($line['Volume'])) ? '<span class="kvt">кВт ч</span>' : ''?></div>
     </td>
 
 </tr>
