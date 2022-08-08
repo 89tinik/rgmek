@@ -13,11 +13,11 @@ $chartYarsDataArr = [];
 $seriesArr = [];
 ?>
 
-<div class="objects-item wrap-object history-wrap">
+<div class="objects-item wrap-object history-wrap consumption">
     <div class="objects-head">
         <!--div class="subname">3 прибора учета</div-->
         <div class="name"><a href="#"><?= $object['FullName'] ?></a></div>
-        <div class="btnChart<?=$i?> wrap-checkbox-chart first-show">
+        <div class="btnChart<?= $i ?> wrap-checkbox-chart first-show">
             График
             <label class="checkbox-ios">
                 <input type="checkbox" checked>
@@ -148,6 +148,11 @@ $seriesArr = [];
                 <? //= ($currentTU == $pu['UIDTU']) ? 'Свернуть' : 'Развернуть' ?><!--</span>-->
                 <span>Развернуть</span>
             </a>
+<!--            --><?php //if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
+                <?= Html::a('История показаний', ['main/history', 'uidtu' => 'тутнепонятно', 'uidobject' => $object['UIDObject'], 'uid'=> \Yii::$app->request->get('uid')], ['class' => 'btn submit-btn ploader', 'data-uidcontract' => $UIDContract]) ?>
+
+                <a href="http://93.92.80.25:5001/" class="btn submit-btn" target="_blank">Переход в интелектуальные системы учёта</a>
+<!--            --><?php //endif; ?>
         </div>
     <?php } ?>
 </div>

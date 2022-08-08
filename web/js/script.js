@@ -60,6 +60,11 @@ if ($('#receiptform-penalty').length > 0){
 	$('.checkbox-ios input').focusout(function(){
 		$(this).parent().removeClass('focused');
 	});
+	//popup ep
+	$('.colculation-popup-link').on('click', function(){
+		$.fancybox.open($(this).siblings('.colculation-popup'));
+		return false;
+	});
 //popup удалить аккаунт
 	$('.remove-akk').on('click', function(){
 		$.fancybox.open('<div class="message-del"><h2>Удалить ваш аккаунт?</h2>' +

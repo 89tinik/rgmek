@@ -2925,6 +2925,24 @@ margin-bottom:10px;
 .wrap-checkbox-chart label{
   margin: 0 5px;
 }
+.colculation-name{
+  line-height: 44px;
+}
+td .colculation-popup {
+  display:none;
+}
+.consumption .objects-more a{
+  line-height: 60px;
+}
+.consumption .objects-more a.btn{
+  font-size:16px;
+  color:#fff;
+  float: right;
+  margin-left: 10px;
+}
+.consumption .objects-more a.btn:after{
+  display:none;
+}
 @media screen and (max-width: 1350px) {
   .arrear-left{
     width:580px;
