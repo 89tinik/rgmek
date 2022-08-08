@@ -81,17 +81,12 @@ IeAssets::register($this);
 
                 <!-- login -->
                 <div class="h-login">
-<?php
-if (\Yii::$app->session->get('admin')){
-    echo Html::a(\Yii::$app->controller->userName, ['login/logout'], ['class' => 'h-login-btn']) .
-        Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']);
-} else{
-    echo Html::a(\Yii::$app->controller->userName, ['login/logout'], ['class' => 'h-login-btn']) .
-    Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']);
-}
-?>
+
+                    <?= Html::a(\Yii::$app->controller->userName, ['login/logout'], ['class' => 'h-login-btn']) ?>
+                    <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']) ?>
 
                 </div>
+                <a href="#" class="remove-akk">Удалить аккаунт</a>
 
                 <!-- menu btn -->
                 <a href="#" class="menu-btn">

@@ -283,9 +283,6 @@ input, textarea, button {
 	color: #4475F2;
 	text-decoration: none;
 }
-.remove-akk {
-	display:none;
-}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {
@@ -344,33 +341,6 @@ input, textarea, button {
 	}
 	.information {
 		padding: 20px 20px 40px;
-	}
-	.remove-akk {
-		display: block;
-		width: 100%;
-		text-align: center;
-		position: absolute;
-		bottom: 10px;
-		color: red;
-	}
-	.message-del .del{
-		display: block;
-		width: 100%;
-		text-align: center;
-		border: 1px solid gray;
-		color:red;
-		border-radius: 5px;
-		padding: 10px;
-		margin-bottom: 10px;
-	}
-	.message-del .can{
-		display: block;
-		width: 100%;
-		text-align: center;
-		border: 1px solid gray;
-		color:black;
-		border-radius: 5px;
-		padding: 10px;
 	}
 	/*ENDtin*/
 }

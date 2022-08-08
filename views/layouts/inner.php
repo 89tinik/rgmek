@@ -82,8 +82,9 @@ IeAssets::register($this);
 
                     <?= Html::a(\Yii::$app->controller->userName, ['login/logout'], ['class' => 'h-login-btn']) ?>
                     <?= Html::a('Выйти из аккаунта', ['login/logout'], ['class' => 'h-login-btn-mobile']) ?>
-                </div>
 
+                </div>
+                <a href="#" class="remove-akk">Удалить аккаунт</a>
                 <!-- menu btn -->
                 <a href="#" class="menu-btn">
                     <span class="lines"></span>
