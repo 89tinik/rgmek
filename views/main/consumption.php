@@ -219,3 +219,21 @@ if (isset($objectsData['Object'])) {
 
 }
 //?>
+<div class="bts">
+    <?= Html::a('Скачать', [
+        'main/access-history-file',
+        'print' => 'false',
+        'action' => 'download_report_consumption',
+        'uid' => $model->uid,
+        'withdate' => $model->withdate,
+        'bydate' => $model->bydate
+    ], ['class' => 'btn small  download', 'target' => '_blank']) ?>
+    <?= Html::a('Печать', [
+        'main/access-history-file',
+        'print' => 'true',
+        'action' => 'download_report_consumption',
+        'uid' => $model->uid,
+        'withdate' => $model->withdate,
+        'bydate' => $model->bydate
+    ], ['class' => 'btn small  print', 'target' => '_blank']) ?>
+</div>

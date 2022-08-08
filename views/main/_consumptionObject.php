@@ -148,11 +148,12 @@ $seriesArr = [];
                 <? //= ($currentTU == $pu['UIDTU']) ? 'Свернуть' : 'Развернуть' ?><!--</span>-->
                 <span>Развернуть</span>
             </a>
-<!--            --><?php //if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
-                <?= Html::a('История показаний', ['main/history', 'uidtu' => 'тутнепонятно', 'uidobject' => $object['UIDObject'], 'uid'=> \Yii::$app->request->get('uid')], ['class' => 'btn submit-btn ploader', 'data-uidcontract' => $UIDContract]) ?>
+            <?php if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
+                <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные
+                    системы учёта</a>
+                <?= Html::a('История показаний', ['main/history', 'uidtu' => 'тутнепонятно', 'uidobject' => $object['UIDObject'], 'uid' => \Yii::$app->request->get('uid')], ['class' => 'small btn right ploader', 'data-uidcontract' => $UIDContract]) ?>
 
-                <a href="http://93.92.80.25:5001/" class="btn submit-btn" target="_blank">Переход в интелектуальные системы учёта</a>
-<!--            --><?php //endif; ?>
+            <?php endif; ?>
         </div>
     <?php } ?>
 </div>
