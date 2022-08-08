@@ -49,7 +49,17 @@ if ($('#receiptform-penalty').length > 0){
 		delimiter: ''
 	});
 }
+//checkbox ios
+	$(window).keyup(function(e){
+		var target = $('.checkbox-ios input:focus');
+		if (e.keyCode == 9 && $(target).length){
+			$(target).parent().addClass('focused');
+		}
+	});
 
+	$('.checkbox-ios input').focusout(function(){
+		$(this).parent().removeClass('focused');
+	});
 //popup удалить аккаунт
 	$('.remove-akk').on('click', function(){
 		$.fancybox.open('<div class="message-del"><h2>Удалить ваш аккаунт?</h2>' +

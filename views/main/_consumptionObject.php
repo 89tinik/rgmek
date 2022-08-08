@@ -17,7 +17,14 @@ $seriesArr = [];
     <div class="objects-head">
         <!--div class="subname">3 прибора учета</div-->
         <div class="name"><a href="#"><?= $object['FullName'] ?></a></div>
-        <div class="btnChart<?=$i?>">Chart</div>
+        <div class="btnChart<?=$i?> wrap-checkbox-chart first-show">
+            График
+            <label class="checkbox-ios">
+                <input type="checkbox" checked>
+                <span class="checkbox-ios-switch"></span>
+            </label>
+            Таблица
+        </div>
         <!--        <div class="date-install"><b>Дата установки: --><? //= $pu['InstallationDate'] ?><!--</b></div>-->
         <!--        <div class="info">--><? //= $pu['Purpose'] ?><!--</div>-->
         <!--        <div class="info blue">--><? //= $pu['KTTName'] ?><!--</div>-->
@@ -85,31 +92,43 @@ $seriesArr = [];
             <?php
 
             $series = implode(',', $seriesArr);
-            $js = "$('.btnChart$i').on('click', function(){
-            Highcharts.chart('container$i', {
-        chart: {
-        type: 'column'
-        },
-        title: {
-        text: ''
-        },
-        $xMonth
-        yAxis: {
-        min: 0,
-        title: {
-        text: 'кВт ч'
-        }
-        },
-        $tooltip
-        plotOptions: {
-        column: {
-        pointPadding: 0.2,
-        borderWidth: 0
-        }
-        },
-        series: [$series]
-        });
-        
+            $js = "$('.btnChart$i input').on('change', function () {
+                var containerWrap = $(this).closest('.objects-head').siblings('.objects-body');
+                if ($(this).prop('checked')) {
+                    containerWrap.children('.invoice-table').show(1000);
+                    containerWrap.children('.invoice-chart').hide(1000);
+                } else {
+                    if ($(this).closest('.wrap-checkbox-chart').hasClass('first-show')) {
+                        Highcharts.chart('container$i', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: ''
+                            },
+                            $xMonth
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'кВт ч'
+                                }
+                            },
+                            $tooltip
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: [$series]
+                        });
+            
+                        $(this).closest('.wrap-checkbox-chart').removeClass('first-show');
+                    }
+                    containerWrap.children('.invoice-table').hide(1000);
+                    containerWrap.children('.invoice-chart').show(1000);
+                }
+            
             });
         ";
             $this->registerJs($js);
