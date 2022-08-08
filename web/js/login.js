@@ -89,17 +89,6 @@ $(function () {
 
     /*ENDtin*/
 
-    $('.remove-akk').on('click', function(){
-        $.fancybox.open('<div class="message-del"><h2>Удалить ваш аккаунт?</h2>' +
-            '<p>Вы хотите удалить ваш аккаунт безвозвратно?</p>' +
-            '<a href="#" class="del">Удалить</a><a href="#" class="can">Отмена</a></div>');
-        return false;
-    });
-
-    $('body').on('click', '.message-del a', function(){
-        $.fancybox.close();
-        return false;
-    });
     /*
     *
     * Validation Forms

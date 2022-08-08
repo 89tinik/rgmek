@@ -55,4 +55,3 @@ $this->title = 'Авторизация';
         <?php ActiveForm::end(); ?>
     </div>
 </div>
-<a href="#" class="remove-akk">Удалить аккаунт</a>

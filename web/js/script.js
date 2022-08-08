@@ -49,6 +49,26 @@ if ($('#receiptform-penalty').length > 0){
 		delimiter: ''
 	});
 }
+
+//popup удалить аккаунт
+	$('.remove-akk').on('click', function(){
+		$.fancybox.open('<div class="message-del"><h2>Удалить ваш аккаунт?</h2>' +
+			'<p>Вы хотите удалить ваш аккаунт безвозвратно?</p>' +
+			'<a href="#" class="del">Удалить</a><a href="#" class="can">Отмена</a></div>');
+		return false;
+	});
+
+	$('body').on('click', '.message-del a.del', function(){
+		$.fancybox.close();
+		$.fancybox.open('<div class="message-del">' +
+			'<p>Ваш аккаунт будет удалён в течение 24 часов</p>' +
+			'<a href="#" class="can">Понятно</a></div>');
+		return false;
+	});
+	$('body').on('click', '.message-del a.can', function(){
+		$.fancybox.close();
+		return false;
+	});
 	//удаление файлов из ФОС
 	$('#feedbackform-file').on('change', function() {
 		if ($(this).parent().siblings('.fos-file-close').length == 0) {
