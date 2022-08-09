@@ -43,12 +43,19 @@ $seriesArr = [];
                         $seriesArr[] = "{name: '" . $object['Line']['Year'] . "', data: [" . implode(',', $chartDataArr) . "]}";
 
                         echo $this->render('_consumptionMonth', [
-                            'line' => $object['Line']
+                            'line' => [
+                                    'Month'=>$object['Line']['Month'],
+                                    'Year'=>[$object['Line']['Year']],
+                                    'Volume'=>[$object['Line']['Volume']],
+                                    'CalculationMethod'=>$object['Line']['CalculationMethod'],
+                                    'CalculationMethodName'=>$object['Line']['CalculationMethodName'],
+                                    'CalculationMethodInitialData'=>$object['Line']['CalculationMethodInitialData'],
+                                ]
                         ]);
                     } else {
                         $currentYear = $object['Line'][0]['Year'];
+                        $tableObjectDataArr = array_fill(1, 12, ['Month'=>'', 'Year'=> [], 'Volume'=>[]]);
                         foreach ($object['Line'] as $arr) {
-
                             if ($currentYear != $arr['Year']) {
                                 $seriesArr[] = "{name: '" . $currentYear . "', data: [" . implode(',', $chartDataArr) . "]}";
                                 $chartDataArr = array_fill(1, 12, 0);
@@ -56,13 +63,23 @@ $seriesArr = [];
                             }
                             $dateArr = explode('.', $arr['Date']);
                             $chartDataArr[intval($dateArr['1'])] = $arr['Volume'];
-
-                            echo $this->render('_consumptionMonth', [
-                                'line' => $arr
-                            ]);
+                            $tableObjectDataArr[intval($dateArr['1'])]['Month']= $arr['Month'];
+                            $tableObjectDataArr[intval($dateArr['1'])]['Year'][]= $arr['Year'];
+                            $tableObjectDataArr[intval($dateArr['1'])]['Volume'][]= $arr['Volume'];
+                            $tableObjectDataArr[intval($dateArr['1'])]['CalculationMethod']= $arr['CalculationMethod'];
+                            $tableObjectDataArr[intval($dateArr['1'])]['CalculationMethodName']= $arr['CalculationMethodName'];
+                            $tableObjectDataArr[intval($dateArr['1'])]['CalculationMethodInitialData']= $arr['CalculationMethodInitialData'];
                         }
                         $seriesArr[] = "{name: '" . $currentYear . "', data: [" . implode(',', $chartDataArr) . "]}";
                     }
+                    if (isset($tableObjectDataArr)){
+                        foreach($tableObjectDataArr as $month){
+                            echo $this->render('_consumptionMonth', [
+                                'line' => $month
+                            ]);
+                        }
+                    }
+
                     ?>
                     </tbody>
                 </table>

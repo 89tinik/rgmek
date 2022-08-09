@@ -6,10 +6,10 @@
         <div class="price"><?=$line['Month']?></div>
     </td>
     <td>
-        <div class="price"><?=$line['Year']?></div>
+        <div class="price"><?=implode('/', $line['Year'])?></div>
     </td>
     <td>
-        <div class="price"><?=$line['Volume']?> <?=(is_numeric($line['Volume'])) ? 'кВт ч' : ''?></div>
+        <div class="price"><?=implode('/', $line['Volume'])?> <?=(is_numeric($line['Volume'][0])) ? 'кВт ч' : ''?></div>
         <?php if (!empty ($line['CalculationMethod'])):?>
         <span class="colculation-name"><?=$line['CalculationMethod']?></span>
             <a class="btn small border colculation-popup-link">?</a>

@@ -6,9 +6,9 @@
         <div class="price"><?=$month['Month']?></div>
     </td>
     <td>
-        <div class="price"><?=$month['Year']?></div>
+        <div class="price"><?= implode('/', $month['Year']) ?></div>
     </td>
     <td>
-        <div class="price"><?=$month['Volume']?> <?=(is_numeric($month['Volume'])) ? 'кВт ч' : ''?></div>
+        <div class="price"><?=implode('/', $month['Volume']) ?> <?=(is_numeric($month['Volume'][0])) ? 'кВт ч' : ''?></div>
     </td>
 </tr>

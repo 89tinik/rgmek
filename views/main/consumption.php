@@ -42,9 +42,10 @@ $seriesArr = [];
                         $chartDataArr[intval($dateArr['1'])] = $objectsData['Total']['Line']['Volume'];
                         $seriesArr[] = "{name: '".$objectsData['Total']['Line']['Year']."', data: [".implode(',', $chartDataArr)."]}";
                         echo $this->render('_consumptionTop', [
-                            'month' => $objectsData['Total']['Line']
+                            'month' => ['Month'=>$objectsData['Total']['Line']['Month'], 'Year'=> [$objectsData['Total']['Line']['Year']], 'Volume'=>[$objectsData['Total']['Line']['Volume']]]
                         ]);
                     } else {
+                        $tableDataArr = array_fill(1, 12, ['Month'=>'', 'Year'=> [], 'Volume'=>[]]);
                         $currentYear = $objectsData['Total']['Line'][0]['Year'];
                         foreach ($objectsData['Total']['Line'] as $arr) {
                             if ($currentYear != $arr['Year']) {
@@ -54,12 +55,19 @@ $seriesArr = [];
                             }
                             $dateArr = explode('.', $arr['Date']);
                             $chartDataArr[intval($dateArr['1'])] = $arr['Volume'];
-
-                            echo $this->render('_consumptionTop', [
-                                'month' => $arr
-                            ]);
+                            $tableDataArr[intval($dateArr['1'])]['Month']= $arr['Month'];
+                            $tableDataArr[intval($dateArr['1'])]['Year'][]= $arr['Year'];
+                            $tableDataArr[intval($dateArr['1'])]['Volume'][]= $arr['Volume'];
                         }
                         $seriesArr[] = "{name: '".$currentYear."', data: [".implode(',', $chartDataArr)."]}";
+                    }
+
+                    if (isset($tableDataArr)){
+                        foreach($tableDataArr as $month){
+                            echo $this->render('_consumptionTop', [
+                                'month' => $month
+                            ]);
+                        }
                     }
 
                 }
