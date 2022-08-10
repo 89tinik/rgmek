@@ -380,6 +380,15 @@ class MainController extends Controller
             return $objectsData['error'];
         }
     }
+    
+    
+    public function actionRaz (){
+        return $this->render('raz', []);
+    }
+    
+    public function actionDva (){
+        return $this->render('dva', []);
+    }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
         $client = new Client();

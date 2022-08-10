@@ -49,6 +49,11 @@ if ($('#receiptform-penalty').length > 0){
 		delimiter: ''
 	});
 }
+
+//push
+if(window.userId){
+alert(window.userId);
+}
 //checkbox ios
 	$(window).keyup(function(e){
 		var target = $('.checkbox-ios input:focus');

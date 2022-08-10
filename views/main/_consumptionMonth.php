@@ -3,20 +3,19 @@
 ?>
 <tr class="line">
     <td>
-        <div class="price"><?=$line['Month']?></div>
-    </td>
-    <td>
-        <div class="price"><?=implode('/', $line['Year'])?></div>
+        <div class="price"><?=$line['Month'] . " " . implode('/', $line['Year']) ?></div>
     </td>
     <td>
         <div class="price"><?=implode('/', $line['Volume'])?> <?=(is_numeric($line['Volume'][0])) ? 'кВт ч' : ''?></div>
+    </td>
+    <td>
         <?php if (!empty ($line['CalculationMethod'])):?>
-        <span class="colculation-name"><?=$line['CalculationMethod']?></span>
-            <a class="btn small border colculation-popup-link">?</a>
-            <div class="colculation-popup">
-                <h3><?=$line['CalculationMethodName']?></h3>
-                <p><?=$line['CalculationMethodInitialData']?></p>
-            </div>
+            <span class="colculation-name"><?=$line['CalculationMethod']?></span>
+                <a class="btn small border colculation-popup-link">?</a>
+                <div class="colculation-popup">
+                    <h3><?=$line['CalculationMethodName']?></h3>
+                    <p><?=$line['CalculationMethodInitialData']?></p>
+                </div>
         <?php endif; ?>
     </td>
 

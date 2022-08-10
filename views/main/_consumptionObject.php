@@ -29,11 +29,18 @@ $seriesArr = [];
         <!--        <div class="info">--><? //= $pu['Purpose'] ?><!--</div>-->
         <!--        <div class="info blue">--><? //= $pu['KTTName'] ?><!--</div>-->
     </div>
+    
+    
     <?php if (isset($object['Line'])) { ?>
         <div class="objects-body" style="display:none">
-            <div class="invoice-table">
+            <div class="invoice-table consumption">
                 <table>
                     <tbody>
+                         <tr>
+                            <th>Месяц</th>
+                            <th>Потребление, кВт ч</th>
+                            <th>Способ расчёта</th>
+                        </tr>
                     <?php
 
                     if (isset($object['Line']['Date'])) {

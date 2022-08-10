@@ -3960,4 +3960,91 @@ h1.object-name-history {
 .invoice-table .bts{
     margin-top:40px;
 }
+
+        .invoice-table{
+        	overflow-x:auto;
+        }	
+        table.tab-invoice {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+        }
+        table.tab-invoice tr {
+        }
+        table.tab-invoice th, table.tab-invoice td {
+        	text-align: left;
+            padding: 8px;
+        }
+        
+        table.tab-invoice th{
+        	font-weight: bold;
+        }
+        .invoice-table table tr td{
+            display:table-cell;
+        }
+        .invoice-table table, .invoice-table table tbody, .invoice-table table tr, .invoice-table table td{
+            display:revert;
+        }
+        .invoice-table table tr td{
+            float:none;
+            font-size:12px;
+            text-align:center;
+        }
+        .invoice-table table td .price{
+            font-size:12px;
+        }
+        .checkbox-item strong{
+            font-size:12px;
+        }
+        .kvt{
+            display:none;
+        }
+        .checkbox-item span{
+            font-size:12px;
+        }
+        @media screen and (min-width: 1200px){
+            .invoice-table table tr td{
+             width:33%;   
+            }
+        }
+
+
+    .sub-objects-item span{
+    display: block;
+    font-size: 16px;
+    margin-bottom: 20px;
+    }
+    
+    	.colculation-name{
+		line-height: 24px;
+		color: #4475F2;
+		font-weight: 500;
+		font-size: 12px;
+	}
+	a.btn.small.colculation-popup-link{
+		color: #4475F2;
+		font-size:12px;
+		background: none;
+		border: 1px solid rgba(68, 117, 242, 0.2);
+		padding: 5px 8px;
+		line-height: 14px;
+		height: 24px;
+		border-radius: 100% !important;
+		display: inline-block;
+		vertical-align: top;
+		cursor: pointer;
+		text-align: center;
+		transition: all 0.3s ease 0s;
+		-moz-transition: all 0.3s ease 0s;
+		-webkit-transition: all 0.3s ease 0s;
+		-o-transition: all 0.3s ease 0s;
+		border-radius: 6px;
+		-moz-border-radius: 6px;
+		-webkit-border-radius: 6px;
+		-khtml-border-radius: 6px;
+	}
+	.invoice-table.consumption table td{
+	    padding:5px 0;
+	}
+
 /*ivanov end*/

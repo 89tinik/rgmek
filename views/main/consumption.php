@@ -32,9 +32,15 @@ $seriesArr = [];
 
 <div class="arrear-right">
     <div class="payment-form white-box">
-        <div class="invoice-table">
+        <div class="invoice-table consumption">
             <table>
                 <tbody>
+                 <tr>
+                     <th>Месяц</th>
+                     <th>Показания, кВт ч</th>
+                 </tr>   
+                    
+                    
                 <?php
                 if (isset($objectsData['Total']['Line'])) {
                     if (isset($objectsData['Total']['Line']['Date'])) {
@@ -85,7 +91,7 @@ $tooltip = <<<TOOLTIP
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} кВт ч</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
