@@ -46,6 +46,7 @@ use yii\helpers\Html;
         .invoice-table table tr td{
             float:none;
             font-size:12px;
+            text-align:center;
         }
         .invoice-table table td .price{
             font-size:12px;
@@ -63,8 +64,8 @@ use yii\helpers\Html;
             .invoice-table table tr td{
              width:33%;   
             }
-            
         }
+
     </style>
     
     <?php if (isset($pu['Line'])) {?>
