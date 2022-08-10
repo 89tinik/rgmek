@@ -11,10 +11,17 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 ?>
+<style>
+    .sub-objects-item span{
+    display: block;
+    font-size: 16px;
+    margin-bottom: 20px;
+    }
+</style>
 <div class="sub-objects-item collapse-item no-result wrap-pu <?= ($onePU) ? 'active' : '' ?> <?=($pu['AIISKUE'] == 'Да') ? 'aiiskue' : '' ?>"
      data-id="<?= $pu['UIDTU'] ?>" data-puid="<?= $pu['UIDPU'] ?>" data-k="<?= $pu['KTT'] ?>">
     <div class="sub-objects-btn collapse-btn <?= ($onePU) ? 'active' : '' ?>">
-        <?= $pu['FullName'] ?>
+        <?= $pu['Name'] . "<span>" . $pu['Type'] . "</span>"?>
         <!--span class="tip" style="display:none;">Показания переданы объем <span class="result-pu"></span>кВтч</span-->
     </div>
     <div class="sub-objects-content collapse-content" style="display: <?= ($onePU) ? 'block' : 'none' ?>;">
