@@ -45,26 +45,7 @@ use yii\helpers\Html;
                 ?>
                 </tbody>
             </table>
-            <div class="bts">
-                <?= Html::a('Печать', [
-                    'main/access-history-file',
-                    'print' => 'true',
-                    'action' => 'download_history_ind',
-                    'uidtu' => $pu['UIDTU'],
-                    'uidobject' => $model->uidobject,
-                    'withdate' => $model->withdate,
-                    'bydate' => $model->bydate
-                ], ['class' => 'btn small right print', 'target' => '_blank']) ?>
-                <?= Html::a('Скачать', [
-                    'main/access-history-file',
-                    'print' => 'false',
-                    'action' => 'download_history_ind',
-                    'uidtu' => $pu['UIDTU'],
-                    'uidobject' => $model->uidobject,
-                    'withdate' => $model->withdate,
-                    'bydate' => $model->bydate
-                ], ['class' => 'btn small right download', 'target' => '_blank']) ?>
-            </div>
+
         </div>
     </div>
     <div class="objects-more">
