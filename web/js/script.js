@@ -51,9 +51,10 @@ if ($('#receiptform-penalty').length > 0){
 }
 
 //push
-if(window.userId){
-alert(window.userId);
-}
+//setTimeout(function(){
+//alert(window.userId);
+//},5000);
+
 //checkbox ios
 	$(window).keyup(function(e){
 		var target = $('.checkbox-ios input:focus');

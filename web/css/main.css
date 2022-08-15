@@ -80,7 +80,7 @@ label {
   cursor: pointer; }
 
 label {
-  /*padding-left: 30px*/;
+  padding-left: 30px;
   position: relative;
   font-size: 16px;
   line-height: 24px;
@@ -3747,7 +3747,7 @@ td .colculation-popup {
     line-height: 42px;
   z-index: 1;}
   .testimony-box {
-    padding: 20px 0;
+    /*padding: 20px 0;*/
     padding-bottom: 60px;
     background: transparent;
     border: none;
@@ -3991,10 +3991,10 @@ h1.object-name-history {
             text-align:center;
         }
         .invoice-table table td .price{
-            font-size:12px;
+            font-size:14px;
         }
         .checkbox-item strong{
-            font-size:12px;
+            font-size:14px;
         }
         .kvt{
             display:none;

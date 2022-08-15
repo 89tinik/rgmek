@@ -61,5 +61,7 @@ $this->title = 'Главная | ЛК РГМЭК';
             ]);
         }
     }
+    //print_r(getallheaders());
     ?>
+    
 </div>
