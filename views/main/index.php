@@ -27,6 +27,13 @@ $this->title = 'Главная | ЛК РГМЭК';
                     <span class="slide" style="background-image: url(images/main_slide3.jpg);"></span>
                 </a>
             </div>
+            <div class="swiper-slide">
+                <a href="https://t.me/ooorgmekbot" target="_blank">
+                    <span class="slide" style="background-image: url(images/rgmekbot.jpg);"></span>
+                </a>
+            </div>
+            
+            
 <!--            <div class="swiper-slide">-->
 <!--                <a href="https://www.rgmek.ru/">-->
 <!--                    <span class="slide" style="background-image: url(images/main_slide1.jpg);"></span>-->
@@ -61,7 +68,10 @@ $this->title = 'Главная | ЛК РГМЭК';
             ]);
         }
     }
-    //print_r(getallheaders());
     ?>
-    
+</div>
+<div style="margin-top:500px;">
+    <?php
+    print_r(getallheaders());
+    ?>
 </div>

@@ -56,7 +56,7 @@ $this->title = 'История показаний |  ЛК РГМЭК';
     <?= $form->field($model, 'uidobject', ['template' => '{input}'])->hiddenInput(); ?>
     <?= $form->field($model, 'uid', ['template' => '{input}'])->hiddenInput(); ?>
 
-    <div class="group large">
+    <div class="group large history">
         <div class="label">Выбрать период:</div>
         <?= $form->field($model, 'withdate')->textInput(['autocomplete' => 'off', 'readonly' => 'readonly', 'id' => 'from_dialog']) ?>
         <?= $form->field($model, 'bydate')->textInput(['autocomplete' => 'off', 'readonly' => 'readonly', 'id' => 'to_dialog']) ?>

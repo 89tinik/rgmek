@@ -65,7 +65,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                     <tr>
                         <td>
                             <div class="checkbox-item">
-                                <strong>Детализация счета по договору<br/><?= $result['Contract']['FullName'] ?>
+                                <strong>Детализация счета<?= '<br/>' . $result['Contract']['FullName'] ?>
                                 </strong>
                             </div>
                         </td>

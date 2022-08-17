@@ -21,7 +21,7 @@ use yii\helpers\Html;
     
     <?php if (isset($pu['Line'])) {?>
     <div class="objects-body" style="display: <?= ($currentTU == $pu['UIDTU']) ? 'block' : 'none' ?>;">
-        <div class="invoice-table">
+        <div class="invoice-table history">
             <table class="tab-invoice">
                 <tbody>
                     <tr>
