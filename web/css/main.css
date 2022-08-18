@@ -3985,6 +3985,7 @@ display:block;
 		}
 		.invoice-table.history table tr td {
 		  display: table-cell;
+		  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		}
 		.invoice-table.history table,
 		.invoice-table.history table tbody,
@@ -4012,10 +4013,17 @@ display:block;
 		.history .field label {
 		  padding-left: 0;
 	    }
+	    
+	    .history-wrap .info{color:#4475F2;}
 		
 		@media screen and (min-width: 1200px) {
 		  .invoice-table.history table tr td {
 			width: 33%;
+		  }
+		}
+		@media screen and (max-width: 1200px) {
+		  .invoice-table.history table tr:first-child td:first-child{
+		      display:revert !important;
 		  }
 		}
 	/*history end*/

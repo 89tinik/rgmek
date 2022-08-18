@@ -123,6 +123,7 @@ if ($('#receiptform-penalty').length > 0){
 	setAnswerType($('#feedbackForm .type-answer input[type=radio]:checked').val());
 
 	//попап История показаний
+	/*
 	$('.history').on('click', function(){
 		if ($(window).scrollTop() > $('.bg').scrollTop()){
 			var topPos = $(window).scrollTop() + 50;
@@ -133,7 +134,7 @@ if ($('#receiptform-penalty').length > 0){
 		$('.history-popup').animate({'top': topPos}, 450);
 		$('.contracts-devices-popup-overlay').fadeIn(250);
 		return false;
-	});
+	});*/
 
 	//пересчёт в форме оплаты
 	$('.sber-form .value input').on('change', function(){
