@@ -2943,6 +2943,26 @@ td .colculation-popup {
 .consumption .objects-more a.btn:after{
   display:none;
 }
+.tehpris p {
+  color: #111;
+}
+
+.tehpris ul li {
+  color: #111;
+}
+
+.tehpris table tbody tr td {
+  padding: 10px;
+  color: #111;
+}
+
+.tehpris table tbody tr:nth-child(odd) {
+  background: #e9ebf5;
+}
+
+.tehpris table tbody tr:nth-child(even) {
+  background: #cfd5ea;
+}
 @media screen and (max-width: 1350px) {
   .arrear-left{
     width:580px;
@@ -3902,7 +3922,17 @@ display:block;
     clear:both;
   }
 /*ENDtin*/
+  .tehpris .sub-objects-items {
+    margin: 0;
+  }
 
+  .tehpris .objects-more {
+    display: block;
+  }
+
+  .tehpris table tbody tr td {
+    float: left;
+  }
 }
 
 @media screen and (max-width: 350px) {

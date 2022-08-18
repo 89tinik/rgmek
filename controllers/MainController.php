@@ -232,6 +232,44 @@ class MainController extends Controller
 
     }
 
+    public function actionAccessTehaddFile()
+    {
+
+        $data = \Yii::$app->request->get();
+//        $fileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/download_technological', $data, true, 'POST');
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('POST')
+            ->setFormat(Client::FORMAT_JSON)
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/download_technological')
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            $xml = new XmlParser();
+            $responseArr = $xml->parse($response);
+            if (isset($responseArr['Error'])){
+                return $responseArr['Error']['Message'];
+            } else {
+                return \Yii::$app->response->sendContentAsFile(base64_decode ($responseArr['File']), $responseArr['Name'].'.'.$responseArr['Extension']);
+            }
+        } else {
+            return 'Не удалось связаться БД - повторите попытку позже.';
+        }
+//        if (isset($historyInfo['success'])){
+//            if ($historyInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+//                throw new HttpException(403, 'Доступ запрещён');
+//            }
+//            if ($data['print'] == 'true'){
+//                return \Yii::$app->response->sendContentAsFile(base64_decode ($historyInfo['success']['FilePDF']), $historyInfo['success']['Name'].'.pdf', ['inline' => true, 'mimeType' => 'application/pdf']);
+//            } else {
+//                return \Yii::$app->response->sendContentAsFile(base64_decode ($historyInfo['success']['FileXLS']), $historyInfo['success']['Name'].'.xls');
+//            }
+//        } else {
+//            return $historyInfo['error'];
+//        }
+
+    }
+
 //    public function actionDecoding()
 //    {
 //
@@ -386,8 +424,18 @@ class MainController extends Controller
         return $this->render('raz', []);
     }
     
-    public function actionDva (){
-        return $this->render('dva', []);
+    public function actionTehadd (){
+        $data = [
+            'uidcontracts' => \Yii::$app->request->get('uid')
+        ];
+        $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/applications_list/technological', $data);
+        if (isset($objectsData['success'])){
+            return $this->render('tehadd', [
+                'objectsData' => $objectsData['success']
+            ]);
+        } else {
+            return $objectsData['error'];
+        }
     }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){

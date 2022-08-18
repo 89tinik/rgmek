@@ -219,7 +219,7 @@ if (isset($objectsData['Object'])) {
         echo $this->render('_consumptionObject', [
             'object' => $objectsData['Object'],
             'i' => $i,
-            'ooltip' => $tooltip,
+            'tooltip' => $tooltip,
             'xMonth' => $xMonth
         ]);
     } else {
@@ -227,7 +227,7 @@ if (isset($objectsData['Object'])) {
             echo $this->render('_consumptionObject', [
                 'object' => $arr,
                 'i' => $i,
-                'ooltip' => $tooltip,
+                'tooltip' => $tooltip,
                 'xMonth' => $xMonth
             ]);
             $i++;
