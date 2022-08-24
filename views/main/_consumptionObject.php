@@ -33,13 +33,13 @@ $seriesArr = [];
     
     <?php if (isset($object['Line'])) { ?>
         <div class="objects-body" style="display:none">
-            <div class="invoice-table consumption">
+            <div class="invoice-table consumption month">
                 <table>
                     <tbody>
                          <tr>
-                            <th>Месяц</th>
-                            <th>Потребление, кВт ч</th>
-                            <th>Способ расчёта</th>
+                            <td>Месяц</td>
+                            <td>Потребление, кВт ч</td>
+                            <td>Способ расчёта</td>
                         </tr>
                     <?php
 

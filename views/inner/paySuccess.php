@@ -16,7 +16,7 @@ $receiptUID = Yii::$app->session->getFlash('receiptUID');
     </div>
     <p>Квитанция об оплате <?= Yii::$app->session->getFlash('receiptN1C') ?>
 
-        <?= Html::a('Печать', ['inner/download-receipt', 'uidpaydoc' => $receiptUID, 'print' => 'true'], ['class' => 'btn small border', 'target' => '_blank', 'style' => 'margin-top: -13px;']) ?>
+        <?= Html::a('Печать', ['inner/download-receipt', 'uidpaydoc' => $receiptUID, 'print' => 'true'], ['class' => 'btn small border print', 'target' => '_blank', 'style' => 'margin-top: -13px;']) ?>
         <?= Html::a('Скачать', ['inner/download-receipt', 'uidpaydoc' => $receiptUID, 'print' => 'false'], ['class' => 'btn small border', 'target' => '_blank', 'style' => 'margin-top: -13px;']) ?>
 
     </p>

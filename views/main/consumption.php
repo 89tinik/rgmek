@@ -14,7 +14,36 @@ $chartDataArr = array_fill(1, 12, 0);
 $chartYarsDataArr = [];
 $seriesArr = [];
 ?>
-
+<style>
+.invoice-table.consumption tr th{
+	text-align:left;
+}
+.invoice-table.consumption table td .price{
+	font-size:14px;
+}
+.consumption .jq-selectbox__select-text{ 
+	font-size:14px;
+}
+.consumption label{
+    padding-left:0;
+}
+a.btn.small.colculation-popup-link{
+    margin-top:0;
+}
+@media screen and (max-width: 1200px){
+    .invoice-table.consumption table tr td:last-child{
+        clear:unset;
+        width:auto;
+    } 
+    .invoice-table.consumption table tr td{
+        text-align:left;
+        float:left;
+    } 
+    .invoice-table.consumption.month table tr td{
+        width:33%;
+    } 
+}
+</style>
 <div class="page-heading">
     <div class="breadcrumbs">
         <strong>Информация об электропотреблении по договору</strong><span class="sep"></span>
@@ -36,8 +65,8 @@ $seriesArr = [];
             <table>
                 <tbody>
                  <tr>
-                     <th>Месяц</th>
-                     <th>Показания, кВт ч</th>
+                     <td>Месяц</td>
+                     <td>Расход, кВт ч</td>
                  </tr>   
                     
                     
@@ -143,7 +172,7 @@ $this->registerJs($js);
 ?>
 
 
-<div class="payment-filter white-box">
+<div class="payment-filter white-box consumption">
     <?php
     if (Yii::$app->session->hasFlash('success')) {
         echo Yii::$app->session->getFlash('success');
@@ -196,7 +225,7 @@ $this->registerJs($js);
         <?= $form->field($model, 'uidobject', ['template' => '{input}'])->dropdownList(
             $objectOptionArr,
             [
-                'class' => 'styler select__default',
+                'class' => 'styler select__default consumption',
                 'prompt' => 'Все объекты'
 
             ]); ?>

@@ -3,7 +3,7 @@
 ?>
 <tr class="line">
     <td>
-        <div class="price"><?=$line['Month'] . " " . implode('/', $line['Year']) ?></div>
+        <div class="price"><?=$line['Month'] . "<br>" . implode('/', $line['Year']) ?></div>
     </td>
     <td>
         <div class="price"><?=implode('/', $line['Volume'])?> <?=(is_numeric($line['Volume'][0])) ? 'кВт ч' : ''?></div>
