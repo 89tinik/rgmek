@@ -1,6 +1,14 @@
 <?php
 /* @var $month */
 ?>
+
+<?php
+if (is_numeric($month['Volume'][0])){
+    foreach ($month['Volume'] as &$arr){
+        $arr = number_format($arr, 0, ',', ' ');
+    }
+}
+?>
 <tr class="line">
     <td>
         <div class="price"><?=$month['Month'] . "<br>" . implode('/', $month['Year']) ?></div>
