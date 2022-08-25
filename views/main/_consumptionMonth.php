@@ -1,6 +1,14 @@
 <?php
 /* @var $line */
 ?>
+
+<?php
+if (is_numeric($line['Volume'][0])){
+    foreach ($line['Volume'] as &$arr){
+        $arr = number_format($arr, 0, ',', ' ');
+    }
+}
+?>
 <tr class="line">
     <td>
         <div class="price"><?=$line['Month'] . "<br>" . implode('/', $line['Year']) ?></div>
