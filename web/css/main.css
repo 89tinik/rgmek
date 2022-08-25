@@ -2951,6 +2951,13 @@ td .colculation-popup {
   color: #111;
 }
 
+.tehpris table tbody tr.dis {
+  filter: grayscale(70%);
+}
+
+.tehpris table tbody tr.dis button{
+  cursor: default;
+}
 .tehpris table tbody tr td {
   padding: 10px;
   color: #111;

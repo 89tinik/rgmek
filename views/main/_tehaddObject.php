@@ -2,7 +2,8 @@
 
 /* @var $object */
 /* @var $i */
-/* @var $one*/
+
+/* @var $one */
 
 use yii\helpers\Html;
 
@@ -13,60 +14,20 @@ $seriesArr = [];
 
 <div class="objects-item wrap-object <?= ($one) ? 'open' : '' ?>">
     <div class="objects-head">
-        <div class="name"><a href="#"><?=$object['Name']?></a></div>
-        <div class="info"><?=$object['Application']['FullName']?></div>
+        <div class="name"><a href="#"><?= $object['Name'] ?></a></div>
+        <div class="info"><?= $object['Application']['FullName'] ?></div>
     </div>
     <div class="objects-body" style="display: <?= ($one) ? 'block' : 'none' ?>;">
         <div class="sub-objects-items collapse-items">
             <table>
                 <tbody>
-                <tr>
-                    <td>01.07.2022</td>
-                    <td>Проект договора энергоснабжения (купли – продажи (поставки) электрической энергии (мощности)
-                        / Соглашение
-                    </td>
-                    <td>icon</td>
-                    <td>
-                        <?= Html::a('Скачать', [
-                            'main/access-tehadd-file',
-                            'print' => 'true',
-                            'action' => 'download_report_consumption',
-                            'uid' => \Yii::$app->request->get('uid'),
-                            'path' => $object['Application']['Document']['Path'],
-                            'name' => $object['Application']['Document']['Name']
-                        ], ['class' => 'btn full', 'target' => '_blank']) ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>01.07.2022</td>
-                    <td>Проект договора энергоснабжения (купли – продажи (поставки) электрической энергии (мощности)
-                        / Соглашение
-                    </td>
-                    <td>icon</td>
-                    <td>
-                        <button class="btn full">Скачать</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>01.07.2022</td>
-                    <td>Проект договора энергоснабжения (купли – продажи (поставки) электрической энергии (мощности)
-                        / Соглашение
-                    </td>
-                    <td>icon</td>
-                    <td>
-                        <button class="btn full">Скачать</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>01.07.2022</td>
-                    <td>Проект договора энергоснабжения (купли – продажи (поставки) электрической энергии (мощности)
-                        / Соглашение
-                    </td>
-                    <td>icon</td>
-                    <td>
-                        <button class="btn full">Скачать</button>
-                    </td>
-                </tr>
+                <?php
+                foreach ($object['Application'][0]['Document'] as $doc) {
+                    echo $this->render('_tehaddObjectDoc', [
+                        'doc' => $doc
+                    ]);
+                }
+                ?>
                 </tbody>
             </table>
 
@@ -80,7 +41,9 @@ $seriesArr = [];
                 Радищева, д. 61, каб. 1</p>
             <p>Договор (соглашение) считается заключенным с даты составления акта об осуществлении технологического
                 присоединения (уведомления об обеспечении сетевой организацией возможности присоединения к
-                электрическим сетям) <a href="#">подробнее</a></p>
+                электрическим сетям) <a
+                        href="http://www.consultant.ru/document/cons_doc_LAW_130498/?ysclid=l702egl2lb8490951159:03"
+                        target="_blank">подробнее</a></p>
         </div>
     </div>
     <div class="objects-more">

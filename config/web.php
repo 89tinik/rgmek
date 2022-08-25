@@ -16,6 +16,9 @@ $config = [
     //'catchAll' => ['ajax/close'],
 //    'defaultRoute' => 'main',
     'components' => [
+        'session'=>[
+            'timeout'=>10*365*24*60*60,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'FmFrzpt6h1XjcMViBc3vLOzCOuAnS_BB',
@@ -26,7 +29,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => false,
+            'enableAutoLogin' => true,
             'loginUrl' => ['login'],
         ],
         'errorHandler' => [
