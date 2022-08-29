@@ -191,7 +191,7 @@ class DefaultController extends Controller
         $user = User::findOne($id);
         if ($user){
             $user->setDataContracts();
-            if (Yii::$app->user->login($user)){
+            if (Yii::$app->user->login($user, 3600 * 24 * 30 * 12)){
                 Admin::setSessionAdmin($adminId);
                 $client = new Client();
                 $client->createRequest()

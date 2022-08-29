@@ -75,7 +75,7 @@ class LoginForm extends Model
 
                 $user->setDataContracts();
 
-                return Yii::$app->user->login($user);
+                return Yii::$app->user->login($user, 3600 * 24 * 30 * 12);
             } else {
                 Yii::$app->session->setFlash('error', 'Вы заблокированы!');
             }
