@@ -49,6 +49,16 @@ class Contract extends ActiveRecord
         $contract->full_name = $dataContract['FullName'];
         $contract->category = $dataContract['Category'];
         $contract->number = $dataContract['Number'];
+        if (!empty($dataContract['Status'])) {
+            $contract->status = $dataContract['Status'];
+        } else {
+            $contract->status = '';
+        }
+        if (!empty($dataContract['StatusName'])) {
+            $contract->status_name = $dataContract['StatusName'];
+        } else {
+            $contract->status_name = '';
+        }
         if ($contract->save()) {
             return $contract->id;
         }
@@ -61,13 +71,13 @@ class Contract extends ActiveRecord
 
     public static function getListContracts($userId)
     {
-        if (!empty($contracts = static::find()->where(['user_id'=>$userId])->asArray()->all())) {
+        if (!empty($contracts = static::find()->where(['user_id' => $userId])->asArray()->all())) {
             $links = [];
             foreach ($contracts as $contract) {
-                $links []= Html::a($contract['full_name'], ['main/downloadedo', 'uid' => $contract['uid']],['target'=>'_blank']);
+                $links [] = Html::a($contract['full_name'], ['main/downloadedo', 'uid' => $contract['uid']], ['target' => '_blank']);
 
             }
-            return Html::ul($links,['encode'=>false]);
+            return Html::ul($links, ['encode' => false]);
         }
     }
 

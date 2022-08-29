@@ -1012,22 +1012,22 @@ a.lnk, .lnk {
         .summary-item .controls ul li:first-child {
           margin-left: 0;
           border-left: none; }
-        .summary-item .controls ul li.item-1 a:before {
+        .summary-item .controls ul li.item-1 a:before, .summary-item .controls ul li.item-1 span:before {
           background: url(../images/sum_ic1.svg) no-repeat;
           background-size: contain; }
-        .summary-item .controls ul li.item-2 a:before {
+        .summary-item .controls ul li.item-2 a:before, .summary-item .controls ul li.item-2 span:before {
           background: url(../images/sum_ic2.svg) no-repeat;
           background-size: contain; }
-        .summary-item .controls ul li.item-3 a:before {
+        .summary-item .controls ul li.item-3 a:before, .summary-item .controls ul li.item-3 span:before {
           background: url(../images/sum_ic3.svg) no-repeat;
           background-size: contain; }
-        .summary-item .controls ul li.item-4 a:before {
+        .summary-item .controls ul li.item-4 a:before, .summary-item .controls ul li.item-4 span:before {
           background: url(../images/sum_ic4.svg) no-repeat;
           background-size: contain; }
-        .summary-item .controls ul li.item-5 a:before {
+        .summary-item .controls ul li.item-5 a:before, .summary-item .controls ul li.item-5 span:before {
           background: url(../images/sum_ic5.svg) no-repeat;
           background-size: contain; }
-        .summary-item .controls ul li a {
+        .summary-item .controls ul li a, .summary-item .controls ul li span  {
           padding: 90px 10px 25px 10px;
           display: block;
           height: 178px;
@@ -1040,7 +1040,7 @@ a.lnk, .lnk {
           -o-transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1);
           transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1);
           -webkit-transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1); }
-          .summary-item .controls ul li a:before {
+          .summary-item .controls ul li a:before, .summary-item .controls ul li span:before {
             margin-left: -25px;
             content: '';
             position: absolute;
@@ -1048,7 +1048,7 @@ a.lnk, .lnk {
             top: 30px;
             width: 50px;
             height: 50px; }
-          .summary-item .controls ul li a:hover {
+          .summary-item .controls ul li a:hover{
             color: #4475F2; }
   .summary-item .info-top {
     display: -webkit-box;
@@ -2574,7 +2574,21 @@ a.lnk, .lnk {
           font-weight: 400; }
 
 /*tin*/
-
+.objects-head .info.gray{
+  color: #959CA3;
+}
+.sidebar-menu .sidebar-menu-fw ul li ul li:first-child, .mobile-popup .btn.small:first-child {
+  display:none;
+}
+.summary-item .controls ul li.item-0{
+  position:absolute;
+  overflow: hidden;
+  width: 10px;
+  height: 10px;
+  left: 0;
+  bottom: 0;
+  border: 0;
+}
 .profile-details ul li:after{
 	content: "";
 	position: absolute;
@@ -3297,7 +3311,7 @@ td .colculation-popup {
     position: relative;
     width: 100%;
     border: none; }
-  .summary-item .controls ul li a {
+  .summary-item .controls ul li a, .summary-item .controls ul li span {
     padding: 0 10px;
     margin: 0 10px;
     display: block;
@@ -3306,7 +3320,7 @@ td .colculation-popup {
     color: #4475F2;
     border: 1px solid #4475F2;
     border-radius: 6px; }
-  .summary-item .controls ul li a:before {
+  .summary-item .controls ul li a:before, .summary-item .controls ul li span:before {
     display: none; }
   .summary-item .controls ul li a:hover {
     color: #fff;

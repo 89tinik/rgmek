@@ -15,17 +15,39 @@ $seriesArr = [];
 <div class="objects-item wrap-object <?= ($one) ? 'open' : '' ?>">
     <div class="objects-head">
         <div class="name"><a href="#"><?= $object['Name'] ?></a></div>
-        <div class="info"><?= $object['Application']['FullName'] ?></div>
+        <?php if (isset($object['Application']['FullName'])) {
+            echo '<div class="info">' . $object['Application']['FullName'] . '</div>';
+        } else {
+            foreach ($object['Application'] as $app) {
+                if ($app['Status'] == 'отозвана') {
+                    echo '<div class="info gray">' . $app['FullName'] . '(' . $app['Status'] . ')</div>';
+                } else {
+                    echo '<div class="info">' . $app['FullName'] . '</div>';
+                }
+            }
+        } ?>
     </div>
     <div class="objects-body" style="display: <?= ($one) ? 'block' : 'none' ?>;">
         <div class="sub-objects-items collapse-items">
             <table>
                 <tbody>
                 <?php
-                foreach ($object['Application'][0]['Document'] as $doc) {
-                    echo $this->render('_tehaddObjectDoc', [
-                        'doc' => $doc
-                    ]);
+                if (isset($object['Application']['Document'])) {
+                    foreach ($object['Application']['Document'] as $doc) {
+                        echo $this->render('_tehaddObjectDoc', [
+                            'doc' => $doc
+                        ]);
+                    }
+                } else {
+                    foreach ($object['Application'] as $app) {
+                        foreach ($app['Document'] as $doc) {
+                            if ($app['Status'] != 'отозвана') {
+                                echo $this->render('_tehaddObjectDoc', [
+                                    'doc' => $doc
+                                ]);
+                            }
+                        }
+                    }
                 }
                 ?>
                 </tbody>
