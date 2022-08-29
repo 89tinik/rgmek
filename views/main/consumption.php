@@ -30,6 +30,9 @@ $seriesArr = [];
 a.btn.small.colculation-popup-link{
     margin-top:0;
 }
+.payment-filter.consumption{
+    max-width:100%;
+}
 @media screen and (max-width: 1200px){
     .invoice-table.consumption table tr td:last-child{
         clear:unset;
