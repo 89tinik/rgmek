@@ -82,7 +82,7 @@ use yii\helpers\Html;
                 <li class="item-5"><?=Html::a('Начисления и платежи', ['main/payment', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-5"><?=Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <style>
-                    .item-6 a{border:none !important;}
+                    .item-6 span{border:none !important;}
                 </style>
                 <li class="item-6"><?=Html::a('', ['main/consumption', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
             <?php else: ?>
@@ -93,7 +93,7 @@ use yii\helpers\Html;
                 <li class="item-5"><span>Начисления и платежи</span></li>
                 <li class="item-5"><span>Действующие объекты и приборы учёта</span></li>
                 <style>
-                    .item-6 a{border:none !important;}
+                    .item-6 span{border:none !important;}
                 </style>
                 <li class="item-6"><span></span></li>
            <?php endif; ?>

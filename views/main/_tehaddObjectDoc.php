@@ -7,8 +7,8 @@ use yii\helpers\Html;
 ?>
 <tr <?php if (empty($doc['Path'])) echo 'class="dis"' ?>>
     <td><?php if (!empty($doc['Date'])) echo $doc['Date'] ?></td>
-    <td><?= $doc['Name'] ?></td>
-    <td><a href="#popap-info-tehadd" data-fancybox><img src="/images/icon.svg" width="50"/></a></td>
+    <td class="name"><?= $doc['Name'] ?></td>
+    
     <td>
 
         <?php
@@ -26,4 +26,5 @@ use yii\helpers\Html;
         }
         ?>
     </td>
+    <td class="popup"><a href="#" data-fancybox><img src="/images/icon.svg" width="50"/></a></td>
 </tr>

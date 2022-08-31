@@ -54,17 +54,73 @@ $seriesArr = [];
             </table>
 
             <p>Скачайте документ, подпишите своей электронно-цифровой подписью, направьте нам одним из способов:</p>
-            <ul>
-                <li>через сервис «<?= Html::a('Написать обращение', ['inner/fos']) ?>» Личного кабинета;
-                </li>
-                <li>посредством электронного документооборота СБИС, Диадок.</li>
-            </ul>
+            <style>
+                .leftright{
+                    height:80px;
+                }
+                .leftright ul{
+                    width:50%;
+                    float:left;
+                    margin-top:0;
+                }
+                .leftright .docSend{
+                    display:block;
+                    padding:10px 15px;
+                    background:#4475F2;
+                    color:#fff;
+                    width:44%;
+                    float:left;
+                    text-align:center;
+                    border-radius:6px;
+                }
+                .leftright .popup{
+                    float:right;
+                }
+                .leftright .popup img{
+                    height:40px;
+                }
+                @media screen and (max-width: 1200px){
+                    .tehpris table tbody tr td .btn{
+                        margin-top:0;
+                    }
+                    .tehpris table tbody tr td.name{
+                        width:100%;
+                    }
+                    .tehpris table tbody tr td.popup{
+                        float:right;
+                        padding-top:20px;
+                    }
+                    .tehpris table tbody tr td img{
+                        height:25px;
+                    }
+                    .leftright{
+                        height:130px;
+                    }
+                    .leftright .popup img{
+                        height:25px;
+                    }
+                    .leftright .docSend{
+                        width:40%;
+                    }
+                    .leftright .popup{
+                        padding-top:15px;
+                    }
+                }
+            </style>
+            <div class="leftright">
+                <ul>
+                    <li>через сервис «<?= Html::a('Написать обращение', ['inner/fos']) ?>» Личного кабинета;</li>
+                    <li>посредством электронного документооборота СБИС, Диадок.</li>
+                </ul>
+                <a href="#" class="docSend">Направить подписанный документ</a>
+                <a href="#popap-info-tehadd" data-fancybox class="popup"><img src="/images/icon.svg" width="50"/></a>
+            </div>
             <p>Также подписанный договор (соглашение) в бумажном виде можно вернуть по адресу: г. Рязань, ул.
                 Радищева, д. 61, каб. 1</p>
             <p>Договор (соглашение) считается заключенным с даты составления акта об осуществлении технологического
                 присоединения (уведомления об обеспечении сетевой организацией возможности присоединения к
                 электрическим сетям) <a
-                        href="http://www.consultant.ru/document/cons_doc_LAW_130498/?ysclid=l702egl2lb8490951159:03"
+                        href="https://www.rgmek.ru/business-clients/contracts.html"
                         target="_blank">подробнее</a></p>
         </div>
     </div>
