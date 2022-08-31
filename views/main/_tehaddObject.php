@@ -19,11 +19,7 @@ $seriesArr = [];
             echo '<div class="info">' . $object['Application']['FullName'] . '</div>';
         } else {
             foreach ($object['Application'] as $app) {
-                if ($app['Status'] == 'отозвана') {
-                    echo '<div class="info gray">' . $app['FullName'] . '(' . $app['Status'] . ')</div>';
-                } else {
-                    echo '<div class="info">' . $app['FullName'] . '</div>';
-                }
+                echo '<div class="info gray">' . $app['FullName'] . ' - ' . $app['Status'] . '</div>';
             }
         } ?>
     </div>
@@ -55,55 +51,67 @@ $seriesArr = [];
 
             <p>Скачайте документ, подпишите своей электронно-цифровой подписью, направьте нам одним из способов:</p>
             <style>
-                .leftright{
-                    height:80px;
+                .leftright {
+                    height: 80px;
                 }
-                .leftright ul{
-                    width:50%;
-                    float:left;
-                    margin-top:0;
+
+                .leftright ul {
+                    width: 50%;
+                    float: left;
+                    margin-top: 0;
                 }
-                .leftright .docSend{
-                    display:block;
-                    padding:10px 15px;
-                    background:#4475F2;
-                    color:#fff;
-                    width:44%;
-                    float:left;
-                    text-align:center;
-                    border-radius:6px;
+
+                .leftright .docSend {
+                    display: block;
+                    padding: 10px 15px;
+                    background: #4475F2;
+                    color: #fff;
+                    width: 44%;
+                    float: left;
+                    text-align: center;
+                    border-radius: 6px;
                 }
-                .leftright .popup{
-                    float:right;
+
+                .leftright .popup {
+                    float: right;
                 }
-                .leftright .popup img{
-                    height:40px;
+
+                .leftright .popup img {
+                    height: 40px;
                 }
-                @media screen and (max-width: 1200px){
-                    .tehpris table tbody tr td .btn{
-                        margin-top:0;
+
+                @media screen and (max-width: 1200px) {
+                    .tehpris table tbody tr td .btn {
+                        margin-top: 0;
                     }
-                    .tehpris table tbody tr td.name{
-                        width:100%;
+
+                    .tehpris table tbody tr td.name {
+                        width: 100%;
                     }
-                    .tehpris table tbody tr td.popup{
-                        float:right;
-                        padding-top:20px;
+
+                    .tehpris table tbody tr td.popup {
+                        float: right;
+                        padding-top: 20px;
                     }
-                    .tehpris table tbody tr td img{
-                        height:25px;
+
+                    .tehpris table tbody tr td img {
+                        height: 25px;
                     }
-                    .leftright{
-                        height:130px;
+
+                    .leftright {
+                        height: 130px;
                     }
-                    .leftright .popup img{
-                        height:25px;
+
+                    .leftright .popup img {
+                        height: 25px;
                     }
-                    .leftright .docSend{
-                        width:40%;
+
+                    .leftright .docSend {
+                        width: 40%;
                     }
-                    .leftright .popup{
-                        padding-top:15px;
+
+                    .leftright .popup {
+                        padding-top: 15px;
                     }
                 }
             </style>
