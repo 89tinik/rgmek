@@ -63,6 +63,9 @@ class InnerController extends Controller
             }
 
         }
+        if (\Yii::$app->request->get('tehadd') == 'true'){
+            $model->subject = 'Технологическое присоединение';
+        }
         $contracts = '';
         if (!empty($contractsArr = Contract::find()->where(['user_id'=>\Yii::$app->user->identity->id])->asArray()->all())){
             foreach ($contractsArr as $contract){

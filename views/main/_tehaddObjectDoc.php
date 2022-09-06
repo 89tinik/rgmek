@@ -1,6 +1,7 @@
 <?php
 
 /* @var $doc */
+/* @var $i */
 
 use yii\helpers\Html;
 
@@ -26,5 +27,5 @@ use yii\helpers\Html;
         }
         ?>
     </td>
-    <td class="popup"><a href="#" data-fancybox><img src="/images/icon.svg" width="50"/></a></td>
+    <td class="popup"><a data-fancybox class="btn small border" href="#popap-info-tehadd-<?=$i?>">?</a></td>
 </tr>

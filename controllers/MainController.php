@@ -29,6 +29,7 @@ class MainController extends Controller
     public $byDate = '';
     public $listContract = '';
     public $currentContract = '';
+    public $currentContractStatus = '';
 
     public function behaviors()
     {
@@ -57,6 +58,7 @@ class MainController extends Controller
             }
         }
         $this->currentContract =$curentContract->full_name;
+        $this->currentContractStatus =$curentContract->status_name;
 
         return parent::beforeAction($action);
     }

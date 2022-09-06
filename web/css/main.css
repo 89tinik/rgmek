@@ -806,8 +806,10 @@ a.lnk, .lnk {
         .sidebar-menu .sidebar-menu-fw ul li a span {
           display: block;
           font-size: 12px;
-          line-height: 24px;
-          color: #5E676F; }
+          line-height: 12px;
+          width: 80%;
+    white-space: pre-wrap;
+          color: #FF4949; }
       .sidebar-menu .sidebar-menu-fw ul li.active a {
         background: #4475F2; }
         .sidebar-menu .sidebar-menu-fw ul li.active a span {
@@ -1012,6 +1014,9 @@ a.lnk, .lnk {
         .summary-item .controls ul li:first-child {
           margin-left: 0;
           border-left: none; }
+        .summary-item .controls ul li.item-0 a:before, .summary-item .controls ul li.item-0 span:before {
+          background: url(../images/sum_ic5.svg) no-repeat;
+          background-size: contain; }
         .summary-item .controls ul li.item-1 a:before, .summary-item .controls ul li.item-1 span:before {
           background: url(../images/sum_ic1.svg) no-repeat;
           background-size: contain; }
@@ -1040,6 +1045,9 @@ a.lnk, .lnk {
           -o-transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1);
           transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1);
           -webkit-transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1); }
+            .summary-item .controls ul li span {
+    opacity:0.1
+  }
           .summary-item .controls ul li a:before, .summary-item .controls ul li span:before {
             margin-left: -25px;
             content: '';
@@ -2578,14 +2586,8 @@ a.lnk, .lnk {
   color: #959CA3;
 }
 
-.summary-item .controls ul li.item-0{
-  position:absolute;
-  overflow: hidden;
-  width: 10px;
-  height: 10px;
-  left: 0;
-  bottom: 0;
-  border: 0;
+.summary-item .info-top .name .status{
+    color:#FF4949;
 }
 .profile-details ul li:after{
 	content: "";
@@ -3318,9 +3320,7 @@ td .colculation-popup {
     color: #4475F2;
     border: 1px solid #4475F2;
     border-radius: 6px; }
-  .summary-item .controls ul li span {
-    opacity:0.1
-  }
+
   .summary-item .controls ul li a:before, .summary-item .controls ul li span:before {
     display: none; }
   .summary-item .controls ul li a:hover {
@@ -3502,7 +3502,7 @@ td .colculation-popup {
     line-height: 20px;
     margin: 10px 0 0 0; }
   .objects-body {
-    display: block !important; }
+    /*display: block !important; хз зачем так*/ }
   .objects-more {
     display: none; }
   .contracts-item {
@@ -4134,5 +4134,74 @@ display:block;
             .btn.print{display:none;}   
         }
     /*print hide mobile END*/
+    
+    /*tehadd start*/
+
+                .leftright {
+                    /*height: 80px;*/
+                }
+
+                .leftright ul {
+                    width: 50%;
+                    float: left;
+                    margin-top: 0;
+                }
+
+                .leftright .docSend {
+                    display: block;
+                    padding: 10px 15px;
+                    background: #4475F2;
+                    color: #fff;
+                    width: 43%;
+                    float: left;
+                    text-align: center;
+                    border-radius: 6px;
+                }
+
+                .leftright .popup {
+                    float: right;
+                }
+
+                .leftright .popup img {
+                    height: 40px;
+                }
+
+                @media screen and (max-width: 1200px) {
+                    .tehpris table tbody tr td .btn {
+                        margin-top: 0;
+                    }
+
+                    .tehpris table tbody tr td.name {
+                        width: 100%;
+                    }
+
+                    .tehpris table tbody tr td.popup {
+                        float: right;
+                        padding-top: 20px;
+                    }
+
+                    .tehpris table tbody tr td img {
+                        height: 25px;
+                    }
+
+                    .leftright {
+                        /*height: 175px;*/
+                    }
+
+                    .leftright .popup img {
+                        height: 25px;
+                    }
+
+                    .leftright .docSend {
+                        width: 35%;
+                    }
+
+                    .leftright .popup {
+                        padding-top: 15px;
+                    }
+                }
+                .tehpris a.btn.border, .btn.border{height:40px;line-height:40px;}
+
+            /*tehadd end*/
 
 /*ivanov end*/
