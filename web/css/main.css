@@ -2992,6 +2992,12 @@ td .colculation-popup {
     width: 350px;
   }
 }
+.sidebar-mobile-popup .dis.btn.border{
+  opacity: 0.3;
+}
+.sidebar-mobile-popup .dis.btn.border:hover{
+  background: none;
+}
 /*ENDtin*/
 .checkbox-ios {
   display: inline-block;

@@ -21,7 +21,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
     <?php if (empty($contract['status'])):?>
     
     <ul>
-        <li><span>Техническое присоединение</span></li>
+        <li><span>Технологическое присоединение</span></li>
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
@@ -32,7 +32,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <div class="title">Выбрать действие</div>
         <div class="close">Закрыть</div>
         <div class="bts">
-            <div class="btn full small border white"><span>Техническое присоединение</span></div>
+            <div class="btn full small border white"><span>Технологическое присоединение</span></div>
             <div class="btn full small border white"><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
@@ -42,7 +42,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
     </div>
     <?php elseif($contract['status'] == 'Заключение'): ?>
         <ul>
-            <li><?= Html::a('Техническое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
+            <li><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
             <li><span>Перейти к оплате</span></li>
             <li><span>Передать показания</span></li>
             <li><span>Счета</span></li>
@@ -53,7 +53,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="title">Выбрать действие</div>
             <div class="close">Закрыть</div>
             <div class="bts">
-                <div class="btn full small border white"><?= Html::a('Техническое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
+                <div class="btn full small border white"><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
                 <div class="btn full small border white"><span>Перейти к оплате</span></div>
                 <div class="btn full small border white"><span>Передать показания</span></div>
                 <div class="btn full small border white"><span>Счета</span></div>
@@ -63,7 +63,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         </div>
     <?php elseif($contract['status'] == 'Соглашение'): ?>
         <ul>
-            <li><?= Html::a('Техническое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
+            <li><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
@@ -74,7 +74,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="title">Выбрать действие</div>
             <div class="close">Закрыть</div>
             <div class="bts">
-                <div class="btn full small border white"><?= Html::a('Техническое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
+                <div class="btn full small border white"><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
