@@ -283,6 +283,16 @@ input, textarea, button {
 	color: #4475F2;
 	text-decoration: none;
 }
+select.styler{
+    border: 1px solid #EFF0F0;
+    background: #fff;
+    font-size: 14px;
+    color: #1C2834;
+    height: 58px;
+    border-radius: 10px;
+    width: 100%;
+    padding: 0 15px;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {

@@ -1132,7 +1132,8 @@ if ($('#receiptform-penalty').length > 0){
 
 function styler_func() {
 	/*styler*/
-	$('input.styler, select.styler').styler({'selectPlaceholder':'Из списка'});
+	//$('input.styler, select.styler').styler({'selectPlaceholder':'Из списка'});
+	$('input.styler').styler();
 
 	/*datepicker from-to dialog*/
 	var dateFormat = "dd.mm.yy", from = $( "#from_dialog" ).datepicker({

@@ -132,5 +132,6 @@ $(function () {
 
 function styler_func() {
     /*styler*/
-    $('input.styler, select.styler').styler();
+    //$('input.styler, select.styler').styler();
+    $('input.styler').styler();
 }

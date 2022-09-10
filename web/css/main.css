@@ -2582,6 +2582,17 @@ a.lnk, .lnk {
           font-weight: 400; }
 
 /*tin*/
+
+select.styler{
+    border: 1px solid #EFF0F0;
+    background: #fff;
+    font-size: 14px;
+    color: #1C2834;
+    height: 58px;
+    border-radius: 10px;
+    width: 100%;
+    padding: 0 15px;
+}
 .objects-head .info.gray{
   color: #959CA3;
 }
@@ -4084,6 +4095,13 @@ display:block;
 		@media screen and (max-width: 1200px) {
 		  .invoice-table.history table tr:first-child td:first-child{
 		      display:revert !important;
+		  }
+		  h1.object-name-history {
+		    color: #1C2834;
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 600;
+            font-family: "Inter", sans-serif;
 		  }
 		}
 	/*history end*/

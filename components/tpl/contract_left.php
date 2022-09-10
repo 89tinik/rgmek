@@ -32,7 +32,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <div class="title">Выбрать действие</div>
         <div class="close">Закрыть</div>
         <div class="bts">
-            <div class="btn full small border white"><span>Технологическое присоединение</span></div>
+            <div class="btn full small border white dis"><span>Технологическое присоединение</span></div>
             <div class="btn full small border white"><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
@@ -54,11 +54,11 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="close">Закрыть</div>
             <div class="bts">
                 <div class="btn full small border white"><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
-                <div class="btn full small border white"><span>Перейти к оплате</span></div>
-                <div class="btn full small border white"><span>Передать показания</span></div>
-                <div class="btn full small border white"><span>Счета</span></div>
-                <div class="btn full small border white"><span>Начисления и платежи</span></div>
-                <div class="btn full small border white"><span>Действующие объекты и приборы учёта</span></div>
+                <div class="btn full small border white dis"><span>Перейти к оплате</span></div>
+                <div class="btn full small border white dis"><span>Передать показания</span></div>
+                <div class="btn full small border white dis"><span>Счета</span></div>
+                <div class="btn full small border white dis"><span>Начисления и платежи</span></div>
+                <div class="btn full small border white dis"><span>Действующие объекты и приборы учёта</span></div>
             </div>
         </div>
     <?php elseif($contract['status'] == 'Соглашение'): ?>

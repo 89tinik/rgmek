@@ -13,7 +13,7 @@ class LoginAssets extends AssetBundle
     public $css = [
         '//fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap',
         'css/form-styler.css',
-        'css/login.css?v=0.1',
+        'css/login.css?v=0.2',
     ];
     public $js = [
         'js/jquery.formstyler.min.js',
@@ -21,7 +21,7 @@ class LoginAssets extends AssetBundle
         'js/jquery.maskedinput.js',
         'js/jquery.validate.min.js',
         'js/jquery-ui.js',
-        'js/login.js',
+        'js/login.js?v=0.1',
     ];
     public $depends = [
         'yii\web\YiiAsset',
