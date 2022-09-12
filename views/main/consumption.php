@@ -102,9 +102,12 @@ a.btn.small.colculation-popup-link{
 
                     if (isset($tableDataArr)){
                         foreach($tableDataArr as $month){
-                            echo $this->render('_consumptionTop', [
-                                'month' => $month
-                            ]);
+                            if (!empty($month['Month'])){
+                                echo $this->render('_consumptionTop', [
+                                    'month' => $month
+                                ]);
+                            }
+
                         }
                     }
 
@@ -239,7 +242,7 @@ $this->registerJs($js);
         <?= $form->field($model, 'withdate')->textInput(['autocomplete' => 'off', 'readonly' => 'readonly', 'id' => 'from_dialog']) ?>
         <?= $form->field($model, 'bydate')->textInput(['autocomplete' => 'off', 'readonly' => 'readonly', 'id' => 'to_dialog']) ?>
 
-        <?= Html::submitButton('Сформировать', ['class' => 'btn submit-btn']) ?>
+        <?= Html::submitButton('Сформировать', ['class' => 'btn submit-btn ploader']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
@@ -247,25 +250,31 @@ $this->registerJs($js);
 <?php
 if (isset($objectsData['Object'])) {
     $i=1;
-    if (isset($objectsData['Object']['FullName'])) {
-        echo $this->render('_consumptionObject', [
-            'object' => $objectsData['Object'],
-            'i' => $i,
-            'tooltip' => $tooltip,
-            'xMonth' => $xMonth
-        ]);
-    } else {
-        foreach ($objectsData['Object'] as $arr) {
-            echo $this->render('_consumptionObject', [
-                'object' => $arr,
-                'i' => $i,
-                'tooltip' => $tooltip,
-                'xMonth' => $xMonth
-            ]);
-            $i++;
+        if (isset($objectsData['Object']['FullName'])) {
+            if (empty($model->uidobject) || $model->uidobject == $objectsData['Object']['UIDObject']) {
+                echo $this->render('_consumptionObject', [
+                    'object' => $objectsData['Object'],
+                    'i' => $i,
+                    'tooltip' => $tooltip,
+                    'xMonth' => $xMonth,
+                    'open' => $model->uidobject == $objectsData['Object']['UIDObject']
+                ]);
+            }
+        } else {
+            foreach ($objectsData['Object'] as $arr) {
+                if (empty($model->uidobject) || $model->uidobject == $arr['UIDObject']) {
+                    echo $this->render('_consumptionObject', [
+                        'object' => $arr,
+                        'i' => $i,
+                        'tooltip' => $tooltip,
+                        'xMonth' => $xMonth,
+                        'open' => $model->uidobject == $arr['UIDObject']
+                    ]);
+                }
+                $i++;
+            }
         }
-    }
-
+    if ($i > 10 && empty($model->uidobject)) echo '<div class="wrap-paginate"><a href="#" class="btn more">Показать все</a></div>';
 }
 //?>
 <div class="bts">

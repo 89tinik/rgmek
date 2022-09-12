@@ -3,6 +3,7 @@
 /* @var $object */
 /* @var $i */
 /* @var $tooltip */
+/* @var $open */
 
 /* @var $xMonth */
 
@@ -13,7 +14,7 @@ $chartYarsDataArr = [];
 $seriesArr = [];
 ?>
 
-<div class="objects-item wrap-object history-wrap consumption">
+<div class="objects-item wrap-object history-wrap consumption <?= ($open) ? 'open' : '' ?> <?= ($i > 10 && !($open)) ? 'hidden-pag' : '' ?>" objekt-uid="<?= $object['UIDObject'] ?>">
     <div class="objects-head">
         <!--div class="subname">3 прибора учета</div-->
         <div class="name"><a href="#"><?= $object['FullName'] ?></a></div>
@@ -32,7 +33,7 @@ $seriesArr = [];
     
     
     <?php if (isset($object['Line'])) { ?>
-        <div class="objects-body" style="display:none">
+        <div class="objects-body" style="display:<?= ($open) ? 'block' : 'none' ?>">
             <div class="invoice-table consumption month">
                 <table>
                     <tbody>
@@ -81,9 +82,11 @@ $seriesArr = [];
                     }
                     if (isset($tableObjectDataArr)){
                         foreach($tableObjectDataArr as $month){
-                            echo $this->render('_consumptionMonth', [
-                                'line' => $month
-                            ]);
+                            if (!empty($month['Month'])) {
+                                echo $this->render('_consumptionMonth', [
+                                    'line' => $month
+                                ]);
+                            }
                         }
                     }
 
@@ -170,7 +173,7 @@ $seriesArr = [];
             <a href="#" class="more-link" data-text-open="Развернуть" data-text-close="Свернуть">
                 <!--            <span>-->
                 <? //= ($currentTU == $pu['UIDTU']) ? 'Свернуть' : 'Развернуть' ?><!--</span>-->
-                <span>Развернуть</span>
+                <span><?= ($open) ? 'Свернуть' : 'Развернуть' ?></span>
             </a>
             <?php if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
                 <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные

@@ -398,7 +398,8 @@ class MainController extends Controller
             $model->uid = \Yii::$app->request->get('uid');
         }
         if (empty( $model->bydate = \Yii::$app->request->get('ConsumptionForm')['bydate'])) {
-            $model->bydate = '01.12.'. date('Y');
+            //$model->bydate = '01.12.'. date('Y');
+            $model->bydate = \Yii::$app->user->identity->by_date;
         }
         if (empty($model->withdate)) {
             $bydateArr = explode('.', $model->bydate);

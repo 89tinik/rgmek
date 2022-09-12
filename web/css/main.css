@@ -2582,7 +2582,12 @@ a.lnk, .lnk {
           font-weight: 400; }
 
 /*tin*/
-
+.objects-item.hidden-pag {
+  display: none;
+}
+.wrap-paginate{
+  text-align: center;
+}
 select.styler{
     border: 1px solid #EFF0F0;
     background: #fff;

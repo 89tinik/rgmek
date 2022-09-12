@@ -54,6 +54,12 @@ if ($('#receiptform-penalty').length > 0){
 //setTimeout(function(){
 //alert(window.userId);
 //},5000);
+//paginate consumption
+	$('.wrap-paginate .more').on('click', function(){
+		$('.objects-item.hidden-pag').removeClass('hidden-pag');
+		$(this).css('display', 'none');
+		return false;
+	});
 
 //checkbox ios
 	$(window).keyup(function(e){
