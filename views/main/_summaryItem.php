@@ -75,7 +75,7 @@ use yii\helpers\Html;
     <div class="controls">
         <ul>
             <?php if (empty($contract['Status'])):?>
-                <li class="item-0"><span>Тех. присоединение</span></li>
+                <li class="item-0"><?= Html::a('Тех. присоединение', ['inner/information-teh-add'], ['class' => 'ploader']) ?></li>
                 <li class="item-1"><?=Html::a('Перейти к оплате', ['main/arrear', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-2"><?=Html::a('Передать показания', ['main/indication', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-3"><?=Html::a('Счета', ['main/invoice', 'uid' => $contract['UID']], ['class' => 'ploader']) ?></li>

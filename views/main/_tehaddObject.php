@@ -22,6 +22,7 @@ $seriesArr = [];
                 echo '<div class="info gray">' . $app['FullName'] . ' - ' . $app['Status'] . '</div>';
             }
         } ?>
+        <div class="company">Сетевая организация <a href="https://www.rgmek.ru/business-clients/contracts.html" target="_blank"><?=$object['Application']['NetworkOrganization']?></a></div>
     </div>
     <div class="objects-body" style="display: <?= ($one) ? 'block' : 'none' ?>;">
         <div class="sub-objects-items collapse-items">

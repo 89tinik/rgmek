@@ -92,6 +92,9 @@ class InnerController extends Controller
     public function actionPayFail(){
         return $this->render('payFail');
     }
+    public function actionInformationTehAdd(){
+        return $this->render('informationTehAdd');
+    }
 
     public function actionDownloadReceipt()
     {
