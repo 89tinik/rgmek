@@ -202,8 +202,9 @@ class MainController extends Controller
 
             $options=[];
             if($data['print'] == 'true'){
-                $options=['inline' => true, 'mimeType' => 'application/pdf'];
+                $options=['inline' => true];
             }
+            $options['mimeType'] = 'application/pdf';
 
             return \Yii::$app->response->sendContentAsFile(file_get_contents($fileInfo['success']['URL']), $fileInfo['success']['Name'], $options);
 

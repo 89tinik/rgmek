@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 ?>
 <tr <?php if (empty($doc['Path'])) echo 'class="dis"' ?>>
-    <td><?php if (!empty($doc['Date'])) echo $doc['Date'] ?></td>
+    <td><?php if (!empty($doc['Date'])) {echo $doc['Date'];} else {echo 'Не размещён';} ?></td>
     <td class="name"><?= $doc['Name'] ?></td>
     
     <td>

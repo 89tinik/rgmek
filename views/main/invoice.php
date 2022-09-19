@@ -84,7 +84,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                 ], ['class' => 'btn small right border print', 'target' => '_blank']) ?>
                                 <?= Html::a('Скачать', [
                                     'main/access-file',
-                                    'print' => 'true',
+                                    'print' => 'false',
                                     'action' => 'download_report_detal',
                                     'uid' => \Yii::$app->request->get('uid'),
                                     'withdate' => $withDate,
