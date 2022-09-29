@@ -4049,7 +4049,7 @@ display:block;
 
 
 /*ivanov start*/
-
+.btn.download-mobile{display:none;}
 	/*history start*/
 		h1.object-name-history {
 		  line-height: 100%;
@@ -4180,10 +4180,11 @@ display:block;
 	/*indication end*/
 
 
-    /*print hide mobile*/
-        @media screen and (max-width: 600px) {
-            .btn.print{display:none;}   
-        }
+/*print hide mobile*/
+@media screen and (max-width: 600px) {
+  .btn.print,.btn.download{display:none;}
+  .btn.download-mobile{display:block;}
+}
     /*print hide mobile END*/
     
     /*tehadd start*/

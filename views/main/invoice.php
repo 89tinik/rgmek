@@ -82,6 +82,15 @@ $this->title = 'Счета |  ЛК РГМЭК';
                                     'withdate' => $withDate,
                                     'bydate' => $byDate
                                 ], ['class' => 'btn small right border print', 'target' => '_blank']) ?>
+                                <?= Html::a('скачать с сервера', [
+                                    'main/access-file',
+                                    'uploadWithServer' => 'true',
+                                    'print' => 'true',
+                                    'action' => 'download_report_detal',
+                                    'uid' => \Yii::$app->request->get('uid'),
+                                    'withdate' => $withDate,
+                                    'bydate' => $byDate
+                                ], ['class' => 'btn small right border download-mobile', 'target' => '_blank']) ?>
                                 <?= Html::a('Скачать', [
                                     'main/access-file',
                                     'print' => 'false',

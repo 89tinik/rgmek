@@ -200,14 +200,19 @@ class MainController extends Controller
                 throw new HttpException(403, 'Доступ запрещён');
             }
 
-            $options=[];
-            if($data['print'] == 'true'){
-                $options=['inline' => true];
+            if ($data['uploadWithServer'] == true){
+                $file_name = time() . \Yii::$app->user->identity->id . '_' . $fileInfo['success']['Name'];
+                if ($this->savePdfToServer($fileInfo['success']['URL'], $file_name)){
+                    return $this->redirect(Url::home(true).'web/temp_pdf/'.$file_name, 301);
+                }
+            } else {
+                $options = [];
+                if ($data['print'] == 'true') {
+                    $options = ['inline' => true];
+                }
+                $options['mimeType'] = 'application/pdf';
+                return \Yii::$app->response->sendContentAsFile(file_get_contents($fileInfo['success']['URL']), $fileInfo['success']['Name'], $options);
             }
-            $options['mimeType'] = 'application/pdf';
-
-            return \Yii::$app->response->sendContentAsFile(file_get_contents($fileInfo['success']['URL']), $fileInfo['success']['Name'], $options);
-
             //return $this->redirect($invoiceInfo['success']['URL'], 301);
         } else {
             return $fileInfo['error'];
@@ -516,6 +521,17 @@ private function decodingToDocSave ($base_64, $file_name){
         fwrite ($doc,$doc_decoded);
 //close output file
         fclose ($doc);
+        return true;
+    }
+
+    private function savePdfToServer ($url, $file_name){
+        $ch = curl_init($url);
+        $fp = fopen ('temp_pdf/'.$file_name,'wb');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
         return true;
     }
 }
