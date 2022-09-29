@@ -429,17 +429,24 @@ class MainController extends Controller
     }
     
     public function actionTehadd (){
-        $data = [
-            'uidcontracts' => \Yii::$app->request->get('uid')
-        ];
-        $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/applications_list/technological', $data);
-        if (isset($objectsData['success'])){
-            return $this->render('tehadd', [
-                'objectsData' => $objectsData['success']
-            ]);
+        if (\Yii::$app->request->get('empty') == 1){
+            $outputArr = [
+                'empty' => true
+            ];
         } else {
-            return $objectsData['error'];
+            $data = [
+                'uidcontracts' => \Yii::$app->request->get('uid')
+            ];
+            $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/applications_list/technological', $data);
+            if (isset($objectsData['success'])){
+                $outputArr = [
+                    'objectsData' => $objectsData['success']
+                ];
+            } else {
+                return $objectsData['error'];
+            }
         }
+        return $this->render('tehadd', $outputArr);
     }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){

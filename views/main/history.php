@@ -65,7 +65,7 @@ $this->title = 'История показаний |  ЛК РГМЭК';
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<h1 class="object-name-history"><?= $result['FullName'] ?></h1>
+<h1 class="object-name-history" style="font-size:24px;"><?= $result['FullName'] ?></h1>
 <?php
 if (!empty($result['CalculationAlgorithm'])) {
     echo '<h3 class="colculation-history">' . $result['CalculationAlgorithm'] . '</h3>';

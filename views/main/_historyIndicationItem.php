@@ -10,9 +10,9 @@ use yii\helpers\Html;
 ?>
 
 <div class="objects-item wrap-object history-wrap <?= ($currentTU == $pu['UIDTU']) ? 'open' : '' ?>">
-    <div class="objects-head">
+    <div class="objects-head" style="margin:0;">
         <!--div class="subname">3 прибора учета</div-->
-        <div class="name"><a href="#"><?= $pu['FullName'] ?></a></div>
+        <div class="name"><a href="#"><?= $pu['FullName'] ?></a></div><br><br>
         <div class="date-install"><b>Дата установки: <?= $pu['InstallationDate'] ?></b></div>
         <div class="info"><?= $pu['Purpose'] ?></div>
         <div class="info blue"><?= $pu['KTTName'] ?></div>

@@ -22,7 +22,7 @@ $seriesArr = [];
                 echo '<div class="info gray">' . $app['FullName'] . ' - ' . $app['Status'] . '</div>';
             }
         } ?>
-        <div class="company">Сетевая организация <a href="https://www.rgmek.ru/business-clients/contracts.html" target="_blank"><?=$object['Application']['NetworkOrganization']?></a></div>
+        <div class="company">Сетевая организация <a href="https://www.rgmek.ru/business-clients/contracts.html#ankor-3" target="_blank"><?=$object['Application']['NetworkOrganization']?></a></div>
     </div>
     <div class="objects-body" style="display: <?= ($one) ? 'block' : 'none' ?>;">
         <div class="sub-objects-items collapse-items">
@@ -55,17 +55,19 @@ $seriesArr = [];
                 </tbody>
             </table>
 
-            <p>Скачайте документ, подпишите своей электронно-цифровой подписью, направьте нам одним из способов:</p>
+            <p>Скачайте документ, добавьте свою электронно-цифровую подпись и направьте нам одним из способов:</p>
             
             <div class="leftright">
                 <ul>
                     <li>через сервис «<?= Html::a('Написать обращение', ['inner/fos', 'tehadd' => 'true'], ['class' => 'ploader ']) ?>» Личного кабинета;</li>
                     <li>посредством электронного документооборота СБИС, Диадок.</li>
                 </ul>
+                <div style="clear:both;" class="dnone"></div>
                 <?= Html::a('Направить подписанный документ', ['inner/fos', 'tehadd' => 'true'], ['class' => 'ploader docSend']) ?>
-                <a href="#popap-info-tehadd" data-fancybox class="popup btn small border">?</a>
+                <a href="#popap-info-tehadd" data-fancybox class="popup btn small border papp-tehadd">?</a>
             </div>
             <div style="clear:both;"></div>
+            
             <p>Также подписанный договор (соглашение) в бумажном виде можно вернуть по адресу: г. Рязань, ул.
                 Радищева, д. 61, каб. 1</p>
             <p>Договор (соглашение) считается заключенным с даты составления акта об осуществлении технологического

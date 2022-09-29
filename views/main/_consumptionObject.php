@@ -31,6 +31,8 @@ $seriesArr = [];
         <!--        <div class="info blue">--><? //= $pu['KTTName'] ?><!--</div>-->
     </div>
     
+    <div style="clear:both;"></div>
+    
     
     <?php if (isset($object['Line'])) { ?>
         <div class="objects-body" style="display:<?= ($open) ? 'block' : 'none' ?>">
@@ -161,6 +163,8 @@ $seriesArr = [];
             $this->registerJs($js);
 
             ?>
+            
+
             <div class="invoice-chart">
                 <figure class="highcharts-figure">
                     <div id="container<?= $i ?>"></div>
@@ -178,9 +182,10 @@ $seriesArr = [];
             <?php if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
                 <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные
                     системы учёта</a>
-                <?= Html::a('История показаний', ['main/history', 'uidtu' => 'тутнепонятно', 'uidobject' => $object['UIDObject'], 'uid' => \Yii::$app->request->get('uid')], ['class' => 'small btn right ploader', 'data-uidcontract' => $UIDContract]) ?>
-
+                
             <?php endif; ?>
+            <?= Html::a('История показаний', ['main/history', 'uidtu' => '0', 'uidobject' => $object['UIDObject'], 'uid' => \Yii::$app->request->get('uid')], ['class' => 'small btn right ploader', 'data-uidcontract' => $UIDContract]) ?>
+
         </div>
     <?php } ?>
 </div>

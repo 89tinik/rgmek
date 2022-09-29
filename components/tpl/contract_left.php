@@ -21,7 +21,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
     <?php if (empty($contract['status'])):?>
     
     <ul>
-        <li><?= Html::a('Технологическое присоединение', ['inner/information-teh-add'], ['class' => 'ploader']) ?></li>
+        <li><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid'], 'empty' => 1], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
@@ -32,7 +32,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <div class="title">Выбрать действие</div>
         <div class="close">Закрыть</div>
         <div class="bts">
-            <div class="btn full small border white"><?= Html::a('Технологическое присоединение', ['inner/information-teh-add'], ['class' => 'ploader']) ?></div>
+            <div class="btn full small border white"><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid'], 'empty' => 1], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>

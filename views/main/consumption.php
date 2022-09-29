@@ -15,37 +15,61 @@ $chartYarsDataArr = [];
 $seriesArr = [];
 ?>
 <style>
-.invoice-table.consumption tr th{
-	text-align:left;
+
+.invoice-table {
+    margin-bottom: 40px;
+    height: 360px;
+    overflow-y: scroll;
 }
-.invoice-table.consumption table td .price{
-	font-size:14px;
-}
-.consumption .jq-selectbox__select-text{ 
-	font-size:14px;
-}
-.consumption label{
-    padding-left:0;
-}
-a.btn.small.colculation-popup-link{
-    margin-top:0;
-}
-.payment-filter.consumption{
-    max-width:100%;
-}
-@media screen and (max-width: 1200px){
-    .invoice-table.consumption table tr td:last-child{
-        clear:unset;
-        width:auto;
-    } 
-    .invoice-table.consumption table tr td{
-        text-align:left;
-        float:left;
-    } 
-    .invoice-table.consumption.month table tr td{
-        width:33%;
-    } 
-}
+
+                .invoice-chart figure{
+                    margin:0;
+                }
+                .highcharts-figure div{
+                    overflow:visible;
+                    width:100% !important;
+                }
+    .invoice-table.consumption tr th {
+        text-align: left;
+    }
+
+    .invoice-table.consumption table td .price {
+        font-size: 14px;
+    }
+
+    .consumption .jq-selectbox__select-text {
+        font-size: 14px;
+    }
+
+    .consumption label {
+        padding-left: 0;
+    }
+
+    a.btn.small.colculation-popup-link {
+        margin-top: 0;
+    }
+
+    .payment-filter.consumption {
+        max-width: 100%;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .invoice-table.consumption table tr td:last-child {
+            clear: unset;
+            width: auto;
+        }
+
+        .invoice-table.consumption table tr td {
+            text-align: left;
+            float: left;
+        }
+
+        .invoice-table.consumption.month table tr td {
+            width: 33%;
+        }
+    }
+    
+
 </style>
 <div class="page-heading">
     <div class="breadcrumbs">
@@ -55,10 +79,25 @@ a.btn.small.colculation-popup-link{
 </div>
 <!---->
 <div class="arrear-left top-chart border-box">
-
+<?php
+if (isset($objectsData['Total']['Line'])) {
+    if (isset($objectsData['Total']['Line']['Date'])) {
+$all = $objectsData['Total']['Line']['Volume'];
+    } else {
+        $all = 0;
+        
+        foreach ($objectsData['Total']['Line'] as $arr) {
+            $all += $arr['Volume'];
+        }
+    }
+    $all = number_format($all, 0, ',', ' ');
+}
+?>
     <figure class="highcharts-figure">
         <div id="container"></div>
     </figure>
+    <h4 style="padding:0 35px;color:#111;">Всего по договору:<br> за период с <?= $model->withdate ?> по <?= $model->bydate ?> — <span style="font-weight:bold;color:#4475F2;font-size:16px;font-style:italic;"><?=$all?> кВт ч</span></h4>
+    
 </div>
 
 
@@ -67,42 +106,42 @@ a.btn.small.colculation-popup-link{
         <div class="invoice-table consumption">
             <table>
                 <tbody>
-                 <tr>
-                     <td>Месяц</td>
-                     <td>Расход, кВт ч</td>
-                 </tr>   
-                    
-                    
+                <tr>
+                    <td>Месяц</td>
+                    <td>Расход, кВт ч</td>
+                </tr>
+
+
                 <?php
                 if (isset($objectsData['Total']['Line'])) {
                     if (isset($objectsData['Total']['Line']['Date'])) {
                         $dateArr = explode('.', $objectsData['Total']['Line']['Date']);
                         $chartDataArr[intval($dateArr['1'])] = $objectsData['Total']['Line']['Volume'];
-                        $seriesArr[] = "{name: '".$objectsData['Total']['Line']['Year']."', data: [".implode(',', $chartDataArr)."]}";
+                        $seriesArr[] = "{name: '" . $objectsData['Total']['Line']['Year'] . "', data: [" . implode(',', $chartDataArr) . "]}";
                         echo $this->render('_consumptionTop', [
-                            'month' => ['Month'=>$objectsData['Total']['Line']['Month'], 'Year'=> [$objectsData['Total']['Line']['Year']], 'Volume'=>[$objectsData['Total']['Line']['Volume']]]
+                            'month' => ['Month' => $objectsData['Total']['Line']['Month'], 'Year' => [$objectsData['Total']['Line']['Year']], 'Volume' => [$objectsData['Total']['Line']['Volume']]]
                         ]);
                     } else {
-                        $tableDataArr = array_fill(1, 12, ['Month'=>'', 'Year'=> [], 'Volume'=>[]]);
+                        $tableDataArr = array_fill(1, 12, ['Month' => '', 'Year' => [], 'Volume' => []]);
                         $currentYear = $objectsData['Total']['Line'][0]['Year'];
                         foreach ($objectsData['Total']['Line'] as $arr) {
                             if ($currentYear != $arr['Year']) {
-                                $seriesArr[] = "{name: '".$currentYear."', data: [".implode(',', $chartDataArr)."]}";
+                                $seriesArr[] = "{name: '" . $currentYear . "', data: [" . implode(',', $chartDataArr) . "]}";
                                 $chartDataArr = array_fill(1, 12, 0);
                                 $currentYear = $arr['Year'];
                             }
                             $dateArr = explode('.', $arr['Date']);
                             $chartDataArr[intval($dateArr['1'])] = $arr['Volume'];
-                            $tableDataArr[intval($dateArr['1'])]['Month']= $arr['Month'];
-                            $tableDataArr[intval($dateArr['1'])]['Year'][]= $arr['Year'];
-                            $tableDataArr[intval($dateArr['1'])]['Volume'][]= $arr['Volume'];
+                            $tableDataArr[intval($dateArr['1'])]['Month'] = $arr['Month'];
+                            $tableDataArr[intval($dateArr['1'])]['Year'][] = $arr['Year'];
+                            $tableDataArr[intval($dateArr['1'])]['Volume'][] = $arr['Volume'];
                         }
-                        $seriesArr[] = "{name: '".$currentYear."', data: [".implode(',', $chartDataArr)."]}";
+                        $seriesArr[] = "{name: '" . $currentYear . "', data: [" . implode(',', $chartDataArr) . "]}";
                     }
 
-                    if (isset($tableDataArr)){
-                        foreach($tableDataArr as $month){
-                            if (!empty($month['Month'])){
+                    if (isset($tableDataArr)) {
+                        foreach ($tableDataArr as $month) {
+                            if (!empty($month['Month'])) {
                                 echo $this->render('_consumptionTop', [
                                     'month' => $month
                                 ]);
@@ -215,8 +254,8 @@ $this->registerJs($js);
     <?= $form->field($model, 'uid', ['template' => '{input}'])->hiddenInput(); ?>
     <?php
     $objectOptionArr = [];
-    if (isset($objectsData['Objects'])){
-        if (isset($objectsData['Objects']['Line']['UIDObject'])){
+    if (isset($objectsData['Objects'])) {
+        if (isset($objectsData['Objects']['Line']['UIDObject'])) {
             $objectOptionArr[$objectsData['Objects']['Line']['UIDObject']] = $objectsData['Objects']['Line']['FullName'];
         } else {
             foreach ($objectsData['Objects']['Line'] as $object) {
@@ -249,31 +288,31 @@ $this->registerJs($js);
 
 <?php
 if (isset($objectsData['Object'])) {
-    $i=1;
-        if (isset($objectsData['Object']['FullName'])) {
-            if (empty($model->uidobject) || $model->uidobject == $objectsData['Object']['UIDObject']) {
+    $i = 1;
+    if (isset($objectsData['Object']['FullName'])) {
+        if (empty($model->uidobject) || $model->uidobject == $objectsData['Object']['UIDObject']) {
+            echo $this->render('_consumptionObject', [
+                'object' => $objectsData['Object'],
+                'i' => $i,
+                'tooltip' => $tooltip,
+                'xMonth' => $xMonth,
+                'open' => $model->uidobject == $objectsData['Object']['UIDObject']
+            ]);
+        }
+    } else {
+        foreach ($objectsData['Object'] as $arr) {
+            if (empty($model->uidobject) || $model->uidobject == $arr['UIDObject']) {
                 echo $this->render('_consumptionObject', [
-                    'object' => $objectsData['Object'],
+                    'object' => $arr,
                     'i' => $i,
                     'tooltip' => $tooltip,
                     'xMonth' => $xMonth,
-                    'open' => $model->uidobject == $objectsData['Object']['UIDObject']
+                    'open' => $model->uidobject == $arr['UIDObject']
                 ]);
             }
-        } else {
-            foreach ($objectsData['Object'] as $arr) {
-                if (empty($model->uidobject) || $model->uidobject == $arr['UIDObject']) {
-                    echo $this->render('_consumptionObject', [
-                        'object' => $arr,
-                        'i' => $i,
-                        'tooltip' => $tooltip,
-                        'xMonth' => $xMonth,
-                        'open' => $model->uidobject == $arr['UIDObject']
-                    ]);
-                }
-                $i++;
-            }
+            $i++;
         }
+    }
     if ($i > 10 && empty($model->uidobject)) echo '<div class="wrap-paginate"><a href="#" class="btn more">Показать все</a></div>';
 }
 //?>

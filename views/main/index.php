@@ -75,8 +75,8 @@ $this->title = 'Главная | ЛК РГМЭК';
     }
     ?>
 </div>
-<div style="margin-top:500px;">
+<!--<div style="margin-top:500px;">
     <?php
     print_r(getallheaders());
     ?>
-</div>
+</div>-->
