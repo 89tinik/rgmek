@@ -19,7 +19,8 @@ use yii\helpers\Html;
         <!--a href="#" class="btn small border right">Просмотр</a-->
         <div class="bts">
             <?=Html::a('Печать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'true', 'action'=>$action],['class'=>'btn small border right print', 'target'=>'_blank'])?>
-            <?=Html::a('Скачать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'false', 'action'=>$action],['class'=>'btn small border right', 'target'=>'_blank'])?>
+            <?=Html::a('Скачать', ['main/access-file', 'uid'=>$pack['UID'], 'print' => 'false', 'action'=>$action],['class'=>'btn small border right download', 'target'=>'_blank'])?>
+            <?=Html::a('Скачать', ['main/access-file', 'uid'=>$pack['UID'], 'uploadWithServer' => 'true', 'print' => 'true', 'action'=>$action],['class'=>'btn small border right download-mobile', 'target'=>'_blank'])?>
 
         </div>
     </td>

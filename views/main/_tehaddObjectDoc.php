@@ -22,6 +22,15 @@ use yii\helpers\Html;
                 'path' => $doc['Path'],
                 'name' => $doc['Name']
             ], ['class' => 'btn full', 'target' => '_blank']);
+            echo Html::a('Скачать', [
+                'main/access-tehadd-file',
+                'print' => 'true',
+                'uploadWithServer' => 'true',
+                'action' => 'download_report_consumption',
+                'uid' => \Yii::$app->request->get('uid'),
+                'path' => $doc['Path'],
+                'name' => $doc['Name']
+            ], ['class' => 'btn full download-mobile', 'target' => '_blank']);
         } else {
             echo '<button class="btn full disable">Скачать</button>';
         }

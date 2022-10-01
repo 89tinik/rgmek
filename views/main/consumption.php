@@ -327,6 +327,15 @@ if (isset($objectsData['Object'])) {
         'withdate' => $model->withdate,
         'bydate' => $model->bydate
     ], ['class' => 'btn small  download', 'target' => '_blank']) ?>
+    <?= Html::a('Скачать', [
+        'main/access-history-file',
+        'print' => 'true',
+        'uploadWithServer' => 'true',
+        'action' => 'download_report_consumption',
+        'uid' => $model->uid,
+        'withdate' => $model->withdate,
+        'bydate' => $model->bydate
+    ], ['class' => 'btn small  download download-mobile', 'target' => '_blank']) ?>
     <?= Html::a('Печать', [
         'main/access-history-file',
         'print' => 'true',

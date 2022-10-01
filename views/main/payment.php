@@ -82,6 +82,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
                 <!--a href="#" class="btn small border">Просмотр</a-->
                 <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right border print', 'target'=>'_blank'])?>
                 <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_report_detal'],['class'=>'btn small right border download', 'target'=>'_blank'])?>
+                <?=Html::a('Скачать', ['main/access-file', 'uploadWithServer' => 'true', 'print' => 'true', 'action'=>'download_report_detal'],['class'=>'btn small right border download download-mobile', 'target'=>'_blank'])?>
                 <div class="clear"></div>
             </div>
         </div>
@@ -92,6 +93,7 @@ $this->title = 'Начисление и платежи |  ЛК РГМЭК';
                 <!--a href="#" class="btn small border">Просмотр</a-->
                 <?=Html::a('Печать', ['main/access-file', 'print' => 'true', 'action'=>'download_counting'],['class'=>'btn small right print', 'target'=>'_blank'])?>
                 <?=Html::a('Скачать', ['main/access-file', 'print' => 'false', 'action'=>'download_counting'],['class'=>'btn small right download', 'target'=>'_blank'])?>
+                <?=Html::a('Скачать', ['main/access-file', 'uploadWithServer' => 'true', 'print' => 'true', 'action'=>'download_counting'],['class'=>'btn small right download download-mobile', 'target'=>'_blank'])?>
                 <div class="clear"></div>
             </div>
         </div>

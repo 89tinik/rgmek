@@ -108,5 +108,15 @@ if (isset($result['PU'])) {
             'withdate' => $model->withdate,
             'bydate' => $model->bydate
         ], ['class' => 'btn small right download', 'target' => '_blank']) ?>
+        <?= Html::a('Скачать', [
+            'main/access-history-file',
+            'print' => 'true',
+            'uploadWithServer' => 'true',
+            'action' => 'download_history_ind',
+            'uidtu' => $model->uidtu,
+            'uidobject' => $model->uidobject,
+            'withdate' => $model->withdate,
+            'bydate' => $model->bydate
+        ], ['class' => 'btn small right download download-mobile', 'target' => '_blank']) ?>
     </div>
 <?php } ?>
