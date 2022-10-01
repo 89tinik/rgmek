@@ -87,7 +87,9 @@ $all = $objectsData['Total']['Line']['Volume'];
         $all = 0;
         
         foreach ($objectsData['Total']['Line'] as $arr) {
-            $all += $arr['Volume'];
+            if (!empty($arr['Volume'])){
+                $all += $arr['Volume'];
+            }
         }
     }
     $all = number_format($all, 0, ',', ' ');
