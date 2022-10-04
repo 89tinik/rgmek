@@ -274,6 +274,26 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 $this->with_date = $result['Withdate'];
                 $this->by_date = $result['Bydate'];
                 $this->full_name = $result['Name'];
+                //FOR PUSH
+                $headersArr = getallheaders();
+                if (isset($headersArr['Userid']) && !empty($headersArr['Userid'])){
+                    $oldUserIdArr = explode(',', $this->playersid);
+                    if (!in_array($headersArr['Userid'], $oldUserIdArr)){
+                        $oldUserIdArr[] = $headersArr['Userid'];
+                        $this->playersid = implode(',', $oldUserIdArr);
+                    }
+                    $response = $contracts->createRequest()
+                        ->setMethod('POST')
+                        ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/add_ids_push')
+                        ->setData([
+                            'id' => $this->id_db,
+                            'ids_push' => $headersArr['Userid']
+                        ])
+                        ->send();
+                    if (!$response->isOk) {
+                        Yii::error('Не удалось передать userID для push - повторите авторизацию позже.');
+                    }
+                }
                 $this->save();
             } else {
                 Contract::removeAllUserContract($this->id);
