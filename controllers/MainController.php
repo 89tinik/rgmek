@@ -65,6 +65,13 @@ class MainController extends Controller
 
     public function actionIndex()
     {
+        //FOR PUSH
+        $headersArr = getallheaders();
+        if (isset($headersArr['Userid']) && !empty($headersArr['Userid'])){
+            $user = User::findOne(\Yii::$app->user->identity->id);
+            $user->setPushId($headersArr['Userid']);
+        }
+
         $this->withDate = \Yii::$app->user->identity->with_date;
         $this->byDate = \Yii::$app->user->identity->by_date;
 
