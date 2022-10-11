@@ -180,11 +180,15 @@ $seriesArr = [];
                 <span><?= ($open) ? 'Свернуть' : 'Развернуть' ?></span>
             </a>
             <?php if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
-                <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные
-                    системы учёта</a>
-                
+                <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные системы учёта</a>    
             <?php endif; ?>
-            <?= Html::a('История показаний', ['main/history', 'uidtu' => '0', 'uidobject' => $object['UIDObject'], 'uid' => \Yii::$app->request->get('uid')], ['class' => 'small btn right ploader', 'data-uidcontract' => $UIDContract]) ?>
+			
+			<?php if ($object['StatusObject'] == 'Действующий'): ?>
+               <?=Html::a('История показаний', ['main/history', 'uidtu' => '0', 'uidobject' => $object['UIDObject'], 'uid' => \Yii::$app->request->get('uid')], ['class' => 'small btn right ploader', 'data-uidcontract' => $UIDContract])  
+                ?>
+            <?php endif; ?>
+
+            
 
         </div>
     <?php } ?>
