@@ -4182,7 +4182,7 @@ display:block;
 
 /*print hide mobile*/
 @media screen and (max-width: 600px) {
-  .btn.print,.btn.download{display:none;}
+  .btn.print,.btn.download, .btn.download-zip{display:none;}
   .btn.download-mobile{display:block;}
 }
     /*print hide mobile END*/

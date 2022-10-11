@@ -264,7 +264,13 @@ class MainController extends Controller
             if (isset($responseArr['Error'])){
                 return $responseArr['Error']['Message'];
             } else {
-                return \Yii::$app->response->sendContentAsFile(base64_decode ($responseArr['File']), $responseArr['Name'].'.'.$responseArr['Extension']);
+                if ($data['uploadWithServer'] == true){
+                    if ($file_name = $this->decodingToDocSave($responseArr['File'], str_replace('/', '-',$responseArr['Name'] . '.' . $responseArr['Extension']))){
+                        return $this->redirect(Url::home(true).'web/'.$file_name, 301);
+                    }
+                } else {
+                    return \Yii::$app->response->sendContentAsFile(base64_decode($responseArr['File']), $responseArr['Name'] . '.' . $responseArr['Extension']);
+                }
             }
         } else {
             return 'Не удалось связаться БД - повторите попытку позже.';
@@ -521,13 +527,14 @@ class MainController extends Controller
 //    }
 //
 private function decodingToDocSave ($base_64, $file_name){
-        $doc_decoded = base64_decode ($base_64);
+    $file_name = 'temp_pdf/'.time() . \Yii::$app->user->identity->id . '_' . $file_name;
+    $doc_decoded = base64_decode ($base_64);
 //Write data back to pdf file
-        $doc = fopen ('temp_edo/'.$file_name,'w');
-        fwrite ($doc,$doc_decoded);
+    $doc = fopen ($file_name,'w');
+    fwrite ($doc,$doc_decoded);
 //close output file
-        fclose ($doc);
-        return true;
+    fclose ($doc);
+    return $file_name;
     }
 
     private function savePdfToServer ($url, $file_name){

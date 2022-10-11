@@ -21,7 +21,7 @@ use yii\helpers\Html;
                 'uid' => \Yii::$app->request->get('uid'),
                 'path' => $doc['Path'],
                 'name' => $doc['Name']
-            ], ['class' => 'btn full', 'target' => '_blank']);
+            ], ['class' => 'btn full download-zip', 'target' => '_blank']);
             echo Html::a('Скачать', [
                 'main/access-tehadd-file',
                 'print' => 'true',
