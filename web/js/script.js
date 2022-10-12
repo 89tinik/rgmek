@@ -508,6 +508,7 @@ if ($('#receiptform-penalty').length > 0){
 
 				$('.detail-report-wrap a.print').attr('href', $('.detail-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 				$('.detail-report-wrap a.download').attr('href', $('.detail-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
+				$('.detail-report-wrap a.download-mobile').attr('href', $('.detail-report-wrap a.download-mobile').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 
 				$('.report-item').hide();
 				$('.detail-report-wrap').show();
@@ -539,6 +540,7 @@ if ($('#receiptform-penalty').length > 0){
 
 				$('.odn-report-wrap a.print').attr('href', $('.odn-report-wrap a.print').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 				$('.odn-report-wrap a.download').attr('href', $('.odn-report-wrap a.download').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
+				$('.odn-report-wrap a.download-mobile').attr('href', $('.odn-report-wrap a.download-mobile').attr('href')+'&uid=' + uid + '&withdate=' + dateFrom + '&bydate=' + dateTo);
 
 				$('.report-item').hide();
 				$('.odn-report-wrap').show();

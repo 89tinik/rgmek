@@ -4182,8 +4182,8 @@ display:block;
 
 /*print hide mobile*/
 @media screen and (max-width: 600px) {
-  .btn.print,.btn.download, .btn.download-zip{display:none;}
-  .btn.download-mobile{display:block;}
+  .btn.print,.payment-item .payment-info .btn.print,.btn.download, .payment-item .payment-info .btn.download, .btn.download-zip{display:none;}
+  .payment-item .payment-info .btn.download.download-mobile, .btn.download-mobile{display:block;}
 }
     /*print hide mobile END*/
     
