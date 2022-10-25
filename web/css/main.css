@@ -3031,6 +3031,9 @@ td .colculation-popup {
 .sidebar-mobile-popup .dis.btn.border:hover{
   background: none;
 }
+.preloader .message{
+  display: none;
+}
 /*ENDtin*/
 .checkbox-ios {
   display: inline-block;

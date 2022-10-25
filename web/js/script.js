@@ -449,6 +449,12 @@ if ($('#receiptform-penalty').length > 0){
 	function ajaxPreloaderOn(){
 		$('.preloader').css({'display':'block', 'opacity':'0.5'});
 		$('.preloader .spinner').css('display', 'inline-block');
+		setTimeout(function(){
+			if ($('.preloader').is(':visible')) {
+				$('.preloader').css({'opacity':'1'});
+				$('.preloader .message').css('display', 'block');
+			}
+		}, 60000);
 	}
 	//скрыть прелоадер
 	function ajaxPreloaderOff() {
@@ -456,7 +462,13 @@ if ($('#receiptform-penalty').length > 0){
 		preload.find('.spinner').fadeOut(function(){
 			preload.fadeOut(500);
 		});
+		$('.preloader .message').css('display', 'none');
 	}
+	//скрыть прелоадер по клику на кнопку по истечению таймаута
+	$('.spiner-close').on('click', function(){
+		ajaxPreloaderOff();
+		return false;
+	});
 	//доступные отчеты в разделе НАЧИСЛЕНИЯ И ПЛАТЕЖИ
 	if ($('.sidebar-menu-fw a.active').attr('data-odn') != 'true' && $('.type-order option[value=odn]').length){
 		$('.type-order option[value=odn]').attr('disabled', 'disabled');

@@ -45,6 +45,7 @@ AdminAssets::register($this);
                 <div class="centrize full-width">
                     <div class="vertical-center">
                         <div class="spinner"></div>
+                        <div class="message"><h3>Не удалось связаться с базой данных, попробуйте позже</h3><a href="#" class="spiner-close btn">Отмена</a></div>
                     </div>
                 </div>
             </div>
