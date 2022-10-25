@@ -919,6 +919,7 @@ if ($('#receiptform-penalty').length > 0){
 		Popups
 	**/
 	$('.overlay, .mobile-popup .close, .popup-box .close').on('click', function(){
+	    $('.sidebar-menu-fw').css('overflow', 'scroll');
 		$(this).closest('.popup-box').fadeOut();
 		$('.overlay').fadeOut(250);
 		return false;
@@ -926,12 +927,14 @@ if ($('#receiptform-penalty').length > 0){
 
 	if(width < 1200) {
 	$('.sidebar-menu ul li a').on('click', function(){
+	    $('.sidebar-menu-fw').css('overflow', 'visible');
 		$('.popup-box.sidebar-mobile-popup').fadeOut();
 		$(this).closest('li').find('.popup-box.sidebar-mobile-popup').fadeIn();
 		$('.overlay').fadeIn(250);
 		//return false; не работаю переходы по ссылкам
 	});
 	}
+	
 
 	/**
 		Form Anketa 1

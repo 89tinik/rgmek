@@ -803,6 +803,9 @@ a.lnk, .lnk {
         -o-transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1);
         transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1);
         -webkit-transition: all 0.4s cubic-bezier(0.3, 0, 0.3, 1); }
+        
+        
+        
         .sidebar-menu .sidebar-menu-fw ul li a span {
           display: block;
           font-size: 12px;
@@ -3485,7 +3488,7 @@ td .colculation-popup {
     font-size: 16px;
     line-height: 24px; }
   .info-table .table {
-    overflow: auto; }
+    overflow-x: scroll; }
   .info-table .table table {
     width: 580px; }
   .info-table .table table td {
@@ -4272,5 +4275,19 @@ display:block;
                 
 
             /*tehadd end*/
+            
+            @media screen and (max-width: 1200px){
+                .info-table:before{
+                    content: '';
+                    position: fixed;
+                    top: 84%;
+                    right: 0;
+                    width: 42px;
+                    height: 100%;
+                    background:url(images/icon-swipe.svg) no-repeat;
+                    z-index: 2;
+                }
+                .sidebar-menu .sidebar-menu-fw ul li a.ploader {line-height:40px;}
+            }
 
 /*ivanov end*/

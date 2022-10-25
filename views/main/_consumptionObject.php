@@ -182,8 +182,8 @@ $seriesArr = [];
             <?php if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
                 <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные системы учёта</a>    
             <?php endif; ?>
-			
-			<?php if ($object['StatusObject'] == 'Действующий'): ?>
+
+			<?php if ($object['Line'][0]['CalculationMethod'] != 'Норматив' && $object['StatusObject'] == 'Действующий'): ?>
                <?=Html::a('История показаний', ['main/history', 'uidtu' => '0', 'uidobject' => $object['UIDObject'], 'uid' => \Yii::$app->request->get('uid')], ['class' => 'small btn right ploader', 'data-uidcontract' => $UIDContract])  
                 ?>
             <?php endif; ?>

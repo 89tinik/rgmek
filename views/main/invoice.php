@@ -252,7 +252,7 @@ $this->title = 'Счета |  ЛК РГМЭК';
                     'print' => 'true',
                     'action' => 'download_report_detal',
                     'uid' => \Yii::$app->request->get('uid')
-                ], ['class' => 'btn small right border download download-mobile', 'target' => '_blank']) ?>
+                ], ['class' => 'btn small right border download-mobile', 'target' => '_blank']) ?>
                 <div class="clear"></div>
             </div>
         </div>

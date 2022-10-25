@@ -36,7 +36,6 @@ IeAssets::register($this);
     <body>
     <?php $this->beginBody() ?>
     <div class="bg">
-
         <!-- Preloader -->
         <div class="preloader">
             <div class="centrize full-width">

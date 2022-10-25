@@ -10,6 +10,8 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
     $activeClass = '';
 }
 ?>
+
+
 <li>
     <a href="javascript:void(0);"
        class="<?= $activeClass ?>"
@@ -20,7 +22,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
     </a>
     <?php if (empty($contract['status'])):?>
     
-    <ul>
+    <ul class="leftm">
         <li><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['uid'], 'empty' => 1], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Перейти к оплате', ['main/arrear', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Передать показания', ['main/indication', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
