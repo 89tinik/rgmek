@@ -934,11 +934,14 @@ if ($('#receiptform-penalty').length > 0){
 	    $('.sidebar-menu-fw').css('overflow', 'scroll');
 		$(this).closest('.popup-box').fadeOut();
 		$('.overlay').fadeOut(250);
+		$('.hover-mobile').removeClass('hover-mobile');
 		return false;
 	});
 
 	if(width < 1200) {
 	$('.sidebar-menu ul li a').on('click', function(){
+		$('.sidebar-menu ul li a').removeClass('hover-mobile');
+		$(this).addClass('hover-mobile');
 	    $('.sidebar-menu-fw').css('overflow', 'visible');
 		$('.popup-box.sidebar-mobile-popup').fadeOut();
 		$(this).closest('li').find('.popup-box.sidebar-mobile-popup').fadeIn();

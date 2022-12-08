@@ -2783,7 +2783,7 @@ width:40%;
 .testimony-box .cols .col:last-child{
 width:25%;
 }
-.sidebar-menu .sidebar-menu-fw ul li a.active {
+.sidebar-menu .sidebar-menu-fw ul li a.active, .sidebar-menu .sidebar-menu-fw ul li a.hover-mobile {
 background: #4475F2;
 }
 .h-login {

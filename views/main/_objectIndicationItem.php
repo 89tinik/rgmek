@@ -72,14 +72,18 @@ use yii\helpers\Html;
                 </div>
             </div>
             <?php
-        } else {
-            echo '<h2>Приборы учета отсутствуют</h2>';
         }
         ?>
     </div>
     <div class="objects-more">
+        <?php if (isset($object['Expand']['PU'])) { ?>
         <a href="#" class="more-link" data-text-open="Развернуть" data-text-close="Свернуть">
             <span><?=($one)?'Свернуть':'Развернуть'?></span>
         </a>
+            <?php
+        } else {
+            echo '<h2>Приборы учета отсутствуют</h2>';
+        }
+        ?>
     </div>
 </div>
