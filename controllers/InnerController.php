@@ -117,6 +117,16 @@ class InnerController extends Controller
         }
 
     }
+    public function actionError()
+    {
+        $exception = \Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            if ($exception->statusCode == 404)
+                return $this->render('error404', ['exception' => $exception]);
+            else
+                return $this->render('error', ['exception' => $exception]);
+        }
+    }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
         $client = new Client();
@@ -133,7 +143,7 @@ class InnerController extends Controller
                 return ['success' => $response];
             }
         } else {
-            return ['error'=>'Не удалось связаться БД - повторите попытку позже.'];
+            $this->redirect(['err/one-c']);
         }
     }
 }

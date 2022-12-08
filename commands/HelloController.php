@@ -34,6 +34,7 @@ class HelloController extends Controller
         echo $message . "\n";
         return ExitCode::OK;
     }
+
     public function actionUpdate($message = 'hello world')
     {
         echo time() . "\n";
@@ -61,13 +62,35 @@ class HelloController extends Controller
                     Contract::removeAllUserContract($user->id);
                 }
             } else {
-                \Yii::error('Не удалось связаться БД - повторите попытку позже.uid-'.$user->id_db.'\n');
-                echo 'Не удалось связаться БД - повторите попытку позже.uid-'.$user->id_db;
+                \Yii::error('Не удалось связаться БД - повторите попытку позже.uid-' . $user->id_db . '\n');
+                echo 'Не удалось связаться БД - повторите попытку позже.uid-' . $user->id_db;
             }
 
 
         }
         echo time() . "\n";
         return ExitCode::OK;
+    }
+
+    public function actionError1c()
+    {
+        $user = User::find()->one();
+        $contracts = new Client();
+        $response = $contracts->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts')
+            ->setData([
+                'id' => $user->id_db
+            ])
+            ->send();
+        if (!$response->isOk) {
+            \Yii::$app->mailer->compose()
+                ->setFrom('no-reply@rgmek.ru')
+                ->setTo(['it@rgmek.ru', 'lk@rgmek.ru'])
+                ->setSubject('Ошибка связи с 1С!!!')
+                ->setTextBody('Отвалилась 1С в ЛК!.')
+                ->send();
+        }
+
     }
 }

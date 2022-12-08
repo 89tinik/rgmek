@@ -281,7 +281,7 @@ class MainController extends Controller
                 }
             }
         } else {
-            return 'Не удалось связаться БД - повторите попытку позже.';
+            $this->redirect(['err/one-c']);
         }
 //        if (isset($historyInfo['success'])){
 //            if ($historyInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
@@ -481,7 +481,7 @@ class MainController extends Controller
             ->setUrl($url)
             ->setData($data)
             ->send();
-        if ($response->isOk) {
+        if (false) {
             if ($toArray){
                 $xml = new XmlParser();
                 return ['success' => $xml->parse($response)];
@@ -489,7 +489,7 @@ class MainController extends Controller
                 return ['success' => $response];
             }
         } else {
-            return ['error'=>'Не удалось связаться БД - повторите попытку позже.'];
+            $this->redirect(['err/one-c']);
         }
     }
 
