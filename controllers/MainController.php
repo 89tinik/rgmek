@@ -481,7 +481,7 @@ class MainController extends Controller
             ->setUrl($url)
             ->setData($data)
             ->send();
-        if (false) {
+        if ($response->isOk) {
             if ($toArray){
                 $xml = new XmlParser();
                 return ['success' => $xml->parse($response)];
