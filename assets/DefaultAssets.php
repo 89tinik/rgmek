@@ -18,7 +18,7 @@ class DefaultAssets extends AssetBundle
 	'css/form-styler.css',
 	'css/swiper.css',
 	'css/jquery-ui.css',
-	'css/main.css?v=171001'
+	'css/main.css?v=021101'
     ];
     public $js = [
         'js/jquery.formstyler.min.js',
@@ -29,7 +29,7 @@ class DefaultAssets extends AssetBundle
         'js/datepicker-ru.js',
         'js/swiper.min.js',
         'js/Cleave.js',
-        'js/script.js?v=14102',
+        'js/script.js?v=251021',
     ];
     public $depends = [
         'yii\web\YiiAsset',

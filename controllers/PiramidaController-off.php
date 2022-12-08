@@ -14,8 +14,11 @@ class PiramidaController extends Controller
 	{
 		 $post = print_r(Yii::$app->request->getRawBody(), true);
        // $postArr = print_r(simplexml_load_string($post), true);
+        Yii::error('starting \n');
         Yii::error('Это тест пост-' . $post . '\n');
-        Yii::error('Это тест постpostArr-' . $postArr . '\n');
+        Yii::error('Это тест постpostArr1-' . $_POST . '\n');
+        
+        Yii::error('finishing \n');
 		return false;
 	}
     public function actionValidateSession()
@@ -27,9 +30,13 @@ class PiramidaController extends Controller
 //$array = json_decode($json,TRUE);
   //      $postArr = print_r(simplexml_load_string($array), true);
         Yii::error('Это пост-' . $post . '\n');
-        Yii::error('Это постpostArr-' . $array . '\n');
+        Yii::error('Это postArr-' . $array . '\n');
+        $bod = file_get_contents('php://input');
+
+        Yii::error('Это post' . $bod . '\n');
         return \Yii::$app->response->sendContentAsFile(
-            '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+            '<?xml version="1.0" encoding="UTF-8"?>
+            <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
                             <s:Body>
                                 <ValidateSessionResponse xmlns="PyramidExternalAuth">
                                     <ValidateSessionResult>Shlykov</ValidateSessionResult>

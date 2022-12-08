@@ -22,7 +22,10 @@ $this->title = 'Главная | ЛК РГМЭК';
                     <span class="slide" style="background-image: url(images/all.jpg);"></span>
                 </a>
             </div>-->
-                   <div class="swiper-slide">
+            <div class="swiper-slide">
+                    <span class="slide" style="background-image: url(images/pril.jpg);"></span>
+            </div>
+            <div class="swiper-slide">
                     <span class="slide" style="background-image: url(images/history2.jpg);"></span>
             </div>
               <div class="swiper-slide">

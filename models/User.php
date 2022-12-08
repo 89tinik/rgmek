@@ -307,6 +307,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     }
 
+    public function setSessionId(){
+        $this->session_id = \Yii::$app->security->generateRandomString();
+        $this->save();
+    }
+
     public function getContracts(){
         $this->hasMany(Contract::class, ['user_id'=>'id']);
     }

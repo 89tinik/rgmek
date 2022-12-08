@@ -65,13 +65,21 @@ class MainController extends Controller
 
     public function actionIndex()
     {
+        $user = User::findOne(\Yii::$app->user->identity->id);
         //FOR PUSH
         $headersArr = getallheaders();
         if (isset($headersArr['Userid']) && !empty($headersArr['Userid'])){
-            $user = User::findOne(\Yii::$app->user->identity->id);
             $user->setPushId($headersArr['Userid']);
         }
 
+        $user->setSessionId();
+        $authData = [
+            'action'=>'setSession',
+            'login'=>$user->peramida_name,
+            'sessionId'=>$user->session_id
+
+        ];
+        $this->sendToServer('https://auth.rgmek.ru/pub/index.php', $authData, false, 'POST');
         $this->withDate = \Yii::$app->user->identity->with_date;
         $this->byDate = \Yii::$app->user->identity->by_date;
 

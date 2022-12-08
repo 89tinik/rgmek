@@ -14,7 +14,7 @@ $seriesArr = [];
 
 <div class="objects-item wrap-object <?= ($one) ? 'open' : '' ?>">
     <div class="objects-head">
-        <div class="name"><a href="#"><?= $object['Name'] ?></a></div>
+        <div class="name"><a href="#"><?= $object['Name'] ?></a></div><br>
         <?php if (isset($object['Application']['FullName'])) {
             echo '<div class="info">' . $object['Application']['FullName'] . ' - ' . $object['Application']['Status'] .  '</div>';
         } else {

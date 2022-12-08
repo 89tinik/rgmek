@@ -293,6 +293,10 @@ select.styler{
     width: 100%;
     padding: 0 15px;
 }
+
+.preloader .message{
+	display: none;
+}
 /*ENDtin*/
 @media screen and (max-width: 1200px) {
 	.login-fw {
