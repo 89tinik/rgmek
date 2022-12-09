@@ -16,16 +16,16 @@ if (is_numeric($line['Volume'][0])){
     <td>
         <div class="price"><?=implode('/', $line['Volume'])?> <?=(is_numeric($line['Volume'][0])) ? 'кВт ч' : 'кВт ч'?></div>
     </td>
-    <td>
-        <?php if (!empty ($line['CalculationMethod'])):?>
-            <span class="colculation-name"><?=$line['CalculationMethod']?></span>
-                <a class="btn small border colculation-popup-link">?</a>
-                <div class="colculation-popup">
-                    <h3><?=$line['CalculationMethodName']?></h3>
-                    <p><?=$line['CalculationMethodInitialData']?></p>
-                </div>
-        <?php endif; ?>
-    </td>
+<!--    <td>-->
+<!--        --><?php //if (!empty ($line['CalculationMethod'])):?>
+<!--            <span class="colculation-name">--><?php //=$line['CalculationMethod']?><!--</span>-->
+<!--                <a class="btn small border colculation-popup-link">?</a>-->
+<!--                <div class="colculation-popup">-->
+<!--                    <h3>--><?php //=$line['CalculationMethodName']?><!--</h3>-->
+<!--                    <p>--><?php //=$line['CalculationMethodInitialData']?><!--</p>-->
+<!--                </div>-->
+<!--        --><?php //endif; ?>
+<!--    </td>-->
 
 <!--    <td>-->
 <!--        <div class="checkbox-item">-->
