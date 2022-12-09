@@ -82,6 +82,7 @@ $this->title = 'Восстановление пароля';
             'mask' => '89999999999',
         ])->textInput(['placeholder' => 'Телефон', 'class'=>'phone form-control']) ?>
         <?= Html::submitButton('Изменить пароль') ?>
+        <?php echo $this->render('_app');?>
         <?php ActiveForm::end(); ?>
     </div>
 </div>

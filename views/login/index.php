@@ -52,6 +52,7 @@ $this->title = 'Авторизация';
             <span>&nbsp; &nbsp; </span>
             <?= Html::a('Восстановить пароль', ['login/repassword'],['class'=>'ploader']) ?>
         </div>
+        <?php echo $this->render('_app');?>
         <?php 
             ActiveForm::end(); 
             //print_r(getallheaders());
