@@ -1035,6 +1035,10 @@ a.lnk, .lnk {
         .summary-item .controls ul li.item-5 a:before, .summary-item .controls ul li.item-5 span:before {
           background: url(../images/sum_ic5.svg) no-repeat;
           background-size: contain; }
+          .summary-item .controls ul li.item-6{width:30%;}
+        .summary-item .controls ul li.item-6 a:before, .summary-item .controls ul li.item-6 span:before {
+          background: url(../images/sum_ic5.svg) no-repeat;
+          background-size: contain; }
         .summary-item .controls ul li a, .summary-item .controls ul li span  {
           padding: 90px 10px 25px 10px;
           display: block;
@@ -2942,11 +2946,11 @@ margin-bottom:10px;
     }
 }
 
-.summary-item .controls ul li.item-6{
+/*.summary-item .controls ul li.item-6{
   margin-left:50px;
   width:1%;
   border: 0;
-}
+}*/
 
 .top-chart{
   padding:0;
@@ -3362,6 +3366,7 @@ td .colculation-popup {
     position: relative;
     width: 100%;
     border: none; }
+    .summary-item .controls ul li.item-6{width:100%;}
   .summary-item .controls ul li a, .summary-item .controls ul li span {
     padding: 0 10px;
     margin: 0 10px;
@@ -4299,7 +4304,8 @@ display:block;
                     background:url(images/icon-swipe.svg) no-repeat;
                     z-index: 2;
                 }
-                .sidebar-menu .sidebar-menu-fw ul li a.ploader {line-height:40px;}
+                .sidebar-menu .sidebar-menu-fw ul li a.ploader {line-height:40px; 
+    height: 58px;}
                 .contracts-edo-popup.custom-popup {position:fixed;}
             }
 

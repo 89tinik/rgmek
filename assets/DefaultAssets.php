@@ -18,7 +18,7 @@ class DefaultAssets extends AssetBundle
 	'css/form-styler.css',
 	'css/swiper.css',
 	'css/jquery-ui.css',
-	'css/main.css?v=021101'
+	'css/main.css?v=221222'
     ];
     public $js = [
         'js/jquery.formstyler.min.js',

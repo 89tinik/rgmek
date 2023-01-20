@@ -2,11 +2,16 @@
 
 /* @var $this yii\web\View */
 /* @var $result */
+/* @var $piramida */
+
 
 $this->title = 'Главная | ЛК РГМЭК';
 ?>
 <div class="page-heading">
     <h1 class="title">Главная</h1>
+    <?php if(!empty($piramida)):?>
+    <a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?=$piramida['name']?>&sessionId=<?=$piramida['id']?>" style="position: absolute;">&nbsp;</a>
+    <?php endif;?>
 </div>
 <!-- main carousel -->
 <div class="main-carousel">

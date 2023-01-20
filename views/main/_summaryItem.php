@@ -75,41 +75,29 @@ use yii\helpers\Html;
     <div class="controls">
         <ul>
             <?php if (empty($contract['Status'])):?>
-                <li class="item-0"><?= Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['UID'], 'empty' => 1], ['class' => 'ploader']) ?></li>
+                <li class="item-0"><?=Html::a('Технологическое присоединение', ['main/tehadd', 'uid' => $contract['UID'], 'empty' => 1], ['class' => 'ploader']) ?></li>
                 <li class="item-1"><?=Html::a('Перейти к оплате', ['main/arrear', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-2"><?=Html::a('Передать показания', ['main/indication', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-3"><?=Html::a('Счета', ['main/invoice', 'uid' => $contract['UID']], ['class' => 'ploader']) ?></li>
                 <li class="item-5"><?=Html::a('Начисления и платежи', ['main/payment', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-5"><?=Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
-                <style>
-                    .item-6 span{border:none !important;}
-                    .item-6 a{border:none !important;}
-                </style>
-                <li class="item-6"><?=Html::a('', ['main/consumption', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
+                <li class="item-6"><?=Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
             <?php elseif($contract['Status'] == 'Заключение'): ?>
-                <li class="item-0"><?=Html::a('Тех. присоединение', ['main/tehadd', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
+                <li class="item-0"><?=Html::a('Технологическое присоединение', ['main/tehadd', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-1"><span>Перейти к оплате</span></li>
                 <li class="item-2"><span>Передать показания</span></li>
                 <li class="item-3"><span>Счета</span></li>
                 <li class="item-5"><span>Начисления и платежи</span></li>
                 <li class="item-5"><span>Действующие объекты и приборы учёта</span></li>
-                <style>
-                    .item-6 span{border:none !important;}
-                    .item-6 a{border:none !important;}
-                </style>
-                <li class="item-6"><span></span></li>
+                <li class="item-6"><span>Информация об электропотреблении</span></li>
             <?php elseif($contract['Status'] == 'Соглашение'): ?>
-                <li class="item-0"><?=Html::a('Тех. присоединение', ['main/tehadd', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
+                <li class="item-0"><?=Html::a('Технологическое присоединение', ['main/tehadd', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-1"><?=Html::a('Перейти к оплате', ['main/arrear', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-2"><?=Html::a('Передать показания', ['main/indication', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-3"><?=Html::a('Счета', ['main/invoice', 'uid' => $contract['UID']], ['class' => 'ploader']) ?></li>
                 <li class="item-5"><?=Html::a('Начисления и платежи', ['main/payment', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-5"><?=Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
-                <style>
-                    .item-6 span{border:none !important;}
-                    .item-6 a{border:none !important;}
-                </style>
-                <li class="item-6"><span></span></li>
+                <li class="item-6"><?=Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
            <?php endif; ?>
 
         </ul>

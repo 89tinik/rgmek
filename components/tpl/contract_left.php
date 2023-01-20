@@ -29,6 +29,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <li><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
+        <li><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></li>
     </ul>
     <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
         <div class="title">Выбрать действие</div>
@@ -40,6 +41,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="btn full small border white"><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
+            <div class="btn full small border white"><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></div>
         </div>
     </div>
     <?php elseif($contract['status'] == 'Заключение'): ?>
@@ -50,6 +52,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <li><span>Счета</span></li>
             <li><span>Начисления и платежи</span></li>
             <li><span>Действующие объекты и приборы учёта</span></li>
+            <li><span>Информация об электропотреблении</span></li>
         </ul>
         <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
             <div class="title">Выбрать действие</div>
@@ -61,6 +64,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
                 <div class="btn full small border white dis"><span>Счета</span></div>
                 <div class="btn full small border white dis"><span>Начисления и платежи</span></div>
                 <div class="btn full small border white dis"><span>Действующие объекты и приборы учёта</span></div>
+                <div class="btn full small border white dis"><span>Информация об электропотреблении</span></div>
             </div>
         </div>
     <?php elseif($contract['status'] == 'Соглашение'): ?>
@@ -71,6 +75,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <li><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
+        <li><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></li>
         </ul>
         <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
             <div class="title">Выбрать действие</div>
@@ -82,6 +87,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="btn full small border white"><?= Html::a('Счета', ['main/invoice', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
+            <div class="btn full small border white"><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></div>
             </div>
         </div>
     <?php endif; ?>

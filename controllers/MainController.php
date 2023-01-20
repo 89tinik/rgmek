@@ -86,9 +86,16 @@ class MainController extends Controller
         $data = ['id' => \Yii::$app->user->identity->id_db];
         //$data = ['id' => 'NjIyODAwMDM1MS02Mg=='];
         $profileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
+        $piramida = [];
+       // var_dump($user->piramida_name);
+    //    die();
+        if(!empty($user->peramida_name)){
+            $piramida = ['name'=>$user->peramida_name, 'id'=>$user->session_id];
+        }
         if (isset($profileInfo['success'])){
             return $this->render('index', [
                 'result'=>$profileInfo['success'],
+                'piramida'=>$piramida,
                 'withDate'=>\Yii::$app->user->identity->with_date,
                 'byDate'=>\Yii::$app->user->identity->by_date
             ]);
@@ -424,19 +431,21 @@ class MainController extends Controller
             $model->uid = \Yii::$app->request->get('uid');
         }
         if (empty( $model->bydate = \Yii::$app->request->get('ConsumptionForm')['bydate'])) {
-            //$model->bydate = '01.12.'. date('Y');
-            $model->bydate = \Yii::$app->user->identity->by_date;
+            //ivanov поменял следующую строку $model->bydate = \Yii::$app->user->identity->by_date;
+            $model->bydate = '31.12.2022';
         }
         if (empty($model->withdate)) {
             $bydateArr = explode('.', $model->bydate);
             $Y = $bydateArr[2] - 1;
-            $model->withdate = '01.01.'. date('Y');
+            //ivanov поменял следующую строку $model->withdate = '01.01.'. date('Y');
+            $model->withdate = '01.01.2022';
         }
         $data = [
             'uidcontract' => $model->uid,
             'withdate' => $model->withdate,
             'bydate' => $model->bydate
         ];
+        //var_dump($data);die();
         $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/report_consumption', $data);
         if (isset($objectsData['success'])){
             return $this->render('consumption', [
