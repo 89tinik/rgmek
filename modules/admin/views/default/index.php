@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 $this->title = 'Пользователи';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
+<div class="user-index grid-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 <!---->

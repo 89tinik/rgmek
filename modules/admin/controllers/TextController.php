@@ -18,7 +18,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Default controller for the `admin` module
  */
-class DefaultController extends Controller
+class TextController extends Controller
 {
     public $userName = '';
 
@@ -27,13 +27,13 @@ class DefaultController extends Controller
     {
         return [
             'verbs' => [
-            'class' => VerbFilter::class,
+            'class' => VerbFilter::className(),
             'actions' => [
                 'delete' => ['POST'],
             ],
         ],
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
@@ -64,22 +64,6 @@ class DefaultController extends Controller
 
 
 
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect(['/admin']);
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
 
     public function actionIndex()
     {

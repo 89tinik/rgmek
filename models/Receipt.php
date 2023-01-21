@@ -17,10 +17,14 @@ class Receipt extends ActiveRecord
     }
 
 
-
     public function getInvoice()
     {
-        $this->hasOne(Invoice::class, ['order_id' => 'id']);
+        return $this->hasOne(Invoice::class, ['order_id' => 'id']);
+    }
+
+    public function getIndenture()
+    {
+        return $this->hasOne(Contract::class, ['uid' => 'contract']);
     }
 
     public function sendToServer(){
@@ -80,6 +84,6 @@ class Receipt extends ActiveRecord
 
     public function getUser()
     {
-        $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

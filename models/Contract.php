@@ -83,6 +83,6 @@ class Contract extends ActiveRecord
 
     public function getUser()
     {
-        $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

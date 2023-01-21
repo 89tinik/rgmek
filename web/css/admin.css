@@ -31,17 +31,17 @@ body.operator {
     text-decoration: none;
     color: #111;
 }
-.user-index tr{
+.grid-index tr{
     height: 50px;
 }
-.user-index th{text-align: left;}
-.user-index td {text-align: left;border-bottom: 1px solid #e3e3e3;}
-.user-index td a{
+.grid-index th{text-align: left;}
+.grid-index td {text-align: left;border-bottom: 1px solid #e3e3e3;}
+.grid-index td a{
     display: block;
     margin: 0 5px;
     float: left;
 }
-.user-index td input {height:40px;}
+.grid-index td input {height:40px;}
 
 .operator header {
     background: #fafafa;

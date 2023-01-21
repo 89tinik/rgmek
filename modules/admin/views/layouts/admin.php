@@ -67,7 +67,9 @@ AdminAssets::register($this);
                     <!-- menu -->
                     <div class="top-menu">
                         <ul>
-<!--                            <li>--><?//= Html::a('Пользователи', ['/admin'], ['class' => 'ploader']) ?><!--</li>-->
+                            <li><?= Html::a('Пользователи', ['/admin'], ['class' => 'ploader']) ?></li>
+                            <li><?= Html::a('Счета', ['/admin/invoice'], ['class' => 'ploader']) ?></li>
+<!--                            <li>--><?php //= Html::a('Текстовые страницы', ['/admin'], ['class' => 'ploader']) ?><!--</li>-->
 
                         </ul>
                     </div>
