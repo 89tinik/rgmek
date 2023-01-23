@@ -431,14 +431,14 @@ class MainController extends Controller
             $model->uid = \Yii::$app->request->get('uid');
         }
         if (empty( $model->bydate = \Yii::$app->request->get('ConsumptionForm')['bydate'])) {
-            //ivanov поменял следующую строку $model->bydate = \Yii::$app->user->identity->by_date;
-            $model->bydate = '31.12.2022';
+            $model->bydate = \Yii::$app->user->identity->by_date;
         }
         if (empty($model->withdate)) {
-            $bydateArr = explode('.', $model->bydate);
-            $Y = $bydateArr[2] - 1;
-            //ivanov поменял следующую строку $model->withdate = '01.01.'. date('Y');
-            $model->withdate = '01.01.2022';
+            $Y = date('Y');
+            if (date('n') < 4) {
+                $Y--;
+            }
+            $model->withdate = '01.01.'. $Y;
         }
         $data = [
             'uidcontract' => $model->uid,
