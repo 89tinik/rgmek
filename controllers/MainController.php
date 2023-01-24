@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\models\AttachForm;
+use app\models\Baner;
 use app\models\ConsumptionForm;
 use app\models\Contract;
 use app\models\HistoryForm;
@@ -66,6 +67,7 @@ class MainController extends Controller
     public function actionIndex()
     {
         $user = User::findOne(\Yii::$app->user->identity->id);
+        $baners = Baner::find()->where(['disable'=>0])->orderBy(['sort' => SORT_ASC,'id'=>SORT_DESC])->all();
         //FOR PUSH
         $headersArr = getallheaders();
         if (isset($headersArr['Userid']) && !empty($headersArr['Userid'])){
@@ -94,6 +96,7 @@ class MainController extends Controller
         }
         if (isset($profileInfo['success'])){
             return $this->render('index', [
+                'baners'=>$baners,
                 'result'=>$profileInfo['success'],
                 'piramida'=>$piramida,
                 'withDate'=>\Yii::$app->user->identity->with_date,

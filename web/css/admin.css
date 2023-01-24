@@ -41,6 +41,10 @@ body.operator {
     margin: 0 5px;
     float: left;
 }
+.grid-index.baner-index th,
+.grid-index.baner-index td{
+    padding: 1px 20px;
+}
 .grid-index td input {height:40px;}
 
 .operator header {

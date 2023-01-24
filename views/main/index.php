@@ -3,65 +3,38 @@
 /* @var $this yii\web\View */
 /* @var $result */
 /* @var $piramida */
+/* @var $baners */
 
 
 $this->title = 'Главная | ЛК РГМЭК';
 ?>
 <div class="page-heading">
     <h1 class="title">Главная</h1>
-    <?php if(!empty($piramida)):?>
-    <a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?=$piramida['name']?>&sessionId=<?=$piramida['id']?>" style="position: absolute;">&nbsp;</a>
-    <?php endif;?>
+    <?php if (!empty($piramida)): ?>
+        <a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>"
+           style="position: absolute;">&nbsp;</a>
+    <?php endif; ?>
 </div>
 <!-- main carousel -->
 <div class="main-carousel">
     <div class="swiper-container">
         <div class="swiper-wrapper">
-<!--            <div class="swiper-slide">-->
-<!--                <a href="https://www.rgmek.ru/" target="_blank">-->
-<!--                    <span class="slide" style="background-image: url(images/main_slide1.jpg);"></span>-->
-<!--                </a>-->
-<!--            </div>-->
-            <!--<div class="swiper-slide">
-                <a href="https://www.rgmek.ru/news/news/konkurs-vse-vklyucheno.html" target="_blank">
-                    <span class="slide" style="background-image: url(images/all.jpg);"></span>
-                </a>
-            </div>-->
-            <div class="swiper-slide">
-                    <span class="slide" style="background-image: url(images/pril.jpg);"></span>
-            </div>
-            <div class="swiper-slide">
-                    <span class="slide" style="background-image: url(images/history2.jpg);"></span>
-            </div>
-              <div class="swiper-slide">
-                <a href="https://t.me/ooorgmekbot" target="_blank">
-                    <span class="slide" style="background-image: url(images/rgmekbot.jpg);"></span>
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">
-                    <span class="slide" style="background-image: url(images/main_slide3.jpg);"></span>
-                </a>
-            </div>
-          
+            <?php
 
-            
-            
-<!--            <div class="swiper-slide">-->
-<!--                <a href="https://www.rgmek.ru/">-->
-<!--                    <span class="slide" style="background-image: url(images/main_slide1.jpg);"></span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <div class="swiper-slide">-->
-<!--                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">-->
-<!--                    <span class="slide" style="background-image: url(images/main_slide2.jpg);"></span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <div class="swiper-slide">-->
-<!--                <a href="https://www.rgmek.ru/business-clients/edo.html#ankor-1" target="_blank">-->
-<!--                    <span class="slide" style="background-image: url(images/main_slide3.jpg);"></span>-->
-<!--                </a>-->
-<!--            </div>-->
+            /* @var $baner \app\models\Baner */
+            foreach ($baners as $baner):
+                ?>
+                <div class="swiper-slide">
+                    <?php if (!empty($baner->link)): ?>
+                        <a href="<?= $baner->link ?>" target="_blank">
+                            <span class="slide" style="background-image: url(<?= $baner->path ?>);"></span>
+                        </a>
+                    <?php else: ?>
+                        <span class="slide" style="background-image: url(<?= $baner->path ?>);"></span>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+
         </div>
     </div>
     <div class="swiper-button-prev"></div>
@@ -85,6 +58,6 @@ $this->title = 'Главная | ЛК РГМЭК';
 </div>
 <!--<div style="margin-top:500px;">
     <?php
-    print_r(getallheaders());
-    ?>
+print_r(getallheaders());
+?>
 </div>-->

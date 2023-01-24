@@ -69,6 +69,7 @@ AdminAssets::register($this);
                         <ul>
                             <li><?= Html::a('Пользователи', ['/admin'], ['class' => 'ploader']) ?></li>
                             <li><?= Html::a('Счета', ['/admin/invoice'], ['class' => 'ploader']) ?></li>
+                            <li><?= Html::a('Банеры', ['/admin/baner'], ['class' => 'ploader']) ?></li>
 <!--                            <li>--><?php //= Html::a('Текстовые страницы', ['/admin'], ['class' => 'ploader']) ?><!--</li>-->
 
                         </ul>
