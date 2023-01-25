@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\Contract;
 use app\models\FeedbackForm;
+use app\models\Page;
 use app\models\Theme;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -90,7 +91,10 @@ class InnerController extends Controller
     }
 
     public function actionHelp(){
-        return $this->render('help');
+        $pages = Page::findOne(1);
+        return $this->render('help',[
+            'page'=>$pages,
+        ]);
     }
 
     public function actionPaySuccess(){
