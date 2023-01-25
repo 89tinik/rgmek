@@ -10,12 +10,12 @@ use yii\grid\GridView;
 $this->title = 'Страницы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-index">
+<div class="page-index grid-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Новая страница', ['create'], ['class' => 'btn btn-success']) ?>
+<!--        --><?php //= Html::a('Новая страница', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -32,7 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
             }],
 
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'header'=>'#',
+                'headerOptions' => ['width' => '80'],
+                'template' => '{update}',
+
+            ],
         ],
     ]); ?>
 
