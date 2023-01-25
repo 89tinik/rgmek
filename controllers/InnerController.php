@@ -6,7 +6,9 @@ namespace app\controllers;
 
 use app\models\Contract;
 use app\models\FeedbackForm;
+use app\models\Theme;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use yii\web\Controller;
@@ -63,6 +65,10 @@ class InnerController extends Controller
             }
 
         }
+
+        $allThemes=Theme::find()->orderBy(['sort' => SORT_ASC,'id'=>SORT_DESC])->all(); // Query(by Active record or Query Builder or ..)
+
+        $itemThemes=ArrayHelper::map($allThemes,'title','title');
         if (\Yii::$app->request->get('tehadd') == 'true'){
             $model->subject = 'Технологическое присоединение';
         }
@@ -78,6 +84,7 @@ class InnerController extends Controller
         }
         return $this->render('fos', [
             'model' => $model,
+            'itemThemes' => $itemThemes,
             'contracts' => $contracts
         ]);
     }
