@@ -274,6 +274,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 $this->with_date = $result['Withdate'];
                 $this->by_date = $result['Bydate'];
                 $this->full_name = $result['Name'];
+                if($result['LK']){
+                    $this->peramida_name = $result['LK']['Name'];
+                }else{
+                    $this->peramida_name = '';
+                }
                 $this->save();
             } else {
                 Contract::removeAllUserContract($this->id);
