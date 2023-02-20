@@ -59,14 +59,42 @@ tinymce.init({
 
 
 $(function () {
+    //показать прелоадер
+    function ajaxPreloaderOn() {
+        $('.preloader').css({'display': 'block', 'opacity': '0.5'});
+        $('.preloader .spinner').css('display', 'inline-block');
+        setTimeout(function () {
+            if ($('.preloader').is(':visible')) {
+                $('.preloader').css({'opacity': '1'});
+                $('.preloader .message').css('display', 'block');
+            }
+        }, 40000);
+    }
+
+    //скрыть прелоадер
+    function ajaxPreloaderOff() {
+        var preload = $('.preloader');
+        preload.find('.spinner').fadeOut(function () {
+            preload.fadeOut(500);
+        });
+        $('.preloader .message').css('display', 'none');
+    }
+
+    //скрыть прелоадер по клику на кнопку по истечению таймаута
+    $('.spiner-close').on('click', function () {
+        ajaxPreloaderOff();
+        return false;
+    });
+
+
     $('body').on('click', '.action-to-1c', function () {
-    var invoiceId = $(this).data('id');
+        ajaxPreloaderOn();
+        var invoiceId = $(this).data('id');
         $.ajax({
             type: 'POST',
             url: 'ajax/add-invoice-to-one-c',
             data: 'invoice='+invoiceId,
             success: function (msg){
-                alert(msg);
             }
         });
     });
