@@ -9,7 +9,7 @@ const image_upload_handler_callback = (blobInfo, progress) => new Promise((resol
 
     xhr.onload = () => {
         if (xhr.status === 403) {
-            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+            reject({message: 'HTTP Error: ' + xhr.status, remove: true});
             return;
         }
 
@@ -46,8 +46,8 @@ tinymce.init({
     tinycomments_mode: 'embedded',
     tinycomments_author: 'Author name',
     mergetags_list: [
-        { value: 'First.Name', title: 'First Name' },
-        { value: 'Email', title: 'Email' },
+        {value: 'First.Name', title: 'First Name'},
+        {value: 'Email', title: 'Email'},
     ],
 
     // without images_upload_url set, Upload tab won't show up
@@ -55,4 +55,19 @@ tinymce.init({
 
     // override default upload handler to simulate successful upload
     images_upload_handler: image_upload_handler_callback
+});
+
+
+$(function () {
+    $('body').on('click', '.action-to-1c', function () {
+    var invoiceId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/add-invoice-to-one-c',
+            data: 'invoice='+invoiceId,
+            success: function (msg){
+                alert(msg);
+            }
+        });
+    });
 });

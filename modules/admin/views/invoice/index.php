@@ -42,6 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'user.full_name'
             ],
             'status',
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{toOneC}',  // the default buttons + your custom button
+                'buttons' => [
+                    'toOneC' => function($url, $model, $key) {     // render your custom button
+                        return '<button class="btn small action-to-1c" data-id="'.$model->id.'" data-create="'.strtotime($model->created_at).'">Провести</button>';
+                }
+                ]
+            ],
             //'created_at',
             //'method',
             //'orderId',

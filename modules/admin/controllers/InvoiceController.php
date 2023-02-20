@@ -61,6 +61,7 @@ class InvoiceController extends Controller
         $searchModel = new InvoiceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination = ['pageSize' => 200,];
+        $dataProvider->query->andWhere(['not', ['orderId' => null]]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -147,5 +148,12 @@ class InvoiceController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAddInvoiceToOneC()
+    {
+        $data = \Yii::$app->request->post();
+        var_dump($data);
+        die();
     }
 }
