@@ -64,7 +64,7 @@ IeAssets::register($this);
                     <ul>
                         <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li>
                         <?php if (!empty($piramida = \Yii::$app->controller->piramida)): ?>
-                            <li><a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" class="ploader" target="_blank">Перейти в ИСУ</a></li>
+                            <li><a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Перейти в ИСУ</a></li>
                         <?php endif; ?>
                         <!-- class="active" -->
                         <!--                        <li class="children">-->
