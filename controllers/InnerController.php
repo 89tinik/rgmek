@@ -23,6 +23,7 @@ class InnerController extends Controller
     public $layout = 'inner';
     public $userName = '';
     public $listContract = '';
+    public $piramida = [];
 
     public function behaviors()
     {
@@ -43,6 +44,10 @@ class InnerController extends Controller
     {
 
         $this->userName = \Yii::$app->user->identity->full_name;
+        
+        if(!empty(\Yii::$app->user->identity->peramida_name)){
+            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id];
+        }
 
         return parent::beforeAction($action);
     }

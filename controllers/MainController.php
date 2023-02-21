@@ -31,6 +31,7 @@ class MainController extends Controller
     public $listContract = '';
     public $currentContract = '';
     public $currentContractStatus = '';
+    public $piramida = [];
 
     public function behaviors()
     {
@@ -51,6 +52,7 @@ class MainController extends Controller
     {
 
         $this->userName = \Yii::$app->user->identity->full_name;
+        
         $curentContract = Contract::find()->where(['uid'=> \Yii::$app->request->get('uid')])->one();
         if (empty($curentContract)){
             $requestForm = \Yii::$app->request->get();
@@ -61,6 +63,10 @@ class MainController extends Controller
         $this->currentContract =$curentContract->full_name;
         $this->currentContractStatus =$curentContract->status_name;
 
+        if(!empty(\Yii::$app->user->identity->peramida_name)){
+            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id];
+        }
+        
         return parent::beforeAction($action);
     }
 
@@ -88,12 +94,7 @@ class MainController extends Controller
         $data = ['id' => \Yii::$app->user->identity->id_db];
         //$data = ['id' => 'NjIyODAwMDM1MS02Mg=='];
         $profileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
-        $piramida = [];
-       // var_dump($user->piramida_name);
-    //    die();
-        if(!empty($user->peramida_name)){
-            $piramida = ['name'=>$user->peramida_name, 'id'=>$user->session_id];
-        }
+
         if (isset($profileInfo['success'])){
             return $this->render('index', [
                 'baners'=>$baners,
