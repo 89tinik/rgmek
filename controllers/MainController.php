@@ -63,8 +63,12 @@ class MainController extends Controller
         $this->currentContract =$curentContract->full_name;
         $this->currentContractStatus =$curentContract->status_name;
 
+        if($action->id == 'index'){
+            \Yii::$app->user->identity->setSessionId();
+        }
+        
         if(!empty(\Yii::$app->user->identity->peramida_name)){
-            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id];
+            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id, 'act'=>$action];
         }
         
         return parent::beforeAction($action);
@@ -80,7 +84,7 @@ class MainController extends Controller
             $user->setPushId($headersArr['Userid']);
         }
 
-        $user->setSessionId();
+        //$user->setSessionId();
         $authData = [
             'action'=>'setSession',
             'login'=>$user->peramida_name,
