@@ -68,7 +68,7 @@ class MainController extends Controller
         }
         
         if(!empty(\Yii::$app->user->identity->peramida_name)){
-            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id, 'act'=>$action];
+            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id];
         }
         
         return parent::beforeAction($action);

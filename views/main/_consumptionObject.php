@@ -42,6 +42,7 @@ $seriesArr = [];
                          <tr>
                             <td>Месяц</td>
                             <td>Потребление, кВт ч</td>
+                            <td>Резервируемая мощность, кВт ч</td>
 <!--                            <td>Способ расчёта</td>-->
                         </tr>
                     <?php
@@ -76,6 +77,7 @@ $seriesArr = [];
                             $tableObjectDataArr[intval($dateArr['1'])]['Month']= $arr['Month'];
                             $tableObjectDataArr[intval($dateArr['1'])]['Year'][]= $arr['Year'];
                             $tableObjectDataArr[intval($dateArr['1'])]['Volume'][]= $arr['Volume'];
+                            $tableObjectDataArr[intval($dateArr['1'])]['VolumeR'][]= $arr['VolumeR'];
                             $tableObjectDataArr[intval($dateArr['1'])]['CalculationMethod']= $arr['CalculationMethod'];
                             $tableObjectDataArr[intval($dateArr['1'])]['CalculationMethodName']= $arr['CalculationMethodName'];
                             $tableObjectDataArr[intval($dateArr['1'])]['CalculationMethodInitialData']= $arr['CalculationMethodInitialData'];

@@ -16,6 +16,9 @@ if (is_numeric($line['Volume'][0])){
     <td>
         <div class="price"><?=implode('/', $line['Volume'])?> <?=(is_numeric($line['Volume'][0])) ? 'кВт ч' : 'кВт ч'?></div>
     </td>
+    <td>
+        <div class="price"><?=implode('/', $line['VolumeR'])?> <?=(is_numeric($line['VolumeR'][0])) ? 'кВт ч' : 'кВт ч'?></div>
+    </td>
 <!--    <td>-->
 <!--        --><?php //if (!empty ($line['CalculationMethod'])):?>
 <!--            <span class="colculation-name">--><?php //=$line['CalculationMethod']?><!--</span>-->
