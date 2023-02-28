@@ -63,6 +63,8 @@ IeAssets::register($this);
                         <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li>
                         <?php if (!empty($piramida = \Yii::$app->controller->piramida)): ?>
                             <li><a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Перейти в ИСУ</a></li>
+                        <?php else :?>
+                            <li><a href="#" class="empty-pitrammida">Переход в интеллектуальные системы учета</a></li>
                         <?php endif; ?>
                         <!-- class="active" -->
                         <!--                        <li class="children">-->
@@ -126,6 +128,11 @@ IeAssets::register($this);
         <div class="overlay"></div>
 
         <div class="contracts-devices-popup-overlay"></div>
+
+        <div class="pirammida-empty-popup custom-popup">
+            <p>Отсутствуют расчетные приборы учета, подключенные к интеллектуальной системе учета.</p>
+            <div class="close"></div>
+        </div>
 
     </div>
 

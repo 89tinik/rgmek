@@ -77,6 +77,18 @@ if ($('#receiptform-penalty').length > 0){
 		$.fancybox.open($(this).siblings('.colculation-popup'));
 		return false;
 	});
+
+//popup отсутстви Пирамиды
+	$('.empty-pitrammida').on('click', function(){
+		var topPos = $('.bg').scrollTop() + 50;
+		if ($(window).scrollTop() > $('.bg').scrollTop()){
+			topPos = $(window).scrollTop() + 50;
+		}
+		$('.pirammida-empty-popup').animate({'top': topPos}, 450);
+		$('.contracts-devices-popup-overlay').fadeIn(250);
+		return false;
+	});
+
 //popup удалить аккаунт
 	$('.remove-akk').on('click', function(){
 		$.fancybox.open('<div class="message-del"><h2>Удалить ваш аккаунт?</h2>' +
