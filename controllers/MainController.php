@@ -64,7 +64,9 @@ class MainController extends Controller
         $this->currentContractStatus =$curentContract->status_name;
 
         if($action->id == 'index'){
-            \Yii::$app->user->identity->setSessionId();
+            if( \Yii::$app->user->identity) {
+                \Yii::$app->user->identity->setSessionId();
+            }
         }
         
         if(!empty(\Yii::$app->user->identity->peramida_name)){
