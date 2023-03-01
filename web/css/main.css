@@ -3040,6 +3040,15 @@ td .colculation-popup {
 .preloader .message{
   display: none;
 }
+.h-login .h-login-btn{
+  text-align: right;
+}
+.top-menu ul li{
+  width: 20%;
+}
+a.empty-pitrammida {
+  opacity: 0.2;
+}
 /*ENDtin*/
 .checkbox-ios {
   display: inline-block;
@@ -4005,6 +4014,7 @@ display:block;
   .arrear-lists .list ul li .bts{
     clear:both;
   }
+
 /*ENDtin*/
   .tehpris .sub-objects-items {
     margin: 0;
