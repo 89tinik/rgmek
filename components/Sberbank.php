@@ -99,12 +99,12 @@ class Sberbank extends \pantera\yii2\pay\sberbank\components\Sberbank
             return Json::decode($out);
         } else {
             $dataMess = print_r($data, true);
-            \Yii::$app->mailer->compose()
-                ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
-                ->setTo(['89.tinik@gmail.com','mapurian@gmail.com','kai@rgmek.ru'])
-                ->setSubject('Ошибка при переходе на шлюз Сбера!!!')
-                ->setHtmlBody('Время ошибки:' . date("Y-m-d H:i:s") . '.<br/> Данные:<br>' . $dataMess . '<br/>Ошибка curl: ' . curl_error($curl))
-                ->send();
+           // \Yii::$app->mailer->compose()
+           //     ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
+           //     ->setTo(['89.tinik@gmail.com','mapurian@gmail.com','kai@rgmek.ru'])
+           //     ->setSubject('Ошибка при переходе на шлюз Сбера!!!')
+           //     ->setHtmlBody('Время ошибки:' . date("Y-m-d H:i:s") . '.<br/> Данные:<br>' . $dataMess . '<br/>Ошибка curl: ' . curl_error($curl))
+           //     ->send();
                 
             curl_close($curl);
             die('Ошибка');

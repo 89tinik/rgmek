@@ -574,7 +574,7 @@ a.lnk, .lnk {
     height: 100%; }
 
 .h-logo {
-  margin-right: 61px;
+  margin-right: 10px;
   float: left;
   width: 188px;
   font-size: 0;
@@ -3044,7 +3044,7 @@ td .colculation-popup {
   text-align: right;
 }
 .top-menu ul li{
-  width: 20%;
+  /*width: 20%;*/
 }
 a.empty-pitrammida {
   opacity: 0.2;

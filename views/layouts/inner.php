@@ -130,7 +130,7 @@ IeAssets::register($this);
         <div class="contracts-devices-popup-overlay"></div>
 
         <div class="pirammida-empty-popup custom-popup">
-            <p>Отсутствуют расчетные приборы учета, подключенные к интеллектуальной системе учета.</p>
+            <p>Отсутствуют расчетные приборы учета, подключенные к интеллектуальной системе учета..</p>
             <div class="close"></div>
         </div>
 
