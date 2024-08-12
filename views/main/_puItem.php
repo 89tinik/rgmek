@@ -32,7 +32,7 @@
             <?php endif; ?>
             <?php if (!empty($pu['VerificationYear'])): ?>
                 <tr>
-                    <td>Год следующей проверки</td>
+                    <td>Год следующей поверки</td>
                     <td><strong><?= $pu['VerificationYear'] ?></strong></td>
                 </tr>
             <?php endif; ?>
