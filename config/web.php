@@ -1,4 +1,9 @@
 <?php
+use Dotenv\Dotenv;
+
+// Подгружаем переменные из .env
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -82,7 +87,8 @@ $config = [
                 'verification'=>'login/verification',
                 'profile'=>'main/profile',
                 'payment'=>'main/payment',
-                'admin/<action:(login|update|as-user|delete|index|logout)>'=>'admin/default/<action>'
+                'admin/<action:(login|update|as-user|delete|index|logout)>'=>'admin/default/<action>',
+                'ticket/<action:(login|index|logout)>'=>'ticket/default/<action>'
                 //'<action:(profile | payment)>'=>'main/<action>',
             ],
         ],
@@ -152,6 +158,10 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Module',
             'layout' => 'admin',
+        ],
+        'ticket' => [
+            'class' => 'app\modules\ticket\Module',
+            'layout' => 'ticket',
         ],
     ],
     'params' => $params,

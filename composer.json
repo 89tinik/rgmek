@@ -22,7 +22,8 @@
         "yiisoft/yii2-httpclient": "^2.0",
         "moonlandsoft/yii2-phpexcel": "*",
         "mk-j/php_xlsxwriter": "*",
-        "pantera-digital/yii2-sberbank-pay": "@dev"
+        "pantera-digital/yii2-sberbank-pay": "@dev",
+        "vlucas/phpdotenv": "^5.5"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -40,6 +41,9 @@
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
     },
     "scripts": {
