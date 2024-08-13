@@ -55,7 +55,7 @@ class Messages extends \yii\db\ActiveRecord
             'user_id' => 'Пользователь',
             'status_id' => 'Статус',
             'published' => 'Дата публикации',
-            'admin_num' => 'Номер',
+            'admin_num' => 'Присвоенный номер',
             'new' => 'Новое сообщение',
             'answer' => 'Ответ',
             'answer_files' => 'Файлы ответа',

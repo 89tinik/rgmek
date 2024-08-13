@@ -60,3 +60,22 @@ body.operator {
 .ui-datepicker-calendar{
     display: table;
 }
+table.table.table-striped.table-bordered {
+    margin-top: 50px;
+    width:100%;
+    border-collapse: collapse;
+}
+
+table.table.table-striped.table-bordered tbody td {
+    padding: 5px;
+    border: 1px solid #dddddd;
+    padding: 5px 20px;
+}
+
+.messages-form label{
+    padding-left:0;
+}
+
+.messages-form .form-group {
+    margin: 20px 0;
+}

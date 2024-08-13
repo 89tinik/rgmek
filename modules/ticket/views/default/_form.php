@@ -33,12 +33,13 @@ $statuses = \app\models\MessageStatuses::find()->all();
 ?>
 
 <div class="messages-form">
-
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
+    <h2>Тело обращения</h2>
 
+    <?= $form->field($model, 'user_id')->textInput(['disabled' => true, 'value' => $model->user->full_name]) ?>
+    <?= $form->field($model, 'contract_id')->textInput(['disabled' => true, 'value' => $model->contract->number]) ?>
     <?= $form->field($model, 'subject')->textInput(['disabled' => true, 'value' => $model->subject->title]) ?>
 
-    <?= $form->field($model, 'contract_id')->textInput(['disabled' => true, 'value' => $model->contract->number]) ?>
 
     <?= $form->field($model, 'message')->textarea(['rows' => 6, 'disabled' => true]) ?>
 
@@ -52,8 +53,7 @@ $statuses = \app\models\MessageStatuses::find()->all();
         echo '</ul>';
     }
     ?>
-
-    <?= $form->field($model, 'user_id')->textInput(['disabled' => true, 'value' => $model->user->full_name]) ?>
+    <h2>Обработка обращения</h2>
 
     <?= $form->field($model, 'status_id')->dropDownList(
         \yii\helpers\ArrayHelper::map($statuses, 'id', 'status'),
