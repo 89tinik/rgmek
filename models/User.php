@@ -4,6 +4,7 @@ namespace app\models;
 
 use linslin\yii2\curl\Curl;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use Yii;
@@ -378,6 +379,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
 
+    }
+
+    /**
+     * @return array
+     */
+    public function getContractsList()
+    {
+        $contracts = $this->getContracts()->all();
+        return ArrayHelper::map($contracts, 'id', 'number');
     }
 
 }

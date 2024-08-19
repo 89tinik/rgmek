@@ -105,13 +105,11 @@ class DefaultController extends Controller
                 $folderId = $model->id;
                 $uploadDirectory = 'uploads/tickets/' . $folderId;
 
-                // Создаем директорию, если она не существует
                 if (!is_dir($uploadDirectory)) {
                     mkdir($uploadDirectory, 0777, true);
                 }
 
-                // Загружаем файлы и сохраняем пути в формате JSON
-                $paths = $model->uploadFiles($folderId);
+                $paths = $model->uploadFiles($folderId, 'answerFilesUpload');
                 if ($paths !== false) {
                     $model->answer_files = json_encode($paths);
                 }

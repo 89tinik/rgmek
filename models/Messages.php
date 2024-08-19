@@ -1,18 +1,19 @@
 <?php
+
 namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "messages".
- */
 class Messages extends \yii\db\ActiveRecord
 {
+    const SCENARIO_CREATE = 'create';
     const SCENARIO_ADMIN_UPDATE = 'adminUpdate';
     const SCENARIO_USER_UPDATE = 'userUpdate';
 
     public $answerFilesUpload;
+
     public $filesUpload;
+
     /**
      * {@inheritdoc}
      */
@@ -27,7 +28,8 @@ class Messages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subject_id', 'contract_id', 'message', 'user_id', 'status_id'], 'required'],
+            [['subject_id', 'contract_id', 'message', 'user_id', 'status_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
+            [['subject_id', 'contract_id', 'message', 'user_id'], 'required', 'on' => self::SCENARIO_CREATE],
             [['subject_id', 'contract_id', 'user_id', 'status_id', 'new'], 'integer'],
             [['message', 'files', 'answer', 'answer_files'], 'string'],
             [['created', 'published'], 'safe'],
@@ -67,7 +69,6 @@ class Messages extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            // Преобразуем формат даты перед сохранением в базу данных
             if ($this->published) {
                 $this->published = \Yii::$app->formatter->asDate($this->published, 'yyyy-MM-dd');
             }
@@ -80,24 +81,26 @@ class Messages extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
+        $scenarios[self::SCENARIO_CREATE] = ['subject_id', 'contract_id', 'message', 'user_id', 'files'];
+
         $scenarios[self::SCENARIO_ADMIN_UPDATE] = ['new', 'status_id'];
         $onetimeChange = ['answer_files', 'published', 'admin_num', 'answer'];
         foreach ($onetimeChange as $property) {
-            if(empty($this->$property)){
-                $scenarios[self::SCENARIO_ADMIN_UPDATE][]= $property;
+            if (empty($this->$property)) {
+                $scenarios[self::SCENARIO_ADMIN_UPDATE][] = $property;
             }
         }
-
 
         $scenarios[self::SCENARIO_USER_UPDATE] = ['files'];
 
         return $scenarios;
     }
-    public function uploadFiles($id)
+
+    public function uploadFiles($id, $files = 'filesUpload')
     {
         if ($this->validate() && empty($this->answer_files)) {
             $paths = [];
-            foreach ($this->answerFilesUpload as $file) {
+            foreach ($this->$files as $file) {
                 $filename = str_replace(' ', '-', $file->baseName) . '.' . $file->extension;
                 $filePath = 'uploads/tickets/' . $id . '/' . $filename;
                 if ($file->saveAs($filePath)) {
