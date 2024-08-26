@@ -14,7 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_id')->hiddenInput(['value' => $model->user_id])->label(false); ?>
     <?= $form->field($model, 'contract_id')->textInput(['disabled' => true, 'value' => $model->contract->number]) ?>
-    <?= $form->field($model, 'subject')->textInput(['disabled' => true, 'value' => $model->subject->title]) ?>
+    <?= $form->field($model, 'subject_id')->textInput(['disabled' => true, 'value' => $model->subject->title]) ?>
+    <?= $form->field($model, 'status_id')->textInput(['disabled' => true, 'value' => $model->status->status]) ?>
 
     <?= $form->field($model, 'message')->textarea(['rows' => 6, 'disabled' => true]) ?>
 
@@ -26,13 +27,15 @@ use yii\widgets\ActiveForm;
             echo '<li>' . Html::a(basename(mb_convert_encoding($file, 'UTF-8', 'auto')), ['/' . $file], ['target' => '_blank']) . '</li>';
         }
         echo '</ul>';
-    } else {
-        echo $form->field($model, 'filesUpload[]')->fileInput(['multiple' => true]);
     }
+        echo $form->field($model, 'filesUpload[]')->fileInput(['multiple' => true]);
+
     ?>
 
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
+        <?= Html::a('К списку', ['messages/index'],['class' => 'btn btn-success']) ?>
+        <?= Html::a('Отозвать', ['messages/re-call', 'id'=>$model->id],['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -1208,6 +1208,32 @@ function styler_func() {
 		from.datepicker( "option", "minDate", getDate( this, '-1y' ) );
 	});
 
+	var fromMessage = $( "#messagessearch-date_from" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			numberOfMonths: 1,
+			regional: "ru",
+			minDate: new Date(2020, 1 - 1, 1),
+			showButtonPanel: true,
+		})
+			.on( "change", function() {
+				toMessage.datepicker( "option", "minDate", getDate( this ) );
+				toMessage.datepicker( "option", "maxDate", getDate( this , '+1y') );
+			}),
+
+		toMessage = $( "#messagessearch-date_to" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			numberOfMonths: 1,
+			showButtonPanel: true,
+			regional: "ru",
+			minDate: new Date(2020, 1 - 1, 1)
+		})
+			.on( "change", function() {
+				fromMessage.datepicker( "option", "maxDate", getDate( this ) );
+				fromMessage.datepicker( "option", "minDate", getDate( this, '-1y' ) );
+			});
+
 	function getDate( element, offset) {
 		var date;
 		try {

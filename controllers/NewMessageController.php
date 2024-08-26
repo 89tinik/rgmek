@@ -93,7 +93,7 @@ class NewMessageController extends Controller
                 }
             }
             if ($model->save()) {
-                return $this->redirect(['update', 'id' => $model->id]);
+                return $this->redirect(['messages/update', 'id' => $model->id]);
             }
         }
 
@@ -102,27 +102,6 @@ class NewMessageController extends Controller
             'themeModel' => $this->findMessageThemes($id),
             'messageModel' => $model,
             'userModel' => \Yii::$app->user->identity,
-        ]);
-    }
-
-    /**
-     * Updates an existing Messages model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findMessage($id);
-
-        $model->scenario = Messages::SCENARIO_USER_UPDATE;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
         ]);
     }
 

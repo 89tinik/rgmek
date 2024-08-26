@@ -49,7 +49,7 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'subject' => 'Тема',
+            'subject_id' => 'Тема',
             'contract_id' => 'Договор',
             'message' => 'Сообщение',
             'files' => 'Файлы',
@@ -91,7 +91,7 @@ class Messages extends \yii\db\ActiveRecord
             }
         }
 
-        $scenarios[self::SCENARIO_USER_UPDATE] = ['files'];
+        $scenarios[self::SCENARIO_USER_UPDATE] = ['files', 'new'];
 
         return $scenarios;
     }
@@ -103,6 +103,9 @@ class Messages extends \yii\db\ActiveRecord
             foreach ($this->$files as $file) {
                 $filename = str_replace(' ', '-', $file->baseName) . '.' . $file->extension;
                 $filePath = 'uploads/tickets/' . $id . '/' . $filename;
+                if (is_file($filePath)){
+                    $filePath = 'uploads/tickets/' . $id . '/(' . time() . ')' . $filename;
+                }
                 if ($file->saveAs($filePath)) {
                     $paths[] = $filePath;
                 }

@@ -96,26 +96,29 @@ class DefaultController extends Controller
 
         $model->scenario = Messages::SCENARIO_ADMIN_UPDATE;
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->status_id < $this->findModel($model->id)->status_id){
-                $model->status_id = $this->findModel($model->id)->status_id;
-            }
-            $model->answerFilesUpload = UploadedFile::getInstances($model, 'answerFilesUpload');
-
-            if ($model->answerFilesUpload) {
-                $folderId = $model->id;
-                $uploadDirectory = 'uploads/tickets/' . $folderId;
-
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0777, true);
+            if ($model->dirtyAttributes) {
+                $model->new = 1;
+                if ($model->status_id < $this->findModel($model->id)->status_id){
+                    $model->status_id = $this->findModel($model->id)->status_id;
                 }
+                $model->answerFilesUpload = UploadedFile::getInstances($model, 'answerFilesUpload');
 
-                $paths = $model->uploadFiles($folderId, 'answerFilesUpload');
-                if ($paths !== false) {
-                    $model->answer_files = json_encode($paths);
+                if ($model->answerFilesUpload) {
+                    $folderId = $model->id;
+                    $uploadDirectory = 'uploads/tickets/' . $folderId;
+
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0777, true);
+                    }
+
+                    $paths = $model->uploadFiles($folderId, 'answerFilesUpload');
+                    if ($paths !== false) {
+                        $model->answer_files = json_encode($paths);
+                    }
                 }
-            }
-            if ($model->save()) {
-                $message = 'Обновлено!';
+                if ($model->save()) {
+                    $message = 'Обновлено!';
+                }
             }
         }
 

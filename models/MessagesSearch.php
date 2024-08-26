@@ -13,6 +13,9 @@ class MessagesSearch extends Messages
 {
     public $user_name;
     public $contract_number;
+    public $date_from;
+    public $date_to;
+
     /**
      * {@inheritdoc}
      */
@@ -20,7 +23,7 @@ class MessagesSearch extends Messages
     {
         return [
             [['id', 'subject_id', 'contract_id', 'user_id', 'status_id', 'new'], 'integer'],
-            [['message', 'files', 'created', 'published', 'admin_num', 'answer', 'answer_files', 'user_name', 'contract_number'], 'safe'],
+            [['message', 'files', 'created', 'published', 'admin_num', 'answer', 'answer_files', 'user_name', 'contract_number', 'date_to', 'date_from'], 'safe'],
         ];
     }
 
@@ -57,8 +60,7 @@ class MessagesSearch extends Messages
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+             $query->where('0=1');
             return $dataProvider;
         }
 
@@ -80,6 +82,57 @@ class MessagesSearch extends Messages
             ->andFilterWhere(['like', 'admin_num', $this->admin_num])
             ->andFilterWhere(['like', 'answer', $this->answer])
             ->andFilterWhere(['like', 'answer_files', $this->answer_files]);
+
+        return $dataProvider;
+    }
+/**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchForUser($params, $userId)
+    {
+        $query = Messages::find()->alias('m');
+
+        $query->andWhere(['m.user_id' => $userId]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=>[
+                'defaultOrder'=>[
+                    'status_id' => SORT_ASC,
+                    'new' => SORT_DESC,
+                ],
+            ],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            $query->where('0=1');
+            return $dataProvider;
+        }
+
+        if ($this->date_from) {
+            $dateFrom = \DateTime::createFromFormat('d.m.Y', $this->date_from)->format('Y-m-d');
+        }
+
+        if ($this->date_to) {
+            $dateTo = \DateTime::createFromFormat('d.m.Y', $this->date_to)->format('Y-m-d');
+        }
+
+        if ($dateFrom && $dateTo) {
+            $query->andFilterWhere(['between', 'published', $dateFrom, $dateTo]);
+        } elseif ($dateFrom) {
+            $query->andFilterWhere(['>=', 'published', $dateFrom]);
+        } elseif ($dateTo) {
+            $query->andFilterWhere(['<=', 'published', $dateTo]);
+        }
+
+
+
 
         return $dataProvider;
     }

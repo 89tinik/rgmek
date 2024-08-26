@@ -38,7 +38,7 @@ $statuses = \app\models\MessageStatuses::find()->all();
 
     <?= $form->field($model, 'user_id')->textInput(['disabled' => true, 'value' => $model->user->full_name]) ?>
     <?= $form->field($model, 'contract_id')->textInput(['disabled' => true, 'value' => $model->contract->number]) ?>
-    <?= $form->field($model, 'subject')->textInput(['disabled' => true, 'value' => $model->subject->title]) ?>
+    <?= $form->field($model, 'subject_id')->textInput(['disabled' => true, 'value' => $model->subject->title]) ?>
 
 
     <?= $form->field($model, 'message')->textarea(['rows' => 6, 'disabled' => true]) ?>

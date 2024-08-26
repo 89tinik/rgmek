@@ -31,7 +31,7 @@ IeAssets::register($this);
         <?php $this->head() ?>
     </head>
 
-    <body>
+    <body class="<?=Yii::$app->controller->id?> <?=Yii::$app->controller->id?>-<?=Yii::$app->controller->action->id?>">
     <?php $this->beginBody() ?>
     <div class="bg">
         <!-- Preloader -->
