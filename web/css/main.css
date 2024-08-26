@@ -4322,36 +4322,86 @@ display:block;
 /*ivanov end*/
 
 /*tin*/
-.hidden{
-  display:none;
+.hidden {
+  display: none;
 }
-.message-title span{
+
+.message-title span {
   color: #4475F2;
 }
-.message-title sup{
+
+.message-title sup {
   color: red;
 }
-.message-status{
+
+.message-status.btn.small {
   cursor: default;
+  padding: 0 20px;
+  width: 130px;
+  color: #fff;
 }
-.message-status:hover{
+
+.message-status:hover {
   box-shadow: none;
 }
-.message-status.status-1{
-  background: none;
-  border: 1px solid #4475F2;
-  color: #4475F2;
+
+.message-status.status-1 {
+  background: #4475F2;
 }
-.message-status.status-2{
-  background: #FFC300;
+
+.message-status.status-2 {
+  background: #ddce00;
 }
-.message-status.status-3{
-  background: #317D34;
+
+.message-status.status-3 {
+  background: #39c900;
 }
-.message-status.status-4{
-  background: #5E676F;
+
+.message-status.status-4 {
+  background: #ff4949;
 }
-.messages-index .ui-datepicker-calendar{
+
+.messages-index .ui-datepicker-calendar {
   display: table;
+}
+
+.messages label, .new-message label {
+  padding: 0;
+}
+
+.messages-form .form-group {
+  margin: 20px 0;
+}
+
+.paginate-more {
+  width: 100%;
+  max-width: 890px;
+  color: #4475F2;
+  background: #fff;
+  border: 1px solid #4475F2;
+}
+
+.create-message {
+  background: #4475F2;
+  color: #fff;
+  max-width: 890px;
+  width: 100%;
+}
+
+.message-title {
+  line-height: 24px;
+  color: #1C2834;
+  font-size: 14px;
+}
+
+.messages-form .disabled {
+  color: #cdcdcd;
+  display: block;
+}
+
+.theme-btn {
+  margin-bottom: 20px;
+  max-width: 890px;
+  width: 100%;
 }
 /*ENDtin*/

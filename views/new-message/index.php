@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,23 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-
-
-
-    <?= GridView::widget([
+    <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'layout' => "{items}\n{pager}",
-        'showHeader' => false,
-        'columns' => [
-            [
-                'attribute' => 'title',
-                'format' => 'raw',
-                'value' => function($data) {
-                    return Html::a(Html::encode($data->title), ['create', 'id' => $data->id]);
-                },
-            ],
-        ],
-    ]); ?>
+        'itemView' => '_item',
+        'summary' => false,
+    ]) ?>
+
 
 
 </div>
