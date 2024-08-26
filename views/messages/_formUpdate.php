@@ -31,6 +31,7 @@ use yii\widgets\ActiveForm;
         echo $form->field($model, 'filesUpload[]')->fileInput(['multiple' => true]);
 
     ?>
+    <?= $form->field($model, 'answer')->textarea(['rows' => 6, 'disabled' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
