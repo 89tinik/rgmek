@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\httpclient\Client;
 
 class Messages extends \yii\db\ActiveRecord
 {
@@ -103,7 +104,7 @@ class Messages extends \yii\db\ActiveRecord
             foreach ($this->$files as $file) {
                 $filename = str_replace(' ', '-', $file->baseName) . '.' . $file->extension;
                 $filePath = 'uploads/tickets/' . $id . '/' . $filename;
-                if (is_file($filePath)){
+                if (is_file($filePath)) {
                     $filePath = 'uploads/tickets/' . $id . '/(' . time() . ')' . $filename;
                 }
                 if ($file->saveAs($filePath)) {
@@ -153,5 +154,60 @@ class Messages extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    /**
+     * @param $text string
+     * @return string[]|true
+     */
+    public function sendNoticeSms(string $text, string $phone)
+    {
+        //отправляем SMS
+        $client = new Client();
+        $phone = substr_replace($phone, '7', 0, 1);
+        $username = '5b503501ef';
+        $password = '95f1345b6a';
+        $data = [
+            'msisdn' => $phone,
+            'shortcode' => 'rgmek',
+            'text' => $text
+        ];
+
+        $response = $client->createRequest()
+            ->setMethod('POST')
+            ->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
+            ->setUrl('https://target.tele2.ru/api/v2/send_message')
+            ->setData($data)
+            ->send();
+
+        if (!$response->isOk) {
+            return ['error' => 'Не удалось отправить SMS!'];
+        } else {
+            $responseArrContent = json_decode($response->content, true);
+            if ($responseArrContent['status'] == 'error') {
+                return ['error' => 'Не удалось отправить SMS! Error:' . $responseArrContent['reason']];
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param $subject string
+     * @param $text string
+     * @return string[]|true
+     */
+    public function sendNoticeEmail(string $subject, string $text, string $email)
+    {
+        //отправляем почту
+        $mail = Yii::$app->mailer->compose()
+            ->setFrom('noreply@send.rgmek.ru')
+            ->setTo($email)
+            ->setSubject($subject)
+            ->setHtmlBody($text)
+            ->send();
+        if (!$mail) {
+            return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
+        }
+        return true;
     }
 }

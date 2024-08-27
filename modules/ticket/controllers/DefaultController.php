@@ -8,6 +8,8 @@ use app\modules\ticket\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -51,7 +53,6 @@ class DefaultController extends Controller
     }
 
 
-
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -83,6 +84,7 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
     /**
      * Updates an existing Messages model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -98,7 +100,7 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($model->dirtyAttributes) {
                 $model->new = 1;
-                if ($model->status_id < $this->findModel($model->id)->status_id){
+                if ($model->status_id < $this->findModel($model->id)->status_id) {
                     $model->status_id = $this->findModel($model->id)->status_id;
                 }
                 $model->answerFilesUpload = UploadedFile::getInstances($model, 'answerFilesUpload');
@@ -116,8 +118,26 @@ class DefaultController extends Controller
                         $model->answer_files = json_encode($paths);
                     }
                 }
+                if ($model->isAttributeChanged('status_id')) {
+                    $subject ='Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
+                }
+                if ($model->isAttributeChanged('answer')) {
+                    $subject ='Получен ответ на обращение № ' . $model->admin_num;
+                }
+
+
                 if ($model->save()) {
-                    $message = 'Обновлено!';
+                    if (!empty($email = $model->getUser()->one()->email)) {
+                        $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
+                        $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
+                        if ($message = $model->sendNoticeEmail($subject, $text, $email) === true){
+                            $message = 'Обновлено!';
+                        }
+                    } elseif (!empty($phone = $model->getUser()->one()->phone)){
+                        if ($message = $model->sendNoticeSms($subject, $phone) === true){
+                            $message = 'Обновлено!';
+                        }
+                    }
                 }
             }
         }
@@ -134,6 +154,7 @@ class DefaultController extends Controller
         Yii::$app->user->logout();
         return $this->redirect('/ticket/login');
     }
+
     /**
      * Finds the Messages model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
