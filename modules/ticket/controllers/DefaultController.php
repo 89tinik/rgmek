@@ -100,6 +100,7 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($model->dirtyAttributes) {
                 $model->new = 1;
+                $model->update = date("Y-m-d H:i:s");
                 if ($model->status_id < $this->findModel($model->id)->status_id) {
                     $model->status_id = $this->findModel($model->id)->status_id;
                 }
@@ -121,19 +122,19 @@ class DefaultController extends Controller
                 if ($model->isAttributeChanged('status_id')) {
                     $subject ='Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
                 }
-                if ($model->isAttributeChanged('answer')) {
+                if ($model->isAttributeChanged('answer') && !empty($model->answer)) {
                     $subject ='Получен ответ на обращение № ' . $model->admin_num;
                 }
 
 
                 if ($model->save()) {
-                    if (!empty($email = $model->getUser()->one()->email)) {
+                    if (!empty($email = ($model->email)??$model->getUser()->one()->email)) {
                         $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
                         $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
                         if ($message = $model->sendNoticeEmail($subject, $text, $email) === true){
                             $message = 'Обновлено!';
                         }
-                    } elseif (!empty($phone = $model->getUser()->one()->phone)){
+                    } elseif (!empty($phone = ($model->phone)??$model->getUser()->one()->phone)){
                         if ($message = $model->sendNoticeSms($subject, $phone) === true){
                             $message = 'Обновлено!';
                         }

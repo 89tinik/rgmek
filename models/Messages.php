@@ -30,11 +30,12 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             [['subject_id', 'contract_id', 'message', 'user_id', 'status_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
-            [['subject_id', 'contract_id', 'message', 'user_id'], 'required', 'on' => self::SCENARIO_CREATE],
+            [['subject_id', 'contract_id', 'message', 'user_id', 'email'], 'required', 'on' => self::SCENARIO_CREATE],
             [['subject_id', 'contract_id', 'user_id', 'status_id', 'new'], 'integer'],
+            [['email,'], 'email'],
             [['message', 'files', 'answer', 'answer_files'], 'string'],
-            [['created', 'published'], 'safe'],
-            [['admin_num'], 'string', 'max' => 255],
+            [['created', 'published', 'update'], 'safe'],
+            [['admin_num','contact_name','phone'], 'string', 'max' => 255],
             [['contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contract::class, 'targetAttribute' => ['contract_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => MessageStatuses::class, 'targetAttribute' => ['status_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Theme::class, 'targetAttribute' => ['subject_id' => 'id']],
@@ -64,6 +65,10 @@ class Messages extends \yii\db\ActiveRecord
             'answer_files' => 'Файлы ответа',
             'answerFilesUpload' => 'Загрузить файлы ответа',
             'filesUpload' => 'Загрузить файлы',
+            'email' => 'E-mail контактного лица',
+            'contact_name' => 'Контактное лицо',
+            'update' => 'Обновлено',
+            'phone' => 'Телефон контактного лица',
         ];
     }
 
@@ -82,9 +87,9 @@ class Messages extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['subject_id', 'contract_id', 'message', 'user_id', 'files'];
+        $scenarios[self::SCENARIO_CREATE] = ['subject_id', 'contract_id', 'message', 'user_id', 'files', 'email', 'phone', 'contact_name'];
 
-        $scenarios[self::SCENARIO_ADMIN_UPDATE] = ['new', 'status_id'];
+        $scenarios[self::SCENARIO_ADMIN_UPDATE] = ['new', 'status_id', 'update'];
         $onetimeChange = ['answer_files', 'published', 'admin_num', 'answer'];
         foreach ($onetimeChange as $property) {
             if (empty($this->$property)) {
@@ -92,7 +97,7 @@ class Messages extends \yii\db\ActiveRecord
             }
         }
 
-        $scenarios[self::SCENARIO_USER_UPDATE] = ['files', 'new'];
+        $scenarios[self::SCENARIO_USER_UPDATE] = ['files', 'new', 'update'];
 
         return $scenarios;
     }

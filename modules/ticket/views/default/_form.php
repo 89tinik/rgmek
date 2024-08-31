@@ -36,12 +36,17 @@ $statuses = \app\models\MessageStatuses::find()->all();
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
     <h2>Тело обращения</h2>
 
-    <?= $form->field($model, 'user_id')->textInput(['disabled' => true, 'value' => $model->user->full_name]) ?>
-    <?= $form->field($model, 'contract_id')->textInput(['disabled' => true, 'value' => $model->contract->number]) ?>
-    <?= $form->field($model, 'subject_id')->textInput(['disabled' => true, 'value' => $model->subject->title]) ?>
+    <?= $form->field($model, 'contract_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->contract->number]) ?>
+    <?= $form->field($model, 'subject_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->subject->title]) ?>
+    <?= $form->field($model, 'user_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->user->full_name]) ?>
+    <?= $form->field($model, 'user_email')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->user->email])->label('E-mail пользователя') ?>
+    <?= $form->field($model, 'user_phone')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->user->phone])->label('Телефон пользователя') ?>
+    <?= $form->field($model, 'contact_name')->textInput(['class' => 'disabled', 'disabled' => true]) ?>
+    <?= $form->field($model, 'phone')->textInput(['class' => 'disabled', 'disabled' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['class' => 'disabled', 'disabled' => true]) ?>
 
 
-    <?= $form->field($model, 'message')->textarea(['rows' => 6, 'disabled' => true]) ?>
+    <?= $form->field($model, 'message')->textarea(['class' => 'disabled', 'rows' => 6, 'disabled' => true]) ?>
 
     <?php
     if (!empty($model->files)) {
@@ -71,7 +76,6 @@ $statuses = \app\models\MessageStatuses::find()->all();
 
     <?= $form->field($model, 'answer')->textarea($answerProperties) ?>
 
-<!--    --><?php //= $form->field($model, 'answer_files')->textarea(['rows' => 6]) ?>
     <?php
     if (!empty($model->answer_files)) {
         $files = json_decode($model->answer_files);

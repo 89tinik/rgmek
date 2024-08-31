@@ -103,6 +103,7 @@ class MessagesSearch extends Messages
             'sort'=>[
                 'defaultOrder'=>[
                     'status_id' => SORT_ASC,
+                    'update' => SORT_DESC,
                     'new' => SORT_DESC,
                 ],
             ],
