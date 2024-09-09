@@ -4328,6 +4328,7 @@ display:block;
 
 .message-title span {
   color: #4475F2;
+  display: block;
 }
 
 .message-title sup {
@@ -4392,6 +4393,7 @@ display:block;
   line-height: 24px;
   color: #1C2834;
   font-size: 14px;
+  font-weight: bold;
 }
 
 .messages-form .disabled {
@@ -4403,5 +4405,47 @@ display:block;
   margin-bottom: 20px;
   max-width: 890px;
   width: 100%;
+}
+.messages-form .btn{
+   margin-right: 20px;
+ }
+.messages-form .form-message{
+  background: #39c900;
+  padding: 10px;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+}
+.messages-index  .invoice-table {
+  margin-bottom:0;
+}
+.messages-index  .invoice-table table td{
+  border-bottom:0;
+}
+@media screen and (max-width: 1200px) {
+  .messages-index .invoice-table table tr{
+    border-bottom: 0;
+  }
+  .messages-index .payment-filter .group.large .field{
+    width: 49%;
+    display: inline-block;
+  }
+    .messages-index .payment-filter .value span{
+    width: 30px;
+    text-align: center;
+  }
+  a.btn.message-btn{
+    width: 130px;
+    float: left;
+    margin-right: 20px;
+  }
+  .message-status.btn.small{
+    float: left;
+    margin-right: 20px;
+  }
+  .messages-form .btn{
+    display: inline-block;
+  }
 }
 /*ENDtin*/

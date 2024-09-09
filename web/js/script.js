@@ -34,6 +34,13 @@ $(function() {
 	});
 
 	/*tin*/
+	$('.messages-form .input-file').on('change', function(){
+		if ($(this).val().length > 0){
+			$('.messages-form form button[type=submit]').removeClass('hidden');
+		} else {
+			$('.messages-form form button[type=submit]').addClass('hidden');
+		}
+	});
 
 if ($('#receiptform-ee').length > 0){
 	new Cleave('#receiptform-ee', {

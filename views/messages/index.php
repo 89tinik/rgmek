@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 use yii\helpers\Html;
 
-$this->title = 'Messages';
+$this->title = 'Диалоги';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -42,30 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php ActiveForm::end(); ?>
     </div>
 
-
+    <h2>Обращения</h2>
 
     <div class="payment-items">
-        <div class="payment-item">
 
-            <div class="pack-report-wrap white-box">
-                <div class="invoice-table" id="message-list">
 
                         <?= $this->render('_list', ['dataProvider' => $dataProvider]) ?>
 
 
 
-                </div>
-                <?php if ($dataProvider->pagination->pageCount > 1): ?>
-                    <div class="text-center">
-                        <button id="load-more" class="btn btn-primary paginate-more">Показать ещё</button>
-                    </div>
-                <?php endif; ?>
-                <p>
-                    <?= Html::a('Обратиться в РГМЭК', ['new-message/index'], ['class' => 'btn btn-success create-message']) ?>
-                </p>
-            </div>
-        </div>
 
+        <?php if ($dataProvider->pagination->pageCount > 1): ?>
+            <div class="text-center">
+                <button id="load-more" class="btn btn-primary paginate-more">Показать ещё</button>
+            </div>
+        <?php endif; ?>
+        <p>
+            <?= Html::a('Обратиться в РГМЭК', ['new-message/index'], ['class' => 'btn btn-success create-message']) ?>
+        </p>
     </div>
 
 

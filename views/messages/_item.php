@@ -4,6 +4,10 @@
 use yii\helpers\Html;
 
 ?>
+<div class="payment-item">
+
+    <div class="pack-report-wrap white-box">
+        <div class="invoice-table" id="message-list-<?=$model->id?>">
 <table >
     <colgroup>
         <col width="45%">
@@ -26,9 +30,13 @@ use yii\helpers\Html;
         <!--a href="#" class="btn small border right">Просмотр</a-->
         <div class="bts">
             <div class="message-status status-<?=$model->status->id?> btn small" ><?= Html::encode($model->status->status) ?></div>
-            <?= Html::a('Подробнее', ['messages/update', 'id'=>$model->id], ['class'=> 'btn small border right download']) ?>
+            <?= Html::a('Подробнее', ['messages/update', 'id'=>$model->id], ['class'=> 'btn small border right message-btn']) ?>
         </div>
     </td>
 </tr>
     </tbody>
 </table>
+        </div>
+
+    </div>
+</div>
