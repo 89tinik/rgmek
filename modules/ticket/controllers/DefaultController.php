@@ -149,6 +149,17 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionStatistic(){
+        $searchModel = new MessagesSearch();
+
+        $dataProvider = $searchModel->searchStatistics(Yii::$app->request->queryParams);
+
+        return $this->render('statistic', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionLogout()
     {
 

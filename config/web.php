@@ -88,7 +88,7 @@ $config = [
                 'profile'=>'main/profile',
                 'payment'=>'main/payment',
                 'admin/<action:(login|update|as-user|delete|index|logout)>'=>'admin/default/<action>',
-                'ticket/<action:(login|index|logout)>'=>'ticket/default/<action>'
+                'ticket/<action:(login|index|statistic|logout)>'=>'ticket/default/<action>'
                 //'<action:(profile | payment)>'=>'main/<action>',
             ],
         ],

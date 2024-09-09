@@ -14,6 +14,8 @@ class Messages extends \yii\db\ActiveRecord
     public $answerFilesUpload;
 
     public $filesUpload;
+    
+    public $message_count;
 
     /**
      * {@inheritdoc}

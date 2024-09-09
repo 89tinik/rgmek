@@ -66,7 +66,7 @@ TicketAssets::register($this);
                         <ul>
                             <li><?= Html::a('Обращения', ['/ticket'], ['class' => 'ploader']) ?></li>
                             <li><?= Html::a('Темы обращений', ['/ticket/themes'], ['class' => 'ploader']) ?></li>
-
+                            <li><?= Html::a('Статистика', ['/ticket/statistic'], ['class' => 'ploader']) ?></li>
                         </ul>
                     </div>
 

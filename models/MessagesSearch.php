@@ -52,15 +52,15 @@ class MessagesSearch extends Messages
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>[
-                'defaultOrder'=>['id'=> SORT_DESC],
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC],
             ],
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-             $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -85,10 +85,12 @@ class MessagesSearch extends Messages
 
         return $dataProvider;
     }
-/**
+
+    /**
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param int $userId
      *
      * @return ActiveDataProvider
      */
@@ -100,8 +102,8 @@ class MessagesSearch extends Messages
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>[
-                'defaultOrder'=>[
+            'sort' => [
+                'defaultOrder' => [
                     'status_id' => SORT_ASC,
                     'update' => SORT_DESC,
                     'new' => SORT_DESC,
@@ -117,11 +119,11 @@ class MessagesSearch extends Messages
         }
 
         if ($this->date_from) {
-            $dateFrom = \DateTime::createFromFormat('d.m.Y', $this->date_from)->format('Y-m-d');
+            $dateFrom = \DateTime::createFromFormat('d.m.Y', $this->date_from)->format('Y-m-d 00:00:00');
         }
 
         if ($this->date_to) {
-            $dateTo = \DateTime::createFromFormat('d.m.Y', $this->date_to)->format('Y-m-d');
+            $dateTo = \DateTime::createFromFormat('d.m.Y', $this->date_to)->format('Y-m-d 23:59:59');
         }
 
         if ($dateFrom && $dateTo) {
@@ -132,8 +134,45 @@ class MessagesSearch extends Messages
             $query->andFilterWhere(['<=', 'published', $dateTo]);
         }
 
+        return $dataProvider;
+    }
 
+    /**
+     * @param $params
+     * @return ActiveDataProvider|\yii\db\ActiveQuery
+     */
+    public function searchStatistics($params)
+    {
+        $query = Messages::find()->alias('m');
 
+        $query->joinWith(['subject']);
+
+        $this->load($params);
+
+        if ($this->date_from) {
+            $dateFrom = \DateTime::createFromFormat('d.m.Y', $this->date_from)->format('Y-m-d 00:00:00');
+        }
+
+        if ($this->date_to) {
+            $dateTo = \DateTime::createFromFormat('d.m.Y', $this->date_to)->format('Y-m-d 23:59:59');
+        }
+
+        if ($dateFrom && $dateTo) {
+            $query->andFilterWhere(['between', 'created', $dateFrom, $dateTo]);
+        } elseif ($dateFrom) {
+            $query->andFilterWhere(['>=', 'created', $dateFrom]);
+        } elseif ($dateTo) {
+            $query->andFilterWhere(['<=', 'created', $dateTo]);
+        }
+
+        $query->select([
+            'm.subject_id',
+            'COUNT(m.subject_id) as message_count',
+        ])->groupBy('m.subject_id');
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query
+        ]);
 
         return $dataProvider;
     }
