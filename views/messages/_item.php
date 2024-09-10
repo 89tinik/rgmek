@@ -4,10 +4,7 @@
 use yii\helpers\Html;
 
 ?>
-<div class="payment-item">
-
-    <div class="pack-report-wrap white-box">
-        <div class="invoice-table" id="message-list-<?=$model->id?>">
+<div class="white-box">
 <table >
     <colgroup>
         <col width="45%">
@@ -36,7 +33,4 @@ use yii\helpers\Html;
 </tr>
     </tbody>
 </table>
-        </div>
-
-    </div>
 </div>

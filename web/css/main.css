@@ -4423,6 +4423,9 @@ display:block;
 .messages-index  .invoice-table table td{
   border-bottom:0;
 }
+.messages-index .white-box {
+  padding: 10px 20px;
+}
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;

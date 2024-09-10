@@ -45,13 +45,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2>Обращения</h2>
 
     <div class="payment-items">
+        <div class="payment-item">
 
+            <div class="pack-report-wrap ">
+                <div class="invoice-table" id="message-list">
 
                         <?= $this->render('_list', ['dataProvider' => $dataProvider]) ?>
 
 
 
+                </div>
 
+            </div>
+        </div>
         <?php if ($dataProvider->pagination->pageCount > 1): ?>
             <div class="text-center">
                 <button id="load-more" class="btn btn-primary paginate-more">Показать ещё</button>
