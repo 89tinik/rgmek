@@ -164,6 +164,14 @@ class Messages extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMessageHistory()
+    {
+        return $this->hasMany(MessageHistory::class, ['message_id' => 'id']);
+    }
+
+    /**
      * @param $text string
      * @return string[]|true
      */

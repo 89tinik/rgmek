@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\MessageHistory;
 use Yii;
 use app\models\Messages;
 use app\models\MessagesSearch;
@@ -130,6 +131,11 @@ class MessagesController extends Controller
         $model->scenario = Messages::SCENARIO_USER_UPDATE;
         $model->status_id = 4;
         if ($model->save()) {
+            $modelHistory = new MessageHistory();
+            $modelHistory->log = 'Запрос отозван пользователемж';
+            $modelHistory->message_id = $model->id;
+            $modelHistory->save();
+
             return $this->redirect(['index']);
         }
     }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\MessageHistory;
 use app\models\Messages;
 use Yii;
 use app\models\MessageThemes;
@@ -93,6 +94,11 @@ class NewMessageController extends Controller
                 }
             }
             if ($model->save()) {
+                $modelHistory = new MessageHistory();
+                $modelHistory->log = 'Создан запрос';
+                $modelHistory->message_id = $model->id;
+                $modelHistory->save();
+
                 Yii::$app->session->setFlash('success', 'Ваше заявление успешно сформировано! В разделе «Диалоги» Вы можете отслеживать статус его рассмотрения.');
                 return $this->redirect(['messages/update', 'id' => $model->id]);
             }

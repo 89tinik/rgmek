@@ -2,6 +2,7 @@
 
 namespace app\modules\ticket\controllers;
 
+use app\models\MessageHistory;
 use app\models\Messages;
 use app\models\MessagesSearch;
 use app\modules\ticket\models\LoginForm;
@@ -119,23 +120,34 @@ class DefaultController extends Controller
                         $model->answer_files = json_encode($paths);
                     }
                 }
+                $historyArr = [];
                 if ($model->isAttributeChanged('status_id')) {
-                    $subject ='Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
+                    $historyArr[] = 'Установлен статус "'.$model->getStatus()->one()->status.'";';
+                    $subject = 'Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
                 }
                 if ($model->isAttributeChanged('answer') && !empty($model->answer)) {
-                    $subject ='Получен ответ на обращение № ' . $model->admin_num;
+                    $historyArr[] = 'Добавлен ответ;';
+                    $subject = 'Получен ответ на обращение № ' . $model->admin_num;
                 }
 
-
                 if ($model->save()) {
-                    if (!empty($email = ($model->email)??$model->getUser()->one()->email)) {
+                    if (!empty($historyArr)) {
+                        foreach ($historyArr as $log) {
+                            $modelHistory = new MessageHistory();
+                            $modelHistory->log = $log;
+                            $modelHistory->message_id = $model->id;
+                            $modelHistory->save();
+                        }
+                    }
+
+                    if (!empty($email = ($model->email) ?? $model->getUser()->one()->email)) {
                         $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
                         $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
-                        if ($message = $model->sendNoticeEmail($subject, $text, $email) === true){
+                        if ($message = $model->sendNoticeEmail($subject, $text, $email) === true) {
                             $message = 'Обновлено!';
                         }
-                    } elseif (!empty($phone = ($model->phone)??$model->getUser()->one()->phone)){
-                        if ($message = $model->sendNoticeSms($subject, $phone) === true){
+                    } elseif (!empty($phone = ($model->phone) ?? $model->getUser()->one()->phone)) {
+                        if ($message = $model->sendNoticeSms($subject, $phone) === true) {
                             $message = 'Обновлено!';
                         }
                     }
@@ -149,7 +161,8 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionStatistic(){
+    public function actionStatistic()
+    {
         $searchModel = new MessagesSearch();
 
         $dataProvider = $searchModel->searchStatistics(Yii::$app->request->queryParams);

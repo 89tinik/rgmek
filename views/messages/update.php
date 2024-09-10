@@ -13,7 +13,11 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="messages-update">
 
     <h1><?= $this->title ?></h1>
-
+    <ul>
+        <?php foreach ($model->messageHistory as $history): ?>
+            <li><b><?=Yii::$app->formatter->asDate($history->created, 'php:d.m.Y H:i:s')?></b> - <?= $history->log ?></li>
+        <?php endforeach; ?>
+    </ul>
     <?= $this->render('_formUpdate', [
         'model' => $model,
     ]) ?>
