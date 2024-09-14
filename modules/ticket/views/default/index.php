@@ -21,7 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <!--        --><?php //= Html::a('Create Messages', ['create'], ['class' => 'btn btn-success']) ?>
 
-
+    <?php
+    if (Yii::$app->session->hasFlash('success')) {
+        echo '<div class="form-message">' . Yii::$app->session->getFlash('success') . '</div>';
+    }
+    ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -29,7 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'attribute' => 'created',
+                'label' => 'Дата создания',
+                'enableSorting' => false,
+                'filter' => Html::activeTextInput($searchModel, 'created', [
+                'class' => 'form-control',
+                'readonly' => true, // Поле будет только для чтения
+            ]),
+            ],
             [
                 'attribute' => 'admin_num',
                 'enableSorting' => false,

@@ -122,7 +122,7 @@ class DefaultController extends Controller
                 }
                 $historyArr = [];
                 if ($model->isAttributeChanged('status_id')) {
-                    $historyArr[] = 'Установлен статус "'.$model->getStatus()->one()->status.'";';
+                    $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '";';
                     $subject = 'Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
                 }
                 if ($model->isAttributeChanged('answer') && !empty($model->answer)) {
@@ -140,17 +140,19 @@ class DefaultController extends Controller
                         }
                     }
 
-                    if (!empty($email = ($model->email) ?? $model->getUser()->one()->email)) {
+                    if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
                         $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
                         $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
-                        if ($message = $model->sendNoticeEmail($subject, $text, $email) === true) {
-                            $message = 'Обновлено!';
+                        if ($model->sendNoticeEmail($subject, $text, $email) === true) {
+                            Yii::$app->session->setFlash('success', 'Обновлено');
+
                         }
-                    } elseif (!empty($phone = ($model->phone) ?? $model->getUser()->one()->phone)) {
-                        if ($message = $model->sendNoticeSms($subject, $phone) === true) {
-                            $message = 'Обновлено!';
+                    } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {
+                        if ($model->sendNoticeSms($subject, $phone) === true) {
+                            Yii::$app->session->setFlash('success', 'Обновлено');
                         }
                     }
+                    return $this->redirect(['/ticket/index']);
                 }
             }
         }

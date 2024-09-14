@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $themeModel app\models\MessageThemes */
 /* @var $messageModel app\models\MessageThemes */
 /* @var $userModel app\models\User */
+/* @var $profileInfo array */
 
 $this->title = $themeModel->title;
 $this->params['breadcrumbs'][] = ['label' => 'Message Themes', 'url' => ['index']];
@@ -21,5 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $messageModel,
         'subject' => $themeModel->id,
         'userModel' => $userModel,
+        'profileInfo' => $profileInfo,
     ]) ?>
 </div>

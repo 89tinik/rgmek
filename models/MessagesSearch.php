@@ -64,11 +64,21 @@ class MessagesSearch extends Messages
             return $dataProvider;
         }
 
+        if ($this->created) {
+            $arrDate = explode('-', $this->created);
+            $dateFrom = \DateTime::createFromFormat('d.m.Y', trim($arrDate[0]))->format('Y-m-d 00:00:00');
+            $dateTo = \DateTime::createFromFormat('d.m.Y', trim($arrDate[1]))->format('Y-m-d 23:59:59');
+            if ($dateFrom && $dateTo) {
+                $query->andFilterWhere(['between', 'created', $dateFrom, $dateTo]);
+            }
+        }
+
+
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'subject_id' => $this->subject_id,
-            'created' => $this->created,
             'status_id' => $this->status_id,
             'published' => $this->published,
             'new' => $this->new,

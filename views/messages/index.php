@@ -42,7 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php ActiveForm::end(); ?>
     </div>
 
-    <h2>Обращения</h2>
 
     <div class="payment-items">
         <div class="payment-item">

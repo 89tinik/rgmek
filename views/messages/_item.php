@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 ?>
 <div class="white-box">
+    <h3>Обращение</h3>
 <table >
     <colgroup>
         <col width="45%">

@@ -62,4 +62,23 @@ $(function () {
         showOtherMonths: true,
         selectOtherMonths: true
     });
+
+    $('.messages-index input[name="MessagesSearch[created]"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+
+    $('.messages-index input[name="MessagesSearch[created]"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD.MM.YYYY') + ' - ' + picker.endDate.format('DD.MM.YYYY'));
+        $(this).change();
+    });
+
+    $('.messages-index input[name="MessagesSearch[created]"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        $(this).change();
+    });
+
+
 });

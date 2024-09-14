@@ -8,6 +8,8 @@ use Yii;
 use app\models\MessageThemes;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\httpclient\Client;
+use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -104,10 +106,18 @@ class NewMessageController extends Controller
             }
         }
 
+        $data = ['id' => \Yii::$app->user->identity->id_db];
+        $proifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile', $data);
 
+        if (isset($proifileInfo['success'])){
+            $profileInfo = $proifileInfo['success'];
+        } else {
+            return $proifileInfo['error'];
+        }
         return $this->render('create', [
             'themeModel' => $this->findMessageThemes($id),
             'messageModel' => $model,
+            'profileInfo' => $profileInfo,
             'userModel' => \Yii::$app->user->identity,
         ]);
     }
@@ -142,5 +152,23 @@ class NewMessageController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod($method)
+            ->setUrl($url)
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            if ($toArray){
+                $xml = new XmlParser();
+                return ['success' => $xml->parse($response)];
+            }else{
+                return ['success' => $response];
+            }
+        } else {
+            $this->redirect(['err/one-c']);
+        }
     }
 }

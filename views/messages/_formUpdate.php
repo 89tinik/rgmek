@@ -46,7 +46,9 @@ use yii\widgets\ActiveForm;
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success hidden']) ?>
         <?= Html::a('К списку', ['messages/index'],['class' => 'btn btn-success message-btn']) ?>
+        <?php if ($model->status_id != 4) { ?>
         <?= Html::a('Отозвать', ['messages/re-call', 'id'=>$model->id],['class' => 'btn btn-success message-btn']) ?>
+        <?php } ?>
     </div>
 
     <?php ActiveForm::end(); ?>
