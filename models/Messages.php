@@ -31,10 +31,12 @@ class Messages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subject_id', 'contract_id', 'message', 'user_id', 'status_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
-            [['subject_id', 'contract_id', 'message', 'user_id', 'email'], 'required', 'on' => self::SCENARIO_CREATE],
+            [['subject_id', 'message', 'user_id', 'status_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
+            [['subject_id', 'message', 'user_id', 'email'], 'required', 'on' => self::SCENARIO_CREATE],
+            [['contract_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE], 'message' => 'Пожалуйста, выберите номер договора'],
+            [['contract_id'], 'required', 'on' => self::SCENARIO_CREATE, 'message' => 'Пожалуйста, выберите номер договора'],
             [['subject_id', 'contract_id', 'user_id', 'status_id', 'new'], 'integer'],
-            [['email,'], 'email'],
+            [['email'], 'email'],
             [['message', 'files', 'answer', 'answer_files'], 'string'],
             [['created', 'published', 'update'], 'safe'],
             [['admin_num','contact_name','phone'], 'string', 'max' => 255],
@@ -45,6 +47,7 @@ class Messages extends \yii\db\ActiveRecord
             [['answerFilesUpload', 'filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
         ];
     }
+
 
     /**
      * {@inheritdoc}

@@ -12,10 +12,12 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="messages-update">
 
-    <h1><?= $this->title ?></h1>
+    <h1>Обращение <?= (!empty($model->admin_num)) ? '№'.Html::encode($model->admin_num) : '';?></h1>
+    <h2>«<?=Html::encode($model->subject->title)?>»</h2>
+    <h3>История обработки</h3>
     <ul>
         <?php foreach ($model->messageHistory as $history): ?>
-            <li><b><?=Yii::$app->formatter->asDate($history->created, 'php:d.m.Y H:i:s')?></b> - <?= $history->log ?></li>
+            <li><b><?=Yii::$app->formatter->asDate($history->created, 'php:d.m.Y H:i')?></b> - <?= $history->log ?></li>
         <?php endforeach; ?>
     </ul>
     <?= $this->render('_formUpdate', [

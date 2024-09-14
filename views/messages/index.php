@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($searchModel, 'date_from')->input('text', ['placeholder' => 'От'])->label('с') ?>
         <?= $form->field($searchModel, 'date_to')->input('text', ['placeholder' => 'До'])->label('по') ?>
 
-            <?= Html::submitButton('Фильтровать', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Сформировать', ['class' => 'btn btn-primary small']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

@@ -32,6 +32,15 @@ if (!empty($userModel->phone)) {
 
 $userEmail = (!empty($userModel->email)) ? $userModel->email : $profileInfo['Email'][0]['Value'];
 
+$contractsList = $userModel->getContractsList();
+$dropDownOptions = [
+    'class' => 'form-control styler select__default'
+];
+
+if (count($contractsList) > 1) {
+    // Добавляем prompt, если элементов больше одного
+    $dropDownOptions['prompt'] = 'Выберите номер договора';
+}
 ?>
 
 <div class="messages-form">
@@ -44,13 +53,7 @@ $userEmail = (!empty($userModel->email)) ? $userModel->email : $profileInfo['Ema
     <?= $form->field($model, 'user_phone')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userPhone])->label('Телефон пользователя'); ?>
     <?= $form->field($model, 'user_email')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userEmail])->label('E-mail пользователя'); ?>
 
-    <?= $form->field($model, 'contract_id')->dropDownList(
-        $userModel->getContractsList(),
-        [
-            'prompt' => 'Выберите договор',
-            'class' => 'form-control styler select__default'
-        ]
-    ) ?>
+    <?= $form->field($model, 'contract_id')->dropDownList($contractsList, $dropDownOptions) ?>
 
     <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
 
