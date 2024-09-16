@@ -23,7 +23,8 @@
         "moonlandsoft/yii2-phpexcel": "*",
         "mk-j/php_xlsxwriter": "*",
         "pantera-digital/yii2-sberbank-pay": "@dev",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "mpdf/mpdf": "^8.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

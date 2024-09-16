@@ -34,6 +34,76 @@ $(function() {
 	});
 
 	/*tin*/
+	$('.ajax-pdf').on('click', function (e) {
+		e.preventDefault(); // Останавливаем стандартное поведение кнопки
+
+		// Собираем данные формы
+		var formData = new FormData($('.messages-form form')[0]);
+
+		$.ajax({
+			url: '/new-message/generate-pdf', // Укажи правильный URL для обработки запроса
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+			if (response.status === 'success') {
+				// Открываем PDF в новой вкладке
+				window.open(response.pdfUrl, '_blank');
+			} else {
+				alert('Ошибка при генерации PDF');
+			}
+		},
+		error: function () {
+			alert('Ошибка при отправке данных');
+		}
+	});
+	});
+
+	let allFiles = []; // Массив для хранения всех выбранных файлов
+
+	$('#messages-filesupload').on('change', function (e) {
+		// Добавляем новые файлы к уже существующим
+		for (let i = 0; i < e.target.files.length; i++) {
+			allFiles.push(e.target.files[i]);
+		}
+
+		// Обновляем список файлов в интерфейсе
+		updateFileList();
+
+		// Очищаем поле input, чтобы можно было заново выбрать файлы
+		$('#messages-filesupload').val('');
+	});
+
+	$(document).on('click', '.removeFile', function() {
+		let index = $(this).data('index');
+		allFiles.splice(index, 1); // Удаляем файл из массива
+
+		updateFileList(); // Обновляем список файлов
+	});
+
+	function updateFileList() {
+		$('#filesList').empty();
+
+		for (let i = 0; i < allFiles.length; i++) {
+			$('#filesList').append('<li>' + allFiles[i].name +
+				' <button class="removeFile" data-index="'+ i +'">Х</button></li>');
+		}
+	}
+
+	// Перед отправкой формы обновляем input с файлами
+	$('.new-message-create #w0').on('submit', function() {
+		let dt = new DataTransfer();
+
+		// Добавляем все файлы в объект DataTransfer
+		for (let i = 0; i < allFiles.length; i++) {
+			dt.items.add(allFiles[i]);
+		}
+
+		// Присваиваем все файлы полю input
+		document.getElementById('messages-filesupload').files = dt.files;
+	});
+
 	$('.messages-form .input-file').on('change', function(){
 		if ($(this).val().length > 0){
 			$('.messages-form form button[type=submit]').removeClass('hidden');
@@ -42,20 +112,20 @@ $(function() {
 		}
 	});
 
-if ($('#receiptform-ee').length > 0){
-	new Cleave('#receiptform-ee', {
-		numeral: true,
-		numeralDecimalMark: ',',
-		delimiter: ''
-	});
-}
-if ($('#receiptform-penalty').length > 0){
-	new Cleave('#receiptform-penalty', {
-		numeral: true,
-		numeralDecimalMark: ',',
-		delimiter: ''
-	});
-}
+	if ($('#receiptform-ee').length > 0) {
+		new Cleave('#receiptform-ee', {
+			numeral: true,
+			numeralDecimalMark: ',',
+			delimiter: ''
+		});
+	}
+	if ($('#receiptform-penalty').length > 0) {
+		new Cleave('#receiptform-penalty', {
+			numeral: true,
+			numeralDecimalMark: ',',
+			delimiter: ''
+		});
+	}
 
 //push
 //setTimeout(function(){

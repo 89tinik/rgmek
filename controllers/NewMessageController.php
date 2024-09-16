@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\MessageHistory;
 use app\models\Messages;
+use Mpdf\Mpdf;
 use Yii;
 use app\models\MessageThemes;
 use yii\data\ActiveDataProvider;
@@ -119,6 +120,39 @@ class NewMessageController extends Controller
             'messageModel' => $model,
             'profileInfo' => $profileInfo,
             'userModel' => \Yii::$app->user->identity,
+        ]);
+    }
+
+    public function actionGeneratePdf()
+    {
+        if (Yii::$app->request->isPost) {
+            $model = new Messages();
+
+            // Загрузка данных формы
+            if ($model->load(Yii::$app->request->post())) {
+
+                $mpdf = new Mpdf([
+                    'tempDir' => 'tmp-mpdf'
+                ]);
+
+                $html = "<h1>Данные формы</h1>";
+                $html .= "<p>Контактное лицо: " . $model->contact_name . "</p>";
+
+                $mpdf->WriteHTML($html);
+
+                $pdfPath = Yii::getAlias('@webroot') . '/uploads/form.pdf';
+                $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
+
+                return $this->asJson([
+                    'status' => 'success',
+                    'pdfUrl' => Yii::getAlias('@web') . '/uploads/form.pdf',
+                ]);
+            }
+        }
+
+        return $this->asJson([
+            'status' => 'error',
+            'message' => 'Данные не получены',
         ]);
     }
 

@@ -58,6 +58,7 @@ if (count($contractsList) > 1) {
     <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'filesUpload[]')->fileInput(['multiple' => true]); ?>
+    <ul id="filesList"></ul>
     <?= $form->field($model, 'contact_name')->textInput(['value' => $userModel->full_name]); ?>
     <?= $form->field($model, 'phone')->textInput(['value' => $userPhone]); ?>
     <?= $form->field($model, 'email')->textInput(['value' => $userEmail]); ?>
@@ -65,6 +66,7 @@ if (count($contractsList) > 1) {
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
         <?= Html::a('Выйти из обращения без сохранения', ['messages/index'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Смотреть PDF', ['class' => 'btn btn-success ajax-pdf']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

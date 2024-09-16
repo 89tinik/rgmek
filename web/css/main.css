@@ -4438,6 +4438,20 @@ display:block;
   margin-top: 15px;
   color: #4475F2;
 }
+
+#filesList li {
+  line-height: 30px;
+}
+
+#filesList .removeFile {
+  border: none;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background: #ff4949;
+  color: #fff;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;
