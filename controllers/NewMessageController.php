@@ -82,35 +82,40 @@ class NewMessageController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->status_id = 1;
             $model->filesUpload = UploadedFile::getInstances($model, 'filesUpload');
-
-            if ($model->filesUpload) {
-                $folderId = $model->id;
-                $uploadDirectory = 'uploads/tickets/' . $folderId;
-
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0777, true);
-                }
-
-                $paths = $model->uploadFiles($folderId);
-                if ($paths !== false) {
-                    $model->files = json_encode($paths);
-                }
-            }
             if ($model->save()) {
-                $modelHistory = new MessageHistory();
-                $modelHistory->log = 'Создан запрос';
-                $modelHistory->message_id = $model->id;
-                $modelHistory->save();
+                if ($model->filesUpload) {
+                    $folderId = $model->id;
+                    $uploadDirectory = 'uploads/tickets/' . $folderId;
 
-                Yii::$app->session->setFlash('success', 'Ваше заявление успешно сформировано! В разделе «Диалоги» Вы можете отслеживать статус его рассмотрения.');
-                return $this->redirect(['messages/update', 'id' => $model->id]);
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0777, true);
+                    }
+
+                    $paths = $model->uploadFiles($folderId);
+                    if ($paths !== false) {
+                        $model->files = json_encode($paths);
+                    }
+                }
+                if ($model->save()) {
+                    $modelHistory = new MessageHistory();
+                    $modelHistory->log = 'Создан запрос';
+                    $modelHistory->message_id = $model->id;
+                    $modelHistory->save();
+
+                    if ($fileName = $model->sendAdminNoticeEmail()) {
+                         unlink($fileName);
+                    }
+
+                    Yii::$app->session->setFlash('success', 'Ваше заявление успешно сформировано! В разделе «Диалоги» Вы можете отслеживать статус его рассмотрения.');
+                    return $this->redirect(['messages/update', 'id' => $model->id]);
+                }
             }
         }
 
         $data = ['id' => \Yii::$app->user->identity->id_db];
         $proifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile', $data);
 
-        if (isset($proifileInfo['success'])){
+        if (isset($proifileInfo['success'])) {
             $profileInfo = $proifileInfo['success'];
         } else {
             return $proifileInfo['error'];
@@ -131,21 +136,11 @@ class NewMessageController extends Controller
             // Загрузка данных формы
             if ($model->load(Yii::$app->request->post())) {
 
-                $mpdf = new Mpdf([
-                    'tempDir' => 'tmp-mpdf'
-                ]);
-
-                $html = "<h1>Данные формы</h1>";
-                $html .= "<p>Контактное лицо: " . $model->contact_name . "</p>";
-
-                $mpdf->WriteHTML($html);
-
-                $pdfPath = Yii::getAlias('@webroot') . '/uploads/form.pdf';
-                $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
+                $model->generatePdf();
 
                 return $this->asJson([
                     'status' => 'success',
-                    'pdfUrl' => Yii::getAlias('@web') . '/uploads/form.pdf',
+                    'pdfUrl' => Yii::getAlias('@web') . '/uploads/formaPDF.pdf',
                 ]);
             }
         }
@@ -187,7 +182,9 @@ class NewMessageController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
+
+    private function sendToServer($url, $data = array(), $toArray = true, $method = 'GET')
+    {
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod($method)
@@ -195,10 +192,10 @@ class NewMessageController extends Controller
             ->setData($data)
             ->send();
         if ($response->isOk) {
-            if ($toArray){
+            if ($toArray) {
                 $xml = new XmlParser();
                 return ['success' => $xml->parse($response)];
-            }else{
+            } else {
                 return ['success' => $response];
             }
         } else {

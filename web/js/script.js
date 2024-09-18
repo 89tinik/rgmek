@@ -35,9 +35,12 @@ $(function() {
 
 	/*tin*/
 	$('.ajax-pdf').on('click', function (e) {
-		e.preventDefault(); // Останавливаем стандартное поведение кнопки
-
-		// Собираем данные формы
+		e.preventDefault();
+		let filesName = [];
+		$('#filesList li').each(function ($i) {
+			filesName[$i] = $(this).children('span').text();
+		});
+		$('#messages-filesuploadnames').val(filesName.join(', '));
 		var formData = new FormData($('.messages-form form')[0]);
 
 		$.ajax({
@@ -48,7 +51,6 @@ $(function() {
 			contentType: false,
 			success: function (response) {
 			if (response.status === 'success') {
-				// Открываем PDF в новой вкладке
 				window.open(response.pdfUrl, '_blank');
 			} else {
 				alert('Ошибка при генерации PDF');
@@ -60,47 +62,41 @@ $(function() {
 	});
 	});
 
-	let allFiles = []; // Массив для хранения всех выбранных файлов
+	let allFiles = [];
 
 	$('#messages-filesupload').on('change', function (e) {
-		// Добавляем новые файлы к уже существующим
 		for (let i = 0; i < e.target.files.length; i++) {
 			allFiles.push(e.target.files[i]);
 		}
 
-		// Обновляем список файлов в интерфейсе
 		updateFileList();
 
-		// Очищаем поле input, чтобы можно было заново выбрать файлы
 		$('#messages-filesupload').val('');
 	});
 
 	$(document).on('click', '.removeFile', function() {
 		let index = $(this).data('index');
-		allFiles.splice(index, 1); // Удаляем файл из массива
+		allFiles.splice(index, 1);
 
-		updateFileList(); // Обновляем список файлов
+		updateFileList();
 	});
 
 	function updateFileList() {
 		$('#filesList').empty();
 
 		for (let i = 0; i < allFiles.length; i++) {
-			$('#filesList').append('<li>' + allFiles[i].name +
-				' <button class="removeFile" data-index="'+ i +'">Х</button></li>');
+			$('#filesList').append('<li><span>' + allFiles[i].name +
+				'</span> <button class="removeFile" data-index="'+ i +'">Х</button></li>');
 		}
 	}
 
-	// Перед отправкой формы обновляем input с файлами
 	$('.new-message-create #w0').on('submit', function() {
 		let dt = new DataTransfer();
 
-		// Добавляем все файлы в объект DataTransfer
 		for (let i = 0; i < allFiles.length; i++) {
 			dt.items.add(allFiles[i]);
 		}
 
-		// Присваиваем все файлы полю input
 		document.getElementById('messages-filesupload').files = dt.files;
 	});
 

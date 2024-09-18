@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Mpdf\Mpdf;
+use Mpdf\MpdfException;
 use Yii;
 use yii\httpclient\Client;
 
@@ -14,7 +16,8 @@ class Messages extends \yii\db\ActiveRecord
     public $answerFilesUpload;
 
     public $filesUpload;
-    
+    public $filesUploadNames;
+
     public $message_count;
 
     /**
@@ -37,9 +40,9 @@ class Messages extends \yii\db\ActiveRecord
             [['contract_id'], 'required', 'on' => self::SCENARIO_CREATE, 'message' => 'Пожалуйста, выберите номер договора'],
             [['subject_id', 'contract_id', 'user_id', 'status_id', 'new'], 'integer'],
             [['email'], 'email'],
-            [['message', 'files', 'answer', 'answer_files'], 'string'],
+            [['message', 'files', 'answer', 'answer_files', 'filesUploadNames'], 'string'],
             [['created', 'published', 'update'], 'safe'],
-            [['admin_num','contact_name','phone'], 'string', 'max' => 255],
+            [['admin_num', 'contact_name', 'phone'], 'string', 'max' => 255],
             [['contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contract::class, 'targetAttribute' => ['contract_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => MessageStatuses::class, 'targetAttribute' => ['status_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Theme::class, 'targetAttribute' => ['subject_id' => 'id']],
@@ -227,5 +230,59 @@ class Messages extends \yii\db\ActiveRecord
             return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
         }
         return true;
+    }
+
+    /**
+     * @return false|string
+     * @throws MpdfException
+     */
+    public function sendAdminNoticeEmail()
+    {
+        $fileName = date('d.m.Y H:i') . '_' . $this->contract->number . '.pdf';
+        $this->generatePdf($fileName);
+        $filePath = Yii::getAlias('@webroot') . '/uploads/' . $fileName;
+        //отправляем почту
+        $mail = Yii::$app->mailer->compose()
+            ->setFrom('noreply@send.rgmek.ru')
+            ->setTo('tinik_89@mail.ru')
+            ->setSubject('Новое обращение')
+            ->setHtmlBody('Детали во вложении')
+            ->attach($filePath)
+            ->send();
+        if (!$mail) {
+            return false;
+        }
+        return $filePath;
+    }
+
+    /**
+     * @throws MpdfException
+     */
+    public function generatePdf($fileName = 'formaPDF.pdf')
+    {
+        $mpdf = new Mpdf([
+            'tempDir' => 'tmp-mpdf'
+        ]);
+        if (!empty($this->files)) {
+            $filesUploadNames = implode(', ', json_decode($this->files, true));
+        } else {
+            $filesUploadNames = $this->filesUploadNames;
+        }
+        $html = Yii::$app->view->render('@app/views/new-message/pdf', [
+            'date' => date('d.m.Y H:i'),
+            'contract' => ($this->contract ? $this->contract->number : 'Не указан'),
+            'subject' => ($this->subject ? $this->subject->title : 'Не указана'),
+            'message' => $this->message,
+            'filesUploadNames' => $filesUploadNames,
+            'contactName' => $this->contact_name,
+            'phone' => $this->phone,
+            'email' => $this->email,
+        ]);
+
+
+        $mpdf->WriteHTML($html);
+
+        $pdfPath = Yii::getAlias('@webroot') . '/uploads/' . $fileName;
+        $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
     }
 }

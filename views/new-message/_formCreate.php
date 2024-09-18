@@ -47,6 +47,7 @@ if (count($contractsList) > 1) {
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'filesUploadNames')->hiddenInput()->label(false); ?>
     <?= $form->field($model, 'subject_id')->hiddenInput(['value' => $subject])->label(false); ?>
     <?= $form->field($model, 'user_id')->hiddenInput(['value' => $userModel->id])->label(false); ?>
     <?= $form->field($model, 'user_name')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userModel->full_name])->label('Пользователь'); ?>
