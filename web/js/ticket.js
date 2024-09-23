@@ -66,7 +66,38 @@ $(function () {
     $('.messages-index input[name="MessagesSearch[created]"]').daterangepicker({
         autoUpdateInput: false,
         locale: {
-            cancelLabel: 'Clear'
+            "format": "DD.MM.YYYY",
+            "separator": " - ",
+            "applyLabel": "Применить",
+            "cancelLabel": "Очистить",
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "Вс",
+                "Пн",
+                "Вт",
+                "Ср",
+                "Чт",
+                "Пт",
+                "Сб"
+            ],
+            "monthNames": [
+                "Январь",
+                "Февраль",
+                "Март",
+                "Апрель",
+                "Май",
+                "Июнь",
+                "Июль",
+                "Август",
+                "Сентябрь",
+                "Октябрь",
+                "Ноябрь",
+                "Декабрь"
+            ],
+            "firstDay": 1
         }
     });
 
