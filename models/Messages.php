@@ -247,8 +247,14 @@ class Messages extends \yii\db\ActiveRecord
             ->setTo('lk@rgmek.ru')
             ->setSubject('Новое обращение')
             ->setHtmlBody('Детали во вложении')
-            ->attach($filePath)
-            ->send();
+            ->attach($filePath);
+        if ($this->files){
+            $attaches = json_decode($this->files, true);
+            foreach ($attaches as $attach) {
+                $mail->attach($attach);
+            }
+        }
+        $mail->send();
         if (!$mail) {
             return false;
         }

@@ -132,7 +132,7 @@ class MessagesController extends Controller
         $model->status_id = 4;
         if ($model->save()) {
             $modelHistory = new MessageHistory();
-            $modelHistory->log = 'Запрос отозван пользователемж';
+            $modelHistory->log = 'Запрос отозван пользователем';
             $modelHistory->message_id = $model->id;
             $modelHistory->save();
 

@@ -116,6 +116,7 @@ class MessagesSearch extends Messages
                 'defaultOrder' => [
                     'status_id' => SORT_ASC,
                     'published' => SORT_DESC,
+                    'created' => SORT_DESC,
                     'new' => SORT_DESC,
                 ],
             ],

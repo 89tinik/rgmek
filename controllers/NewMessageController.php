@@ -103,7 +103,13 @@ class NewMessageController extends Controller
                     $modelHistory->save();
 
                     if ($fileName = $model->sendAdminNoticeEmail()) {
-                         unlink($fileName);
+                        unlink($fileName);
+                    }
+                    if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
+                        if ($model->sendNoticeEmail('Обращение в РГМЭК', 'Ваше сообщение принято.', $email) === true) {
+                            Yii::$app->session->setFlash('success', 'Обновлено');
+
+                        }
                     }
 
                     Yii::$app->session->setFlash('success', 'Ваше заявление успешно сформировано! В разделе «Диалоги» Вы можете отслеживать статус его рассмотрения.');
