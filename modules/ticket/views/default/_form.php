@@ -7,7 +7,25 @@ use yii\helpers\FormatConverter;
 /* @var $this yii\web\View */
 /* @var $model app\models\Messages */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $profileInfo array */
 
+
+if (!empty($userModel->phone)) {
+    $userPhone = $model->user->phone;
+} else {
+    if (is_array($profileInfo['PhoneCity']) && !isset($profileInfo['PhoneCity']['Value'])) {
+        $userPhone = '';
+        foreach ($profileInfo['PhoneCity'] as $arr) {
+            if (empty($phoneCity)) {
+                $userPhone = $arr['Value'];
+            } else {
+                $userPhone .= ', ' . $arr['Value'];
+            }
+        }
+    } else {
+        $userPhone = $profileInfo['PhoneCity']['Value'];
+    }
+}
 // Преобразуем дату перед отображением
 if ($model->published) {
     $model->published = Yii::$app->formatter->asDate($model->published, 'php:d.m.Y');
@@ -40,7 +58,7 @@ $statuses = \app\models\MessageStatuses::find()->all();
     <?= $form->field($model, 'subject_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->subject->title]) ?>
     <?= $form->field($model, 'user_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->user->full_name]) ?>
     <?= $form->field($model, 'user_email')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->user->email])->label('E-mail пользователя') ?>
-    <?= $form->field($model, 'user_phone')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->user->phone])->label('Телефон пользователя') ?>
+    <?= $form->field($model, 'user_phone')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userPhone])->label('Телефон пользователя') ?>
     <?= $form->field($model, 'contact_name')->textInput(['class' => 'disabled', 'disabled' => true]) ?>
     <?= $form->field($model, 'phone')->textInput(['class' => 'disabled', 'disabled' => true]) ?>
     <?= $form->field($model, 'email')->textInput(['class' => 'disabled', 'disabled' => true]) ?>

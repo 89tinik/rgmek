@@ -41,8 +41,19 @@ use yii\widgets\ActiveForm;
         echo $form->field($model, 'filesUpload[]')->fileInput(['multiple' => true, 'class' => 'input-file']);
 
     ?>
+    <ul id="filesList"></ul>
     <?= $form->field($model, 'answer')->textarea(['class' => 'disabled', 'rows' => 6, 'disabled' => true]) ?>
+    <?php
+    if (!empty($model->answer_files)) {
+        $files = json_decode($model->answer_files);
+        echo '<h3>Прикреплённые файлы ответа</h3><ul>';
+        foreach ($files as $file) {
+            echo '<li>' . Html::a(basename(mb_convert_encoding($file, 'UTF-8', 'auto')), ['/' . $file], ['target' => '_blank']) . '</li>';
+        }
+        echo '</ul>';
+    }
 
+    ?>
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success hidden']) ?>
         <?= Html::a('К списку', ['messages/index'],['class' => 'btn btn-success message-btn']) ?>

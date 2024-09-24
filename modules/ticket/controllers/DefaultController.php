@@ -5,12 +5,15 @@ namespace app\modules\ticket\controllers;
 use app\models\MessageHistory;
 use app\models\Messages;
 use app\models\MessagesSearch;
+use app\models\User;
 use app\modules\ticket\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\httpclient\Client;
+use yii\httpclient\XmlParser;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -157,9 +160,19 @@ class DefaultController extends Controller
             }
         }
 
+        $userModel= User::findIdentity($model->user_id);
+        $data = ['id' => $userModel->id_db];
+        $proifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile', $data);
+
+        if (isset($proifileInfo['success'])) {
+            $profileInfo = $proifileInfo['success'];
+        } else {
+            return $proifileInfo['error'];
+        }
+
         return $this->render('update', [
             'model' => $model,
-            'message' => $message,
+            'profileInfo' => $profileInfo
         ]);
     }
 
@@ -196,5 +209,25 @@ class DefaultController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function sendToServer($url, $data = array(), $toArray = true, $method = 'GET')
+    {
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod($method)
+            ->setUrl($url)
+            ->setData($data)
+            ->send();
+        if ($response->isOk) {
+            if ($toArray) {
+                $xml = new XmlParser();
+                return ['success' => $xml->parse($response)];
+            } else {
+                return ['success' => $response];
+            }
+        } else {
+            $this->redirect(['err/one-c']);
+        }
     }
 }

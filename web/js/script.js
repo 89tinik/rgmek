@@ -83,14 +83,20 @@ $(function () {
 
     function updateFileList() {
         $('#filesList').empty();
-
+        let show = 0;
         for (let i = 0; i < allFiles.length; i++) {
+            show = 1;
             $('#filesList').append('<li><span>' + allFiles[i].name +
                 '</span> <button class="removeFile" data-index="' + i + '">Х</button></li>');
         }
+        if (show > 0) {
+            $('.messages-form form button[type=submit]').removeClass('hidden');
+        } else {
+            $('.messages-form form button[type=submit]').addClass('hidden');
+        }
     }
 
-    $('.new-message-create #w0').on('submit', function () {
+    $('.new-message-create #w0, .messages-update #w0').on('submit', function () {
         let dt = new DataTransfer();
 
         for (let i = 0; i < allFiles.length; i++) {
@@ -100,13 +106,6 @@ $(function () {
         document.getElementById('messages-filesupload').files = dt.files;
     });
 
-    $('.messages-form .input-file').on('change', function () {
-        if ($(this).val().length > 0) {
-            $('.messages-form form button[type=submit]').removeClass('hidden');
-        } else {
-            $('.messages-form form button[type=submit]').addClass('hidden');
-        }
-    });
 
     if ($('#receiptform-ee').length > 0) {
         new Cleave('#receiptform-ee', {

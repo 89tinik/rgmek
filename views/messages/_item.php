@@ -3,6 +3,7 @@
 
 use yii\helpers\Html;
 
+$date = (!empty($model->published)) ? $model->published : $model->created;
 ?>
 <div class="white-box">
     <h3>Обращение</h3>
@@ -23,7 +24,7 @@ use yii\helpers\Html;
             <!--span>Счет на оплату от: 01.01.2013</span-->
         </div>
     </td>
-    <td><p><?= Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') ?></p>    </td>
+    <td><p><?= Yii::$app->formatter->asDate($date, 'php:d.m.Y') ?></p>    </td>
     <td>
         <!--a href="#" class="btn small border right">Просмотр</a-->
         <div class="bts">

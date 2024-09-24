@@ -45,7 +45,7 @@ if (count($contractsList) > 1) {
 
 <div class="messages-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'filesUploadNames')->hiddenInput()->label(false); ?>
     <?= $form->field($model, 'subject_id')->hiddenInput(['value' => $subject])->label(false); ?>
