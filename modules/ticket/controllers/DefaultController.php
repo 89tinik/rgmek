@@ -31,6 +31,9 @@ class DefaultController extends Controller
         return [
             'verbs' => [
                 'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
             ],
             'access' => [
                 'class' => AccessControl::class,
@@ -124,7 +127,7 @@ class DefaultController extends Controller
                     }
                 }
                 $historyArr = [];
-                if ($model->isAttributeChanged('status_id')) {
+                if ($model->status_id != $this->findModel($model->id)->status_id) {
                     $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '";';
                     $subject = 'Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
                 }
@@ -141,18 +144,18 @@ class DefaultController extends Controller
                             $modelHistory->message_id = $model->id;
                             $modelHistory->save();
                         }
-                    }
 
-                    if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
-                        $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
-                        $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
-                        if ($model->sendNoticeEmail($subject, $text, $email) === true) {
-                            Yii::$app->session->setFlash('success', 'Обновлено');
+                        if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
+                            $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
+                            $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
+                            if ($model->sendNoticeEmail($subject, $text, $email) === true) {
+                                Yii::$app->session->setFlash('success', 'Обновлено');
 
-                        }
-                    } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {
-                        if ($model->sendNoticeSms($subject, $phone) === true) {
-                            Yii::$app->session->setFlash('success', 'Обновлено');
+                            }
+                        } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {
+                            if ($model->sendNoticeSms($subject, $phone) === true) {
+                                Yii::$app->session->setFlash('success', 'Обновлено');
+                            }
                         }
                     }
                     return $this->redirect(['/ticket/index']);
@@ -160,7 +163,7 @@ class DefaultController extends Controller
             }
         }
 
-        $userModel= User::findIdentity($model->user_id);
+        $userModel = User::findIdentity($model->user_id);
         $data = ['id' => $userModel->id_db];
         $proifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile', $data);
 
@@ -186,6 +189,20 @@ class DefaultController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Deletes an existing MessageThemes model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
     }
 
     public function actionLogout()

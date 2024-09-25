@@ -74,7 +74,6 @@ class MessagesSearch extends Messages
         }
 
 
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -138,11 +137,23 @@ class MessagesSearch extends Messages
         }
 
         if ($dateFrom && $dateTo) {
-            $query->andFilterWhere(['between', 'published', $dateFrom, $dateTo]);
+            $query->andWhere([
+                'or',
+                ['between', 'published', $dateFrom, $dateTo],
+                ['and', ['between', 'created', $dateFrom, $dateTo], ['published' => null]],
+            ]);
         } elseif ($dateFrom) {
-            $query->andFilterWhere(['>=', 'published', $dateFrom]);
+            $query->andWhere([
+                'or',
+                ['>=', 'published', $dateFrom],
+                ['and', ['>=', 'created', $dateFrom], ['published' => null]],
+            ]);
         } elseif ($dateTo) {
-            $query->andFilterWhere(['<=', 'published', $dateTo]);
+            $query->andWhere([
+                'or',
+                ['<=', 'published', $dateTo],
+                ['and', ['<=', 'created', $dateTo], ['published' => null]],
+            ]);
         }
 
         return $dataProvider;
@@ -180,7 +191,7 @@ class MessagesSearch extends Messages
             'm.subject_id',
             'COUNT(m.subject_id) as message_count',
         ])->groupBy('m.subject_id');
-        
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query
         ]);

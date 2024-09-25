@@ -108,6 +108,10 @@ class MessagesController extends Controller
                 }
                 if (!$model->save()) {
                     return 'Ошибка!';
+                } else {
+                    if ($fileName = $model->sendAdminNoticeEmail('Обновлено обращение.')) {
+                        unlink($fileName);
+                    }
                 }
             }
         }

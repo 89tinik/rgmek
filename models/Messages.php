@@ -233,10 +233,11 @@ class Messages extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param $subject string
      * @return false|string
      * @throws MpdfException
      */
-    public function sendAdminNoticeEmail()
+    public function sendAdminNoticeEmail(string $subject='Новое обращение')
     {
         $fileName = date('d.m.Y H:i') . '_' . $this->contract->number . '.pdf';
         $this->generatePdf($fileName);
@@ -245,7 +246,7 @@ class Messages extends \yii\db\ActiveRecord
         $mail = Yii::$app->mailer->compose()
             ->setFrom('noreply@send.rgmek.ru')
             ->setTo('lk@rgmek.ru')
-            ->setSubject('Новое обращение')
+            ->setSubject($subject)
             ->setHtmlBody('Детали во вложении')
             ->attach($filePath);
         if ($this->files){
