@@ -50,7 +50,6 @@ class MessagesController extends Controller
     }
 
 
-
     /**
      * Lists all Messages models.
      * @return mixed
@@ -99,17 +98,25 @@ class MessagesController extends Controller
                         mkdir($uploadDirectory, 0777, true);
                     }
 
-                    $paths = $model->uploadFiles($folderId);
-                    $oldFilesArr = json_decode($model->files, true);
-                    $allFilesArr = array_merge($oldFilesArr, $paths);
-                    if ($paths !== false) {
+                    $allFilesArr = $model->uploadFiles($folderId);
+                    if ($oldFilesArr = json_decode($model->files, true)) {
+                        $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
+                    }
+                    if ($allFilesArr !== false) {
                         $model->files = json_encode($allFilesArr);
                     }
                 }
                 if (!$model->save()) {
                     return 'Ошибка!';
                 } else {
-                    if ($fileName = $model->sendAdminNoticeEmail('Обновлено обращение.')) {
+                    $subject = 'Обновлено обращение';
+                    if ($model->admin_num) {
+                        $subject .= ' №' . $model->admin_num;
+                    } else {
+                        $subject .= ' №(не задано)';
+                    }
+                    $subject .= ' (id ' . $model->id . ')';
+                    if ($fileName = $model->sendAdminNoticeEmail($subject)) {
                         unlink($fileName);
                     }
                 }

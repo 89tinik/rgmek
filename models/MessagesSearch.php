@@ -45,7 +45,7 @@ class MessagesSearch extends Messages
      */
     public function search($params)
     {
-        $query = Messages::find();
+        $query = Messages::find()->alias('m');
 
         $query->joinWith(['user']);
         $query->joinWith(['contract']);
@@ -76,7 +76,7 @@ class MessagesSearch extends Messages
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'm.id' => $this->id,
             'subject_id' => $this->subject_id,
             'status_id' => $this->status_id,
             'published' => $this->published,
