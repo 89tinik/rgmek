@@ -51,7 +51,7 @@ $statuses = \app\models\MessageStatuses::find()->all();
 ?>
 
 <div class="messages-form">
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <h2>Тело обращения</h2>
 
     <?= $form->field($model, 'contract_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->contract->number]) ?>
@@ -91,23 +91,23 @@ $statuses = \app\models\MessageStatuses::find()->all();
     <?= $form->field($model, 'published')->textInput($publishedProperties) ?>
 
     <?= $form->field($model, 'admin_num')->textInput($adminNumProperties) ?>
+    <?php if ($model->admin_num) : ?>
+        <?= $form->field($model, 'answer')->textarea($answerProperties) ?>
 
-    <?= $form->field($model, 'answer')->textarea($answerProperties) ?>
-
-    <?php
-    if (!empty($model->answer_files)) {
-        $files = json_decode($model->answer_files);
-        echo '<h3>Прикреплённые файлы</h3><ul>';
-        foreach ($files as $file) {
-            echo '<li>' . Html::a(basename(mb_convert_encoding($file, 'UTF-8', 'auto')), ['/' . $file], ['target' => '_blank']) . '</li>';
+        <?php
+        if (!empty($model->answer_files)) {
+            $files = json_decode($model->answer_files);
+            echo '<h3>Прикреплённые файлы</h3><ul>';
+            foreach ($files as $file) {
+                echo '<li>' . Html::a(basename(mb_convert_encoding($file, 'UTF-8', 'auto')), ['/' . $file], ['target' => '_blank']) . '</li>';
+            }
+            echo '</ul>';
+        } else {
+            echo $form->field($model, 'answerFilesUpload[]')->fileInput(['multiple' => true]);
+            echo '<ul id="answerFilesList"></ul>';
         }
-        echo '</ul>';
-    } else {
-        echo $form->field($model, 'answerFilesUpload[]')->fileInput(['multiple' => true]);
-    }
-    ?>
-
-
+        ?>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

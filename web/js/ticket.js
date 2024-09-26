@@ -58,6 +58,48 @@ tinymce.init({
 });
 
 $(function () {
+
+    let allFiles = [];
+
+    $('#messages-answerfilesupload').on('change', function (e) {
+        for (let i = 0; i < e.target.files.length; i++) {
+            allFiles.push(e.target.files[i]);
+        }
+
+        updateFileList();
+
+        $('#messages-answerfilesupload').val('');
+    });
+
+    $(document).on('click', '.removeAnswerFile', function () {
+        let index = $(this).data('index');
+        allFiles.splice(index, 1);
+
+        updateFileList();
+    });
+
+    function updateFileList() {
+        $('#answerFilesList').empty();
+        let show = 0;
+        for (let i = 0; i < allFiles.length; i++) {
+            show = 1;
+            $('#answerFilesList').append('<li><span>' + allFiles[i].name +
+                '</span> <button class="removeAnswerFile" data-index="' + i + '">Х</button></li>');
+        }
+
+    }
+
+    $('.operator .messages-form #w0').on('submit', function () {
+        let dt = new DataTransfer();
+
+        for (let i = 0; i < allFiles.length; i++) {
+            dt.items.add(allFiles[i]);
+        }
+
+        document.getElementById('messages-answerfilesupload').files = dt.files;
+    });
+
+
     $('#admin_public').datepicker({
         showOtherMonths: true,
         selectOtherMonths: true

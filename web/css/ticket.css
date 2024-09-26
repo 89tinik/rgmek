@@ -79,3 +79,12 @@ table.table.table-striped.table-bordered tbody td {
 .messages-form .form-group {
     margin: 20px 0;
 }
+
+#answerFilesList .removeAnswerFile {
+    border: none;
+    padding: 3px 6px;
+    border-radius: 6px;
+    background: #ff4949;
+    color: #fff;
+    cursor: pointer;
+}

@@ -127,13 +127,29 @@ class DefaultController extends Controller
                     }
                 }
                 $historyArr = [];
-                if ($model->status_id != $this->findModel($model->id)->status_id) {
+                $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
+
+                if ($model->status_id != $this->findModel($model->id)->status_id && $model->status_id == 4) {
+                    $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '";';
+                    $subject = 'Ваше обращение отозвано.';
+                    $text = 'Уважаемый клиент! Вашему обращение номер №'.
+                        $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
+                        ' отозвано администратором.';
+                } elseif ($model->admin_num != $this->findModel($model->id)->admin_num  && !empty($model->admin_num)) {
+                    $historyArr[] = 'Присвоен номер;';
+                    $subject = 'Ваше обращение зарегистрировано.';
+                    $text = 'Уважаемый клиент! Вашему обращению присвоен регистрационный номер №'.
+                        $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
+                    '. Обращение принято в работу. Подробности можете узнать, перейдя по ' .
+                    Html::a('ссылке', $link);
+                } elseif ($model->status_id != $this->findModel($model->id)->status_id) {
                     $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '";';
                     $subject = 'Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
-                }
-                if ($model->isAttributeChanged('answer') && !empty($model->answer)) {
+                    $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
+                } elseif ($model->isAttributeChanged('answer') && !empty($model->answer)) {
                     $historyArr[] = 'Добавлен ответ;';
                     $subject = 'Получен ответ на обращение № ' . $model->admin_num;
+                    $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
                 }
 
                 if ($model->save()) {
@@ -146,8 +162,6 @@ class DefaultController extends Controller
                         }
 
                         if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
-                            $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
-                            $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
                             if ($model->sendNoticeEmail($subject, $text, $email) === true) {
                                 Yii::$app->session->setFlash('success', 'Обновлено');
 

@@ -105,11 +105,11 @@ class NewMessageController extends Controller
                     if ($fileName = $model->sendAdminNoticeEmail()) {
                         unlink($fileName);
                     }
+                    $text = 'Ваше обращение успешно получено. Мы зарегистрируем его и сообщим Вам номер.';
                     if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
-                        if ($model->sendNoticeEmail('Обращение в РГМЭК', 'Ваше сообщение принято.', $email) === true) {
-                            Yii::$app->session->setFlash('success', 'Обновлено');
-
-                        }
+                        $model->sendNoticeEmail('Обращение в РГМЭК', $text, $email);
+                    } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {
+                        $model->sendNoticeSms($text, $phone);
                     }
 
                     Yii::$app->session->setFlash('success', 'Ваше заявление успешно сформировано! В разделе «Диалоги» Вы можете отслеживать статус его рассмотрения.');

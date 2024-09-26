@@ -67,7 +67,7 @@ if (count($contractsList) > 1) {
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
         <?= Html::a('Выйти из обращения без сохранения', ['messages/index'], ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Смотреть PDF', ['class' => 'btn btn-success ajax-pdf']) ?>
+        <?= Html::button('Посмотреть черновик обращения', ['class' => 'btn btn-success ajax-pdf']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

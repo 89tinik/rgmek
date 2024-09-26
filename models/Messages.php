@@ -35,6 +35,7 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             [['subject_id', 'message', 'user_id', 'status_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
+            [['admin_num', 'published'], 'required', 'on' => self::SCENARIO_ADMIN_UPDATE],
             [['subject_id', 'message', 'user_id', 'email'], 'required', 'on' => self::SCENARIO_CREATE],
             [['contract_id'], 'required', 'on' => [self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE], 'message' => 'Пожалуйста, выберите номер договора'],
             [['contract_id'], 'required', 'on' => self::SCENARIO_CREATE, 'message' => 'Пожалуйста, выберите номер договора'],
@@ -245,7 +246,7 @@ class Messages extends \yii\db\ActiveRecord
         //отправляем почту
         $mail = Yii::$app->mailer->compose()
             ->setFrom('noreply@send.rgmek.ru')
-            ->setTo('lk@rgmek.ru')
+            ->setTo('6789.tinik@gmail.com')
             ->setSubject($subject)
             ->setHtmlBody('Детали во вложении')
             ->attach($filePath);

@@ -8,8 +8,8 @@
     <p><b>Прикрепленные файлы:</b> <?= $filesUploadNames ?></p>
 <?php endif; ?>
 
-<?php if (!empty($contact_name)) : ?>
-    <p><b>Контактное лицо по обращению:</b> <?= $contact_name ?></p>
+<?php if (!empty($contactName)) : ?>
+    <p><b>Контактное лицо по обращению:</b> <?= $contactName ?></p>
 <?php endif; ?>
 
 <?php if (!empty($phone)) : ?>

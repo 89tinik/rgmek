@@ -142,6 +142,12 @@ class MessagesController extends Controller
         $model->scenario = Messages::SCENARIO_USER_UPDATE;
         $model->status_id = 4;
         if ($model->save()) {
+            $text = 'Уважаемый клиент! Вы отозвали обращение № 3040 от 26.09.2024. Благодарим за пользование личным кабинетом!';
+            if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
+                $model->sendNoticeEmail('Ваше обращение отозвано.', $text, $email);
+            } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {
+                $model->sendNoticeSms($text, $phone);
+            }
             $modelHistory = new MessageHistory();
             $modelHistory->log = 'Запрос отозван пользователем';
             $modelHistory->message_id = $model->id;
