@@ -149,7 +149,7 @@ class DefaultController extends Controller
                 } elseif ($model->isAttributeChanged('answer') && !empty($model->answer)) {
                     $historyArr[] = 'Добавлен ответ;';
                     $subject = 'Получен ответ на обращение № ' . $model->admin_num;
-                    $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
+                    $text = 'Уважаемый клиент! В Личном кабинете размещен ответ ООО «РГМЭК» на Ваше обращение. Для просмотра перейдите по ' . Html::a('ссылке', $link);
                 }
 
                 if ($model->save()) {
