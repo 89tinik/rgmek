@@ -34,6 +34,31 @@ $(function () {
     });
 
     /*tin*/
+    $('.ajax-pdf-update').on('click', function (e) {
+        e.preventDefault();
+        let filesName = [];
+        $('#filesList li').each(function ($i) {
+            filesName[$i] = $(this).children('span').text();
+        });
+        let messageId = $(this).attr('message');
+
+        $.ajax({
+            url: '/messages/generate-pdf',
+            type: 'POST',
+            data: {filesuploadnames: filesName.join(', '), message :  messageId},
+            success: function (response) {
+                if (response.status === 'success') {
+                    window.open(response.pdfUrl, '_blank');
+                } else {
+                    alert('Ошибка при генерации PDF');
+                }
+            },
+            error: function () {
+                alert('Ошибка при отправке данных');
+            }
+        });
+    });
+
     $('.ajax-pdf').on('click', function (e) {
         e.preventDefault();
         let filesName = [];
@@ -44,7 +69,7 @@ $(function () {
         var formData = new FormData($('.messages-form form')[0]);
 
         $.ajax({
-            url: '/new-message/generate-pdf', // Укажи правильный URL для обработки запроса
+            url: '/new-message/generate-pdf',
             type: 'POST',
             data: formData,
             processData: false,

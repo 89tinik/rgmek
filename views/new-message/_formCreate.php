@@ -50,9 +50,9 @@ if (count($contractsList) > 1) {
     <?= $form->field($model, 'filesUploadNames')->hiddenInput()->label(false); ?>
     <?= $form->field($model, 'subject_id')->hiddenInput(['value' => $subject])->label(false); ?>
     <?= $form->field($model, 'user_id')->hiddenInput(['value' => $userModel->id])->label(false); ?>
-    <?= $form->field($model, 'user_name')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userModel->full_name])->label('Пользователь'); ?>
-    <?= $form->field($model, 'user_phone')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userPhone])->label('Телефон пользователя'); ?>
-    <?= $form->field($model, 'user_email')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userEmail])->label('E-mail пользователя'); ?>
+    <?= $form->field($model, 'user_name')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userModel->full_name])->label('Потребитель'); ?>
+    <?= $form->field($model, 'user_phone')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userPhone])->label('Телефон потребителя'); ?>
+    <?= $form->field($model, 'user_email')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $userEmail])->label('E-mail потребителя'); ?>
 
     <?= $form->field($model, 'contract_id')->dropDownList($contractsList, $dropDownOptions) ?>
 
@@ -67,7 +67,7 @@ if (count($contractsList) > 1) {
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
         <?= Html::a('Выйти из обращения без сохранения', ['messages/index'], ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Посмотреть черновик обращения', ['class' => 'btn btn-success ajax-pdf']) ?>
+        <?= Html::button('Посмотреть обращение', ['class' => 'btn btn-success ajax-pdf']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

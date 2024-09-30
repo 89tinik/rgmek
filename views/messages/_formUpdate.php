@@ -1,5 +1,6 @@
 <?php
 
+use app\models\MessageStatuses;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,17 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
 
-    <?php if (!empty($model->created)){?>
-        <?= $form->field($model, 'created')->textInput(['class' => 'disabled', 'disabled' => true, 'value'=>Yii::$app->formatter->asDate($model->created, 'php:d.m.Y')]) ?>
 
-    <?php } ?>
-
-    <?= $form->field($model, 'user_id')->hiddenInput(['value' => $model->user_id])->label(false); ?>
-    <?= $form->field($model, 'contract_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->contract->number]) ?>
-    <?= $form->field($model, 'subject_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->subject->title]) ?>
-    <?= $form->field($model, 'status_id')->textInput(['class' => 'disabled', 'disabled' => true, 'value' => $model->status->status]) ?>
-
-    <?= $form->field($model, 'message')->textarea(['class' => 'disabled', 'rows' => 6, 'disabled' => true]) ?>
+    <?= Html::a('Обращение.pdf', '#', ['class' => ' ajax-pdf-update', 'message' => $model->id]) ?>
 
     <?php
     if (!empty($model->files)) {
@@ -38,7 +30,9 @@ use yii\widgets\ActiveForm;
         }
         echo '</ul>';
     }
+    if ($model->status_id < MessageStatuses::SUCCESS) {
         echo $form->field($model, 'filesUpload[]')->fileInput(['multiple' => true, 'class' => 'input-file']);
+    }
 
     ?>
     <ul id="filesList"></ul>
@@ -57,7 +51,7 @@ use yii\widgets\ActiveForm;
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success hidden']) ?>
         <?= Html::a('К списку', ['messages/index'],['class' => 'btn btn-success message-btn']) ?>
-        <?php if ($model->status_id < 3) { ?>
+        <?php if ($model->status_id < MessageStatuses::SUCCESS) { ?>
         <?= Html::a('Отозвать', ['messages/re-call', 'id'=>$model->id],['class' => 'btn btn-success message-btn']) ?>
         <?php } ?>
     </div>

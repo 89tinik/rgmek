@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\MessageHistory;
 use app\models\Messages;
+use app\models\MessageStatuses;
 use Mpdf\Mpdf;
 use Yii;
 use app\models\MessageThemes;
@@ -80,7 +81,7 @@ class NewMessageController extends Controller
 
         $model->scenario = Messages::SCENARIO_CREATE;
         if ($model->load(Yii::$app->request->post())) {
-            $model->status_id = 1;
+            $model->status_id = MessageStatuses::RECD;
             $model->filesUpload = UploadedFile::getInstances($model, 'filesUpload');
             if ($model->save()) {
                 if ($model->filesUpload) {
@@ -98,7 +99,7 @@ class NewMessageController extends Controller
                 }
                 if ($model->save()) {
                     $modelHistory = new MessageHistory();
-                    $modelHistory->log = 'Создан запрос';
+                    $modelHistory->log = 'Получено обращение';
                     $modelHistory->message_id = $model->id;
                     $modelHistory->save();
 
@@ -146,7 +147,7 @@ class NewMessageController extends Controller
 
                 return $this->asJson([
                     'status' => 'success',
-                    'pdfUrl' => Yii::getAlias('@web') . '/uploads/formaPDF.pdf',
+                    'pdfUrl' => Yii::getAlias('@web') . '/uploads/Обращение.pdf',
                 ]);
             }
         }

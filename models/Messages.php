@@ -62,10 +62,10 @@ class Messages extends \yii\db\ActiveRecord
             'id' => 'ID',
             'subject_id' => 'Тема',
             'contract_id' => 'Договор',
-            'message' => 'Сообщение',
+            'message' => 'Текст обращения',
             'files' => 'Файлы',
             'created' => 'Создано',
-            'user_id' => 'Пользователь',
+            'user_id' => 'Потребитель',
             'status_id' => 'Статус',
             'published' => 'Дата публикации',
             'admin_num' => 'Присвоенный номер',
@@ -74,10 +74,10 @@ class Messages extends \yii\db\ActiveRecord
             'answer_files' => 'Файлы ответа',
             'answerFilesUpload' => 'Загрузить файлы ответа',
             'filesUpload' => 'Загрузить файлы',
-            'email' => 'E-mail контактного лица',
-            'contact_name' => 'Контактное лицо',
+            'email' => 'E-mail контактного лица по обращению',
+            'contact_name' => 'Контактное лицо по обращению',
             'update' => 'Обновлено',
-            'phone' => 'Телефон контактного лица',
+            'phone' => 'Телефон контактного лица по обращению',
         ];
     }
 
@@ -266,16 +266,19 @@ class Messages extends \yii\db\ActiveRecord
     /**
      * @throws MpdfException
      */
-    public function generatePdf($fileName = 'formaPDF.pdf')
+    public function generatePdf($fileName = 'Обращение.pdf')
     {
         $mpdf = new Mpdf([
             'tempDir' => 'tmp-mpdf'
         ]);
+        $filesUploadNames = '';
         if (!empty($this->files)) {
             $filesUploadNames = implode(', ', json_decode($this->files, true));
-        } else {
-            $filesUploadNames = $this->filesUploadNames;
         }
+        if (!empty($filesUploadNames) && !empty($this->filesUploadNames)){
+            $filesUploadNames .= ', ';
+        }
+        $filesUploadNames .= $this->filesUploadNames;
         $html = Yii::$app->view->render('@app/views/new-message/pdf', [
             'date' => date('d.m.Y H:i'),
             'contract' => ($this->contract ? $this->contract->number : 'Не указан'),

@@ -14,6 +14,10 @@ use Yii;
  */
 class MessageStatuses extends \yii\db\ActiveRecord
 {
+    const RECD = 1;
+    const PROCESS = 2;
+    const SUCCESS = 3;
+    const CLOSE = 4;
     /**
      * {@inheritdoc}
      */

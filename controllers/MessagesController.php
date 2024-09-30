@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\MessageHistory;
+use app\models\MessageStatuses;
 use Yii;
 use app\models\Messages;
 use app\models\MessagesSearch;
@@ -140,7 +141,7 @@ class MessagesController extends Controller
         $model = $this->findModel($id);
 
         $model->scenario = Messages::SCENARIO_USER_UPDATE;
-        $model->status_id = 4;
+        $model->status_id = MessageStatuses::CLOSE;
         if ($model->save()) {
             $text = 'Уважаемый клиент! Вы отозвали обращение № 3040 от 26.09.2024. Благодарим за пользование личным кабинетом!';
             if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
@@ -155,6 +156,26 @@ class MessagesController extends Controller
 
             return $this->redirect(['index']);
         }
+    }
+
+    public function actionGeneratePdf()
+    {
+        if (Yii::$app->request->isPost) {
+            $model = $this->findModel(Yii::$app->request->post('message'));
+            $model->filesUploadNames = Yii::$app->request->post('filesuploadnames');
+
+            $model->generatePdf();
+
+            return $this->asJson([
+                'status' => 'success',
+                'pdfUrl' => Yii::getAlias('@web') . '/uploads/Обращение.pdf',
+            ]);
+        }
+
+        return $this->asJson([
+            'status' => 'error',
+            'message' => 'Данные не получены',
+        ]);
     }
 
     /**
