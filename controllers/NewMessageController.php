@@ -101,6 +101,7 @@ class NewMessageController extends Controller
                     $modelHistory = new MessageHistory();
                     $modelHistory->log = 'Получено обращение';
                     $modelHistory->message_id = $model->id;
+                    $modelHistory->created = date('Y-m-d H:i:s');
                     $modelHistory->save();
 
                     if ($fileName = $model->sendAdminNoticeEmail()) {

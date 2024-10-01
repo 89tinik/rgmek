@@ -160,6 +160,7 @@ class DefaultController extends Controller
                             $modelHistory = new MessageHistory();
                             $modelHistory->log = $log;
                             $modelHistory->message_id = $model->id;
+                            $modelHistory->created = date('Y-m-d H:i:s');
                             $modelHistory->save();
                         }
                         if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {

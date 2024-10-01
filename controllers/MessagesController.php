@@ -152,6 +152,7 @@ class MessagesController extends Controller
             $modelHistory = new MessageHistory();
             $modelHistory->log = 'Запрос отозван пользователем';
             $modelHistory->message_id = $model->id;
+            $modelHistory->created = date('Y-m-d H:i:s');
             $modelHistory->save();
 
             return $this->redirect(['index']);
