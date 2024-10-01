@@ -19,7 +19,9 @@ $date = (!empty($model->published)) ? $model->published : $model->created;
     <td>
         <div class="message-title">
             <?= Html::encode($model->subject->title) ?>
-            <span><?php if (!empty($model->admin_num)) echo '№' . Html::encode($model->admin_num) ?></span>
+            <span>
+                <?php if (!empty($model->admin_num)) echo '№' . Html::encode($model->admin_num) . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y')?>
+            </span>
             <?php if ($model->new) echo '<sup>NEW</sup>';?>
             <!--span>Счет на оплату от: 01.01.2013</span-->
         </div>

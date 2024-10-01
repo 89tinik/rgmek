@@ -143,7 +143,9 @@ class MessagesController extends Controller
         $model->scenario = Messages::SCENARIO_USER_UPDATE;
         $model->status_id = MessageStatuses::CLOSE;
         if ($model->save()) {
-            $text = 'Уважаемый клиент! Вы отозвали обращение № 3040 от 26.09.2024. Благодарим за пользование личным кабинетом!';
+            $text = 'Уважаемый клиент! Вы отозвали обращение ' . $model->admin_num . ' от ' .
+                Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
+                '. Благодарим за пользование личным кабинетом!';
             if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
                 $model->sendNoticeEmail('Ваше обращение отозвано.', $text, $email);
             } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {

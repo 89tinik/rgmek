@@ -281,6 +281,7 @@ class Messages extends \yii\db\ActiveRecord
         $filesUploadNames .= $this->filesUploadNames;
         $html = Yii::$app->view->render('@app/views/new-message/pdf', [
             'date' => date('d.m.Y H:i'),
+            'user' => $this->user->full_name,
             'contract' => ($this->contract ? $this->contract->number : 'Не указан'),
             'subject' => ($this->subject ? $this->subject->title : 'Не указана'),
             'message' => $this->message,

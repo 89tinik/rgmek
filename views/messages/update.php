@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="messages-update">
 
-    <h1>Обращение <?= (!empty($model->admin_num)) ? '№'.Html::encode($model->admin_num) : '';?></h1>
+    <h1>Обращение <?= (!empty($model->admin_num)) ? '№'.Html::encode($model->admin_num) . ' от ' .  Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') : '';?></h1>
     <h2>«<?=Html::encode($model->subject->title)?>»</h2>
     <h3>История обработки</h3>
     <ul>
