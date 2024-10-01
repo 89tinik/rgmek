@@ -127,39 +127,41 @@ class DefaultController extends Controller
                         $model->answer_files = json_encode($paths);
                     }
                 }
-                $history = '';
+                $historyArr = [];
                 $link = Yii::$app->urlManager->createAbsoluteUrl(['/messages/update', 'id' => $id]);
 
                 if ($model->status_id != $this->findModel($model->id)->status_id && $model->status_id == MessageStatuses::CLOSE) {
-                    $history = 'Установлен статус "' . $model->getStatus()->one()->status . '";';
+                    $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '";';
                     $subject = 'Ваше обращение отозвано.';
                     $text = 'Уважаемый клиент! Вашему обращение номер №'.
                         $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
                         ' отозвано администратором.';
                 } elseif ($model->admin_num != $this->findModel($model->id)->admin_num  && !empty($model->admin_num)) {
-                    $history = 'Присвоен номер';
+                    $historyArr[] = 'Присвоен номер';
+                    $historyArr[] = 'Принято в работу';
                     $subject = 'Ваше обращение зарегистрировано.';
                     $text = 'Уважаемый клиент! Вашему обращению присвоен регистрационный номер №'.
                         $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
                     '. Обращение принято в работу. Подробности можете узнать, перейдя по ' .
                     Html::a('ссылке', $link);
                 } elseif ($model->status_id != $this->findModel($model->id)->status_id) {
-                    $history = 'Установлен статус "' . $model->getStatus()->one()->status . '"';
+                    $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '"';
                     $subject = 'Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
                     $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
                 } elseif ($model->isAttributeChanged('answer') && !empty($model->answer)) {
-                    $history = 'Дан ответ';
+                    $historyArr[] = 'Дан ответ';
                     $subject = 'Получен ответ на обращение № ' . $model->admin_num;
                     $text = 'Уважаемый клиент! В Личном кабинете размещен ответ ООО «РГМЭК» на Ваше обращение. Для просмотра перейдите по ' . Html::a('ссылке', $link);
                 }
 
                 if ($model->save()) {
-                    if (!empty($history)) {
-                        $modelHistory = new MessageHistory();
-                        $modelHistory->log = $history;
-                        $modelHistory->message_id = $model->id;
-                        $modelHistory->save();
-
+                    if (!empty($historyArr)) {
+                        foreach ($historyArr as $log) {
+                            $modelHistory = new MessageHistory();
+                            $modelHistory->log = $log;
+                            $modelHistory->message_id = $model->id;
+                            $modelHistory->save();
+                        }
                         if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
                             if ($model->sendNoticeEmail($subject, $text, $email) === true) {
                                 Yii::$app->session->setFlash('success', 'Обновлено');
