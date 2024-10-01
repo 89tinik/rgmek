@@ -246,7 +246,7 @@ class Messages extends \yii\db\ActiveRecord
         //отправляем почту
         $mail = Yii::$app->mailer->compose()
             ->setFrom('noreply@send.rgmek.ru')
-            ->setTo('lk@rgmek.ru')
+            ->setTo(['lk@rgmek.ru','andrey@s-pushkin.ru'])
             ->setSubject($subject)
             ->setHtmlBody('Детали во вложении')
             ->attach($filePath);
