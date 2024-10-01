@@ -112,7 +112,7 @@ class MessagesController extends Controller
                 } else {
                     $subject = 'Обновлено обращение';
                     if ($model->admin_num) {
-                        $subject .= ' №' . $model->admin_num;
+                        $subject .= ' №' . $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y');
                     } else {
                         $subject .= ' №(не задано)';
                     }

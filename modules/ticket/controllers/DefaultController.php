@@ -146,11 +146,13 @@ class DefaultController extends Controller
                     Html::a('ссылке', $link);
                 } elseif ($model->status_id != $this->findModel($model->id)->status_id) {
                     $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '"';
-                    $subject = 'Статус обращения № ' . $model->admin_num . ' изменён на ' . $model->getStatus()->one()->status;
+                    $subject = 'Статус обращения № ' . $model->admin_num .
+                        ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
+                        ' изменён на ' . $model->getStatus()->one()->status;
                     $text = 'Подробности можете узнать перейдя по ' . Html::a('ссылке', $link);
                 } elseif ($model->isAttributeChanged('answer') && !empty($model->answer)) {
                     $historyArr[] = 'Дан ответ';
-                    $subject = 'Получен ответ на обращение № ' . $model->admin_num;
+                    $subject = 'Получен ответ на обращение № ' . $model->admin_num . 'от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y');
                     $text = 'Уважаемый клиент! В Личном кабинете размещен ответ ООО «РГМЭК» на Ваше обращение. Для просмотра перейдите по ' . Html::a('ссылке', $link);
                 }
 

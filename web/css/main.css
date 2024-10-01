@@ -4451,6 +4451,9 @@ display:block;
   color: #fff;
   cursor: pointer;
 }
+.messages h1 {
+  line-height: 1.1em;
+}
 
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
