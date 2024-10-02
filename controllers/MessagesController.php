@@ -112,7 +112,7 @@ class MessagesController extends Controller
                 } else {
                     $subject = 'Обновлено обращение';
                     if ($model->admin_num) {
-                        $subject .= ' №' . $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y');
+                        $subject .= ' №' . $model->admin_num . ' от ' . Yii::$app->formatter->asDate(new \DateTime($model->published), 'php:d.m.Y');
                     } else {
                         $subject .= ' №(не задано)';
                     }
@@ -144,7 +144,7 @@ class MessagesController extends Controller
         $model->status_id = MessageStatuses::CLOSE;
         if ($model->save()) {
             $text = 'Уважаемый клиент! Вы отозвали обращение ' . $model->admin_num . ' от ' .
-                Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
+                Yii::$app->formatter->asDate(new \DateTime($model->published), 'php:d.m.Y') .
                 '. Благодарим за пользование личным кабинетом!';
             if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
                 $model->sendNoticeEmail('Ваше обращение отозвано.', $text, $email);

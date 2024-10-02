@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <h3>История обработки</h3>
     <ul>
         <?php foreach ($model->messageHistory as $history): ?>
-            <li><b><?=Yii::$app->formatter->asDate($history->created, 'php:d.m.Y H:i')?></b> - <?= $history->log ?></li>
+            <li><b><?=Yii::$app->formatter->asDate(new \DateTime($history->created), 'php:d.m.Y H:i')?></b> - <?= $history->log ?></li>
         <?php endforeach; ?>
     </ul>
     <?= $this->render('_formUpdate', [

@@ -85,7 +85,7 @@ class Messages extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if ($this->published) {
-                $this->published = \Yii::$app->formatter->asDate($this->published, 'yyyy-MM-dd');
+                $this->published = \Yii::$app->formatter->asDate(new \DateTime($this->published), 'yyyy-MM-dd');
             }
             return true;
         }
