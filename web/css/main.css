@@ -4455,6 +4455,17 @@ display:block;
   line-height: 1.1em;
 }
 
+.top-menu ul li span.new{
+  position: absolute;
+  background: red;
+  width: 10px;
+  height: 10px;
+  display: block;
+  top: 15px;
+  right: 0;
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;

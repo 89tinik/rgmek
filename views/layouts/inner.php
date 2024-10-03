@@ -4,6 +4,7 @@
 
 /* @var $content string */
 
+use app\widgets\NewMessagesWidget;
 use yii\helpers\Html;
 use app\assets\DefaultAssets;
 use app\assets\IeAssets;
@@ -78,7 +79,7 @@ IeAssets::register($this);
                         <li class="children"><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение
                                 договора</a></li>
                         <li><?= Html::a('Помощь', ['inner/help'], ['class' => 'ploader']) ?></li>
-                        <li><?= Html::a('Написать обращение', ['inner/fos'], ['class' => 'ploader']) ?></li>
+                        <li><?= Html::a('Диалоги', ['messages/index'], ['class' => 'ploader']) ?><?= NewMessagesWidget::widget() ?></li>
                     </ul>
                 </div>
 
