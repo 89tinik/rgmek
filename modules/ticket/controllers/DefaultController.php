@@ -137,7 +137,6 @@ class DefaultController extends Controller
                         $model->admin_num . ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
                         ' отозвано администратором.';
                 } elseif ($model->admin_num != $this->findModel($model->id)->admin_num  && !empty($model->admin_num)) {
-                    $historyArr[] = 'Присвоен номер';
                     $historyArr[] = 'Принято в работу';
                     $subject = 'Ваше обращение зарегистрировано.';
                     $text = 'Уважаемый клиент! Вашему обращению присвоен регистрационный номер №'.
@@ -145,7 +144,7 @@ class DefaultController extends Controller
                     '. Обращение принято в работу. Подробности можете узнать, перейдя по ' .
                     Html::a('ссылке', $link);
                 } elseif ($model->status_id != $this->findModel($model->id)->status_id) {
-                    $historyArr[] = 'Установлен статус "' . $model->getStatus()->one()->status . '"';
+                    $historyArr[] = $model->getStatus()->one()->status ;
                     $subject = 'Статус обращения № ' . $model->admin_num .
                         ' от ' . Yii::$app->formatter->asDate($model->published, 'php:d.m.Y') .
                         ' изменён на ' . $model->getStatus()->one()->status;
