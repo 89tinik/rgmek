@@ -143,13 +143,21 @@ class NewMessageController extends Controller
 
             // Загрузка данных формы
             if ($model->load(Yii::$app->request->post())) {
+                $fileName = time() . 'Обращение.pdf';
+                $model->generatePdf($fileName);
 
-                $model->generatePdf();
-
-                return $this->asJson([
-                    'status' => 'success',
-                    'pdfUrl' => Yii::getAlias('@web') . '/uploads/Обращение.pdf',
-                ]);
+                $pdfPath = Yii::getAlias('@webroot/temp_pdf/' . $fileName);
+                if (file_exists($pdfPath)) {
+                    return $this->asJson([
+                        'status' => 'success',
+                        'pdfUrl' => Yii::getAlias('@web') . '/temp_pdf/' . $fileName,
+                    ]);
+                } else {
+                    return $this->asJson([
+                        'status' => 'error',
+                        'message' => 'PDF файл не найден',
+                    ]);
+                }
             }
         }
 

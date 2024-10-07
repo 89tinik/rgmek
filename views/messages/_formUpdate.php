@@ -10,14 +10,14 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="messages-form">
-        <?php
-        if (Yii::$app->session->hasFlash('success')) {
-            echo '<div class="form-message">' . Yii::$app->session->getFlash('success') . '</div>';
-        }
-        ?>
+    <?php
+    if (Yii::$app->session->hasFlash('success')) {
+        echo '<div class="form-message">' . Yii::$app->session->getFlash('success') . '</div>';
+    }
+    ?>
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
-    
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+
     <?= Html::a('Обращение.pdf', '#', ['class' => ' ajax-pdf-update', 'message' => $model->id]) ?>
 
     <?php
@@ -49,9 +49,9 @@ use yii\widgets\ActiveForm;
     ?>
     <div class="form-group">
         <?= Html::submitButton('Отправить', ['class' => 'btn btn-success hidden']) ?>
-        <?= Html::a('К списку', ['messages/index'],['class' => 'btn btn-success message-btn']) ?>
+        <?= Html::a('К списку', ['messages/index'], ['class' => 'btn btn-success message-btn']) ?>
         <?php if ($model->status_id < MessageStatuses::SUCCESS) { ?>
-        <?= Html::a('Отозвать', ['messages/re-call', 'id'=>$model->id],['class' => 'btn btn-success message-btn']) ?>
+            <?= Html::a('Отозвать', ['messages/re-call', 'id' => $model->id], ['class' => 'btn btn-success message-btn']) ?>
         <?php } ?>
     </div>
 

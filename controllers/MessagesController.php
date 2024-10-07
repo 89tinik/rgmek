@@ -161,19 +161,27 @@ class MessagesController extends Controller
         }
     }
 
-/**
     public function actionGeneratePdf()
     {
         if (Yii::$app->request->isPost) {
             $model = $this->findModel(Yii::$app->request->post('message'));
             $model->filesUploadNames = Yii::$app->request->post('filesuploadnames');
 
-            $model->generatePdf();
+            $fileName = time() . 'Обращение.pdf';
+            $model->generatePdf($fileName);
 
-            return $this->asJson([
-                'status' => 'success',
-                'pdfUrl' => Yii::getAlias('@web') . '/uploads/Обращение.pdf',
-            ]);
+            $pdfPath = Yii::getAlias('@webroot/temp_pdf/' . $fileName);
+            if (file_exists($pdfPath)) {
+                return $this->asJson([
+                    'status' => 'success',
+                    'pdfUrl' => Yii::getAlias('@web') . '/temp_pdf/' . $fileName,
+                ]);
+            } else {
+                return $this->asJson([
+                    'status' => 'error',
+                    'message' => 'PDF файл не найден',
+                ]);
+            }
         }
 
         return $this->asJson([
@@ -181,36 +189,6 @@ class MessagesController extends Controller
             'message' => 'Данные не получены',
         ]);
     }
-**/
-
-public function actionGeneratePdf()
-{
-    if (Yii::$app->request->isPost) {
-        $model = $this->findModel(Yii::$app->request->post('message'));
-        $model->filesUploadNames = Yii::$app->request->post('filesuploadnames');
-
-        $model->generatePdf();
-
-        // Убедитесь, что файл существует перед отправкой URL
-        $pdfPath = Yii::getAlias('@webroot/uploads/Обращение.pdf');
-        if (file_exists($pdfPath)) {
-            return $this->asJson([
-                'status' => 'success',
-                'pdfUrl' => Yii::getAlias('@web') . '/uploads/Обращение.pdf',
-            ]);
-        } else {
-            return $this->asJson([
-                'status' => 'error',
-                'message' => 'PDF файл не найден',
-            ]);
-        }
-    }
-
-    return $this->asJson([
-        'status' => 'error',
-        'message' => 'Данные не получены',
-    ]);
-}
 
     /**
      * Finds the Messages model based on its primary key value.

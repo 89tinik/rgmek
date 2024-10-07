@@ -33,8 +33,7 @@ $(function () {
         return false;
     });
 
-    
-    /*$('.ajax-pdf-update').on('click', function (e) {
+    $('.ajax-pdf-update').on('click', function (e) {
         e.preventDefault();
 
         let filesName = [];
@@ -43,62 +42,28 @@ $(function () {
         });
         let messageId = $(this).attr('message');
 
-        // Открываем пустое окно сразу после клика, сохраняем ссылку на это окно
-        let newWindow = window.open('', '_blank');
-
         $.ajax({
             url: '/messages/generate-pdf',
             type: 'POST',
-            data: { filesuploadnames: filesName.join(', '), message: messageId },
+            data: {filesuploadnames: filesName.join(', '), message: messageId},
             success: function (response) {
                 if (response.status === 'success') {
-                    // После успешного ответа изменяем location ранее открытого окна
-                    newWindow.location = response.pdfUrl;
+                    // Создаем временную ссылку для скачивания
+                    let link = document.createElement('a');
+                    link.href = response.pdfUrl;
+                    link.download = 'Обращение.pdf'; // Имя файла при скачивании
+                    document.body.appendChild(link);
+                    link.click(); // Имитируем клик
+                    document.body.removeChild(link); // Удаляем ссылку
                 } else {
-                    newWindow.close(); // Закрываем окно, если произошла ошибка
                     alert('Ошибка при генерации PDF');
                 }
             },
             error: function () {
-                newWindow.close(); // Закрываем окно в случае ошибки
                 alert('Ошибка при отправке данных');
             }
         });
-    });*/
-  
-$('.ajax-pdf-update').on('click', function (e) {
-    e.preventDefault();
-
-    let filesName = [];
-    $('#filesList li').each(function ($i) {
-        filesName[$i] = $(this).children('span').text();
     });
-    let messageId = $(this).attr('message');
-
-    $.ajax({
-        url: '/messages/generate-pdf',
-        type: 'POST',
-        data: { filesuploadnames: filesName.join(', '), message: messageId },
-        success: function (response) {
-            if (response.status === 'success') {
-                // Создаем временную ссылку для скачивания
-                let link = document.createElement('a');
-                link.href = response.pdfUrl;
-                link.download = 'Обращение.pdf'; // Имя файла при скачивании
-                document.body.appendChild(link);
-                link.click(); // Имитируем клик
-                document.body.removeChild(link); // Удаляем ссылку
-            } else {
-                alert('Ошибка при генерации PDF');
-            }
-        },
-        error: function () {
-            alert('Ошибка при отправке данных');
-        }
-    });
-});
-
-
 
 
     $('.ajax-pdf').on('click', function (e) {
@@ -110,7 +75,6 @@ $('.ajax-pdf-update').on('click', function (e) {
         $('#messages-filesuploadnames').val(filesName.join(', '));
         var formData = new FormData($('.messages-form form')[0]);
 
-        let newWindow = window.open('', '_blank');
         $.ajax({
             url: '/new-message/generate-pdf',
             type: 'POST',
@@ -119,14 +83,18 @@ $('.ajax-pdf-update').on('click', function (e) {
             contentType: false,
             success: function (response) {
                 if (response.status === 'success') {
-                    newWindow.location = response.pdfUrl;
+                    // Создаем временную ссылку для скачивания
+                    let link = document.createElement('a');
+                    link.href = response.pdfUrl;
+                    link.download = 'Обращение.pdf'; // Имя файла при скачивании
+                    document.body.appendChild(link);
+                    link.click(); // Имитируем клик
+                    document.body.removeChild(link); // Удаляем ссылку
                 } else {
-                    newWindow.close();
                     alert('Ошибка при генерации PDF');
                 }
             },
             error: function () {
-                newWindow.close();
                 alert('Ошибка при отправке данных');
             }
         });

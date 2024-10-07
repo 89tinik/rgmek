@@ -294,7 +294,7 @@ class Messages extends \yii\db\ActiveRecord
 
         $mpdf->WriteHTML($html);
 
-        $pdfPath = Yii::getAlias('@webroot') . '/uploads/' . $fileName;
+        $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
     }
 }
