@@ -110,6 +110,7 @@ $('.ajax-pdf-update').on('click', function (e) {
         $('#messages-filesuploadnames').val(filesName.join(', '));
         var formData = new FormData($('.messages-form form')[0]);
 
+        let newWindow = window.open('', '_blank');
         $.ajax({
             url: '/new-message/generate-pdf',
             type: 'POST',
@@ -118,20 +119,16 @@ $('.ajax-pdf-update').on('click', function (e) {
             contentType: false,
             success: function (response) {
                 if (response.status === 'success') {
-		        // Создаем временную ссылку для скачивания
-		        let link = document.createElement('a');
-		        link.href = response.pdfUrl;
-		        link.download = 'Обращение.pdf'; // Имя файла при скачивании
-		        document.body.appendChild(link);
-		        link.click(); // Имитируем клик
-		        document.body.removeChild(link); // Удаляем ссылку
-		    } else {
-		        alert('Ошибка при генерации PDF');
-		    }
-		},
-		error: function () {
-		    alert('Ошибка при отправке данных');
-		}
+                    newWindow.location = response.pdfUrl;
+                } else {
+                    newWindow.close();
+                    alert('Ошибка при генерации PDF');
+                }
+            },
+            error: function () {
+                newWindow.close();
+                alert('Ошибка при отправке данных');
+            }
         });
     });
 
