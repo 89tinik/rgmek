@@ -17,8 +17,7 @@ use yii\widgets\ActiveForm;
         ?>
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
-
-
+    
     <?= Html::a('Обращение.pdf', '#', ['class' => ' ajax-pdf-update', 'message' => $model->id]) ?>
 
     <?php
