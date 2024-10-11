@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\MessageHistory;
 use app\models\Messages;
+use app\models\MessageForm;
 use app\models\MessageStatuses;
 use Mpdf\Mpdf;
 use Yii;
@@ -77,7 +78,7 @@ class NewMessageController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new Messages();
+        $model = new MessageForm();
 
         $model->scenario = Messages::SCENARIO_CREATE;
         if ($model->load(Yii::$app->request->post())) {
@@ -150,7 +151,7 @@ class NewMessageController extends Controller
                 if (file_exists($pdfPath)) {
                     return $this->asJson([
                         'status' => 'success',
-                        'pdfUrl' => Yii::getAlias('@web') . '/temp_pdf/' . $fileName,
+                        'pdfUrl' => Yii::getAlias('@web') . '/web/temp_pdf/' . $fileName,
                     ]);
                 } else {
                     return $this->asJson([

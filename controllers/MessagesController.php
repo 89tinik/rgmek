@@ -174,7 +174,7 @@ class MessagesController extends Controller
             if (file_exists($pdfPath)) {
                 return $this->asJson([
                     'status' => 'success',
-                    'pdfUrl' => Yii::getAlias('@web') . '/temp_pdf/' . $fileName,
+                    'pdfUrl' => Yii::getAlias('@web') . '/web/temp_pdf/' . $fileName,
                 ]);
             } else {
                 return $this->asJson([
