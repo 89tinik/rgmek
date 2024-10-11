@@ -242,7 +242,7 @@ class Messages extends \yii\db\ActiveRecord
     {
         $fileName = date('d.m.Y H:i') . '_' . $this->contract->number . '.pdf';
         $this->generatePdf($fileName);
-        $filePath = Yii::getAlias('@webroot') . '/uploads/' . $fileName;
+        $filePath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         //отправляем почту
         $mail = Yii::$app->mailer->compose()
             ->setFrom('noreply@send.rgmek.ru')
