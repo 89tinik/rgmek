@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\MessageHistory;
 use app\models\Messages;
-use app\models\MessageForm;
 use app\models\MessageStatuses;
 use Mpdf\Mpdf;
 use Yii;
@@ -78,7 +77,7 @@ class NewMessageController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new MessageForm();
+        $model = new Messages();
 
         $model->scenario = Messages::SCENARIO_CREATE;
         if ($model->load(Yii::$app->request->post())) {

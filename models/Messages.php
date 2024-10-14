@@ -19,6 +19,9 @@ class Messages extends \yii\db\ActiveRecord
     public $filesUploadNames;
 
     public $message_count;
+    public $user_name;
+    public $user_email;
+    public $user_phone;
 
     /**
      * {@inheritdoc}
