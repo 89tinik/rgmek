@@ -23,7 +23,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'created_at',
+            [
+                'label' => 'Дата создания',
+                'attribute' => 'created_at',
+                'filterInputOptions' => [
+                    'class' => 'form-control datepicker',
+                    'autocomplete' => 'off'
+                ],
+            ],
             'sum',
             'order_id',
             [
@@ -66,3 +73,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::end(); ?>
 </div>
+
