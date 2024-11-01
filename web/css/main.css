@@ -4466,6 +4466,106 @@ display:block;
   border-radius: 5px;
 }
 
+a.btn.border.contract-btn{
+  height: auto;
+  margin-bottom: 20px;
+  max-width: 890px;
+  width: 100%;
+  line-height: 21px;
+  padding: 20px 50px;
+}
+.draft-contract-form select.styler{
+  height: 60px;
+}
+.draft-contract-form .form-group {
+  max-width: 580px;
+  padding-right: 100px;
+  position: relative;
+}
+.draft-contract-form a.input-tooltip{
+  line-height: 60px;
+  font-size: 16px;
+  height: 60px;
+}
+.draft-contract-form .form-group>.input-tooltip{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.draft-contract-form .group.dates .label{
+  padding-left: 30px;
+  position: relative;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+}
+.draft-contract-form .group.two-col .form-group {
+  margin-right: 30px;
+  display: inline-block;
+  padding-right: 0;
+  vertical-align: top;
+}
+.draft-contract-form .group.two-col .form-group label{
+  padding:0;
+}
+.draft-contract-form .group.two-col .form-group input {
+  display: inline-block;
+  vertical-align: middle;
+  width: 206px;
+}
+.draft-contract-form .group.two-col .input-tooltip{
+  display: inline-block;
+}
+.draft-contract-form .group.three-col{
+  position: relative;
+  max-width: 580px;
+}
+.draft-contract-form .group.three-col .form-group {
+  margin-right: 30px;
+  display: inline-block;
+  padding-right: 0;
+  vertical-align: top;
+  width: 155px;
+}
+.draft-contract-form .group.three-col .form-group.field-draftcontractform-priceperpiece {
+  width: 100px;
+}
+.draft-contract-form .group.three-col .form-group label {
+  font-size: 11px;
+  line-height: 12px;
+  padding: 0;
+}
+.draft-contract-form .group.three-col .input-tooltip{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.draft-contract-form .group.two-equal-col{
+  max-width: 580px;
+}
+.draft-contract-form .group.two-equal-col .form-group {
+  width: 49%;
+  display: inline-block;
+}
+.draft-contract-form .group.two-equal-col .form-group:first-child {
+  padding-right: 125px;
+}
+.draft-contract-form .group.two-equal-col .form-group:first-child>.input-tooltip{
+  right: 25px;
+}
+.draft-contract-form .group.two-equal-col .form-group:last-child {
+  padding-left: 25px;
+}
+.draft-contract-form .form-tab {
+  display: none;
+}
+.draft-contract-form .form-tab.active {
+  display: block;
+}
+.draft-contract .ui-datepicker-calendar {
+  display: table;
+}
+
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;

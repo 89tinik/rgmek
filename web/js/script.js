@@ -18,6 +18,221 @@ $(window).on("load", function () {
 
 $(function () {
     var width = $(window).width();
+
+    // Датапикер
+    var dateFormatDraft = "dd.mm.yy",
+        fromDraft = $(".from-date").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            changeYear: true,
+            regional: "ru",
+        })
+            .on("change", function () {
+                toDraft.datepicker("option", "minDate", getDateDraft(this));
+                $(this).addClass('send-a');
+                sendFormAjax();
+            }),
+
+        toDraft = $(".to-date").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            changeYear: true,
+            regional: "ru",
+        })
+            .on("change", function () {
+                fromDraft.datepicker("option", "maxDate", getDateDraft(this));
+                $(this).addClass('send-a');
+                sendFormAjax();
+            });
+
+    function getDateDraft( element ) {
+        var date;
+        try {
+            date = $.datepicker.parseDate( dateFormatDraft, element.value );
+        } catch( error ) {
+            date = null;
+        }
+
+        return date;
+    }
+
+
+    // Удаление загруженных файлов
+    $('body').on('click', '.removeLoadedFile', function (){
+        ajaxPreloaderOn();
+        var actionForm = $(this).closest('ul').attr('ajax-action');
+        var ajaxData = 'draftId=' + $(this).closest('ul').attr('draft-id') + '&fileId=' + $(this).data('idx');
+        $.ajax({
+            url: actionForm,
+            type: 'POST',
+            data: ajaxData,
+            success: function (response) {
+                $('#wrap-uploaded-files').html(response);
+                ajaxPreloaderOff();
+                console.log('Форма успешно отправлена');
+            },
+            error: function () {
+                    ajaxPreloaderOff();
+                console.log('Произошла ошибка при отправке формы');
+            }
+        });
+    });
+
+    // Переключение табов
+    $('.draft-contract-form .next-btn').on('click', function () {
+        let newActive = $('.draft-contract-form .form-tab.active').next('.form-tab');
+        $('.draft-contract-form .form-tab').removeClass('active');
+        newActive.addClass('active');
+        if ($('.draft-contract-form .form-tab:last').hasClass('active')) {
+            $(this).addClass('hidden');
+            $('.submit-btn').removeClass('hidden');
+        }
+        $('.prev-btn').removeClass('hidden');
+        return false;
+    });
+
+    $('.draft-contract-form .prev-btn').on('click', function () {
+        let newActive = $('.draft-contract-form .form-tab.active').prev('.form-tab');
+        $('.draft-contract-form .form-tab').removeClass('active');
+        newActive.addClass('active');
+        if ($('.draft-contract-form .form-tab:first').hasClass('active')) {
+            $(this).addClass('hidden');
+        }
+        $('.next-btn').removeClass('hidden');
+        $('.submit-btn').addClass('hidden');
+        return false;
+    });
+
+    // Подсказки
+    $('.input-tooltip-js').on('click', function () {
+        $('.draft-input-popup p').text($(this).next('div').text());
+        $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+        $('.contracts-devices-popup-overlay').fadeIn(250);
+        return false;
+    });
+
+    // Обрабатываем событие валидации поля
+    $('.ajax-c-form').on('afterValidateAttribute', function (event, attribute, messages) {
+        if (messages.length === 0 &&  !($(attribute.input).hasClass('draft-files'))) {
+            $(attribute.input).addClass('send-a');
+            sendFormAjax();
+        }
+        if ($(attribute.input).hasClass('off-budget-input')) {
+            if ($(attribute.input).is(':checked')) {
+                $('.off-budget-section').slideDown();
+            } else {
+                $('.off-budget-section').slideUp();
+            }
+        }
+    });
+
+    // Функция для отправки формы через AJAX
+    function sendFormAjax(files=false) {
+        var form = $('.ajax-c-form')[0];
+        var ajaxData = new FormData(form);
+        var actionForm = form.action;
+        var content =  false;
+        var process = false;
+        if (files){
+            ajaxPreloaderOn();
+        } else {
+            form = $('.ajax-c-form');
+            actionForm = form.attr('action');
+            content =  'application/x-www-form-urlencoded; charset=UTF-8';
+            process = true;
+            var formData = form.serializeArray();
+            var filteredData = formData.filter(function (input) {
+                return form.find('[name="' + input.name + '"]').hasClass('send-a');
+            });
+            ajaxData = $.param(filteredData);
+        }
+
+        $.ajax({
+            url: actionForm,
+            type: 'POST',
+            data: ajaxData,
+                processData: process,
+                contentType: content,
+            success: function (response) {
+                if (files) {
+                    allDraftFiles = [];
+                    updateDraftFileList();
+                    $('#wrap-uploaded-files').html(response);
+                    $('.draft-files').val('');
+                    ajaxPreloaderOff();
+                } else {
+                    form.find('input').removeClass('send-a');
+                }
+                console.log('Форма успешно отправлена');
+            },
+            error: function () {
+                if (files) {
+                    allDraftFiles = [];
+                    updateDraftFileList();
+                    ajaxPreloaderOff();
+                } else {
+                    form.find('input').removeClass('send-a');
+                }
+                console.log('Произошла ошибка при отправке формы');
+            }
+        });
+    }
+
+
+    let allDraftFiles = [];
+
+    $('.draft-files').on('change', function (e) {
+        for (let i = 0; i < e.target.files.length; i++) {
+            allDraftFiles.push(e.target.files[i]);
+        }
+        updateDraftFileList();
+        $(this).val('');
+    });
+
+    // Проверка наличия незагруженных файлов
+    function checkFileList() {
+        if ($('#filesList li').length > 0) {
+            $('.submit-file-btn-js').show();
+        } else {
+            $('.submit-file-btn-js').hide();
+        }
+    }
+
+    $(document).on('click', '.removeDraftFile', function () {
+        let index = $(this).data('index');
+        allDraftFiles.splice(index, 1);
+
+        updateDraftFileList();
+    });
+
+    function updateDraftFileList() {
+        $('#filesList').empty();
+        let show = 0;
+        for (let i = 0; i < allDraftFiles.length; i++) {
+            show = 1;
+            $('#filesList').append('<li><span>' + allDraftFiles[i].name +
+                '</span> <button class="removeDraftFile" data-index="' + i + '">Х</button></li>');
+        }
+
+        checkFileList();
+    }
+
+    function attacheFiles() {
+        let dt = new DataTransfer();
+
+        for (let i = 0; i < allDraftFiles.length; i++) {
+            dt.items.add(allDraftFiles[i]);
+        }
+
+        document.querySelector('.draft-files').files = dt.files;
+    }
+
+    // Отправка файлов
+    $(document).on('click', '.submit-file-btn-js', function (e) {
+        e.preventDefault(); // Предотвращаем стандартное поведение кнопки
+        attacheFiles();
+        sendFormAjax(true);
+    });
     /**
      Tabs
      **/

@@ -54,6 +54,6 @@ class m240910_161803_create_table_message_history extends Migration
             '{{%message_history}}'
         );
 
-        $this->dropTable('{{%messages}}');
+        $this->dropTable('{{%message_history}}');
     }
 }

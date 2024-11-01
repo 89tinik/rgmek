@@ -8,6 +8,7 @@ use app\models\AttachForm;
 use app\models\Baner;
 use app\models\ConsumptionForm;
 use app\models\Contract;
+use app\models\DraftContract;
 use app\models\HistoryForm;
 use app\models\InstallESForm;
 use app\models\ReceiptForm;
@@ -455,7 +456,7 @@ class MainController extends Controller
             'withdate' => $model->withdate,
             'bydate' => $model->bydate
         ];
-        //var_dump($data);die();
+
         $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/report_consumption', $data);
         if (isset($objectsData['success'])){
             return $this->render('consumption', [
@@ -491,6 +492,21 @@ class MainController extends Controller
             }
         }
         return $this->render('tehadd', $outputArr);
+    }
+
+    public function actionCreateUpdateContract()
+    {
+        $userId = \Yii::$app->user->id;
+
+        $draftContract = DraftContract::findOne(['user_id' => $userId]);
+        //$draftDelContract = DraftDelContract::findOne(['user_id' => $userId]);
+        //$draftGhagContract = DraftGhagContract::findOne(['user_id' => $userId]);
+
+        return $this->render('createUpdateContract', [
+            'draftContract' => $draftContract,
+            //'draftDelContract' => $draftDelContract,
+           // 'draftGhagContract' => $draftGhagContract,
+        ]);
     }
 
     private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){

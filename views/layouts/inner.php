@@ -135,6 +135,11 @@ IeAssets::register($this);
             <div class="close"></div>
         </div>
 
+        <div class="draft-input-popup custom-popup">
+            <p></p>
+            <div class="close"></div>
+        </div>
+
     </div>
 
 
