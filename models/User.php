@@ -158,8 +158,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
-            $username = '5b503501ef';
-            $password = '95f1345b6a';
+            $username = '1a4a5f50fc';
+            $password = 'e599316079';
             $data = [
                 'msisdn' => $phone,
                 'shortcode' => 'rgmek',
