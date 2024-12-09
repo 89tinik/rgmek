@@ -25,6 +25,8 @@ use yii\widgets\ActiveForm;
 
         <div class="form-tab active">
             <?php
+            //var_dump($contractsInfo['ContractNumberList']['item']);
+            // die('12');
             $contractData = getSelectData($contractsInfo['ContractNumberList']['item']);
             echo $form->field($model, 'contract_id', [
                 'inputOptions' => [
@@ -216,7 +218,7 @@ use yii\widgets\ActiveForm;
 предоставление показаний прибора учета, в том числе акта снятия показаний прибора учета</div>'
             ])->textInput([
                 'class' => 'form-control a-send',
-                'value' => $contractsInfo['Responsible4DeviceContact']['FullName'],
+                'value' => empty($contractsInfo['Responsible4DeviceContact']['FullName']) ? '' : $contractsInfo['Responsible4DeviceContact']['FullName'],
                 'disabled' => true
             ]) ?>
             <div class="group two-col">
@@ -225,7 +227,7 @@ use yii\widgets\ActiveForm;
                     'responsible4DeviceContactP'
                 )->textInput([
                     'class' => 'form-control a-send',
-                    'value' => $contractsInfo['Responsible4DeviceContact']['Phone'],
+                    'value' => empty($contractsInfo['Responsible4DeviceContact']['Phone']) ? '' : $contractsInfo['Responsible4DeviceContact']['Phone'],
                     'disabled' => true
                 ])->label(false) ?>
                 <?= $form->field(
@@ -233,7 +235,7 @@ use yii\widgets\ActiveForm;
                     'responsible4DeviceContactE'
                 )->textInput([
                     'class' => 'form-control a-send',
-                    'value' => $contractsInfo['Responsible4DeviceContact']['Email'],
+                    'value' => empty($contractsInfo['Responsible4DeviceContact']['Email']) ? '' : $contractsInfo['Responsible4DeviceContact']['Email'],
                     'disabled' => true
                 ])->label(false) ?>
             </div>
@@ -245,7 +247,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Лицо, ответственное за взаиморасчеты и получение счетов на оплату</div>'
             ])->textInput([
                 'class' => 'form-control a-send',
-                'value' => $contractsInfo['Responsible4СalculationContact']['FullName'],
+                'value' => empty($contractsInfo['Responsible4СalculationContact']['FullName']) ? '' : $contractsInfo['Responsible4СalculationContact']['FullName'],
                 'disabled' => true]) ?>
             <div class="group two-col">
                 <?= $form->field(
@@ -253,7 +255,7 @@ use yii\widgets\ActiveForm;
                     'responsible4СalculationContactP'
                 )->textInput([
                     'class' => 'form-control a-send',
-                    'value' => $contractsInfo['Responsible4СalculationContact']['Phone'],
+                    'value' => empty($contractsInfo['Responsible4СalculationContact']['Phone']) ? '' : $contractsInfo['Responsible4СalculationContact']['Phone'],
                     'disabled' => true
                 ])->label(false) ?>
                 <?= $form->field(
@@ -261,7 +263,7 @@ use yii\widgets\ActiveForm;
                     'responsible4СalculationContactE'
                 )->textInput([
                     'class' => 'form-control a-send',
-                    'value' => $contractsInfo['Responsible4СalculationContact']['Email'],
+                    'value' => empty($contractsInfo['Responsible4СalculationContact']['Email']) ? '' : $contractsInfo['Responsible4СalculationContact']['Email'],
                     'disabled' => true])->label(false) ?>
             </div>
 
@@ -343,11 +345,15 @@ function getSelectData($data)
 {
     $dataArr = [];
     $idDBArr = [];
-    foreach ($data as $dataVal) {
-        $dataArr[$dataVal['description']] = $dataVal['description'];
-        $idDBArr[$dataVal['description']] = $dataVal['id'];
+    if (array_key_exists('id', $data)){
+        $dataArr[$data['description']] = $data['description'];
+        $idDBArr[$data['description']] = $data['id'];
+    } else {
+        foreach ($data as $dataVal) {
+            $dataArr[$dataVal['description']] = $dataVal['description'];
+            $idDBArr[$dataVal['description']] = $dataVal['id'];
+        }
     }
-
     return [$dataArr, $idDBArr];
 }
 
