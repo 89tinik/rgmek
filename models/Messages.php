@@ -206,7 +206,7 @@ class Messages extends \yii\db\ActiveRecord
             ->send();
 
         if (!$response->isOk) {
-            return ['error' => 'Не удалось отправить SMS!'];
+            return ['error' => 'Не удалось отправить SMS! Статус:'.$response->statusCode];
         } else {
             $responseArrContent = json_decode($response->content, true);
             if ($responseArrContent['status'] == 'error') {
