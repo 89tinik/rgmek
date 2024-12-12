@@ -14,7 +14,8 @@ class ConsumptionAssets extends AssetBundle
 
     ];
     public $js = [
-        '//code.highcharts.com/highcharts.js'
+        //   '//code.highcharts.com/highcharts.js'
+        'js/highcharts.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

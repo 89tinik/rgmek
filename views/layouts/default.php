@@ -8,9 +8,13 @@ use app\widgets\NewMessagesWidget;
 use yii\helpers\Html;
 use app\assets\DefaultAssets;
 use app\assets\IeAssets;
+use app\assets\NewAssets;
 
 DefaultAssets::register($this);
 IeAssets::register($this);
+if($_GET['nCss'] == 7){
+    NewAssets::register($this);
+}
 ?>
 
 <?php $this->beginPage() ?>
@@ -37,6 +41,7 @@ IeAssets::register($this);
     <body>
     <?php $this->beginBody() ?>
     <div class="bg">
+        <div class="top-line"></div>
         <!-- Preloader -->
         <div class="preloader">
             <div class="centrize full-width">
@@ -54,7 +59,8 @@ IeAssets::register($this);
                 <!-- logo -->
                 <div class="h-logo">
                     <a href="<?= \yii\helpers\Url::base(true); ?>" class="ploader">
-                        <img src="/images/logo.svg" alt=""/>
+                        <img src="/images/logo.svg" class="old" alt=""/>
+                        <img src="/images/logo-new.svg" class="new" alt=""/>
                     </a>
                 </div>
 
