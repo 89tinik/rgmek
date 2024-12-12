@@ -169,7 +169,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $response = $client->createRequest()
                 ->setMethod('POST')
                 ->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
-                ->setUrl('https://target.tele2.ru/api/v2/send_message')
+                ->setUrl('https://target.t2.ru/api/v2/send_message')
                 ->setData($data)
                 ->send();
 
@@ -200,8 +200,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     { //@return true or array('error'=>'error message')
 
         $data = ['id' => $this->id_db];
-        
-         Yii::error('id user = ' .$this->id_db);
+
+        Yii::error('id user = ' .$this->id_db);
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -212,8 +212,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $xml = new XmlParser();
             $result = $xml->parse($response);
 
-         //var_dump($result);
-         //die('00');
+            //var_dump($result);
+            //die('00');
             if ($result['Error']) {
                 return ['error' => $result['Error']['Message']];
             } else {
@@ -225,7 +225,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 }
             }
         } else {
-         //die('--');
+            //die('--');
             return ['error' => 'Не удалось связаться БД - повторите попытку регистрации позже.'];
         }
     }

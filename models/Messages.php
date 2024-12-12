@@ -201,7 +201,7 @@ class Messages extends \yii\db\ActiveRecord
         $response = $client->createRequest()
             ->setMethod('POST')
             ->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
-            ->setUrl('https://target.tele2.ru/api/v2/send_message')
+            ->setUrl('https://target.t2.ru/api/v2/send_message')
             ->setData($data)
             ->send();
 
@@ -231,7 +231,7 @@ class Messages extends \yii\db\ActiveRecord
             ->setHtmlBody($text)
             ->send();
         if (!$mail) {
-            return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
+            return ['error' => 'Не удалось отправить письмо.'];
         }
         return true;
     }
@@ -249,7 +249,7 @@ class Messages extends \yii\db\ActiveRecord
         //отправляем почту
         $mail = Yii::$app->mailer->compose()
             ->setFrom('noreply@send.rgmek.ru')
-            ->setTo(['lk@rgmek.ru','andrey@s-pushkin.ru'])
+            ->setTo(['lk@rgmek.ru'])
             ->setSubject($subject)
             ->setHtmlBody('Детали во вложении')
             ->attach($filePath);
