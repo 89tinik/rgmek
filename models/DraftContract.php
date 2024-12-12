@@ -66,7 +66,7 @@ class DraftContract extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
+            'user_id' => 'Пользователь',
             'contract_id' => 'Контракт (договор)',
             'contract_type' => 'Вид контракта (договора)',
             'from_date' => 'С',
@@ -140,6 +140,13 @@ class DraftContract extends \yii\db\ActiveRecord
                 }
             }
         }
+        $fileName = date('d.m.Y H:i') . '_Заявление.pdf';
+        $this->generatePdf($fileName);
+        $filePath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
+        $newPath = $uploadDirectory . '/' . basename($filePath);
+        if (rename($filePath, $newPath)) {
+            $paths[] = $newPath;
+        }
         return json_encode($paths);
     }
 
@@ -148,14 +155,23 @@ class DraftContract extends \yii\db\ActiveRecord
         $mpdf = new Mpdf([
             'tempDir' => 'tmp-mpdf'
         ]);
-        $filesUploadNames = '';
-        if (!empty($this->files)) {
-            $filesUploadNames = implode(', ', json_decode($this->files, true));
-        }
 
         $html = '';
         foreach ($this->attributes as $attribute => $value) {
-            $html .= '<p><b>'.$this->getAttributeLabel($attribute).':</b>'.$value.'</p>';
+            switch ($attribute) {
+                case 'user_id':
+                    $value = User::findOne($value)->full_name;
+                    break;
+                case 'files':
+                    $fileArr = json_decode($value, true);
+                    $tempFiles = [];
+                    foreach ($fileArr as $file) {
+                        $tempFiles[] = reset($file);
+                    }
+                    $value = implode(';', $tempFiles);
+                    break;
+            }
+            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
         }
 
 
