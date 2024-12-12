@@ -321,6 +321,7 @@ class Messages extends \yii\db\ActiveRecord
             MessageHistory::setNewMessage($message->id);
 
             $message->files = $draft->fileToMessage($message->id);
+            $message->save();
             return $message->id;
         }
     }
