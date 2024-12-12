@@ -156,12 +156,12 @@ class DraftContractController extends BaseController
         $this->arrayToXml($sendData, $xmlData);
         $xmlString = $xmlData->asXML();
 
-//        $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
+        $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
 
-        //   if($result['success']){
-        $messageId = Messages::createMessageFromDraft($model);
-        $this->redirect(['messages/update', 'id' => $messageId]);
-        //   }
+        if ($result['success']) {
+            $messageId = Messages::createMessageFromDraft($model);
+            $this->redirect(['messages/update', 'id' => $messageId]);
+        }
     }
 
     /**
