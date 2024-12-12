@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use SimpleXMLElement;
 use yii\filters\AccessControl;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
@@ -41,22 +42,40 @@ class BaseController extends Controller
         return parent::beforeAction($action);
     }
 
-    protected function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
+    protected function sendToServer($url, $data = array(), $toArray = true, $method = 'GET', $xmlData = false)
+    {
         $client = new Client();
-        $response = $client->createRequest()
+        $request = $client->createRequest()
             ->setMethod($method)
-            ->setUrl($url)
-            ->setData($data)
-            ->send();
+            ->setUrl($url);
+        if ($xmlData) {
+            $request->setHeaders(['Content-Type' => 'application/xml; charset=utf-8'])
+                ->setContent($data);
+        } else {
+            $request->setData($data);
+        }
+        $response = $request->send();
         if ($response->isOk) {
-            if ($toArray){
+            if ($toArray) {
                 $xml = new XmlParser();
                 return ['success' => $xml->parse($response)];
-            }else{
+            } else {
                 return ['success' => $response];
             }
         } else {
             $this->redirect(['err/one-c']);
+        }
+    }
+
+    protected function arrayToXml(array $data, SimpleXMLElement &$xmlData)
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $subnode = $xmlData->addChild($key);
+                $this->arrayToXml($value, $subnode);
+            } else {
+                $xmlData->addChild($key, htmlspecialchars($value));
+            }
         }
     }
 }

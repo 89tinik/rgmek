@@ -98,11 +98,7 @@ class NewMessageController extends Controller
                     }
                 }
                 if ($model->save()) {
-                    $modelHistory = new MessageHistory();
-                    $modelHistory->log = 'Получено обращение';
-                    $modelHistory->message_id = $model->id;
-                    $modelHistory->created = date('Y-m-d H:i:s');
-                    $modelHistory->save();
+                    MessageHistory::setNewMessage($model->id);
 
                     if ($fileName = $model->sendAdminNoticeEmail()) {
                         unlink($fileName);

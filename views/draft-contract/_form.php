@@ -321,7 +321,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="form-tab">
-            <h2>Заявление на заключение контракта (договора) энергоснабжения №________сформирована</h2>
+            <h2>Заявление на заключение контракта (договора) энергоснабжения №<span class="contract-number"><?=$model->contract_id?></span> сформирована</h2>
             <p>Проверьте заявление. При необходимости вернитесь и измените данные.</p>
             <p><a class="btn">PDF</a></p>
             <p>Сформированный черновик заявления будет храниться в Личном кабинете в течение 30 дней и доступна для
@@ -335,7 +335,7 @@ use yii\widgets\ActiveForm;
 
         <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button']) ?>
         <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-        <?= Html::submitButton('Отправить заявление', ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
+        <?= Html::a('Отправить заявление', ['draft-contract/send-draft', 'id'=>Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
 
         <?php ActiveForm::end(); ?>
 

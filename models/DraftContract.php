@@ -91,4 +91,26 @@ class DraftContract extends \yii\db\ActiveRecord
             return true;
         }
     }
+
+    public function fileToMessage($folderId)
+    {
+        $uploadDirectory = 'uploads/tickets/' . $folderId;
+
+        if (!is_dir($uploadDirectory)) {
+            mkdir($uploadDirectory, 0777, true);
+        }
+
+        $fileArr = json_decode($this->files, true);
+        $paths = [];
+        foreach ($fileArr as $file) {
+            $path = reset($file);
+            if (!empty($path)) {
+                $newPath = $uploadDirectory . '/' . basename($path);
+                if (rename($path, $newPath)) {
+                    $paths[] = $newPath;
+                }
+            }
+        }
+        return json_encode($paths);
+    }
 }

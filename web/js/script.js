@@ -45,11 +45,11 @@ $(function () {
                 sendFormAjax();
             });
 
-    function getDateDraft( element ) {
+    function getDateDraft(element) {
         var date;
         try {
-            date = $.datepicker.parseDate( dateFormatDraft, element.value );
-        } catch( error ) {
+            date = $.datepicker.parseDate(dateFormatDraft, element.value);
+        } catch (error) {
             date = null;
         }
 
@@ -58,7 +58,7 @@ $(function () {
 
 
     // Удаление загруженных файлов
-    $('body').on('click', '.removeLoadedFile', function (){
+    $('body').on('click', '.removeLoadedFile', function () {
         ajaxPreloaderOn();
         var actionForm = $(this).closest('ul').attr('ajax-action');
         var ajaxData = 'draftId=' + $(this).closest('ul').attr('draft-id') + '&fileId=' + $(this).data('idx');
@@ -72,7 +72,7 @@ $(function () {
                 console.log('Форма успешно отправлена');
             },
             error: function () {
-                    ajaxPreloaderOff();
+                ajaxPreloaderOff();
                 console.log('Произошла ошибка при отправке формы');
             }
         });
@@ -113,7 +113,7 @@ $(function () {
 
     // Обрабатываем событие валидации поля
     $('.ajax-c-form').on('afterValidateAttribute', function (event, attribute, messages) {
-        if (messages.length === 0 &&  !($(attribute.input).hasClass('draft-files'))) {
+        if (messages.length === 0 && !($(attribute.input).hasClass('draft-files'))) {
             $(attribute.input).addClass('send-a');
             sendFormAjax();
         }
@@ -127,33 +127,46 @@ $(function () {
     });
 
     // Функция для отправки формы через AJAX
-    function sendFormAjax(files=false) {
+    function sendFormAjax(files = false) {
         var form = $('.ajax-c-form')[0];
         var ajaxData = new FormData(form);
         var actionForm = form.action;
-        var content =  false;
+        var content = false;
         var process = false;
-        if (files){
+        if (files) {
             ajaxPreloaderOn();
         } else {
             form = $('.ajax-c-form');
             actionForm = form.attr('action');
-            content =  'application/x-www-form-urlencoded; charset=UTF-8';
+            content = 'application/x-www-form-urlencoded; charset=UTF-8';
             process = true;
             var formData = form.serializeArray();
             var filteredData = formData.filter(function (input) {
                 return form.find('[name="' + input.name + '"]').hasClass('send-a');
             });
+
+            var hasContractId = filteredData.some(function (input) {
+                return input.name === "DraftContractForm[contract_id]";
+            });
+
             ajaxData = $.param(filteredData);
+
+            if (hasContractId) {
+                ajaxPreloaderOn();
+                ajaxData += '&updateContract=' +  $('#draftcontractform-contract_id option:selected').data('dbid');
+            }
         }
 
         $.ajax({
             url: actionForm,
             type: 'POST',
             data: ajaxData,
-                processData: process,
-                contentType: content,
+            processData: process,
+            contentType: content,
             success: function (response) {
+                if (hasContractId){
+                    document.location.reload();
+                }
                 if (files) {
                     allDraftFiles = [];
                     updateDraftFileList();

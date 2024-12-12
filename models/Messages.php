@@ -300,4 +300,28 @@ class Messages extends \yii\db\ActiveRecord
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
     }
+
+    /**
+     * @param DraftContract $draft
+     * @return int
+     */
+    public static function createMessageFromDraft($draft)
+    {
+        $message = new self();
+        $message->scenario = self::SCENARIO_CREATE;
+        $message->status_id = MessageStatuses::RECD;
+        $message->subject_id = 5;
+        $message->contract_id = Contract::findOne(['number'=>$draft->contract_id])->id;
+        $message->message = 'Создали заявление';
+        $message->user_id = $draft->user_id;
+        $message->email = $draft->contact_email;
+        $message->phone = $draft->contact_phone;
+        $message->contact_name = $draft->contact_name;
+        if ($message->save()){
+            MessageHistory::setNewMessage($message->id);
+
+            $message->files = $draft->fileToMessage($message->id);
+            return $message->id;
+        }
+    }
 }

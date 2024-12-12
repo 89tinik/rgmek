@@ -4322,7 +4322,7 @@ display:block;
 /*ivanov end*/
 
 /*tin*/
-.hidden {
+.hidden, a.btn.hidden {
   display: none;
 }
 

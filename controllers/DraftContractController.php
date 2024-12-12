@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Contract;
+use app\models\Messages;
+use SimpleXMLElement;
 use Yii;
 use app\models\DraftContract;
 use app\models\DraftContractForm;
@@ -117,6 +120,50 @@ class DraftContractController extends BaseController
 
     }
 
+    public function actionSendDraft($id)
+    {
+        $model = $this->findModel($id);
+        $data = ['id' => \Yii::$app->user->identity->id_db];
+
+        $currentContract = Contract::findOne(['number' => $model->contract_id]);
+        $data['contract'] = $currentContract->uid;
+
+        $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
+        $sendData = array_filter($contractsInfo['success'], function ($key) {
+            return strpos($key, 'List') === false; // Удаляем элементы, где ключ содержит 'List'
+        }, ARRAY_FILTER_USE_KEY);
+
+        $sendData['ContractNumber'] = $currentContract->uid;
+        $sendData['ContractType'] = $this->get1CId($contractsInfo['success']['ContractTypeList']['item'], $model->contract_type);
+        $sendData['WithDate'] = $model->from_date;
+        $sendData['ByDate'] = $model->to_date;
+        $sendData['Basis'] = $this->get1CId($contractsInfo['success']['BasisList']['item'], $model->basis_purchase);
+        $sendData['PurchaseIdentificationCode'] = $model->ikz;
+        $sendData['ContractPrice'] = $model->contract_price;
+        $sendData['IncludeVolumeInContract'] = $model->contract_volume_plane_include;
+        $sendData['FundingSource'] = $this->get1CId($contractsInfo['success']['FundingSourceList']['item'], $model->source_funding);
+        $sendData['ExtraBudgetaryFundsEnable'] = $model->off_budget;
+        $sendData['FundingSourceAnother'] = $model->off_budget_name;
+        $sendData['ContractPriceAnother'] = $model->off_budget_value;
+        $sendData['BudgetFunds'] = $model->budget_value;
+        $sendData['RestrictionNotifyContact']['Phone'] = $model->user_phone;
+        $sendData['RestrictionNotifyContact']['Email'] = $model->user_email;
+        $sendData['ContactPerson4Request']['FullName'] = $model->contact_name;
+        $sendData['ContactPerson4Request']['Phone'] = $model->contact_phone;
+        $sendData['ContactPerson4Request']['Email'] = $model->contact_email;
+
+        $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Request xmlns="http://rgmek.ru/contractConclusion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Request>');
+        $this->arrayToXml($sendData, $xmlData);
+        $xmlString = $xmlData->asXML();
+
+//        $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
+
+        //   if($result['success']){
+        $messageId = Messages::createMessageFromDraft($model);
+        $this->redirect(['messages/update', 'id' => $messageId]);
+        //   }
+    }
+
     /**
      * Deletes an existing DraftContract model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -159,5 +206,14 @@ class DraftContractController extends BaseController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function get1CId($dataArray, $modelData)
+    {
+        foreach ($dataArray as $item) {
+            if ($item['description'] == $modelData) {
+                return $item['id'];
+            }
+        }
     }
 }

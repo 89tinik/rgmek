@@ -60,4 +60,17 @@ class MessageHistory extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Messages::className(), ['id' => 'message_id']);
     }
+
+    /**
+     * @param int $messageId
+     * @return void
+     */
+    public static function setNewMessage($messageId)
+    {
+        $modelHistory = new self();
+        $modelHistory->log = 'Получено обращение';
+        $modelHistory->message_id = $messageId;
+        $modelHistory->created = date('Y-m-d H:i:s');
+        $modelHistory->save();
+    }
 }
