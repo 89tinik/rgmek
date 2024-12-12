@@ -62,6 +62,34 @@ class DraftContract extends \yii\db\ActiveRecord
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'user_id' => 'User ID',
+            'contract_id' => 'Контракт (договор)',
+            'contract_type' => 'Вид контракта (договора)',
+            'from_date' => 'С',
+            'to_date' => 'По',
+            'basis_purchase' => 'Основание закупки',
+            'ikz' => 'Идентификационный код закупки (ИКЗ)',
+            'contract_price' => 'Цена контракта (договора), руб.',
+            'contract_volume_plane' => 'Планируемый объем контракта(договора), кВтч',
+            'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
+            'source_funding' => 'Источник финансирования',
+            'off_budget' => 'Используются внебюджетные средства',
+            'off_budget_name' => 'Иной источник финансирования',
+            'off_budget_value' => 'Денежные средства из иного источника, руб',
+            'budget_value' => 'Денежные средства из бюджета, руб',
+            'user_phone' => 'Телефон',
+            'user_email' => 'E-mail',
+            'files' => 'Файлы',
+            'contact_name' => 'Контактное лицо по заявлению',
+            'contact_phone' => 'Телефон',
+            'contact_email' => 'E-mail'
+        ];
+    }
+
 
     /**
      * Gets query for [[User]].
@@ -124,10 +152,7 @@ class DraftContract extends \yii\db\ActiveRecord
         if (!empty($this->files)) {
             $filesUploadNames = implode(', ', json_decode($this->files, true));
         }
-        if (!empty($filesUploadNames) && !empty($this->filesUploadNames)){
-            $filesUploadNames .= ', ';
-        }
-        $filesUploadNames .= $this->filesUploadNames;
+
         $html = '';
         foreach ($this->attributes as $attribute => $value) {
             $html .= '<p><b>'.$this->getAttributeLabel($attribute).':</b>'.$value.'</p>';
