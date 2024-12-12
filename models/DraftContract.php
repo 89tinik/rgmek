@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Mpdf\Mpdf;
 use Yii;
 
 /**
@@ -112,5 +113,30 @@ class DraftContract extends \yii\db\ActiveRecord
             }
         }
         return json_encode($paths);
+    }
+
+    public function generatePdf($fileName = 'Обращение.pdf')
+    {
+        $mpdf = new Mpdf([
+            'tempDir' => 'tmp-mpdf'
+        ]);
+        $filesUploadNames = '';
+        if (!empty($this->files)) {
+            $filesUploadNames = implode(', ', json_decode($this->files, true));
+        }
+        if (!empty($filesUploadNames) && !empty($this->filesUploadNames)){
+            $filesUploadNames .= ', ';
+        }
+        $filesUploadNames .= $this->filesUploadNames;
+        $html = '';
+        foreach ($this->attributes as $attribute => $value) {
+            $html .= '<p><b>'.$this->getAttributeLabel($attribute).':</b>'.$value.'</p>';
+        }
+
+
+        $mpdf->WriteHTML($html);
+
+        $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
+        $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
     }
 }

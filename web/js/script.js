@@ -19,6 +19,34 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
+    $('.generate-draft-pdf').on('click', function (e) {
+        e.preventDefault();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let draftId = urlParams.get('id');
+
+        $.ajax({
+            url: '/draft-contract/generate-pdf',
+            type: 'POST',
+            data: { draft: draftId},
+            success: function (response) {
+                if (response.status === 'success') {
+                    // Создаем временную ссылку для скачивания
+                    let link = document.createElement('a');
+                    link.href = response.pdfUrl;
+                    link.download = 'Заявление.pdf'; // Имя файла при скачивании
+                    document.body.appendChild(link);
+                    link.click(); // Имитируем клик
+                    document.body.removeChild(link); // Удаляем ссылку
+                } else {
+                    alert('Ошибка при генерации PDF');
+                }
+            },
+            error: function () {
+                alert('Ошибка при отправке данных');
+            }
+        });
+    });
     // Датапикер
     var dateFormatDraft = "dd.mm.yy",
         fromDraft = $(".from-date").datepicker({

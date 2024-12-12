@@ -216,4 +216,32 @@ class DraftContractController extends BaseController
             }
         }
     }
+
+    public function actionGeneratePdf()
+    {
+        if (Yii::$app->request->isPost) {
+            $model = $this->findModel(Yii::$app->request->post('draft'));
+
+            $fileName = time() . ' Заявление.pdf';
+            $model->generatePdf($fileName);
+
+            $pdfPath = Yii::getAlias('@webroot/temp_pdf/' . $fileName);
+            if (file_exists($pdfPath)) {
+                return $this->asJson([
+                    'status' => 'success',
+                    'pdfUrl' => Yii::getAlias('@web') . '/web/temp_pdf/' . $fileName,
+                ]);
+            } else {
+                return $this->asJson([
+                    'status' => 'error',
+                    'message' => 'PDF файл не найден',
+                ]);
+            }
+        }
+
+        return $this->asJson([
+            'status' => 'error',
+            'message' => 'Данные не получены',
+        ]);
+    }
 }
