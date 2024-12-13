@@ -160,6 +160,7 @@ class DraftContractController extends BaseController
 
         if ($result['success']) {
             $messageId = Messages::createMessageFromDraft($model);
+            $model->delete();
             $this->redirect(['messages/update', 'id' => $messageId]);
         }
     }
