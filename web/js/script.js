@@ -19,6 +19,11 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
+    $('.draft-contract-form .calc-price').on('change', function(){
+        $('.calc-result').val(parseFloat($('.calc-price-all').val()) - parseFloat($('.calc-price-off').val()));
+        $('.calc-result').addClass('send-a');
+    });
+
     $('.generate-draft-pdf').on('click', function (e) {
         e.preventDefault();
 

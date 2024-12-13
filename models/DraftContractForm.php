@@ -98,6 +98,7 @@ class DraftContractForm extends Model
             'directorFullName' => 'ФИО руководителя (подписанта)',
             'directorPosition' => 'Должность руководителя (подписанта)',
             'directorOrder' => 'Действует на основании',
+            'filesUpload' => '',
         ];
     }
 

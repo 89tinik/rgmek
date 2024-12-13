@@ -138,7 +138,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Цена договора будет указана в разделе 4 договора «порядок определения стоимости поставленной
  электроэнергии (мощности) и порядок оплаты»</div>'
                 ])->textInput([
-                    'class' => 'form-control a-send',
+                    'class' => 'form-control a-send calc-price calc-price-all',
                     'value' => $model->contract_price ?? $contractsInfo['ContractPrice']
                 ]) ?>
 
@@ -183,12 +183,12 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'off_budget_value', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">Информация будет отражена в  разделе 4.1 договора</div>'
-                ])->textInput(['class' => 'form-control a-send', 'maxlength' => true]) ?>
+                ])->textInput(['class' => 'form-control a-send calc-price calc-price-off', 'maxlength' => true]) ?>
 
                 <?= $form->field($model, 'budget_value', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">Рассчитывается, как разность цены договора и суммы средств из иного источника</div>'
-                ])->textInput(['class' => 'form-control a-send', 'maxlength' => true]) ?>
+                ])->textInput(['class' => 'form-control a-send calc-result', 'maxlength' => true, 'readonly'=>'readonly']) ?>
 
             </div>
         </div>
