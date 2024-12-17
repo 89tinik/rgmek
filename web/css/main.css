@@ -4569,6 +4569,15 @@ a.btn.border.contract-btn{
   display: table;
 }
 
+.input-file-hide-text {
+  color: transparent; /* Скрываем текст "Файл не выбран" */
+  overflow: hidden; /* Обрезаем всё, что выходит за пределы */
+}
+
+.input-file-hide-text::-webkit-file-upload-button {
+  visibility: visible; /* Оставляем видимой кнопку */
+}
+
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;

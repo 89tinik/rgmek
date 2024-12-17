@@ -20,7 +20,23 @@ $(function () {
     var width = $(window).width();
 
     $('.draft-contract-form .calc-price').on('change', function(){
-        $('.calc-result').val(parseFloat($('.calc-price-all').val()) - parseFloat($('.calc-price-off').val()));
+        // Функция для преобразования строки в число
+        function parseFormattedNumber(value) {
+            return parseFloat(value.replace(/\s/g, ''));
+        }
+
+        // Получаем значения из инпутов и убираем пробелы
+        var priceAll = parseFormattedNumber($('.calc-price-all').val()) || 0;
+        var priceOff = parseFormattedNumber($('.calc-price-off').val()) || 0;
+
+        // Вычисляем результат
+        var result = priceAll - priceOff;
+
+        // Устанавливаем результат и добавляем класс
+        $('.calc-result').val(result.toLocaleString('ru-RU', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).replace(',', '.')); // Округляем до 2 знаков после запятой
         $('.calc-result').addClass('send-a');
     });
 
@@ -52,6 +68,20 @@ $(function () {
             }
         });
     });
+
+    function formatNumber(value) {
+        const number = parseFloat(value.replace(/\s/g, '').replace(',', '.') || 0); // Убираем пробелы и заменяем ',' на '.'
+        return number.toLocaleString('ru-RU', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).replace(',', '.');
+    }
+
+    $('.num-format').on('change', function () {
+        const formattedValue = formatNumber($(this).val());
+        $(this).val(formattedValue);
+    });
+
     // Датапикер
     var dateFormatDraft = "dd.mm.yy",
         fromDraft = $(".from-date").datepicker({
@@ -239,8 +269,10 @@ $(function () {
     function checkFileList() {
         if ($('#filesList li').length > 0) {
             $('.submit-file-btn-js').show();
+            $('#draftcontractform-filesupload').addClass('input-file-hide-text');
         } else {
             $('.submit-file-btn-js').hide();
+            $('#draftcontractform-filesupload').removeClass('input-file-hide-text');
         }
     }
 

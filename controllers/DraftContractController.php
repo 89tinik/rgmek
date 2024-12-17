@@ -76,7 +76,9 @@ class DraftContractController extends BaseController
             $fileChange = false;
             $model->attributes = $modelForm->attributes;
             $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
-
+            $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
+            $model->off_budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->off_budget_value);
+            $model->budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->budget_value);
             if ($modelForm->filesUpload) {
                 $fileChange = true;
                 $folderId = $model->id;
@@ -108,6 +110,13 @@ class DraftContractController extends BaseController
                 }
 
                 return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $errors = $model->getErrors();
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                return [
+                    'success' => false,
+                    'errors' => $errors,
+                ];
             }
 
         }

@@ -138,8 +138,8 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Цена договора будет указана в разделе 4 договора «порядок определения стоимости поставленной
  электроэнергии (мощности) и порядок оплаты»</div>'
                 ])->textInput([
-                    'class' => 'form-control a-send calc-price calc-price-all',
-                    'value' => $model->contract_price ?? $contractsInfo['ContractPrice']
+                    'class' => 'form-control a-send calc-price calc-price-all num-format',
+                    'value' => number_format($model->contract_price, 2, '.', ' ') ?? number_format($contractsInfo['ContractPrice'], 2, '.', ' ')
                 ]) ?>
 
                 <?= $form->field($model, 'contract_volume_plane', ['template' => '{label}{input}{hint}{error}
@@ -183,12 +183,21 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'off_budget_value', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">Информация будет отражена в  разделе 4.1 договора</div>'
-                ])->textInput(['class' => 'form-control a-send calc-price calc-price-off', 'maxlength' => true]) ?>
+                ])->textInput([
+                    'class' => 'form-control a-send calc-price calc-price-off num-format',
+                    'maxlength' => true,
+                    'value' => number_format($model->off_budget_value, 2, '.', ' ')
+                ]) ?>
 
                 <?= $form->field($model, 'budget_value', ['template' => '{label}{input}{hint}{error}
-<a class="btn small border input-tooltip input-tooltip-js">?</a>
+<a class="btn small border input-tooltip input-tooltip-js num-format">?</a>
 <div style="display: none">Рассчитывается, как разность цены договора и суммы средств из иного источника</div>'
-                ])->textInput(['class' => 'form-control a-send calc-result', 'maxlength' => true, 'readonly'=>'readonly']) ?>
+                ])->textInput([
+                    'class' => 'form-control a-send calc-result',
+                    'maxlength' => true,
+                    'readonly' => 'readonly',
+                    'value' => number_format($model->budget_value, 2, '.', ' ')
+                ]) ?>
 
             </div>
         </div>
@@ -321,7 +330,8 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="form-tab">
-            <h2>Заявление на заключение контракта (договора) энергоснабжения №<span class="contract-number"><?=$model->contract_id?></span> сформирована</h2>
+            <h2>Заявление на заключение контракта (договора) энергоснабжения №<span
+                        class="contract-number"><?= $model->contract_id ?></span> сформирована</h2>
             <p>Проверьте заявление. При необходимости вернитесь и измените данные.</p>
             <p><a href="#" class="btn generate-draft-pdf">PDF</a></p>
             <p>Сформированный черновик заявления будет храниться в Личном кабинете в течение 30 дней и доступна для
@@ -335,7 +345,7 @@ use yii\widgets\ActiveForm;
 
         <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button']) ?>
         <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-        <?= Html::a('Отправить заявление', ['draft-contract/send-draft', 'id'=>Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
+        <?= Html::a('Отправить заявление', ['draft-contract/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
 
         <?php ActiveForm::end(); ?>
 
@@ -345,7 +355,7 @@ function getSelectData($data)
 {
     $dataArr = [];
     $idDBArr = [];
-    if (array_key_exists('id', $data)){
+    if (array_key_exists('id', $data)) {
         $dataArr[$data['description']] = $data['description'];
         $idDBArr[$data['description']] = $data['id'];
     } else {

@@ -131,12 +131,14 @@ class DraftContract extends \yii\db\ActiveRecord
 
         $fileArr = json_decode($this->files, true);
         $paths = [];
-        foreach ($fileArr as $file) {
-            $path = reset($file);
-            if (!empty($path)) {
-                $newPath = $uploadDirectory . '/' . basename($path);
-                if (rename($path, $newPath)) {
-                    $paths[] = $newPath;
+        if (is_array($fileArr)) {
+            foreach ($fileArr as $file) {
+                $path = reset($file);
+                if (!empty($path)) {
+                    $newPath = $uploadDirectory . '/' . basename($path);
+                    if (rename($path, $newPath)) {
+                        $paths[] = $newPath;
+                    }
                 }
             }
         }
@@ -162,13 +164,23 @@ class DraftContract extends \yii\db\ActiveRecord
                 case 'user_id':
                     $value = User::findOne($value)->full_name;
                     break;
+                case 'contract_volume_plane_include':
+                    $value = ($value == 1) ? $this->contract_volume_plane : 0;
+                    break;
+                case 'off_budget':
+                    $value = ($value == 1) ? 'Да' : 'Нет';
+                    break;
                 case 'files':
                     $fileArr = json_decode($value, true);
                     $tempFiles = [];
-                    foreach ($fileArr as $file) {
-                        $tempFiles[] = reset($file);
+                    if(is_array($fileArr)){
+                        foreach ($fileArr as $file) {
+                            $tempFiles[] = reset($file);
+                        }
+                        $value = implode(';', $tempFiles);
+                    } else {
+                        $value = '';
                     }
-                    $value = implode(';', $tempFiles);
                     break;
             }
             $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';

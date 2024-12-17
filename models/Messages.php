@@ -312,7 +312,7 @@ class Messages extends \yii\db\ActiveRecord
         $message->status_id = MessageStatuses::RECD;
         $message->subject_id = 5;
         $message->contract_id = Contract::findOne(['number'=>$draft->contract_id])->id;
-        $message->message = 'Создали заявление';
+        $message->message = 'Направлено заявление на заключение контракта (договора) энергоснабжения на следующий период';
         $message->user_id = $draft->user_id;
         $message->email = $draft->contact_email;
         $message->phone = $draft->contact_phone;
