@@ -169,7 +169,9 @@ class DraftContractController extends BaseController
 
         if ($result['success']) {
             $messageId = Messages::createMessageFromDraft($model);
-            $model->delete();
+            $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+            $model->save();
+           // $model->delete();
             $this->redirect(['messages/update', 'id' => $messageId]);
         }
     }

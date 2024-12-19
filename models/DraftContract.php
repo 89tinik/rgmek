@@ -54,7 +54,7 @@ class DraftContract extends \yii\db\ActiveRecord
         return [
             [['user_id'], 'required'],
             [['user_id', 'contract_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
-            [['from_date', 'to_date'], 'safe'],
+            [['from_date', 'to_date', 'send'], 'safe'],
             [['contract_price', 'contract_volume_plane', 'off_budget_value', 'budget_value'], 'number'],
             [['files'], 'string'],
             [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
@@ -86,7 +86,8 @@ class DraftContract extends \yii\db\ActiveRecord
             'files' => 'Файлы',
             'contact_name' => 'Контактное лицо по заявлению',
             'contact_phone' => 'Телефон',
-            'contact_email' => 'E-mail'
+            'contact_email' => 'E-mail',
+            'send' => 'Отправлено'
         ];
     }
 
@@ -110,7 +111,9 @@ class DraftContract extends \yii\db\ActiveRecord
         $filesArr = json_decode($this->files, true);
         foreach ($filesArr as &$file) {
             if (array_key_first($file) == $idx) {
-                unlink($file[$idx]);
+                if (is_file($file[$idx])) {
+                    unlink($file[$idx]);
+                }
                 $file[$idx] = '';
             }
         }

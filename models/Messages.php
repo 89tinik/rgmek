@@ -310,7 +310,7 @@ class Messages extends \yii\db\ActiveRecord
         $message = new self();
         $message->scenario = self::SCENARIO_CREATE;
         $message->status_id = MessageStatuses::RECD;
-        $message->subject_id = 5;
+        $message->subject_id = 6;
         $message->contract_id = Contract::findOne(['number'=>$draft->contract_id])->id;
         $message->message = 'Направлено заявление на заключение контракта (договора) энергоснабжения на следующий период';
         $message->user_id = $draft->user_id;

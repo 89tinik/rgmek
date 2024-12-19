@@ -30,6 +30,7 @@ class MessageThemes extends \yii\db\ActiveRecord
     {
         return [
             [['content'], 'string'],
+            [['hidden', 'id'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -43,6 +44,7 @@ class MessageThemes extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Тема',
             'content' => 'Описание',
+            'hidden' => 'Скрытая',
         ];
     }
 

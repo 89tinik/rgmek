@@ -62,7 +62,7 @@ class NewMessageController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => MessageThemes::find(),
+            'query' => MessageThemes::find()->where(['!=', 'hidden', 1]),
         ]);
 
         return $this->render('index', [

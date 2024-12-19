@@ -8,6 +8,7 @@
 namespace app\commands;
 
 use app\models\Contract;
+use app\models\DraftContract;
 use app\models\User;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -92,5 +93,11 @@ class HelloController extends Controller
                 ->send();
         }
 
+    }
+
+    public function actionClearDraft()
+    {
+        $daysAgo = date('Y-m-d H:i:s', strtotime('-30 days'));
+        DraftContract::deleteAll(['<', 'send', $daysAgo]);
     }
 }

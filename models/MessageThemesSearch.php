@@ -17,7 +17,7 @@ class MessageThemesSearch extends MessageThemes
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id','hidden'], 'integer'],
             [['title', 'content'], 'safe'],
         ];
     }
