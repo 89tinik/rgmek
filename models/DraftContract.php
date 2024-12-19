@@ -139,7 +139,7 @@ class DraftContract extends \yii\db\ActiveRecord
                 $path = reset($file);
                 if (!empty($path)) {
                     $newPath = $uploadDirectory . '/' . basename($path);
-                    if (rename($path, $newPath)) {
+                    if (copy($path, $newPath)) {
                         $paths[] = $newPath;
                     }
                 }
