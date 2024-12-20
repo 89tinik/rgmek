@@ -45,9 +45,10 @@ $(function () {
 
         const urlParams = new URLSearchParams(window.location.search);
         let draftId = urlParams.get('id');
+        let url = $(this).attr('href');
 
         $.ajax({
-            url: '/draft-contract/generate-pdf',
+            url: url,
             type: 'POST',
             data: { draft: draftId},
             success: function (response) {
