@@ -6,8 +6,8 @@ use app\models\Contract;
 use app\models\Messages;
 use SimpleXMLElement;
 use Yii;
-use app\models\DraftContract;
-use app\models\DraftContractForm;
+use app\models\DraftContractChange;
+use app\models\DraftContractChangeForm;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -15,21 +15,23 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
- * DraftContractController implements the CRUD actions for DraftContract model.
+ * DraftContractChangeController implements the CRUD actions for DraftContractChange model.
  */
-class DraftContractController extends BaseController
+class DraftContractChangeController extends BaseController
 {
+
+
     /**
-     * Creates a new DraftContract model.
+     * Creates a new DraftContractChange model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        if ($draftContract = DraftContract::findOne(['user_id' => \Yii::$app->user->id])) {
+        if ($draftContract = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
         }
-        $model = new DraftContract();
+        $model = new DraftContractChange();
         $model->user_id = \Yii::$app->user->id;
         if ($model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
@@ -38,7 +40,7 @@ class DraftContractController extends BaseController
     }
 
     /**
-     * Updates an existing DraftContract model.
+     * Updates an existing DraftContractChange model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -48,13 +50,13 @@ class DraftContractController extends BaseController
     {
         if (!Yii::$app->request->isAjax) {
             $data = ['id' => \Yii::$app->user->identity->id_db];
-            $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
+            $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
 
         }
 
         $model = $this->findModel($id);
 
-        $modelForm = new DraftContractForm();
+        $modelForm = new DraftContractChangeForm();
         $modelForm->attributes = $model->attributes;
 
         if ($modelForm->load(Yii::$app->request->post()) && $modelForm->validate()) {
@@ -62,12 +64,14 @@ class DraftContractController extends BaseController
             $model->attributes = $modelForm->attributes;
             $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
             $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
-            $model->off_budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->off_budget_value);
-            $model->budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->budget_value);
+            $model->contract_volume = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume);
+            $model->contract_price_new = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price_new);
+            $model->contract_volume_new = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_new);
+
             if ($modelForm->filesUpload) {
                 $fileChange = true;
                 $folderId = $model->id;
-                $uploadDirectory = DraftContract::UPLOAD_FILES_FOLDER_PATH . $folderId;
+                $uploadDirectory = DraftContractChange::UPLOAD_FILES_FOLDER_PATH . $folderId;
 
                 if (!is_dir($uploadDirectory)) {
                     mkdir($uploadDirectory, 0775, true);
@@ -119,38 +123,32 @@ class DraftContractController extends BaseController
         $model = $this->findModel($id);
         $data = ['id' => \Yii::$app->user->identity->id_db];
 
-        $currentContract = Contract::findOne(['number' => $model->contract_id]);
+        $currentContract = Contract::findOne(['full_name' => '№ '.$model->contract_id]);
         $data['contract'] = $currentContract->uid;
 
-        $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
+        $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
         $sendData = array_filter($contractsInfo['success'], function ($key) {
             return strpos($key, 'List') === false;
         }, ARRAY_FILTER_USE_KEY);
 
         $sendData['ContractNumber'] = $currentContract->uid;
-        $sendData['ContractType'] = $this->get1CId($contractsInfo['success']['ContractTypeList']['item'], $model->contract_type);
-        $sendData['WithDate'] = $model->from_date;
-        $sendData['ByDate'] = $model->to_date;
-        $sendData['Basis'] = $this->get1CId($contractsInfo['success']['BasisList']['item'], $model->basis_purchase);
-        $sendData['PurchaseIdentificationCode'] = $model->ikz;
-        $sendData['ContractPrice'] = $model->contract_price;
         $sendData['IncludeVolumeInContract'] = $model->contract_volume_plane_include;
-        $sendData['FundingSource'] = $this->get1CId($contractsInfo['success']['FundingSourceList']['item'], $model->source_funding);
-        $sendData['ExtraBudgetaryFundsEnable'] = $model->off_budget;
-        $sendData['FundingSourceAnother'] = $model->off_budget_name;
-        $sendData['ContractPriceAnother'] = $model->off_budget_value;
-        $sendData['BudgetFunds'] = $model->budget_value;
-        $sendData['RestrictionNotifyContact']['Phone'] = $model->user_phone;
-        $sendData['RestrictionNotifyContact']['Email'] = $model->user_email;
+//        $sendData['DirectorPosition'] = $model->off_budget;
+//        $sendData['DirectorFullName'] = $model->off_budget;
+//        $sendData['DirectorOrder'] = $model->off_budget;
+        $sendData['ContractPrice'] = $model->contract_price;
+        $sendData['ContractVolume'] = $model->contract_volume;
+        $sendData['ContractPriceNew'] = $model->contract_price_new;
+        $sendData['ContractVolumeNew'] = $model->contract_volume_new;
         $sendData['ContactPerson4Request']['FullName'] = $model->contact_name;
         $sendData['ContactPerson4Request']['Phone'] = $model->contact_phone;
         $sendData['ContactPerson4Request']['Email'] = $model->contact_email;
 
-        $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Request xmlns="http://rgmek.ru/contractConclusion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Request>');
+        $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Request xmlns="http://rgmek.ru/contractPriceChanging" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Request>');
         $this->arrayToXml($sendData, $xmlData);
         $xmlString = $xmlData->asXML();
 
-        $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
+        $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/', $xmlString, false, 'POST', true);
 
         if ($result['success']) {
             $messageId = Messages::createMessageFromDraft($model, $currentContract->id);
@@ -161,18 +159,16 @@ class DraftContractController extends BaseController
         }
     }
 
-
-
     /**
-     * Finds the DraftContract model based on its primary key value.
+     * Finds the DraftContractChange model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return DraftContract the loaded model
+     * @return DraftContractChange the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = DraftContract::findOne(['id' => $id, 'user_id' => \Yii::$app->user->identity->getId()])) !== null) {
+        if (($model = DraftContractChange::findOne(['id' => $id, 'user_id' => \Yii::$app->user->identity->getId()])) !== null) {
             return $model;
         }
 

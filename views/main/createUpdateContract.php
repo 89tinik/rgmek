@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 /* @var $draftContract app\models\DraftContract */
 /* @var $draftDelContract app\models\DraftDelContract */
-/* @var $draftGhagContract app\models\DraftGhagContract */
+/* @var $draftContractChange app\models\DraftContractChange */
 
 ?>
 
@@ -22,8 +22,8 @@ use yii\helpers\Html;
         ) ?>
         <?= Html::a(
             'Сформировать соглашение об изменении цены действующего контракта (договора)'.
-            ($draftContract1 ? '(черновик)' : ''),
-            $draftContract1 ? ['draft-contract/update', 'id' => $draftContract->id] : ['draft-contract/create'],
+            ($draftContractChange ? '(черновик)' : ''),
+            $draftContractChange ? ['draft-contract-change/update', 'id' => $draftContractChange->id] : ['draft-contract-change/create'],
             ['class' => 'btn  border contract-btn']
         ) ?>
         <?= Html::a(

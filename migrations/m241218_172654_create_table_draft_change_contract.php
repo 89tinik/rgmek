@@ -15,7 +15,9 @@ class m241218_172654_create_table_draft_change_contract extends Migration
         $this->createTable('{{%draft_contract_change}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
-            'contract_id' => $this->integer(),
+            'contract_id' => $this->string(255),
+            'contract_price' => $this->decimal(10, 2),
+            'contract_volume' => $this->decimal(10, 2),
             'contract_price_new' => $this->decimal(10, 2),
             'contract_volume_new' => $this->decimal(10, 2),
             'contract_volume_plane_include' => $this->integer(),

@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use SimpleXMLElement;
+use Yii;
 use yii\filters\AccessControl;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class BaseController extends Controller
 {
@@ -75,6 +77,29 @@ class BaseController extends Controller
                 $this->arrayToXml($value, $subnode);
             } else {
                 $xmlData->addChild($key, htmlspecialchars($value));
+            }
+        }
+    }
+
+    /**
+     * Deletes an existing DraftContract model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionRemoveFile()
+    {
+        $model = $this->findModel(Yii::$app->request->post('draftId'));
+        if ($model->removeFile(Yii::$app->request->post('fileId'))) {
+            return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
+        }
+    }
+
+    protected function get1CId($dataArray, $modelData)
+    {
+        foreach ($dataArray as $item) {
+            if ($item['description'] == $modelData) {
+                return $item['id'];
             }
         }
     }

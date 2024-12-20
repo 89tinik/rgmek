@@ -9,6 +9,7 @@ use app\models\Baner;
 use app\models\ConsumptionForm;
 use app\models\Contract;
 use app\models\DraftContract;
+use app\models\DraftContractChange;
 use app\models\HistoryForm;
 use app\models\InstallESForm;
 use app\models\ReceiptForm;
@@ -502,12 +503,12 @@ class MainController extends Controller
 
         $draftContract = DraftContract::findOne(['user_id' => $userId]);
         //$draftDelContract = DraftDelContract::findOne(['user_id' => $userId]);
-        //$draftGhagContract = DraftGhagContract::findOne(['user_id' => $userId]);
+        $draftChangeContract = DraftContractChange::findOne(['user_id' => $userId]);
 
         return $this->render('createUpdateContract', [
             'draftContract' => $draftContract,
             //'draftDelContract' => $draftDelContract,
-            // 'draftGhagContract' => $draftGhagContract,
+             'draftContractChange' => $draftChangeContract,
         ]);
     }
 

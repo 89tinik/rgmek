@@ -302,17 +302,17 @@ class Messages extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param DraftContract $draft
+     * @param DraftContract | DraftContractChange $draft
      * @return int
      */
-    public static function createMessageFromDraft($draft)
+    public static function createMessageFromDraft($draft, $contractId)
     {
         $message = new self();
         $message->scenario = self::SCENARIO_CREATE;
         $message->status_id = MessageStatuses::RECD;
-        $message->subject_id = 6;
-        $message->contract_id = Contract::findOne(['number'=>$draft->contract_id])->id;
-        $message->message = 'Направлено заявление на заключение контракта (договора) энергоснабжения на следующий период';
+        $message->subject_id = $draft::MESSAGE_THEME;
+        $message->contract_id = $contractId;
+        $message->message = $draft::MESSAGE_TEXT;
         $message->user_id = $draft->user_id;
         $message->email = $draft->contact_email;
         $message->phone = $draft->contact_phone;
