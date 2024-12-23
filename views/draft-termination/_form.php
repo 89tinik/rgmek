@@ -119,7 +119,7 @@ use yii\widgets\ActiveForm;
             <h2>Заявление на заключение контракта (договора) энергоснабжения №<span
                         class="contract-number"><?= $model->contract_id ?></span> сформирована</h2>
             <p>Проверьте заявление. При необходимости вернитесь и измените данные.</p>
-            <p><?=Html::a('PDF', ['draft-terminate/generate-pdf'], ['class'=>'btn generate-draft-pdf'])?></p>
+            <p><?=Html::a('PDF', ['draft-termination/generate-pdf'], ['class'=>'btn generate-draft-pdf'])?></p>
             <p>Сформированный черновик заявления будет храниться в Личном кабинете в течение 30 дней и доступна для
                 изменения.</p>
             <p> После того, как Вы нажмете «Отправить заявление», оно поступит в ООО «РГМЭК», будет зарегистрировано и
