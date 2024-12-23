@@ -4514,7 +4514,8 @@ a.btn.border.contract-btn{
 .draft-contract-form .group.two-col .form-group input {
   display: inline-block;
   vertical-align: middle;
-  width: 206px;
+  /*width: 206px;*/
+  width:100%;
 }
 .draft-contract-form .group.two-col .input-tooltip{
   display: inline-block;
@@ -4644,4 +4645,8 @@ a.btn.border.contract-btn{
 .draft-contract-form .group.two-equal-col .form-group{
   margin:0;
 }
+.field-draftcontractchangeform-contract_price,.field-draftcontractchangeform-contract_volume,.field-draftcontractchangeform-contract_price_new,.field-draftcontractchangeform-contract_volume_new{
+    width:40%;
+}
+
 /*ivanov END*/
