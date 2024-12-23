@@ -127,6 +127,8 @@ class DraftContractChange extends \yii\db\ActiveRecord
                 case 'user_id':
                     $value = User::findOne($value)->full_name;
                     break;
+                case 'send':
+                    continue 2;
                 case 'off_budget':
                 case 'contract_volume_plane_include':
                     $value = ($value == 1) ? 'Да' : 'Нет';

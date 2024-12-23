@@ -4,8 +4,8 @@ use app\models\DraftContract;
 use yii\helpers\Html;
 
 /* @var $draftContract app\models\DraftContract */
-/* @var $draftDelContract app\models\DraftDelContract */
 /* @var $draftContractChange app\models\DraftContractChange */
+/* @var $draftTermination app\models\DraftTermination */
 
 ?>
 
@@ -28,8 +28,8 @@ use yii\helpers\Html;
         ) ?>
         <?= Html::a(
             ' Сформировать соглашение о расторжении действующего контракта (договора)'.
-            ($draftContract2 ? '(черновик)' : ''),
-            $draftContract3 ? ['draft-contract/update', 'id' => $draftContract->id] : ['draft-contract/create'],
+            ($draftTermination ? '(черновик)' : ''),
+            $draftTermination ? ['draft-termination/update', 'id' => $draftTermination->id] : ['draft-termination/create'],
             ['class' => 'btn  border contract-btn']
         ) ?>
 

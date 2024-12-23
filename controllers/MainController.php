@@ -10,6 +10,7 @@ use app\models\ConsumptionForm;
 use app\models\Contract;
 use app\models\DraftContract;
 use app\models\DraftContractChange;
+use app\models\DraftTermination;
 use app\models\HistoryForm;
 use app\models\InstallESForm;
 use app\models\ReceiptForm;
@@ -502,13 +503,13 @@ class MainController extends Controller
         $userId = \Yii::$app->user->id;
 
         $draftContract = DraftContract::findOne(['user_id' => $userId]);
-        //$draftDelContract = DraftDelContract::findOne(['user_id' => $userId]);
         $draftChangeContract = DraftContractChange::findOne(['user_id' => $userId]);
+        $draftTermination = DraftTermination::findOne(['user_id' => $userId]);
 
         return $this->render('createUpdateContract', [
             'draftContract' => $draftContract,
-            //'draftDelContract' => $draftDelContract,
-             'draftContractChange' => $draftChangeContract,
+            'draftContractChange' => $draftChangeContract,
+            'draftTermination' => $draftTermination
         ]);
     }
 

@@ -6,46 +6,33 @@ use Mpdf\Mpdf;
 use Yii;
 
 /**
- * This is the model class for table "draft_contract".
+ * This is the model class for table "draft_termination".
  *
  * @property int $id
  * @property int $user_id
- * @property int|null $contract_id
- * @property string|null $contract_type
- * @property string|null $from_date
- * @property string|null $to_date
- * @property string|null $basis_purchase
- * @property string|null $ikz
+ * @property string|null $contract_id
  * @property float|null $contract_price
- * @property float|null $contract_volume_plane
- * @property float|null $contract_volume_plane_include
- * @property string|null $source_funding
- * @property int|null $off_budget
- * @property string|null $off_budget_name
- * @property float|null $off_budget_value
- * @property float|null $budget_value
- * @property string|null $user_phone
- * @property string|null $user_email
+ * @property float|null $contract_volume_price
  * @property string|null $files
  * @property string|null $contact_name
  * @property string|null $contact_phone
  * @property string|null $contact_email
+ * @property string|null $send
  *
  * @property User $user
  */
-class DraftContract extends \yii\db\ActiveRecord
+class DraftTermination extends \yii\db\ActiveRecord
 {
-    const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-contracts/';
-    const TITLE = 'Направить заявление на заключение контракта (договора) энергоснабжения на следующий период';
-    const MESSAGE_THEME = 6;
-    const MESSAGE_TEXT = 'Направлено заявление на заключение контракта (договора) энергоснабжения на следующий период';
-
+    const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-termination/';
+    const TITLE = 'Формирование проекта соглашения о  расторжении действующего контракта (договора) ';
+    const MESSAGE_THEME = 8;
+    const MESSAGE_TEXT = 'Направлено заявление на расторжение действующего контракта (договора) энергоснабжения';
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'draft_contract';
+        return 'draft_termination';
     }
 
     /**
@@ -55,44 +42,33 @@ class DraftContract extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'contract_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
-            [['from_date', 'to_date', 'send'], 'safe'],
-            [['contract_price', 'contract_volume_plane', 'off_budget_value', 'budget_value'], 'number'],
+            [['user_id'], 'integer'],
+            [['contract_price', 'contract_volume_price'], 'number'],
             [['files'], 'string'],
-            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['send'], 'safe'],
+            [['contract_id', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
             'user_id' => 'Пользователь',
             'contract_id' => 'Контракт (договор)',
-            'contract_type' => 'Вид контракта (договора)',
-            'from_date' => 'С',
-            'to_date' => 'По',
-            'basis_purchase' => 'Основание закупки',
-            'ikz' => 'Идентификационный код закупки (ИКЗ)',
             'contract_price' => 'Цена контракта (договора), руб.',
-            'contract_volume_plane' => 'Планируемый объем контракта(договора), кВтч',
-            'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
-            'source_funding' => 'Источник финансирования',
-            'off_budget' => 'Используются внебюджетные средства',
-            'off_budget_name' => 'Иной источник финансирования',
-            'off_budget_value' => 'Денежные средства из иного источника, руб',
-            'budget_value' => 'Денежные средства из бюджета, руб',
-            'user_phone' => 'Телефон',
-            'user_email' => 'E-mail',
+            'contract_volume_price' => 'Стоимость электроэнергии, поставленной по контракту (договору), руб',
             'files' => 'Файлы',
             'contact_name' => 'Контактное лицо по заявлению',
             'contact_phone' => 'Телефон',
             'contact_email' => 'E-mail',
-            'send' => 'Отправлено'
+            'send' => 'Отправлено',
         ];
     }
-
 
     /**
      * Gets query for [[User]].
@@ -103,29 +79,6 @@ class DraftContract extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
-    /**
-     * @param $idx int
-     * @return true|void
-     */
-    public function removeFile($idx)
-    {
-        $filesArr = json_decode($this->files, true);
-        foreach ($filesArr as &$file) {
-            if (array_key_first($file) == $idx) {
-                if (is_file($file[$idx])) {
-                    unlink($file[$idx]);
-                }
-                $file[$idx] = '';
-            }
-        }
-        $filesJson = json_encode($filesArr);
-        $this->files = $filesJson;
-        if ($this->save()) {
-            return true;
-        }
-    }
-
     public function fileToMessage($folderId)
     {
         $uploadDirectory = 'uploads/tickets/' . $folderId;
@@ -171,12 +124,6 @@ class DraftContract extends \yii\db\ActiveRecord
                     break;
                 case 'send':
                     continue 2;
-                case 'contract_volume_plane_include':
-                    $value = ($value == 1) ? $this->contract_volume_plane : 0;
-                    break;
-                case 'off_budget':
-                    $value = ($value == 1) ? 'Да' : 'Нет';
-                    break;
                 case 'files':
                     $fileArr = json_decode($value, true);
                     $tempFiles = [];
