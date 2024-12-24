@@ -129,7 +129,7 @@ use yii\widgets\ActiveForm;
                 электронного документооборота.</p>
         </div>
 
-        <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button']) ?>
+        <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button hidden']) ?>
         <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
         <?= Html::a('Отправить заявление', ['draft-termination/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
 
