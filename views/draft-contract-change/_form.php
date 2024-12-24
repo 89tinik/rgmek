@@ -105,18 +105,16 @@ use yii\widgets\ActiveForm;
                         ?? number_format($contractsInfo['ContractPriceNew'], 2, '.', ' '),
                     'class' => 'form-control a-send num-format'
                 ]) ?>
-                <?= $form->field(
-                    $model,
-                    'contract_volume_new'
-                )->textInput([
+
+                <?= $form->field($model, 'contract_volume_new', ['template' => '{label}{input}{hint}{error}
+<a class="btn small border input-tooltip input-tooltip-js">?</a>
+<div style="display: none">Объем рассчитан исходя из введенной Вами цены контракта и цены за 1 кВтч.
+                    Отметьте «Включать планируемый объем», если хотите, чтобы этот параметр был указан в соглашении</div>'
+                ])->textInput([
                     'value' => number_format($model->contract_volume_new, 2, '.', ' ')
                         ?? number_format($contractsInfo['ContractVolumeNew'], 2, '.', ' '),
                     'class' => 'form-control a-send num-format'
                 ]) ?>
-                <a class="btn small border input-tooltip input-tooltip-js">?</a>
-                <div style="display: none">Объем рассчитан исходя из введенной Вами цены контракта и цены за 1 кВтч.
-                    Отметьте «Включать планируемый объем», если хотите, чтобы этот параметр был указан в соглашении
-                </div>
             </div>
 
 
