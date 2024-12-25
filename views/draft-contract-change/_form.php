@@ -12,7 +12,16 @@ use yii\widgets\ActiveForm;
 ?>
 
     <div class="draft-contract-form">
-
+        <div class="form-message">
+            <?php
+            if (Yii::$app->session->hasFlash('success')) {
+                echo '<div class="success">' . Yii::$app->session->getFlash('success') . '</div>';
+            }
+            if (Yii::$app->session->hasFlash('error')) {
+                echo '<div class="error">' . Yii::$app->session->getFlash('error') . '</div>';
+            }
+            ?>
+        </div>
         <?php $form = ActiveForm::begin([
             'validateOnBlur' => false,
             'validateOnChange' => true,

@@ -64,6 +64,7 @@ class DraftContractController extends BaseController
             $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
             $model->off_budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->off_budget_value);
             $model->budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->budget_value);
+            $model->contract_volume_plane = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_plane);
             if ($modelForm->filesUpload) {
                 $fileChange = true;
                 $folderId = $model->id;
@@ -152,12 +153,13 @@ class DraftContractController extends BaseController
 
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
 
-        if ($result['success']) {
-            $messageId = Messages::createMessageFromDraft($model, $currentContract->id);
+        if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
            // $model->delete();
             $this->redirect(['messages/update', 'id' => $messageId]);
+        } else {
+            $this->redirect(['update', 'id' => $id]);
         }
     }
 

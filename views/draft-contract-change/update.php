@@ -1,6 +1,6 @@
 <?php
 
-use app\models\DraftContract;
+use app\models\DraftContractChange;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $userModel yii\web\User */
 /* @var $contractsInfo array */
 
-$this->title = DraftContract::TITLE;
+$this->title = DraftContractChange::TITLE;
 $this->params['breadcrumbs'][] = ['label' => 'Draft Contracts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

@@ -25,7 +25,7 @@ use Yii;
 class DraftContractChange extends \yii\db\ActiveRecord
 {
     const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-contracts-change/';
-    const TITLE = 'Направить заявление на изменение цены контракта (договора) энергоснабжения';
+    const TITLE = 'Формирование проекта соглашения об изменении цены действующего контракта (договора)';
     const MESSAGE_THEME = 7;
     const MESSAGE_TEXT = 'Направлено заявление на изменение цены контракта (договора) энергоснабжения';
     /**

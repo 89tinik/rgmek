@@ -24,7 +24,7 @@ use Yii;
 class DraftTermination extends \yii\db\ActiveRecord
 {
     const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-termination/';
-    const TITLE = 'Формирование проекта соглашения о  расторжении действующего контракта (договора) ';
+    const TITLE = 'Сформировать соглашение о расторжении действующего контракта (договора)';
     const MESSAGE_THEME = 8;
     const MESSAGE_TEXT = 'Направлено заявление на расторжение действующего контракта (договора) энергоснабжения';
     /**

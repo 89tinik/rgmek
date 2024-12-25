@@ -323,6 +323,12 @@ class Messages extends \yii\db\ActiveRecord
             $message->files = $draft->fileToMessage($message->id);
             $message->save();
             return $message->id;
+        } else{
+            $errorArr = $message->getErrors();
+            foreach ($errorArr as $error){
+                Yii::$app->session->setFlash('error', implode(',', $error));
+            }
+            return false;
         }
     }
 }

@@ -13,6 +13,16 @@ use yii\widgets\ActiveForm;
 
     <div class="draft-contract-form">
 
+        <div class="form-message">
+            <?php
+            if (Yii::$app->session->hasFlash('success')) {
+                echo '<div class="success">' . Yii::$app->session->getFlash('success') . '</div>';
+            }
+            if (Yii::$app->session->hasFlash('error')) {
+                echo '<div class="error">' . Yii::$app->session->getFlash('error') . '</div>';
+            }
+            ?>
+        </div>
         <?php $form = ActiveForm::begin([
             'validateOnBlur' => false,
             'validateOnChange' => true,
@@ -44,10 +54,11 @@ use yii\widgets\ActiveForm;
             $contractTypeData = getSelectData($contractsInfo['ContractTypeList']['item']);
             echo $form->field($model, 'contract_type', [
                 'inputOptions' => [
-                    'class' => 'styler select__default',
+                    'class' => 'styler select__default send-a',
                 ],
             ])->dropDownList($contractTypeData[0], [
                 'prompt' => '',
+                'value' => $model->contract_type ?? array_search($contractsInfo['ContractType'], $contractTypeData[1]),
                 'options' => array_map(function ($v) {
                     return ['data-dbid' => $v];
                 }, $contractTypeData[1])
@@ -61,14 +72,14 @@ use yii\widgets\ActiveForm;
                     'from_date'
                 )->textInput([
                     'value' => $model->from_date ?? $contractsInfo['WithDate'],
-                    'class' => 'form-control a-send from-date'
+                    'class' => 'form-control a-send from-date send-a'
                 ]) ?>
                 <?= $form->field(
                     $model,
                     'to_date'
                 )->textInput([
                     'value' => $model->to_date ?? $contractsInfo['ByDate'],
-                    'class' => 'form-control a-send to-date'
+                    'class' => 'form-control a-send to-date send-a'
                 ]) ?>
                 <a class="btn small border input-tooltip input-tooltip-js">?</a>
                 <div style="display: none">Задайте нужный период</div>
@@ -78,7 +89,7 @@ use yii\widgets\ActiveForm;
             $basisPurchaseData = getSelectData($contractsInfo['BasisList']['item']);
             echo $form->field($model, 'basis_purchase', [
                 'inputOptions' => [
-                    'class' => 'styler select__default',
+                    'class' => 'styler select__default send-a',
                 ],
                 'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
@@ -86,6 +97,7 @@ use yii\widgets\ActiveForm;
  оставьте строку не заполненной.</div>'
             ])->dropDownList($basisPurchaseData[0], [
                 'prompt' => '',
+                'value' => $model->basis_purchase ?? array_search($contractsInfo['Basis'], $basisPurchaseData[1]),
                 'options' => array_map(function ($v) {
                     return ['data-dbid' => $v];
                 }, $basisPurchaseData[1])
@@ -104,24 +116,24 @@ use yii\widgets\ActiveForm;
                     $model,
                     'contractPriceForecast'
                 )->textInput([
-                    'class' => 'form-control a-send',
-                    'value' => $contractsInfo['ContractPriceForecast'],
+                    'class' => 'form-control a-send num-format',
+                    'value' => number_format($contractsInfo['ContractPriceForecast'], 2, '.', ' '),
                     'disabled' => true
                 ]) ?>
                 <?= $form->field(
                     $model,
                     'contractVolumeForecast'
                 )->textInput([
-                    'class' => 'form-control a-send',
-                    'value' => $contractsInfo['ContractVolumeForecast'],
+                    'class' => 'form-control a-send num-format',
+                    'value' => number_format($contractsInfo['ContractVolumeForecast'], 2, '.', ' '),
                     'disabled' => true
                 ]) ?>
                 <?= $form->field(
                     $model,
                     'pricePerPiece'
                 )->textInput([
-                    'class' => 'form-control a-send',
-                    'value' => $contractsInfo['PricePerPiece'],
+                    'class' => 'form-control a-send num-format',
+                    'value' => number_format($contractsInfo['PricePerPiece'], 2, '.', ' '),
                     'disabled' => true
                 ]) ?>
                 <a class="btn small border input-tooltip input-tooltip-js">?</a>
@@ -138,7 +150,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Цена договора будет указана в разделе 4 договора «порядок определения стоимости поставленной
  электроэнергии (мощности) и порядок оплаты»</div>'
                 ])->textInput([
-                    'class' => 'form-control a-send calc-price calc-price-all num-format',
+                    'class' => 'form-control a-send calc-price calc-price-all num-format send-a',
                     'value' => number_format($model->contract_price, 2, '.', ' ') ?? number_format($contractsInfo['ContractPrice'], 2, '.', ' ')
                 ]) ?>
 
@@ -146,7 +158,10 @@ use yii\widgets\ActiveForm;
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">Объем рассчитан исходя из введенной Вами цены контракта и цены за 1 кВтч. Отметьте «Включать
  планируемый объем», если хотите, чтобы этот параметр был указан в разделе 4 договора</div>'
-                ])->textInput(['class' => 'form-control a-send']) ?>
+                ])->textInput([
+                        'class' => 'form-control a-send num-format',
+                        'value' => number_format($model->contract_volume_plane, 2, '.', ' ')
+                ]) ?>
             </div>
 
             <?= $form->field($model, 'contract_volume_plane_include')->checkbox([
@@ -157,13 +172,14 @@ use yii\widgets\ActiveForm;
             $fundingSourceData = getSelectData($contractsInfo['FundingSourceList']['item']);
             echo $form->field($model, 'source_funding', [
                 'inputOptions' => [
-                    'class' => 'styler select__default',
+                    'class' => 'styler select__default send-a',
                 ],
                 'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">Источник финансирования будет отражен в разделе 4 договора</div>'
             ])->dropDownList($fundingSourceData[0], [
                 'prompt' => '',
+                'value' => $model->source_funding ?? array_search($contractsInfo['FundingSource'], $fundingSourceData[1]),
                 'options' => array_map(function ($v) {
                     return ['data-dbid' => $v];
                 }, $fundingSourceData[1])

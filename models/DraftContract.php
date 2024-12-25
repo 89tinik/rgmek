@@ -55,11 +55,11 @@ class DraftContract extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'contract_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
+            [['user_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
             [['from_date', 'to_date', 'send'], 'safe'],
             [['contract_price', 'contract_volume_plane', 'off_budget_value', 'budget_value'], 'number'],
             [['files'], 'string'],
-            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contract_type', 'contract_id', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

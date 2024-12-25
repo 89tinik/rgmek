@@ -210,7 +210,7 @@ $(function () {
             });
 
             var hasContractId = filteredData.some(function (input) {
-                return input.name === "DraftContractForm[contract_id]";
+                return input.name.includes("[contract_id]");
             });
 
             ajaxData = $.param(filteredData);
@@ -270,10 +270,10 @@ $(function () {
     function checkFileList() {
         if ($('#filesList li').length > 0) {
             $('.submit-file-btn-js').show();
-            $('#draftcontractform-filesupload').addClass('input-file-hide-text');
+            $('.draft-files').addClass('input-file-hide-text');
         } else {
             $('.submit-file-btn-js').hide();
-            $('#draftcontractform-filesupload').removeClass('input-file-hide-text');
+            $('.draft-files').removeClass('input-file-hide-text');
         }
     }
 
@@ -423,8 +423,10 @@ $(function () {
         }
         if (show > 0) {
             $('.messages-form form button[type=submit]').removeClass('hidden');
+            $('#messages-filesupload').addClass('input-file-hide-text');
         } else {
             $('.messages-form form button[type=submit]').addClass('hidden');
+            $('#messages-filesupload').removeClass('input-file-hide-text');
         }
     }
 
