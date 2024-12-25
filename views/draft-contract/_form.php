@@ -266,29 +266,29 @@ use yii\widgets\ActiveForm;
             </div>
 
 
-            <?= $form->field($model, 'responsible4СalculationContactFN', [
+            <?= $form->field($model, 'responsible4CalculationContactFN', [
                 'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">Лицо, ответственное за взаиморасчеты и получение счетов на оплату</div>'
             ])->textInput([
                 'class' => 'form-control a-send',
-                'value' => empty($contractsInfo['Responsible4СalculationContact']['FullName']) ? '' : $contractsInfo['Responsible4СalculationContact']['FullName'],
+                'value' => empty($contractsInfo['Responsible4CalculationContact']['FullName']) ? '' : $contractsInfo['Responsible4CalculationContact']['FullName'],
                 'disabled' => true]) ?>
             <div class="group two-col">
                 <?= $form->field(
                     $model,
-                    'responsible4СalculationContactP'
+                    'responsible4CalculationContactP'
                 )->textInput([
                     'class' => 'form-control a-send',
-                    'value' => empty($contractsInfo['Responsible4СalculationContact']['Phone']) ? '' : $contractsInfo['Responsible4СalculationContact']['Phone'],
+                    'value' => empty($contractsInfo['Responsible4CalculationContact']['Phone']) ? '' : $contractsInfo['Responsible4CalculationContact']['Phone'],
                     'disabled' => true
                 ])->label(false) ?>
                 <?= $form->field(
                     $model,
-                    'responsible4СalculationContactE'
+                    'responsible4CalculationContactE'
                 )->textInput([
                     'class' => 'form-control a-send',
-                    'value' => empty($contractsInfo['Responsible4СalculationContact']['Email']) ? '' : $contractsInfo['Responsible4СalculationContact']['Email'],
+                    'value' => empty($contractsInfo['Responsible4CalculationContact']['Email']) ? '' : $contractsInfo['Responsible4CalculationContact']['Email'],
                     'disabled' => true])->label(false) ?>
             </div>
 

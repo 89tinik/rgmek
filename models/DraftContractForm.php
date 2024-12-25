@@ -36,9 +36,9 @@ class DraftContractForm extends Model
     public $responsible4DeviceContactFN;
     public $responsible4DeviceContactP;
     public $responsible4DeviceContactE;
-    public $responsible4СalculationContactFN;
-    public $responsible4СalculationContactP;
-    public $responsible4СalculationContactE;
+    public $responsible4CalculationContactFN;
+    public $responsible4CalculationContactP;
+    public $responsible4CalculationContactE;
     public $directorFullName;
     public $directorPosition;
     public $directorOrder;
@@ -92,9 +92,9 @@ class DraftContractForm extends Model
             'responsible4DeviceContactFN' => 'Лицо, ответственное за приборы учета и показания',
             'responsible4DeviceContactP' => 'Телефон',
             'responsible4DeviceContactE' => 'E-mail',
-            'responsible4СalculationContactFN' => 'Лицо, ответственное за взаиморасчеты',
-            'responsible4СalculationContactP' => 'Телефон',
-            'responsible4СalculationContactE' => 'E-mail',
+            'responsible4CalculationContactFN' => 'Лицо, ответственное за взаиморасчеты',
+            'responsible4CalculationContactP' => 'Телефон',
+            'responsible4CalculationContactE' => 'E-mail',
             'directorFullName' => 'ФИО руководителя (подписанта)',
             'directorPosition' => 'Должность руководителя (подписанта)',
             'directorOrder' => 'Действует на основании',
