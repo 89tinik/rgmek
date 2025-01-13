@@ -55,11 +55,11 @@ class DraftContract extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
+            [['user_id', 'contract_volume_plane_include', 'off_budget', 'contract_id'], 'integer'],
             [['from_date', 'to_date', 'send'], 'safe'],
             [['contract_price', 'contract_volume_plane', 'off_budget_value', 'budget_value'], 'number'],
             [['files'], 'string'],
-            [['contract_type', 'contract_id', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -199,4 +199,49 @@ class DraftContract extends \yii\db\ActiveRecord
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
     }
+    
+     /**
+     * @return array
+     */
+    public function getNullAttr()
+    {
+        return array_filter($this->getAttributes(), function ($value) {
+            return $value === null;
+        });
+    }
+
+    /**
+     * @param $nullAttributes
+     * @param $defaultArr
+     * @return void
+     */
+    public function setDefault($nullAttributes, $defaultArr)
+    {
+        foreach ($nullAttributes as $attribute) {
+            switch ($attribute) {
+                case 'contract_type':
+                    $index = array_search($defaultArr['ContractType'], array_column($defaultArr['ContractTypeList']['item'], 'id'));
+                    $this->$attribute = $defaultArr['ContractTypeList']['item'][$index]['description'];
+                    break;
+                case 'basis_purchase':
+                    $index = array_search($defaultArr['Basis'], array_column($defaultArr['BasisList']['item'], 'id'));
+                    $this->$attribute = $defaultArr['BasisList']['item'][$index]['description'];
+                    break;
+                case 'source_funding':
+                    $index = array_search($defaultArr['FundingSource'], array_column($defaultArr['FundingSourceList']['item'], 'id'));
+                    $this->$attribute = $defaultArr['FundingSourceList']['item'][$index]['description'];
+                    break;
+                case 'from_date':
+                    $this->$attribute = $defaultArr['WithDate'];
+                    break;
+                case 'to_date':
+                    $this->$attribute = $defaultArr['ByDate'];
+                    break;
+                case 'contract_price':
+                    $this->$attribute = $defaultArr['ContractPrice'];
+                    break;
+            }
+        }
+    }
 }
+

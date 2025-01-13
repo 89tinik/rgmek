@@ -43,7 +43,6 @@ use yii\widgets\ActiveForm;
                     'class' => 'styler select__default send-contract',
                 ],
             ])->dropDownList($contractData[0], [
-                'prompt' => '',
                 'options' => array_map(function ($v) {
                     return ['data-dbid' => $v];
                 }, $contractData[1])
@@ -54,7 +53,7 @@ use yii\widgets\ActiveForm;
             $contractTypeData = getSelectData($contractsInfo['ContractTypeList']['item']);
             echo $form->field($model, 'contract_type', [
                 'inputOptions' => [
-                    'class' => 'styler select__default send-a',
+                    'class' => 'styler select__default',
                 ],
             ])->dropDownList($contractTypeData[0], [
                 'prompt' => '',
@@ -72,14 +71,14 @@ use yii\widgets\ActiveForm;
                     'from_date'
                 )->textInput([
                     'value' => $model->from_date ?? $contractsInfo['WithDate'],
-                    'class' => 'form-control a-send from-date send-a'
+                    'class' => 'form-control a-send from-date'
                 ]) ?>
                 <?= $form->field(
                     $model,
                     'to_date'
                 )->textInput([
                     'value' => $model->to_date ?? $contractsInfo['ByDate'],
-                    'class' => 'form-control a-send to-date send-a'
+                    'class' => 'form-control a-send to-date'
                 ]) ?>
                 <a class="btn small border input-tooltip input-tooltip-js">?</a>
                 <div style="display: none">Задайте нужный период</div>
@@ -89,7 +88,7 @@ use yii\widgets\ActiveForm;
             $basisPurchaseData = getSelectData($contractsInfo['BasisList']['item']);
             echo $form->field($model, 'basis_purchase', [
                 'inputOptions' => [
-                    'class' => 'styler select__default send-a',
+                    'class' => 'styler select__default',
                 ],
                 'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
@@ -150,7 +149,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Цена договора будет указана в разделе 4 договора «порядок определения стоимости поставленной
  электроэнергии (мощности) и порядок оплаты»</div>'
                 ])->textInput([
-                    'class' => 'form-control a-send calc-price calc-price-all num-format send-a',
+                    'class' => 'form-control a-send calc-price calc-price-all num-format',
                     'value' => number_format($model->contract_price, 2, '.', ' ') ?? number_format($contractsInfo['ContractPrice'], 2, '.', ' ')
                 ]) ?>
 
@@ -172,7 +171,7 @@ use yii\widgets\ActiveForm;
             $fundingSourceData = getSelectData($contractsInfo['FundingSourceList']['item']);
             echo $form->field($model, 'source_funding', [
                 'inputOptions' => [
-                    'class' => 'styler select__default send-a',
+                    'class' => 'styler select__default',
                 ],
                 'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>

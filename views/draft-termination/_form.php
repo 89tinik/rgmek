@@ -41,7 +41,6 @@ use yii\widgets\ActiveForm;
                     'class' => 'styler select__default send-contract',
                 ],
             ])->dropDownList($contractData[0], [
-                'prompt' => '',
                 'value' => $model->contract_id ?? array_search($contractsInfo['ContractNumber'], $contractData[1]),
                 'options' => array_map(function ($v) {
                     return ['data-dbid' => $v];

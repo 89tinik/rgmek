@@ -55,6 +55,11 @@ class DraftTerminationController extends BaseController
         }
 
         $model = $this->findModel($id);
+        if (empty($model->contract_id)){
+            $index = array_search($contractsInfo['success']['ContractNumber'], array_column($contractsInfo['success']['ContractNumberList']['item'], 'id'));
+            $model->contract_id = $contractsInfo['success']['ContractNumberList']['item'][$index]['description'];
+            $model->save();
+        }
 
         $modelForm = new DraftTerminationForm();
         $modelForm->attributes = $model->attributes;
