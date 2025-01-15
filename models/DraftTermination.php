@@ -21,10 +21,9 @@ use Yii;
  *
  * @property User $user
  */
-class DraftTermination extends \yii\db\ActiveRecord
+class DraftTermination extends BaseDraft
 {
     const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-termination/';
-    const TITLE = 'Сформировать соглашение о расторжении действующего контракта (договора)';
     const MESSAGE_THEME = 8;
     const MESSAGE_TEXT = 'Направлено заявление на расторжение действующего контракта (договора) энергоснабжения';
     /**
@@ -70,15 +69,7 @@ class DraftTermination extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
+
     public function fileToMessage($folderId)
     {
         $uploadDirectory = 'uploads/tickets/' . $folderId;
@@ -116,7 +107,7 @@ class DraftTermination extends \yii\db\ActiveRecord
             'tempDir' => 'tmp-mpdf'
         ]);
 
-        $html = '';
+        $pdfData= [];
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
                 case 'user_id':
@@ -137,9 +128,9 @@ class DraftTermination extends \yii\db\ActiveRecord
                     }
                     break;
             }
-            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+            $pdfData[$attribute] = $value;
         }
-
+        $html = Yii::$app->view->render('@app/views/draft-contract-change/pdf', $pdfData);
 
         $mpdf->WriteHTML($html);
 

@@ -8,14 +8,16 @@ use yii\helpers\Html;
 /* @var $draftTermination app\models\DraftTermination */
 
 ?>
-
+<div class="page-heading">
+    <div class="breadcrumbs">
+        <strong>Заключение/изменение договора</strong>
+    </div>
+</div>
 <div class="main-index">
-
-    <h1>Выберите действие</h1>
 
     <div class="buttons">
         <?= Html::a(
-            DraftContract::TITLE.
+            'Направить заявление на заключение контракта (договора) энергоснабжения на следующий период'.
             ($draftContract ? '(черновик)' : ''),
             $draftContract ? ['draft-contract/update', 'id' => $draftContract->id] : ['draft-contract/create'],
             ['class' => 'btn  border contract-btn']

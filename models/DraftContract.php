@@ -33,10 +33,9 @@ use Yii;
  *
  * @property User $user
  */
-class DraftContract extends \yii\db\ActiveRecord
+class DraftContract extends BaseDraft
 {
     const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-contracts/';
-    const TITLE = 'Направить заявление на заключение контракта (договора) энергоснабжения на следующий период';
     const MESSAGE_THEME = 6;
     const MESSAGE_TEXT = 'Направлено заявление на заключение контракта (договора) энергоснабжения на следующий период';
 
@@ -94,37 +93,6 @@ class DraftContract extends \yii\db\ActiveRecord
     }
 
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
-
-    /**
-     * @param $idx int
-     * @return true|void
-     */
-    public function removeFile($idx)
-    {
-        $filesArr = json_decode($this->files, true);
-        foreach ($filesArr as &$file) {
-            if (array_key_first($file) == $idx) {
-                if (is_file($file[$idx])) {
-                    unlink($file[$idx]);
-                }
-                $file[$idx] = '';
-            }
-        }
-        $filesJson = json_encode($filesArr);
-        $this->files = $filesJson;
-        if ($this->save()) {
-            return true;
-        }
-    }
 
     public function fileToMessage($folderId)
     {
@@ -172,10 +140,15 @@ class DraftContract extends \yii\db\ActiveRecord
                 case 'send':
                     continue 2;
                 case 'contract_volume_plane_include':
-                    $value = ($value == 1) ? $this->contract_volume_plane : 0;
+                    $value = ($value == 1) ? $this->contract_volume_plane : 'Нет';
                     break;
                 case 'off_budget':
-                    $value = ($value == 1) ? 'Да' : 'Нет';
+                    if ($value == 1) {
+                        $value = 'Да';
+                    }else {
+                        $value =  'Нет';
+                        $off_budget = 1;
+                    }
                     break;
                 case 'files':
                     $fileArr = json_decode($value, true);
@@ -190,6 +163,7 @@ class DraftContract extends \yii\db\ActiveRecord
                     }
                     break;
             }
+            if ($off_budget == 1 && in_array($attribute, ['off_budget_value', 'budget_value']) || $attribute == 'contract_volume_plane') continue;
             $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
         }
 

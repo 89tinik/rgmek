@@ -24,7 +24,7 @@ foreach ($files as $file) {
 if (!empty($output)) {
     ?>
     <h3>Прикреплённые файлы</h3>
-    <ul id="uploaded-files" ajax-action="<?= Url::to(['draft-contract/remove-file']) ?>" draft-id="<?= $draft ?>">
+    <ul id="uploaded-files" ajax-action="<?= Url::to(['draft-termination/remove-file']) ?>" draft-id="<?= $draft ?>">
         <?=$output?>
     </ul>
 <?php } ?>

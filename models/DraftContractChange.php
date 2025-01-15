@@ -22,10 +22,9 @@ use Yii;
  *
  * @property User $user
  */
-class DraftContractChange extends \yii\db\ActiveRecord
+class DraftContractChange extends BaseDraft
 {
     const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-contracts-change/';
-    const TITLE = 'Формирование проекта соглашения об изменении цены действующего контракта (договора)';
     const MESSAGE_THEME = 7;
     const MESSAGE_TEXT = 'Направлено заявление на изменение цены контракта (договора) энергоснабжения';
     /**
@@ -74,16 +73,6 @@ class DraftContractChange extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
-
     public function fileToMessage($folderId)
     {
         $uploadDirectory = 'uploads/tickets/' . $folderId;
@@ -121,33 +110,25 @@ class DraftContractChange extends \yii\db\ActiveRecord
             'tempDir' => 'tmp-mpdf'
         ]);
 
-        $html = '';
+        //$html = '';
+        $pdfData= [];
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
                 case 'user_id':
                     $value = User::findOne($value)->full_name;
+                    $pdfData['short_name'] = $this->getShortName($value);
                     break;
                 case 'send':
                     continue 2;
-                case 'off_budget':
-                case 'contract_volume_plane_include':
-                    $value = ($value == 1) ? 'Да' : 'Нет';
-                    break;
-                case 'files':
-                    $fileArr = json_decode($value, true);
-                    $tempFiles = [];
-                    if(is_array($fileArr)){
-                        foreach ($fileArr as $file) {
-                            $tempFiles[] = reset($file);
-                        }
-                        $value = implode(';', $tempFiles);
-                    } else {
-                        $value = '';
-                    }
+                case 'contract_price_new':
+                    $pdfData['price_in_word'] = self::num2str($value);
                     break;
             }
-            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+            $pdfData[$attribute] = $value;
+
+           // $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
         }
+        $html = Yii::$app->view->render('@app/views/draft-contract-change/pdf', $pdfData);
 
 
         $mpdf->WriteHTML($html);

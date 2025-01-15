@@ -78,11 +78,7 @@ use yii\widgets\ActiveForm;
                 'multiple' => true,
                 'class' => 'input-file draft-files'
             ]); ?>
-            <ul id="filesList"></ul>
-            <?= Html::button('Загрузить в черновик', [
-                'class' => 'btn btn-success submit-file-btn-js',
-                'style' => 'display:none'
-            ]) ?>
+
 
 
             <div class="group two-col dates">
@@ -133,38 +129,26 @@ use yii\widgets\ActiveForm;
             ]) ?>
 
             <?= $form->field($model, 'contact_name')->textInput([
-                'class' => 'form-control a-send',
+                'class' => 'form-control a-send required min-length',
+                'min' => '3',
                 'maxlength' => true
-            ]) ?>
+            ])->label('Контактное лицо по заявлению*') ?>
 
             <?= $form->field($model, 'contact_phone')->textInput([
-                'class' => 'form-control a-send',
-                'maxlength' => true
-            ]) ?>
+                'class' => 'form-control a-send required min-length',
+                'maxlength' => true,
+                'min' => '6',
+                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
+            ])->label('Телефон*')   ?>
 
             <?= $form->field($model, 'contact_email')->textInput([
-                'class' => 'form-control a-send',
+                'class' => 'form-control a-send required email',
                 'maxlength' => true
-            ]) ?>
+            ])->label('E-mail*') ?>
         </div>
 
-        <div class="form-tab">
-            <h2>Заявление на заключение контракта (договора) энергоснабжения №<span
-                        class="contract-number"><?= $model->contract_id ?></span> сформирована</h2>
-            <p>Проверьте заявление. При необходимости вернитесь и измените данные.</p>
-            <p><?=Html::a('PDF', ['draft-contract-change/generate-pdf'], ['class'=>'btn generate-draft-pdf'])?></p>
-            <p>Сформированный черновик заявления будет храниться в Личном кабинете в течение 30 дней и доступна для
-                изменения.</p>
-            <p> После того, как Вы нажмете «Отправить заявление», оно поступит в ООО «РГМЭК», будет зарегистрировано и
-                принято в работу.</p>
-            <p> Вы сможете узнать о статусе рассмотрения заявления в разделе «Диалоги».</p>
-            <p> В срок не более 10 рабочих дней Вы получите проект договора (контракта) энергоснабжения в системе
-                электронного документооборота.</p>
-        </div>
 
-        <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button hidden']) ?>
-        <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-        <?= Html::a('Отправить заявление', ['draft-contract-change/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
+        <?= Html::a('Отправить заявление', ['draft-contract-change/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn bottom-button']) ?>
 
         <?php ActiveForm::end(); ?>
 

@@ -158,8 +158,8 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Объем рассчитан исходя из введенной Вами цены контракта и цены за 1 кВтч. Отметьте «Включать
  планируемый объем», если хотите, чтобы этот параметр был указан в разделе 4 договора</div>'
                 ])->textInput([
-                        'class' => 'form-control a-send num-format',
-                        'value' => number_format($model->contract_volume_plane, 2, '.', ' ')
+                    'class' => 'form-control a-send num-format',
+                    'value' => number_format($model->contract_volume_plane, 2, '.', ' ')
                 ]) ?>
             </div>
 
@@ -217,14 +217,16 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
         <div class="form-tab">
-            <h2>Контакты ответственных лиц потребителя будут указаны в разделе 10 договора «Реквизиты сторон».
-                Заполнение данных является обязательным.</h2>
+            <h4>Контакты ответственных лиц потребителя будут указаны в разделе 10 договора «Реквизиты сторон».
+                Заполнение данных является обязательным.</h4>
             <div class="group two-col dates">
                 <div class="label">Контакты для получения уведомлений о введении ограничения</div>
                 <?= $form->field(
                     $model,
                     'user_phone'
-                )->textInput(['class' => 'form-control a-send', 'placeholder' => 'Телефон'])->label(false) ?>
+                )->widget(\yii\widgets\MaskedInput::class, [
+                    'mask' => '+79999999999',
+                ])->textInput(['class' => 'form-control a-send required', 'placeholder' => 'Мобильный телефон*'])->label(false) ?>
                 <?= $form->field(
                     $model,
                     'user_email'
@@ -322,31 +324,30 @@ use yii\widgets\ActiveForm;
                 'multiple' => true,
                 'class' => 'input-file draft-files'
             ]); ?>
-            <ul id="filesList"></ul>
-            <?= Html::button('Загрузить в черновик', [
-                'class' => 'btn btn-success submit-file-btn-js',
-                'style' => 'display:none'
-            ]) ?>
+
 
             <?= $form->field($model, 'contact_name')->textInput([
-                'class' => 'form-control a-send',
+                'class' => 'form-control a-send required min-length',
+                'min' => '3',
                 'maxlength' => true
-            ]) ?>
+            ])->label('Контактное лицо по заявлению*') ?>
 
             <?= $form->field($model, 'contact_phone')->textInput([
-                'class' => 'form-control a-send',
-                'maxlength' => true
-            ]) ?>
+                'class' => 'form-control a-send required min-length',
+                'maxlength' => true,
+                'min' => '6',
+                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
+            ])->label('Телефон*')  ?>
 
             <?= $form->field($model, 'contact_email')->textInput([
-                'class' => 'form-control a-send',
+                'class' => 'form-control required email',
                 'maxlength' => true
-            ]) ?>
+            ])->label('E-mail*')  ?>
         </div>
 
         <div class="form-tab">
             <h2>Заявление на заключение контракта (договора) энергоснабжения №<span
-                        class="contract-number"><?= $model->contract_id ?></span> сформирована</h2>
+                        class="contract-number"><?= $model->contract_id ?></span> сформировано</h2>
             <p>Проверьте заявление. При необходимости вернитесь и измените данные.</p>
             <p><?=Html::a('PDF', ['draft-contract/generate-pdf'], ['class'=>'btn generate-draft-pdf'])?></p>
             <p>Сформированный черновик заявления будет храниться в Личном кабинете в течение 30 дней и доступна для

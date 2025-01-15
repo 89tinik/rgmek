@@ -53,7 +53,7 @@ class DraftContractController extends BaseController
         }
 
         $model = $this->findModel($id);
-        if (empty($model->contract_id)){
+        if (empty($model->contract_id)) {
             $index = array_search($contractsInfo['success']['ContractNumber'], array_column($contractsInfo['success']['ContractNumberList']['item'], 'id'));
             $model->contract_id = $contractsInfo['success']['ContractNumberList']['item'][$index]['description'];
             $model->save();
@@ -157,21 +157,20 @@ class DraftContractController extends BaseController
         $xmlString = $xmlData->asXML();
 
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
-        
+
         if (!empty($nullAttributes = $model->getNullAttr())) {
             $model->setDefault(array_keys($nullAttributes), $contractsInfo['success']);
         }
-        
+
         if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
-           // $model->delete();
+            // $model->delete();
             $this->redirect(['messages/update', 'id' => $messageId]);
         } else {
             $this->redirect(['update', 'id' => $id]);
         }
     }
-
 
 
     /**
@@ -194,7 +193,7 @@ class DraftContractController extends BaseController
     {
         if (Yii::$app->request->isPost) {
             $model = $this->findModel(Yii::$app->request->post('draft'));
-            
+
             if (!empty($nullAttributes = $model->getNullAttr())) {
                 $data = ['id' => \Yii::$app->user->identity->id_db];
                 $currentContract = Contract::findOne(['number' => $model->contract_id]);
@@ -202,7 +201,7 @@ class DraftContractController extends BaseController
                 $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
                 $model->setDefault(array_keys($nullAttributes), $contractsInfo['success']);
             }
-            
+
             $fileName = time() . ' Заявление.pdf';
             $model->generatePdf($fileName);
 

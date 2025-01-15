@@ -302,7 +302,7 @@ class Messages extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param DraftContract | DraftContractChange $draft
+     * @param DraftContract | DraftContractChange | DraftTermination $draft
      * @return int
      */
     public static function createMessageFromDraft($draft, $contractId)

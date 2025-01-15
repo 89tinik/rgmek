@@ -4579,6 +4579,11 @@ a.btn.border.contract-btn{
   visibility: visible; /* Оставляем видимой кнопку */
 }
 
+.form-tab h4 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;
@@ -4641,6 +4646,9 @@ a.btn.border.contract-btn{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+  justify-content: center;
+  border: 2px solid;
+  border-radius: 10px;
 }
 .draft-contract-form .group.two-equal-col .form-group{
   margin:0;

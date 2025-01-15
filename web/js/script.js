@@ -19,6 +19,45 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
+    $('.draft-contract-form form .submit-btn').on('click', function(){
+        var hasEmptyRequiredFields = $(this).closest('form').find('input.required').filter(function () {
+            return !$(this).val().trim();
+        }).length > 0;
+
+        if (hasEmptyRequiredFields) {
+            $('.draft-input-popup p').text('Заполните все обязательные поля!');
+            $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+            $('.contracts-devices-popup-overlay').fadeIn(250);
+            return false;
+        }
+
+        var hasInvalidEmails = $(this).closest('form').find('input.email').filter(function () {
+            var value = $(this).val().trim();
+            return value && !value.includes('@');
+        }).length > 0;
+
+        if (hasInvalidEmails) {
+            $('.draft-input-popup p').text('Все e-mail должны содержать символ @!');
+            $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+            $('.contracts-devices-popup-overlay').fadeIn(250);
+            return false;
+        }
+
+        var hasInvalidMinLength = $(this).closest('form').find('input.min-length').filter(function () {
+            var value = $(this).val().trim();
+            var minLength = parseInt($(this).attr('min'), 10);
+            return value.length < minLength;
+        }).length > 0;
+
+        if (hasInvalidMinLength) {
+            $('.draft-input-popup p').text('Телефон должен быть не менее 6-ти символов! ФИО должно быть неменее 3-х символов!');
+            $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
+            $('.contracts-devices-popup-overlay').fadeIn(250);
+            return false;
+        }
+        ajaxPreloaderOn();
+    });
+
     $('.draft-contract-form .calc-price').on('change', function(){
         // Функция для преобразования строки в число
         function parseFormattedNumber(value) {
@@ -238,7 +277,7 @@ $(function () {
                     $('.draft-files').val('');
                     ajaxPreloaderOff();
                 } else {
-                    form.find('input').removeClass('send-a');
+                    form.find('.send-a').removeClass('send-a');
                 }
                 console.log('Форма успешно отправлена');
             },
@@ -248,7 +287,7 @@ $(function () {
                     updateDraftFileList();
                     ajaxPreloaderOff();
                 } else {
-                    form.find('input').removeClass('send-a');
+                    form.find('.send-a').removeClass('send-a');
                 }
                 console.log('Произошла ошибка при отправке формы');
             }
@@ -259,11 +298,7 @@ $(function () {
     let allDraftFiles = [];
 
     $('.draft-files').on('change', function (e) {
-        for (let i = 0; i < e.target.files.length; i++) {
-            allDraftFiles.push(e.target.files[i]);
-        }
-        updateDraftFileList();
-        $(this).val('');
+        sendFormAjax(true);
     });
 
     // Проверка наличия незагруженных файлов
@@ -296,22 +331,6 @@ $(function () {
         checkFileList();
     }
 
-    function attacheFiles() {
-        let dt = new DataTransfer();
-
-        for (let i = 0; i < allDraftFiles.length; i++) {
-            dt.items.add(allDraftFiles[i]);
-        }
-
-        document.querySelector('.draft-files').files = dt.files;
-    }
-
-    // Отправка файлов
-    $(document).on('click', '.submit-file-btn-js', function (e) {
-        e.preventDefault(); // Предотвращаем стандартное поведение кнопки
-        attacheFiles();
-        sendFormAjax(true);
-    });
     /**
      Tabs
      **/
