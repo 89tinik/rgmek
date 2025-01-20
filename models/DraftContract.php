@@ -54,7 +54,7 @@ class DraftContract extends BaseDraft
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'contract_volume_plane_include', 'off_budget', 'contract_id'], 'integer'],
+            [['user_id', 'contract_volume_plane_include', 'off_budget', 'contract_id', 'last'], 'integer'],
             [['from_date', 'to_date', 'send'], 'safe'],
             [['contract_price', 'contract_volume_plane', 'off_budget_value', 'budget_value'], 'number'],
             [['files'], 'string'],
@@ -88,7 +88,8 @@ class DraftContract extends BaseDraft
             'contact_name' => 'Контактное лицо по заявлению',
             'contact_phone' => 'Телефон',
             'contact_email' => 'E-mail',
-            'send' => 'Отправлено'
+            'send' => 'Отправлено',
+            'last' => 'Последний редактируемый'
         ];
     }
 

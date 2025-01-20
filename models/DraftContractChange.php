@@ -42,7 +42,7 @@ class DraftContractChange extends BaseDraft
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'contract_volume_plane_include'], 'integer'],
+            [['user_id', 'contract_volume_plane_include', 'last'], 'integer'],
             [['contract_price', 'contract_volume', 'contract_price_new', 'contract_volume_new'], 'number'],
             [['contract_id', 'files'], 'string'],
             [['send'], 'safe'],

@@ -8,10 +8,8 @@ use SimpleXMLElement;
 use Yii;
 use app\models\DraftTermination;
 use app\models\DraftTerminationForm;
-use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -24,15 +22,19 @@ class DraftTerminationController extends BaseController
     /**
      * Creates a new DraftTermination model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param string $contract
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($contract='')
     {
-        if ($draftContract = DraftTermination::findOne(['user_id' => \Yii::$app->user->id])) {
+        if ($draftContract = DraftTermination::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $contract])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
         }
         $model = new DraftTermination();
         $model->user_id = \Yii::$app->user->id;
+        if (!empty($contract)){
+            $model->contract_id = $contract;
+        }
         if ($model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         }
@@ -48,8 +50,14 @@ class DraftTerminationController extends BaseController
      */
     public function actionUpdate($id)
     {
+        $model = $this->findModel($id);
+        $model->markLast();
         if (!Yii::$app->request->isAjax) {
             $data = ['id' => \Yii::$app->user->identity->id_db];
+            if (!empty($model->contract_id)) {
+                $currentContract = Contract::findOne(['number' => $model->contract_id]);
+                $data['contract'] = $currentContract->uid;
+            }
             $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/draft', $data);
 
         }
@@ -112,11 +120,14 @@ class DraftTerminationController extends BaseController
             }
 
         }
+        $userDrafts = DraftTermination::find()->where(['user_id' => \Yii::$app->user->id])->select('id, contract_id')->asArray()->all();
+
 
         return $this->render('update', [
             'model' => $modelForm,
             'userModel' => Yii::$app->user->identity,
-            'contractsInfo' => $contractsInfo['success']
+            'contractsInfo' => $contractsInfo['success'],
+            'userDrafts' => ArrayHelper::map($userDrafts, 'contract_id', 'id')
         ]);
 
     }

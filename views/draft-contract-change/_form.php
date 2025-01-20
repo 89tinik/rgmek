@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $userModel yii\web\User */
 /* @var $contractsInfo array */
+/* @var $userDrafts array */
 ?>
 
     <div class="draft-contract-form">
@@ -35,14 +36,19 @@ use yii\widgets\ActiveForm;
         <div class="form-tab active">
             <?php
             $contractData = getSelectData($contractsInfo['ContractNumberList']['item']);
+            $options = [];
+            foreach ($contractData[1] as $key => $dbid) {
+                $options[$key] = [
+                    'data-dbid' => $dbid,
+                    'data-url' => array_key_exists($key, $userDrafts) ? Url::to(['update', 'id' => $userDrafts[$key]]) : Url::to(['create', 'contract' => $key]),
+                ];
+            }
             echo $form->field($model, 'contract_id', [
                 'inputOptions' => [
                     'class' => 'styler select__default send-contract',
                 ],
             ])->dropDownList($contractData[0], [
-                'options' => array_map(function ($v) {
-                    return ['data-dbid' => $v];
-                }, $contractData[1])
+                'options' => $options
             ]);
             ?>
 

@@ -216,9 +216,14 @@ $(function () {
 
     // Обрабатываем событие валидации поля
     $('.ajax-c-form').on('afterValidateAttribute', function (event, attribute, messages) {
-        if (messages.length === 0 && !($(attribute.input).hasClass('draft-files'))) {
+        if (messages.length === 0 &&
+            !($(attribute.input).hasClass('draft-files')) &&
+            !($(attribute.input).hasClass('send-contract'))) {
             $(attribute.input).addClass('send-a');
             sendFormAjax();
+        }
+        if ($(attribute.input).hasClass('send-contract')){
+            location.href = $(attribute.input).find('option:selected').data('url');
         }
         if ($(attribute.input).hasClass('off-budget-input')) {
             if ($(attribute.input).is(':checked')) {
@@ -248,16 +253,8 @@ $(function () {
                 return form.find('[name="' + input.name + '"]').hasClass('send-a');
             });
 
-            var hasContractId = filteredData.some(function (input) {
-                return input.name.includes("[contract_id]");
-            });
-
             ajaxData = $.param(filteredData);
 
-            if (hasContractId) {
-                ajaxPreloaderOn();
-                ajaxData += '&updateContract=' +  $('#draftcontractform-contract_id option:selected').data('dbid');
-            }
         }
 
         $.ajax({
@@ -267,9 +264,6 @@ $(function () {
             processData: process,
             contentType: content,
             success: function (response) {
-                if (hasContractId){
-                    document.location.reload();
-                }
                 if (files) {
                     allDraftFiles = [];
                     updateDraftFileList();

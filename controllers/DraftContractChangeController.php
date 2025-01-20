@@ -8,10 +8,8 @@ use SimpleXMLElement;
 use Yii;
 use app\models\DraftContractChange;
 use app\models\DraftContractChangeForm;
-use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -24,15 +22,19 @@ class DraftContractChangeController extends BaseController
     /**
      * Creates a new DraftContractChange model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param string $contract
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($contract='')
     {
-        if ($draftContract = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id])) {
+        if ($draftContract = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $contract])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
         }
         $model = new DraftContractChange();
         $model->user_id = \Yii::$app->user->id;
+        if (!empty($contract)){
+            $model->contract_id = $contract;
+        }
         if ($model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         }
@@ -48,13 +50,18 @@ class DraftContractChangeController extends BaseController
      */
     public function actionUpdate($id)
     {
+        $model = $this->findModel($id);
+        $model->markLast();
         if (!Yii::$app->request->isAjax) {
             $data = ['id' => \Yii::$app->user->identity->id_db];
+            if (!empty($model->contract_id)) {
+                $currentContract = Contract::findOne(['number' => $model->contract_id]);
+                $data['contract'] = $currentContract->uid;
+            }
             $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
 
         }
 
-        $model = $this->findModel($id);
         if (empty($model->contract_id)){
             $index = array_search($contractsInfo['success']['ContractNumber'], array_column($contractsInfo['success']['ContractNumberList']['item'], 'id'));
             $model->contract_id = $contractsInfo['success']['ContractNumberList']['item'][$index]['description'];
@@ -115,10 +122,13 @@ class DraftContractChangeController extends BaseController
 
         }
 
+        $userDrafts = DraftContractChange::find()->where(['user_id' => \Yii::$app->user->id])->select('id, contract_id')->asArray()->all();
+
         return $this->render('update', [
             'model' => $modelForm,
             'userModel' => Yii::$app->user->identity,
-            'contractsInfo' => $contractsInfo['success']
+            'contractsInfo' => $contractsInfo['success'],
+            'userDrafts' => ArrayHelper::map($userDrafts, 'contract_id', 'id')
         ]);
 
     }

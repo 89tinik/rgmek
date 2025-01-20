@@ -104,4 +104,16 @@ class BaseDraft extends ActiveRecord
         if ($n==1) return $f1;
         return $f5;
     }
+
+    public function markLast()
+    {
+        if ($this->last != 1){
+            if ($oldLast = self::findOne(['user_id' => $this->user_id, 'contract_id' => $this->contract_id, 'last' => 1])) {
+                $oldLast->last = 0;
+                $oldLast->save();
+            }
+            $this->last = 1;
+            $this->save();
+        }
+    }
 }

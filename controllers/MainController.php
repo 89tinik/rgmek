@@ -500,11 +500,10 @@ class MainController extends Controller
 
     public function actionCreateUpdateContract()
     {
-        $userId = \Yii::$app->user->id;
-
-        $draftContract = DraftContract::findOne(['user_id' => $userId]);
-        $draftChangeContract = DraftContractChange::findOne(['user_id' => $userId]);
-        $draftTermination = DraftTermination::findOne(['user_id' => $userId]);
+        $data = ['user_id' => \Yii::$app->user->id, 'last' => 1];
+        $draftContract = DraftContract::findOne($data);
+        $draftChangeContract = DraftContractChange::findOne($data);
+        $draftTermination = DraftTermination::findOne($data);
 
         return $this->render('createUpdateContract', [
             'draftContract' => $draftContract,

@@ -41,7 +41,7 @@ class DraftTermination extends BaseDraft
     {
         return [
             [['user_id'], 'required'],
-            [['user_id'], 'integer'],
+            [['user_id', 'last'], 'integer'],
             [['contract_price', 'contract_volume_price'], 'number'],
             [['files'], 'string'],
             [['send'], 'safe'],

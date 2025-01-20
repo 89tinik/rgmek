@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\DraftContractChangeForm */
 /* @var $userModel yii\web\User */
 /* @var $contractsInfo array */
+/* @var $userDrafts array */
 
 $this->title = 'Формирование проекта соглашения об изменении цены действующего контракта (договора)';
 $this->params['breadcrumbs'][] = ['label' => 'Draft Contracts', 'url' => ['index']];
@@ -26,6 +27,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,
         'userModel' => $userModel,
         'contractsInfo' => $contractsInfo,
+        'userDrafts' => $userDrafts
     ]) ?>
 
 </div>
