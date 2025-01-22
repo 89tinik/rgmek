@@ -23,20 +23,36 @@ class DraftContractController extends BaseController
      * @param string $contract
      * @return mixed
      */
-    public function actionCreate($contract='')
+    public function actionCreate($contract = '')
     {
         if ($draftContract = DraftContract::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $contract])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
         }
+        $data = ['id' => \Yii::$app->user->identity->id_db];
         $model = new DraftContract();
         $model->user_id = \Yii::$app->user->id;
-        if (!empty($contract)){
+        if (!empty($contract)) {
             $model->contract_id = $contract;
+            $currentContract = Contract::findOne(['number' => $contract]);
+            $data['contract'] = $currentContract->uid;
         }
-        if ($model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
-        }
+        $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
+        if ($contractsInfo['success']) {
+            $model->setDefault($contractsInfo['success']);
 
+            if ($model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                $errors = $model->getErrors();
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                return [
+                    'success' => false,
+                    'errors' => $errors,
+                ];
+            }
+        } else {
+            $this->redirect(['err/one-c']);
+        }
     }
 
     /**
@@ -49,82 +65,88 @@ class DraftContractController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->markLast();
-        if (!Yii::$app->request->isAjax) {
-            $data = ['id' => \Yii::$app->user->identity->id_db];
-            if (!empty($model->contract_id)) {
-                $currentContract = Contract::findOne(['number' => $model->contract_id]);
-                $data['contract'] = $currentContract->uid;
-            }
-            $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
-
-        }
-
-        if (empty($model->contract_id)) {
-            $index = array_search($contractsInfo['success']['ContractNumber'], array_column($contractsInfo['success']['ContractNumberList']['item'], 'id'));
-            $model->contract_id = $contractsInfo['success']['ContractNumberList']['item'][$index]['description'];
-            $model->save();
-        }
-
         $modelForm = new DraftContractForm();
         $modelForm->attributes = $model->attributes;
-
-        if ($modelForm->load(Yii::$app->request->post()) && $modelForm->validate()) {
-            $fileChange = false;
-            $model->attributes = $modelForm->attributes;
+        if ($modelForm->load(Yii::$app->request->post())) {
             $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
-            $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
-            $model->off_budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->off_budget_value);
-            $model->budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->budget_value);
-            $model->contract_volume_plane = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_plane);
             if ($modelForm->filesUpload) {
                 $fileChange = true;
-                $folderId = $model->id;
-                $uploadDirectory = DraftContract::UPLOAD_FILES_FOLDER_PATH . $folderId;
-
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0775, true);
-                }
-
-                $oldFilesArr = json_decode($model->files, true) ?? [];
-                $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
-
-                if ($oldFilesArr) {
-                    $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
-                }
-                if ($allFilesArr !== false) {
-                    $model->files = json_encode($allFilesArr);
-                }
-
+                $postAttributes = ['filesUpload'];
+            } else {
+                $fileChange = false;
+                $postAttributes = array_keys(Yii::$app->request->post($modelForm->formName(), []));
             }
+            if ($modelForm->validate($postAttributes)) {
+                if (!Yii::$app->request->isAjax) {
+                    return $this->redirect(['send-draft', 'id' => $model->id]);
+                }
+                $model->attributes = $modelForm->attributes;
+                $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
+                $model->off_budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->off_budget_value);
+                $model->budget_value = preg_replace('/[\s\xC2\xA0]+/u', '', $model->budget_value);
+                $model->contract_volume_plane = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_plane);
+                if ($fileChange) {
+                    $folderId = $model->id;
+                    $uploadDirectory = DraftContract::UPLOAD_FILES_FOLDER_PATH . $folderId;
 
-            if ($model->save()) {
-                if (Yii::$app->request->isAjax) {
-                    if ($fileChange) {
-                        return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
-                    } else {
-                        return 'Обновлено';
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0775, true);
+                    }
+
+                    $oldFilesArr = json_decode($model->files, true) ?? [];
+                    $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
+
+                    if ($oldFilesArr) {
+                        $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
+                    }
+                    if ($allFilesArr !== false) {
+                        $model->files = json_encode($allFilesArr);
                     }
                 }
 
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save()) {
+                    if (Yii::$app->request->isAjax) {
+                        if ($fileChange) {
+                            return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
+                        } else {
+                            return 'Обновлено';
+                        }
+                    }
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    $errors = $model->getErrors();
+                    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                    return [
+                        'success' => false,
+                        'errors' => $errors,
+                    ];
+                }
             } else {
-                $errors = $model->getErrors();
-                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                return [
-                    'success' => false,
-                    'errors' => $errors,
-                ];
+                $errors = $modelForm->getErrors();
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                    return [
+                        'success' => false,
+                        'errors' => $errors,
+                    ];
+                }
+                $errorMessages = [];
+                $errorAttributes = [];
+                foreach ($errors as $attribute => $messages) {
+                    $errorMessages[] = implode('<br>', $messages);
+                    $errorAttributes[] = $attribute;
+                }
+                Yii::$app->session->setFlash('error', implode('<br>', $errorMessages));
+                Yii::$app->session->setFlash('error-attr', implode(',', $errorAttributes));
             }
-
         }
 
+        $model->markLast();
         $userDrafts = DraftContract::find()->where(['user_id' => \Yii::$app->user->id])->select('id, contract_id')->asArray()->all();
-
         return $this->render('update', [
             'model' => $modelForm,
             'userModel' => Yii::$app->user->identity,
-            'contractsInfo' => $contractsInfo['success'],
+            'contractsInfo' => json_decode($model->temp_data, true),
             'userDrafts' => ArrayHelper::map($userDrafts, 'contract_id', 'id')
         ]);
 
@@ -133,6 +155,7 @@ class DraftContractController extends BaseController
     public function actionSendDraft($id)
     {
         $model = $this->findModel($id);
+        $arrayModelAttributesto1C = $model->getArrayModelAttributesto1C();
         $data = ['id' => \Yii::$app->user->identity->id_db];
 
         $currentContract = Contract::findOne(['number' => $model->contract_id]);
@@ -142,35 +165,24 @@ class DraftContractController extends BaseController
         $sendData = array_filter($contractsInfo['success'], function ($key) {
             return strpos($key, 'List') === false;
         }, ARRAY_FILTER_USE_KEY);
-
-        $sendData['ContractNumber'] = $currentContract->uid;
-        $sendData['ContractType'] = $this->get1CId($contractsInfo['success']['ContractTypeList']['item'], $model->contract_type);
-        $sendData['WithDate'] = $model->from_date;
-        $sendData['ByDate'] = $model->to_date;
-        $sendData['Basis'] = $this->get1CId($contractsInfo['success']['BasisList']['item'], $model->basis_purchase);
-        $sendData['PurchaseIdentificationCode'] = $model->ikz;
-        $sendData['ContractPrice'] = $model->contract_price;
-        $sendData['IncludeVolumeInContract'] = $model->contract_volume_plane_include;
-        $sendData['FundingSource'] = $this->get1CId($contractsInfo['success']['FundingSourceList']['item'], $model->source_funding);
-        $sendData['ExtraBudgetaryFundsEnable'] = $model->off_budget;
-        $sendData['FundingSourceAnother'] = $model->off_budget_name;
-        $sendData['ContractPriceAnother'] = $model->off_budget_value;
-        $sendData['BudgetFunds'] = $model->budget_value;
-        $sendData['RestrictionNotifyContact']['Phone'] = $model->user_phone;
-        $sendData['RestrictionNotifyContact']['Email'] = $model->user_email;
-        $sendData['ContactPerson4Request']['FullName'] = $model->contact_name;
-        $sendData['ContactPerson4Request']['Phone'] = $model->contact_phone;
-        $sendData['ContactPerson4Request']['Email'] = $model->contact_email;
+        $listArr = ['source_funding', 'basis_purchase', 'contract_type', 'contract_id'];
+        foreach ($arrayModelAttributesto1C as $attribute => $oneC) {
+            if (in_array($attribute, $listArr)) {
+                $sendData[$oneC] = $this->get1CId($contractsInfo['success'][$oneC . 'List']['item'], $model->$attribute);
+            } else {
+                if (is_array($oneC)) {
+                    $sendData[$oneC[0]][$oneC[1]] = $model->$attribute;
+                } else {
+                    $sendData[$oneC] = $model->$attribute;
+                }
+            }
+        }
 
         $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Request xmlns="http://rgmek.ru/contractConclusion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Request>');
         $this->arrayToXml($sendData, $xmlData);
         $xmlString = $xmlData->asXML();
 
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/', $xmlString, false, 'POST', true);
-
-        if (!empty($nullAttributes = $model->getNullAttr())) {
-            $model->setDefault(array_keys($nullAttributes), $contractsInfo['success']);
-        }
 
         if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
@@ -203,15 +215,6 @@ class DraftContractController extends BaseController
     {
         if (Yii::$app->request->isPost) {
             $model = $this->findModel(Yii::$app->request->post('draft'));
-
-            if (!empty($nullAttributes = $model->getNullAttr())) {
-                $data = ['id' => \Yii::$app->user->identity->id_db];
-                $currentContract = Contract::findOne(['number' => $model->contract_id]);
-                $data['contract'] = $currentContract->uid;
-                $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/conclusion/draft', $data);
-                $model->setDefault(array_keys($nullAttributes), $contractsInfo['success']);
-            }
-
             $fileName = time() . ' Заявление.pdf';
             $model->generatePdf($fileName);
 

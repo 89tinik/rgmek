@@ -4584,6 +4584,30 @@ a.btn.border.contract-btn{
   font-weight: normal;
 }
 
+.draft-files {
+  color: transparent;
+  overflow: hidden;
+}
+
+.draft-files::-webkit-file-upload-button {
+  visibility: visible;
+}
+
+.draft-contract .two-col .help-block,
+.draft-contract-change .two-col .help-block,
+.draft-termination .two-col .help-block{
+  line-height: 10px;
+}
+
+.draft-contract .has-error input,
+.draft-contract .has-error select,
+.draft-contract-change .has-error input,
+.draft-contract-change .has-error select,
+.draft-termination .has-error input,
+.draft-termination .has-error select{
+  border-color: red;
+}
+
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{
     border-bottom: 0;

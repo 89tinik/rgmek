@@ -65,7 +65,7 @@ class BaseController extends Controller
                 return ['success' => $response];
             }
         } else {
-            $this->redirect(['err/one-c']);
+            return ['success' => false];
         }
     }
 

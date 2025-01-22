@@ -22,8 +22,9 @@ class DraftContractForm extends Model
     public $off_budget_name;
     public $off_budget_value;
     public $budget_value;
-    public $user_phone;
-    public $user_email;
+    public $restriction_notify_fn;
+    public $restriction_notify_p;
+    public $restriction_notify_e;
     public $files;
     public $contact_name;
     public $contact_phone;
@@ -33,15 +34,15 @@ class DraftContractForm extends Model
     public $contractPriceForecast;
     public $contractVolumeForecast;
     public $pricePerPiece;
-    public $responsible4DeviceContactFN;
-    public $responsible4DeviceContactP;
-    public $responsible4DeviceContactE;
-    public $responsible4CalculationContactFN;
-    public $responsible4CalculationContactP;
-    public $responsible4CalculationContactE;
-    public $directorFullName;
-    public $directorPosition;
-    public $directorOrder;
+    public $responsible_4device_contact_fn;
+    public $responsible_4device_contact_p;
+    public $responsible_4device_contact_e;
+    public $responsible_4calculation_contact_fn;
+    public $responsible_4calculation_contact_p;
+    public $responsible_4calculation_contact_e;
+    public $director_full_name;
+    public $director_position;
+    public $director_order;
 
     public function rules()
     {
@@ -49,9 +50,17 @@ class DraftContractForm extends Model
             [['user_id'], 'required'],
             [['id', 'user_id', 'contract_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
             [['from_date', 'to_date'], 'safe'],
+            [['restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e'], 'email'],
+            [['contact_phone', 'responsible_4device_contact_p', 'responsible_4calculation_contact_p'], 'match', 'pattern' => '/^\d{6,}$/', 'message' => 'Телефон должен содержать только цифры и минимум 6 цифр.'],
+            [['contact_name', 'restriction_notify_fn', 'responsible_4calculation_contact_fn', 'responsible_4device_contact_fn'], 'match', 'pattern' => '/^[А-ЯЁа-яё\s-]{3,}$/u', 'message' => 'Поле должно содержать только русские буквы, пробелы или дефисы, и быть длиной не менее 3 символов.'],
+            [['restriction_notify_fn', 'restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e',
+                'contact_name', 'contact_phone', 'responsible_4device_contact_fn', 'responsible_4device_contact_p',
+                'responsible_4calculation_contact_fn', 'responsible_4calculation_contact_p', 'director_full_name',
+                'director_position', 'director_order'
+            ], 'required'],
             [['contract_price', 'off_budget_value', 'budget_value', 'contract_volume_plane'], 'string'],
             [['files'], 'string'],
-            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'user_phone', 'user_email', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_p'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
         ];
@@ -80,24 +89,25 @@ class DraftContractForm extends Model
             'off_budget_name' => 'Иной источник финансирования',
             'off_budget_value' => 'Денежные средства из иного источника, руб',
             'budget_value' => 'Денежные средства из бюджета, руб',
-            'user_phone' => 'Телефон',
-            'user_email' => 'E-mail',
+            'restriction_notify_fn' => 'Контакты для получения уведомлений о введении ограничения*',
+            'restriction_notify_p' => 'Мобильный телефон*',
+            'restriction_notify_e' => 'E-mail',
             'files' => 'Файлы',
-            'contact_name' => 'Контактное лицо по заявлению',
-            'contact_phone' => 'Телефон',
-            'contact_email' => 'E-mail',
+            'contact_name' => 'Контактное лицо по заявлению*',
+            'contact_phone' => 'Телефон*',
+            'contact_email' => 'E-mail*',
             'contractPriceForecast' => 'Прогнозируемая цена контракта (договора), руб.',
             'contractVolumeForecast' => 'Прогнозируемый объем контракта (договора), кВтч  ',
             'pricePerPiece' => 'Цена за 1 кВтч с НДС, руб.',
-            'responsible4DeviceContactFN' => 'Лицо, ответственное за приборы учета и показания',
-            'responsible4DeviceContactP' => 'Телефон',
-            'responsible4DeviceContactE' => 'E-mail',
-            'responsible4CalculationContactFN' => 'Лицо, ответственное за взаиморасчеты',
-            'responsible4CalculationContactP' => 'Телефон',
-            'responsible4CalculationContactE' => 'E-mail',
-            'directorFullName' => 'ФИО руководителя (подписанта)',
-            'directorPosition' => 'Должность руководителя (подписанта)',
-            'directorOrder' => 'Действует на основании',
+            'responsible_4device_contact_fn' => 'Лицо, ответственное за приборы учета и показания*',
+            'responsible_4device_contact_p' => 'Телефон*',
+            'responsible_4device_contact_e' => 'E-mail*',
+            'responsible_4calculation_contact_fn' => 'Лицо, ответственное за взаиморасчеты*',
+            'responsible_4calculation_contact_p' => 'Телефон*',
+            'responsible_4calculation_contact_e' => 'E-mail*',
+            'director_full_name' => 'ФИО руководителя (подписанта)*',
+            'director_position' => 'Должность руководителя (подписанта)*',
+            'director_order' => 'Действует на основании*',
             'filesUpload' => '',
         ];
     }
