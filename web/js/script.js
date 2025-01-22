@@ -19,45 +19,6 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
-    $('.draft-contract-form form .submit-btn').on('click', function(){
-        var hasEmptyRequiredFields = $(this).closest('form').find('input.required').filter(function () {
-            return !$(this).val().trim();
-        }).length > 0;
-
-        if (hasEmptyRequiredFields) {
-            $('.draft-input-popup p').text('Заполните все обязательные поля!');
-            $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
-            $('.contracts-devices-popup-overlay').fadeIn(250);
-            return false;
-        }
-
-        var hasInvalidEmails = $(this).closest('form').find('input.email').filter(function () {
-            var value = $(this).val().trim();
-            return value && !value.includes('@');
-        }).length > 0;
-
-        if (hasInvalidEmails) {
-            $('.draft-input-popup p').text('Все e-mail должны содержать символ @!');
-            $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
-            $('.contracts-devices-popup-overlay').fadeIn(250);
-            return false;
-        }
-
-        var hasInvalidMinLength = $(this).closest('form').find('input.min-length').filter(function () {
-            var value = $(this).val().trim();
-            var minLength = parseInt($(this).attr('min'), 10);
-            return value.length < minLength;
-        }).length > 0;
-
-        if (hasInvalidMinLength) {
-            $('.draft-input-popup p').text('Телефон должен быть не менее 6-ти символов! ФИО должно быть неменее 3-х символов!');
-            $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
-            $('.contracts-devices-popup-overlay').fadeIn(250);
-            return false;
-        }
-        ajaxPreloaderOn();
-    });
-
     $('.draft-contract-form .calc-price').on('change', function(){
         // Функция для преобразования строки в число
         function parseFormattedNumber(value) {

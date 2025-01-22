@@ -152,6 +152,8 @@ class DraftContract extends BaseDraft
                 case 'user_id':
                     $value = User::findOne($value)->full_name;
                     break;
+                case 'temp_data':
+                case 'last':
                 case 'send':
                     continue 2;
                 case 'contract_volume_plane_include':

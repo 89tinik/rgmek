@@ -56,8 +56,9 @@ class DraftContractForm extends Model
             [['restriction_notify_fn', 'restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e',
                 'contact_name', 'contact_phone', 'responsible_4device_contact_fn', 'responsible_4device_contact_p',
                 'responsible_4calculation_contact_fn', 'responsible_4calculation_contact_p', 'director_full_name',
-                'director_position', 'director_order'
+                'director_position', 'director_order', 'restriction_notify_p'
             ], 'required'],
+            ['restriction_notify_p', 'match', 'pattern' => '/^\+7\d{10}$/', 'message' => 'Номер телефона должен быть в формате +71111111111.'],
             [['contract_price', 'off_budget_value', 'budget_value', 'contract_volume_plane'], 'string'],
             [['files'], 'string'],
             [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_p'], 'string', 'max' => 255],

@@ -233,7 +233,7 @@ use yii\widgets\ActiveForm;
                 'restriction_notify_p'
             )->widget(\yii\widgets\MaskedInput::class, [
                 'mask' => '+79999999999',
-            ])->textInput(['class' => 'form-control a-send required'])->label(false) ?>
+            ])->textInput(['class' => 'form-control a-send'])->label(false) ?>
             <?= $form->field(
                 $model,
                 'restriction_notify_e'
@@ -256,7 +256,6 @@ use yii\widgets\ActiveForm;
                 $model,
                 'responsible_4device_contact_p'
             )->textInput([
-                'required' => 'required',
                 'class' => 'form-control a-send',
                 'placeholder' => $model->getAttributeLabel('responsible_4device_contact_p'),
             ])->label(false) ?>
@@ -324,20 +323,19 @@ use yii\widgets\ActiveForm;
 
 
         <?= $form->field($model, 'contact_name')->textInput([
-            'class' => 'form-control a-send required min-length',
+            'class' => 'form-control a-send ',
             'min' => '3',
             'maxlength' => true
         ])->label('Контактное лицо по заявлению*') ?>
 
         <?= $form->field($model, 'contact_phone')->textInput([
-            'class' => 'form-control a-send required min-length',
+            'class' => 'form-control a-send ',
             'maxlength' => true,
-            'min' => '6',
             'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
         ])->label('Телефон*') ?>
 
         <?= $form->field($model, 'contact_email')->textInput([
-            'class' => 'form-control required email',
+            'class' => 'form-control ',
             'maxlength' => true
         ])->label('E-mail*') ?>
     </div>
@@ -358,8 +356,7 @@ use yii\widgets\ActiveForm;
 
     <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button hidden']) ?>
     <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-    <?= Html::button('OK', ['class' => 'btn', 'type' => 'submit']) ?>
-    <?= Html::a('Отправить заявление', ['draft-contract/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn hidden bottom-button']) ?>
+    <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn hidden bottom-button', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>
 
