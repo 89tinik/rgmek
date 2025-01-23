@@ -44,9 +44,9 @@ class DraftContractChange extends BaseDraft
             [['user_id'], 'required'],
             [['user_id', 'contract_volume_plane_include', 'last'], 'integer'],
             [['contract_price', 'contract_volume', 'contract_price_new', 'contract_volume_new'], 'number'],
-            [['contract_id', 'files'], 'string'],
+            [['contract_id', 'files', 'temp_data'], 'string'],
             [['send'], 'safe'],
-            [['contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contact_name', 'contact_phone', 'contact_email', 'director_full_name', 'director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -70,6 +70,10 @@ class DraftContractChange extends BaseDraft
             'contact_phone' => 'Телефон',
             'contact_email' => 'E-mail',
             'send' => 'Отправлено',
+            'director_full_name' => 'ФИО руководителя (подписанта)',
+            'director_position' => 'Должность руководителя (подписанта)',
+            'director_order' => 'Действует на основании',
+            'temp_data' => 'Не редактируемые данные'
         ];
     }
 
@@ -116,17 +120,18 @@ class DraftContractChange extends BaseDraft
             switch ($attribute) {
                 case 'user_id':
                     $value = User::findOne($value)->full_name;
-                    $pdfData['short_name'] = $this->getShortName($value);
                     break;
                 case 'send':
                     continue 2;
                 case 'contract_price_new':
                     $pdfData['price_in_word'] = self::num2str($value);
                     break;
+                case 'temp_data':
+                    $pdfData = array_merge($pdfData, json_decode($value, true));
+                    continue 2;
             }
             $pdfData[$attribute] = $value;
 
-           // $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
         }
         $html = Yii::$app->view->render('@app/views/draft-contract-change/pdf', $pdfData);
 
@@ -135,5 +140,69 @@ class DraftContractChange extends BaseDraft
 
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNullAttr()
+    {
+        return array_filter($this->getAttributes(), function ($value) {
+            return $value === null;
+        });
+    }
+
+    /**
+     * @param $defaultArr
+     * @return void
+     */
+    public function setDefault($defaultArr)
+    {
+        $nullAttributes = array_keys($this->getNullAttr());
+        $ArrayModelAttributesto1C = $this->getArrayModelAttributesto1C();
+        foreach ($nullAttributes as $attribute) {
+            switch ($attribute) {
+                case 'contract_volume_plane_include':
+                    $this->$attribute = ($defaultArr[$ArrayModelAttributesto1C[$attribute]]) ? 1 : 0;
+                    break;
+                case 'contract_id':
+                    $index = array_search($defaultArr['ContractNumber'], array_column($defaultArr['ContractNumberList']['item'], 'id'));
+                    $this->$attribute = $defaultArr['ContractNumberList']['item'][$index]['description'];
+                    break;
+                case 'temp_data':
+                    $keys = array_flip(['ContractNumberList', 'DirectorFullNameRP', 'DirectorFullNameDP', 'DirectorPositionRP', 'DirectorPositionDP', 'DirectorOrderRP']);
+                    $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
+                    break;
+                default:
+                    if (is_array($ArrayModelAttributesto1C[$attribute])) {
+                        $value = $defaultArr[$ArrayModelAttributesto1C[$attribute][0]][$ArrayModelAttributesto1C[$attribute][1]];
+                    } else {
+                        $value = $defaultArr[$ArrayModelAttributesto1C[$attribute]];
+                    }
+                    $this->$attribute = (!empty($value)) ? $value : NULL;
+
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayModelAttributesto1C()
+    {
+        return [
+            'contract_id' => 'ContractNumber',
+            'contract_price' => 'ContractPrice',
+            'contract_volume_plane' => 'ContractVolume',
+            'contract_price_new' => 'ContractPriceNew',
+            'contract_volume_plane_new' => 'ContractVolumeNew',
+            'contract_volume_plane_include' => 'IncludeVolumeInContract',
+            'contact_name' => ['ContactPerson4Request', 'FullName'],
+            'contact_phone' => ['ContactPerson4Request', 'Phone'],
+            'contact_email' => ['ContactPerson4Request', 'Email'],
+            'director_full_name' => 'DirectorFullName',
+            'director_position' => 'DirectorPosition',
+            'director_order' => 'DirectorOrder'
+        ];
     }
 }

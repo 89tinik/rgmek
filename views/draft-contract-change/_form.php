@@ -54,25 +54,18 @@ use yii\widgets\ActiveForm;
 
 
 
-            <?= $form->field($model, 'directorPosition')->textInput([
-                'class' => 'form-control a-send',
-                'value' => empty($contractsInfo['DirectorPosition']) ? '' : $contractsInfo['DirectorPosition'],
-                'disabled' => true]) ?>
+            <?= $form->field($model, 'director_position')->textInput(['class' => 'form-control a-send']) ?>
 
-            <?= $form->field($model, 'directorFullName', ['template' => '{label}{input}{hint}{error}
+            <?= $form->field($model, 'director_full_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключен договор.
 Если ФИО не совпадает с указанным, пожалуйста, прикрепите ниже приказ о назначении.</div>'
             ])->textInput([
                 'class' => 'form-control a-send',
-                'value' => empty($contractsInfo['DirectorFullName']) ? '' : $contractsInfo['DirectorFullName'],
                 'disabled' => true
             ]) ?>
 
-            <?= $form->field($model, 'directorOrder')->textInput([
-                'class' => 'form-control a-send',
-                'value' => empty($contractsInfo['DirectorOrder']) ? '' : $contractsInfo['DirectorOrder'],
-                'disabled' => true]) ?>
+            <?= $form->field($model, 'director_order')->textInput(['class' => 'form-control a-send']) ?>
             <div id="wrap-uploaded-files">
                 <?php
                 if (!empty($model->files)) {
@@ -135,26 +128,24 @@ use yii\widgets\ActiveForm;
             ]) ?>
 
             <?= $form->field($model, 'contact_name')->textInput([
-                'class' => 'form-control a-send required min-length',
+                'class' => 'form-control a-send ',
                 'min' => '3',
                 'maxlength' => true
             ])->label('Контактное лицо по заявлению*') ?>
 
             <?= $form->field($model, 'contact_phone')->textInput([
-                'class' => 'form-control a-send required min-length',
+                'class' => 'form-control a-send',
                 'maxlength' => true,
-                'min' => '6',
                 'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
             ])->label('Телефон*')   ?>
 
             <?= $form->field($model, 'contact_email')->textInput([
-                'class' => 'form-control a-send required email',
+                'class' => 'form-control a-send',
                 'maxlength' => true
             ])->label('E-mail*') ?>
         </div>
 
-
-        <?= Html::a('Отправить заявление', ['draft-contract-change/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn bottom-button']) ?>
+        <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn hidden bottom-button', 'type' => 'submit']) ?>
 
         <?php ActiveForm::end(); ?>
 

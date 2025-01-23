@@ -22,9 +22,9 @@ class DraftContractChangeForm extends Model
     public $contact_email;
     public $filesUpload;
 
-    public $directorFullName;
-    public $directorPosition;
-    public $directorOrder;
+    public $director_full_name;
+    public $director_position;
+    public $director_order;
 
     public function rules()
     {
@@ -32,7 +32,7 @@ class DraftContractChangeForm extends Model
             [['user_id'], 'required'],
             [['id', 'user_id', 'contract_volume_plane_include'], 'integer'],
             [['files', 'contract_price', 'contract_volume', 'contract_price_new', 'contract_id', 'contract_volume_new'], 'string'],
-            [['contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
         ];
@@ -61,6 +61,9 @@ class DraftContractChangeForm extends Model
             'directorPosition' => 'Должность руководителя (подписанта)',
             'directorOrder' => 'Действует на основании',
             'filesUpload' => '',
+            'director_full_name' => 'ФИО руководителя (подписанта)*',
+            'director_position' => 'Должность руководителя (подписанта)*',
+            'director_order' => 'Действует на основании*',
         ];
     }
 
