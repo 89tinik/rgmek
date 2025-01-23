@@ -53,7 +53,7 @@ if ($DirectorOrder != $director_order) {
             работе с юридическими лицами
         </td>
         <td width="50%">
-            Директор
+            <?= $director_position ?>
         </td>
     </tr>
 </table>
@@ -69,7 +69,7 @@ if ($DirectorOrder != $director_order) {
             __________________
         </td>
         <td width="25%">
-            <?= $DirectorFullName ?>
+            <?= $director_full_name ?>
         </td>
     </tr>
     <tr>
