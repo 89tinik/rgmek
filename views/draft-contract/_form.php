@@ -326,18 +326,18 @@ use yii\widgets\ActiveForm;
             'class' => 'form-control a-send ',
             'min' => '3',
             'maxlength' => true
-        ])->label('Контактное лицо по заявлению*') ?>
+        ])?>
 
         <?= $form->field($model, 'contact_phone')->textInput([
             'class' => 'form-control a-send ',
             'maxlength' => true,
             'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
-        ])->label('Телефон*') ?>
+        ])?>
 
         <?= $form->field($model, 'contact_email')->textInput([
             'class' => 'form-control ',
             'maxlength' => true
-        ])->label('E-mail*') ?>
+        ])?>
     </div>
 
     <div class="form-tab">
@@ -356,7 +356,7 @@ use yii\widgets\ActiveForm;
 
     <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button hidden']) ?>
     <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-    <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn hidden bottom-button', 'type' => 'submit']) ?>
+    <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>
 

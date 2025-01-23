@@ -145,7 +145,7 @@ use yii\widgets\ActiveForm;
             ])->label('E-mail*') ?>
         </div>
 
-        <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn hidden bottom-button', 'type' => 'submit']) ?>
+        <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
 
         <?php ActiveForm::end(); ?>
 

@@ -29,9 +29,11 @@ class DraftContractChangeForm extends Model
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
             [['id', 'user_id', 'contract_volume_plane_include'], 'integer'],
+            ['contact_email', 'email'],
+            [['contact_phone'], 'match', 'pattern' => '/^\d{6,}$/', 'message' => 'Телефон должен содержать только цифры и минимум 6 цифр.'],
             [['files', 'contract_price', 'contract_volume', 'contract_price_new', 'contract_id', 'contract_volume_new'], 'string'],
+            [['user_id', 'contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'required'],
             [['contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
@@ -54,12 +56,9 @@ class DraftContractChangeForm extends Model
             'contract_volume_new' => 'Новый объем контракта(договора), кВтч',
             'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
             'files' => 'Файлы',
-            'contact_name' => 'Контактное лицо по заявлению',
-            'contact_phone' => 'Телефон',
-            'contact_email' => 'E-mail',
-            'directorFullName' => 'ФИО руководителя (подписанта)',
-            'directorPosition' => 'Должность руководителя (подписанта)',
-            'directorOrder' => 'Действует на основании',
+            'contact_name' => 'Контактное лицо по заявлению*',
+            'contact_phone' => 'Телефон*',
+            'contact_email' => 'E-mail*',
             'filesUpload' => '',
             'director_full_name' => 'ФИО руководителя (подписанта)*',
             'director_position' => 'Должность руководителя (подписанта)*',

@@ -193,9 +193,9 @@ class DraftContractChange extends BaseDraft
         return [
             'contract_id' => 'ContractNumber',
             'contract_price' => 'ContractPrice',
-            'contract_volume_plane' => 'ContractVolume',
+            'contract_volume' => 'ContractVolume',
             'contract_price_new' => 'ContractPriceNew',
-            'contract_volume_plane_new' => 'ContractVolumeNew',
+            'contract_volume_new' => 'ContractVolumeNew',
             'contract_volume_plane_include' => 'IncludeVolumeInContract',
             'contact_name' => ['ContactPerson4Request', 'FullName'],
             'contact_phone' => ['ContactPerson4Request', 'Phone'],

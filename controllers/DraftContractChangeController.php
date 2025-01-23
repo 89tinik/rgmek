@@ -65,92 +65,6 @@ class DraftContractChangeController extends BaseController
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdateN($id)
-    {
-        $model = $this->findModel($id);
-        $model->markLast();
-        if (!Yii::$app->request->isAjax) {
-            $data = ['id' => \Yii::$app->user->identity->id_db];
-            if (!empty($model->contract_id)) {
-                $currentContract = Contract::findOne(['number' => $model->contract_id]);
-                $data['contract'] = $currentContract->uid;
-            }
-            $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
-
-        }
-
-        if (empty($model->contract_id)){
-            $index = array_search($contractsInfo['success']['ContractNumber'], array_column($contractsInfo['success']['ContractNumberList']['item'], 'id'));
-            $model->contract_id = $contractsInfo['success']['ContractNumberList']['item'][$index]['description'];
-            $model->save();
-        }
-
-        $modelForm = new DraftContractChangeForm();
-        $modelForm->attributes = $model->attributes;
-
-        if ($modelForm->load(Yii::$app->request->post()) && $modelForm->validate()) {
-            $fileChange = false;
-            $model->attributes = $modelForm->attributes;
-            $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
-            $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
-            $model->contract_volume = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume);
-            $model->contract_price_new = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price_new);
-            $model->contract_volume_new = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_new);
-
-            if ($modelForm->filesUpload) {
-                $fileChange = true;
-                $folderId = $model->id;
-                $uploadDirectory = DraftContractChange::UPLOAD_FILES_FOLDER_PATH . $folderId;
-
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0775, true);
-                }
-
-                $oldFilesArr = json_decode($model->files, true) ?? [];
-                $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
-
-                if ($oldFilesArr) {
-                    $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
-                }
-                if ($allFilesArr !== false) {
-                    $model->files = json_encode($allFilesArr);
-                }
-
-            }
-
-            if ($model->save()) {
-                if (Yii::$app->request->isAjax) {
-                    if ($fileChange) {
-                        return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
-                    } else {
-                        return 'Обновлено';
-                    }
-                }
-
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                $errors = $model->getErrors();
-                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                return [
-                    'success' => false,
-                    'errors' => $errors,
-                ];
-            }
-
-        }
-
-        $userDrafts = DraftContractChange::find()->where(['user_id' => \Yii::$app->user->id])->select('id, contract_id')->asArray()->all();
-
-        return $this->render('update', [
-            'model' => $modelForm,
-            'userModel' => Yii::$app->user->identity,
-            'contractsInfo' => $contractsInfo['success'],
-            'userDrafts' => ArrayHelper::map($userDrafts, 'contract_id', 'id')
-        ]);
-
-    }
-
-
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -247,7 +161,7 @@ class DraftContractChangeController extends BaseController
         $arrayModelAttributesto1C = $model->getArrayModelAttributesto1C();
         $data = ['id' => \Yii::$app->user->identity->id_db];
 
-        $currentContract = Contract::findOne(['number' => $model->contract_id]);
+        $currentContract = Contract::findOne(['full_name' => '№ '.$model->contract_id]);
         $data['contract'] = $currentContract->uid;
 
         $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
