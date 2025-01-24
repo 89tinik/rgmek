@@ -30,13 +30,30 @@ class DraftTerminationController extends BaseController
         if ($draftContract = DraftTermination::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $contract])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
         }
+        $data = ['id' => \Yii::$app->user->identity->id_db];
         $model = new DraftTermination();
         $model->user_id = \Yii::$app->user->id;
-        if (!empty($contract)){
+        if (!empty($contract)) {
             $model->contract_id = $contract;
+            $currentContract = Contract::findOne(['number' => $contract]);
+            $data['contract'] = $currentContract->uid;
         }
-        if ($model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
+        $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/draft', $data);
+        if ($contractsInfo['success']) {
+            $model->setDefault($contractsInfo['success']);
+
+            if ($model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                $errors = $model->getErrors();
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                return [
+                    'success' => false,
+                    'errors' => $errors,
+                ];
+            }
+        } else {
+            $this->redirect(['err/one-c']);
         }
 
     }
@@ -51,82 +68,86 @@ class DraftTerminationController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->markLast();
-        if (!Yii::$app->request->isAjax) {
-            $data = ['id' => \Yii::$app->user->identity->id_db];
-            if (!empty($model->contract_id)) {
-                $currentContract = Contract::findOne(['number' => $model->contract_id]);
-                $data['contract'] = $currentContract->uid;
-            }
-            $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/draft', $data);
-
-        }
-
-        $model = $this->findModel($id);
-        if (empty($model->contract_id)){
-            $index = array_search($contractsInfo['success']['ContractNumber'], array_column($contractsInfo['success']['ContractNumberList']['item'], 'id'));
-            $model->contract_id = $contractsInfo['success']['ContractNumberList']['item'][$index]['description'];
-            $model->save();
-        }
-
         $modelForm = new DraftTerminationForm();
         $modelForm->attributes = $model->attributes;
-
-        if ($modelForm->load(Yii::$app->request->post()) && $modelForm->validate()) {
-            $fileChange = false;
-            $model->attributes = $modelForm->attributes;
+        if ($modelForm->load(Yii::$app->request->post())) {
             $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
-            $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
-            $model->contract_volume_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_price);
-
             if ($modelForm->filesUpload) {
                 $fileChange = true;
-                $folderId = $model->id;
-                $uploadDirectory = DraftTermination::UPLOAD_FILES_FOLDER_PATH . $folderId;
-
-                if (!is_dir($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0775, true);
-                }
-
-                $oldFilesArr = json_decode($model->files, true) ?? [];
-                $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
-
-                if ($oldFilesArr) {
-                    $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
-                }
-                if ($allFilesArr !== false) {
-                    $model->files = json_encode($allFilesArr);
-                }
-
+                $postAttributes = ['filesUpload'];
+            } else {
+                $fileChange = false;
+                $postAttributes = array_keys(Yii::$app->request->post($modelForm->formName(), []));
             }
+            if ($modelForm->validate($postAttributes)) {
+                if (!Yii::$app->request->isAjax) {
+                    return $this->redirect(['send-draft', 'id' => $model->id]);
+                }
+                $model->attributes = $modelForm->attributes;
+                $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
+                $model->contract_volume_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_price);
+                if ($fileChange) {
+                    $folderId = $model->id;
+                    $uploadDirectory = DraftTermination::UPLOAD_FILES_FOLDER_PATH . $folderId;
 
-            if ($model->save()) {
-                if (Yii::$app->request->isAjax) {
-                    if ($fileChange) {
-                        return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
-                    } else {
-                        return 'Обновлено';
+                    if (!is_dir($uploadDirectory)) {
+                        mkdir($uploadDirectory, 0775, true);
+                    }
+
+                    $oldFilesArr = json_decode($model->files, true) ?? [];
+                    $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
+
+                    if ($oldFilesArr) {
+                        $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
+                    }
+                    if ($allFilesArr !== false) {
+                        $model->files = json_encode($allFilesArr);
                     }
                 }
 
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save()) {
+                    if (Yii::$app->request->isAjax) {
+                        if ($fileChange) {
+                            return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
+                        } else {
+                            return 'Обновлено';
+                        }
+                    }
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    $errors = $model->getErrors();
+                    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                    return [
+                        'success' => false,
+                        'errors' => $errors,
+                    ];
+                }
             } else {
-                $errors = $model->getErrors();
-                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                return [
-                    'success' => false,
-                    'errors' => $errors,
-                ];
+                $errors = $modelForm->getErrors();
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                    return [
+                        'success' => false,
+                        'errors' => $errors,
+                    ];
+                }
+                $errorMessages = [];
+                $errorAttributes = [];
+                foreach ($errors as $attribute => $messages) {
+                    $errorMessages[] = implode('<br>', $messages);
+                    $errorAttributes[] = $attribute;
+                }
+                Yii::$app->session->setFlash('error', implode('<br>', $errorMessages));
+                Yii::$app->session->setFlash('error-attr', implode(',', $errorAttributes));
             }
-
         }
+
+        $model->markLast();
         $userDrafts = DraftTermination::find()->where(['user_id' => \Yii::$app->user->id])->select('id, contract_id')->asArray()->all();
-
-
         return $this->render('update', [
             'model' => $modelForm,
             'userModel' => Yii::$app->user->identity,
-            'contractsInfo' => $contractsInfo['success'],
+            'contractsInfo' => json_decode($model->temp_data, true),
             'userDrafts' => ArrayHelper::map($userDrafts, 'contract_id', 'id')
         ]);
 
@@ -135,6 +156,7 @@ class DraftTerminationController extends BaseController
     public function actionSendDraft($id)
     {
         $model = $this->findModel($id);
+        $arrayModelAttributesto1C = $model->getArrayModelAttributesto1C();
         $data = ['id' => \Yii::$app->user->identity->id_db];
 
         $currentContract = Contract::findOne(['full_name' => '№ '.$model->contract_id]);
@@ -144,13 +166,18 @@ class DraftTerminationController extends BaseController
         $sendData = array_filter($contractsInfo['success'], function ($key) {
             return strpos($key, 'List') === false;
         }, ARRAY_FILTER_USE_KEY);
-
-        $sendData['ContractNumber'] = $currentContract->uid;
-        $sendData['ContractPrice'] = $model->contract_price;
-        $sendData['ProvidedServicesCost'] = $model->contract_volume_price;
-        $sendData['ContactPerson4Request']['FullName'] = $model->contact_name;
-        $sendData['ContactPerson4Request']['Phone'] = $model->contact_phone;
-        $sendData['ContactPerson4Request']['Email'] = $model->contact_email;
+        $listArr = ['contract_id'];
+        foreach ($arrayModelAttributesto1C as $attribute => $oneC) {
+            if (in_array($attribute, $listArr)) {
+                $sendData[$oneC] = $this->get1CId($contractsInfo['success'][$oneC . 'List']['item'], $model->$attribute);
+            } else {
+                if (is_array($oneC)) {
+                    $sendData[$oneC[0]][$oneC[1]] = $model->$attribute;
+                } else {
+                    $sendData[$oneC] = $model->$attribute;
+                }
+            }
+        }
 
         $xmlData = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Request xmlns="http://rgmek.ru/contractTermination" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Request>');
         $this->arrayToXml($sendData, $xmlData);
@@ -184,31 +211,4 @@ class DraftTerminationController extends BaseController
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionGeneratePdf()
-    {
-        if (Yii::$app->request->isPost) {
-            $model = $this->findModel(Yii::$app->request->post('draft'));
-
-            $fileName = time() . ' Заявление.pdf';
-            $model->generatePdf($fileName);
-
-            $pdfPath = Yii::getAlias('@webroot/temp_pdf/' . $fileName);
-            if (file_exists($pdfPath)) {
-                return $this->asJson([
-                    'status' => 'success',
-                    'pdfUrl' => Yii::getAlias('@web') . '/web/temp_pdf/' . $fileName,
-                ]);
-            } else {
-                return $this->asJson([
-                    'status' => 'error',
-                    'message' => 'PDF файл не найден',
-                ]);
-            }
-        }
-
-        return $this->asJson([
-            'status' => 'error',
-            'message' => 'Данные не получены',
-        ]);
-    }
 }

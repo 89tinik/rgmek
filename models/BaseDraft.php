@@ -116,4 +116,15 @@ class BaseDraft extends ActiveRecord
             $this->save();
         }
     }
+
+
+    /**
+     * @return array
+     */
+    public function getNullAttr()
+    {
+        return array_filter($this->getAttributes(), function ($value) {
+            return $value === null;
+        });
+    }
 }

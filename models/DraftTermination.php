@@ -43,9 +43,9 @@ class DraftTermination extends BaseDraft
             [['user_id'], 'required'],
             [['user_id', 'last'], 'integer'],
             [['contract_price', 'contract_volume_price'], 'number'],
-            [['files'], 'string'],
+            [['files', 'temp_data'], 'string'],
             [['send'], 'safe'],
-            [['contract_id', 'contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contract_id', 'contact_name', 'contact_phone', 'contact_email', 'director_full_name', 'director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -66,6 +66,10 @@ class DraftTermination extends BaseDraft
             'contact_phone' => 'Телефон',
             'contact_email' => 'E-mail',
             'send' => 'Отправлено',
+            'director_full_name' => 'ФИО руководителя (подписанта)',
+            'director_position' => 'Должность руководителя (подписанта)',
+            'director_order' => 'Действует на основании',
+            'temp_data' => 'Не редактируемые данные'
         ];
     }
 
@@ -115,26 +119,68 @@ class DraftTermination extends BaseDraft
                     break;
                 case 'send':
                     continue 2;
-                case 'files':
-                    $fileArr = json_decode($value, true);
-                    $tempFiles = [];
-                    if(is_array($fileArr)){
-                        foreach ($fileArr as $file) {
-                            $tempFiles[] = reset($file);
-                        }
-                        $value = implode(';', $tempFiles);
-                    } else {
-                        $value = '';
-                    }
+                case 'contract_volume_price':
+                    $pdfData['price_in_word'] = self::num2str($value);
                     break;
+                case 'temp_data':
+                    $pdfData = array_merge($pdfData, json_decode($value, true));
+                    continue 2;
             }
             $pdfData[$attribute] = $value;
         }
-        $html = Yii::$app->view->render('@app/views/draft-contract-change/pdf', $pdfData);
+        $html = Yii::$app->view->render('@app/views/draft-termination/pdf', $pdfData);
 
         $mpdf->WriteHTML($html);
 
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
+    }
+
+    /**
+     * @param $defaultArr
+     * @return void
+     */
+    public function setDefault($defaultArr)
+    {
+        $nullAttributes = array_keys($this->getNullAttr());
+        $ArrayModelAttributesto1C = $this->getArrayModelAttributesto1C();
+        foreach ($nullAttributes as $attribute) {
+            switch ($attribute) {
+                case 'contract_id':
+                    $index = array_search($defaultArr['ContractNumber'], array_column($defaultArr['ContractNumberList']['item'], 'id'));
+                    $this->$attribute = $defaultArr['ContractNumberList']['item'][$index]['description'];
+                    break;
+                case 'temp_data':
+                    $keys = array_flip(['ContractNumberList', 'DirectorFullNameRP', 'DirectorFullNameDP', 'DirectorPositionRP', 'DirectorPositionDP', 'DirectorOrderRP']);
+                    $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
+                    break;
+                default:
+                    if (is_array($ArrayModelAttributesto1C[$attribute])) {
+                        $value = $defaultArr[$ArrayModelAttributesto1C[$attribute][0]][$ArrayModelAttributesto1C[$attribute][1]];
+                    } else {
+                        $value = $defaultArr[$ArrayModelAttributesto1C[$attribute]];
+                    }
+                    $this->$attribute = (!empty($value)) ? $value : NULL;
+
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayModelAttributesto1C()
+    {
+        return [
+            'contract_id' => 'ContractNumber',
+            'contract_price' => 'ContractPrice',
+            'contract_volume_price' => 'ProvidedServicesCost',
+            'contact_name' => ['ContactPerson4Request', 'FullName'],
+            'contact_phone' => ['ContactPerson4Request', 'Phone'],
+            'contact_email' => ['ContactPerson4Request', 'Email'],
+            'director_full_name' => 'DirectorFullName',
+            'director_position' => 'DirectorPosition',
+            'director_order' => 'DirectorOrder'
+        ];
     }
 }

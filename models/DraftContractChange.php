@@ -142,15 +142,6 @@ class DraftContractChange extends BaseDraft
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
     }
 
-    /**
-     * @return array
-     */
-    public function getNullAttr()
-    {
-        return array_filter($this->getAttributes(), function ($value) {
-            return $value === null;
-        });
-    }
 
     /**
      * @param $defaultArr

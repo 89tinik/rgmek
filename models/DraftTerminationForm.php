@@ -19,17 +19,19 @@ class DraftTerminationForm extends Model
     public $contact_email;
     public $filesUpload;
 
-    public $directorFullName;
-    public $directorPosition;
-    public $directorOrder;
+    public $director_full_name;
+    public $director_position;
+    public $director_order;
 
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
+            [['user_id', 'contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'required'],
             [['id', 'user_id'], 'integer'],
+            ['contact_email', 'email'],
+            [['contact_phone'], 'match', 'pattern' => '/^\d{6,}$/', 'message' => 'Телефон должен содержать только цифры и минимум 6 цифр.'],
             [['files', 'contract_price', 'contract_volume_price', 'contract_id'], 'string'],
-            [['contact_name', 'contact_phone', 'contact_email'], 'string', 'max' => 255],
+            [['contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
         ];
@@ -48,12 +50,12 @@ class DraftTerminationForm extends Model
             'contract_price' => 'Цена контракта (договора), руб.',
             'contract_volume_price' => 'Стоимость электроэнергии, поставленной по контракту (договору), руб',
             'files' => 'Файлы',
-            'contact_name' => 'Контактное лицо по заявлению',
-            'contact_phone' => 'Телефон',
-            'contact_email' => 'E-mail',
-            'directorFullName' => 'ФИО руководителя (подписанта)',
-            'directorPosition' => 'Должность руководителя (подписанта)',
-            'directorOrder' => 'Действует на основании',
+            'contact_name' => 'Контактное лицо по заявлению*',
+            'contact_phone' => 'Телефон*',
+            'contact_email' => 'E-mail*',
+            'director_full_name' => 'ФИО руководителя (подписанта)*',
+            'director_position' => 'Должность руководителя (подписанта)*',
+            'director_order' => 'Действует на основании*',
             'filesUpload' => '',
         ];
     }

@@ -192,16 +192,6 @@ class DraftContract extends BaseDraft
     }
 
     /**
-     * @return array
-     */
-    public function getNullAttr()
-    {
-        return array_filter($this->getAttributes(), function ($value) {
-            return $value === null;
-        });
-    }
-
-    /**
      * @param $defaultArr
      * @return void
      */

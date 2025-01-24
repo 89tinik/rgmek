@@ -168,7 +168,7 @@ class DraftContractChangeController extends BaseController
         $sendData = array_filter($contractsInfo['success'], function ($key) {
             return strpos($key, 'List') === false;
         }, ARRAY_FILTER_USE_KEY);
-        $listArr = ['source_funding', 'basis_purchase', 'contract_type', 'contract_id'];
+        $listArr = ['contract_id'];
         foreach ($arrayModelAttributesto1C as $attribute => $oneC) {
             if (in_array($attribute, $listArr)) {
                 $sendData[$oneC] = $this->get1CId($contractsInfo['success'][$oneC . 'List']['item'], $model->$attribute);

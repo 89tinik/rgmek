@@ -56,25 +56,18 @@ use yii\widgets\ActiveForm;
 
 
 
-        <?= $form->field($model, 'directorPosition')->textInput([
-            'class' => 'form-control a-send',
-            'value' => empty($contractsInfo['DirectorPosition']) ? '' : $contractsInfo['DirectorPosition'],
-            'disabled' => true]) ?>
+        <?= $form->field($model, 'director_position')->textInput([
+            'class' => 'form-control a-send']) ?>
 
-        <?= $form->field($model, 'directorFullName', ['template' => '{label}{input}{hint}{error}
+        <?= $form->field($model, 'director_full_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
 <div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключен договор.
 Если ФИО не совпадает с указанным, пожалуйста, прикрепите ниже приказ о назначении.</div>'
         ])->textInput([
-            'class' => 'form-control a-send',
-            'value' => empty($contractsInfo['DirectorFullName']) ? '' : $contractsInfo['DirectorFullName'],
-            'disabled' => true
-        ]) ?>
+            'class' => 'form-control a-send']) ?>
 
-        <?= $form->field($model, 'directorOrder')->textInput([
-            'class' => 'form-control a-send',
-            'value' => empty($contractsInfo['DirectorOrder']) ? '' : $contractsInfo['DirectorOrder'],
-            'disabled' => true]) ?>
+        <?= $form->field($model, 'director_order')->textInput([
+            'class' => 'form-control a-send']) ?>
         <div id="wrap-uploaded-files">
             <?php
             if (!empty($model->files)) {
