@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-$this->title = 'Узнать задолженность, оплатить | ЛК РГМЭК';
+$this->title = 'Узнать задолженность, оплатить | ЛК Р-Энергия';
 ?>
 
 <div class="page-heading">

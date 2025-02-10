@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 
-$this->title = 'Передать показания | ЛК РГМЭК';
+$this->title = 'Передать показания | ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <div class="breadcrumbs">

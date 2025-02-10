@@ -160,12 +160,12 @@ html, body {
 }	
 
 .info-bottom .title .label{
-	color:#fff;
+	color:#fff !important;
 }
 
 .info-bottom .list ul li span{
 	color: #fff;
-    background: none;
+    background: none !important;
 }	
 
 .info-bottom .list ul li:after{
@@ -173,7 +173,7 @@ html, body {
 }	
 
 .info-bottom .title .value{
-	color:#fff;
+	color:#fff !important;
 }
 
 .top-line{
@@ -186,7 +186,7 @@ html, body {
 }
 
 .main-carousel .slide{
-	background:#222433 !important;
+	
 }
 
 .main-carousel:before {
@@ -371,31 +371,31 @@ a.lnk, .lnk{
 	color:#313795;
 }
 .arrear-summary .info-bottom .title .label{
-	color: #000000;
+	color: #000000 !important;
 }
 
 .arrear-summary .info-bottom .title .value {
-    color: #000000;
+    color: #000000 !important;
 }
 
 .arrear-summary .info-bottom .list ul li span {
-    color: #000000;
+    color: #000000 !important;
 }
 
 .arrear-summary .info-bottom .itog .value {
-    color: #313795;
+    color: #313795 !important;
 }
 
 .arrear-lists .list ul li .price {
-    color: #313795;
+    color: #313795 !important;
 }
 
 .invoice-table table td .price {
-    color: #313795;
+    color: #313795 !important;
 }
 
 .contracts-head .name {
-    color: #313795;
+    color: #313795 !important;
 }
 
 .contracts-devices .devices-link {
@@ -442,4 +442,50 @@ a.btn.right, .btn.right{
 .consumption .objects-more a.btn:hover {
     background: linear-gradient(90deg, #0fa3c8 0%, #332d90 100%);
 	color:#fff !important;
+}
+@media screen and (max-width: 1200px) {
+    .sidebar-menu .sidebar-menu-fw {
+    padding-top: 0;
+}
+.sidebar-menu:after{
+    background:none;
+}
+    a.btn.border, .btn.border {
+    color: #ffffff !important;
+    border: 1px solid #ffffff;
+}
+    .mobile-popup{
+        background: #05a8cd;
+    }
+    .summary-item .show-btn{
+        background:none;
+    }
+    .summary-item .controls ul{
+        display:block;
+    }
+    .summary-item .controls ul li{
+        border:none !important;
+    }
+    .page-heading{
+        margin:0;
+    }
+    
+    .menu-btn .lines{
+        background:#000 !important;
+    }
+    .menu-btn .lines:before, .menu-btn .lines:after{
+        background:#000 !important;
+    }
+    .login-form-fw {
+        align-items: center !important;
+    }
+    .login-form-fw{
+        padding-top:20px;
+    }
+}
+
+.contracts-list .a.btn.border, contracts-list .btn.border, .payment-item .btn.border, .payment-item a.btn.border, .payment-info a.btn.border, .payment-info .btn.border,.invoice-table a.btn.border, .invoice-table .btn.border, .message-themes-index a.btn.border, .message-themes-index .btn.border{
+      color: #313795 !important;
+    background: none;
+    border: 1px solid #313795;
 }

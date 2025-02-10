@@ -6,7 +6,7 @@
 /* @var $baners */
 
 
-$this->title = 'Главная | ЛК РГМЭК';
+$this->title = 'Главная | ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <h1 class="title">Главная</h1>

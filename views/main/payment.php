@@ -8,7 +8,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Начисление и платежи |  ЛК РГМЭК';
+$this->title = 'Начисление и платежи |  ЛК Р-Энергия';
 ?>
 
 <div class="page-heading">

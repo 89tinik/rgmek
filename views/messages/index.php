@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         <?php endif; ?>
         <p>
-            <?= Html::a('Обратиться в РГМЭК', ['new-message/index'], ['class' => 'btn btn-success create-message']) ?>
+            <?= Html::a('Обратиться в Р-Энергия', ['new-message/index'], ['class' => 'btn btn-success create-message']) ?>
         </p>
     </div>
 

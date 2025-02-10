@@ -182,7 +182,7 @@ $seriesArr = [];
                 <span><?= ($open) ? 'Свернуть' : 'Развернуть' ?></span>
             </a>
             <?php if ($object['ISU'] == 'Да' && $object['StatusObject'] == 'Действующий'): ?>
-                <a href="http://93.92.80.25:5001/" class="btn small right" target="_blank">Переход в интелектуальные системы учёта</a>    
+                <a href="http://prmd-lk.rgmek.ru:5001/" class="btn small right" target="_blank">Переход в интелектуальные системы учёта</a>    
             <?php endif; ?>
 
 			<?php if ($object['Line'][0]['CalculationMethod'] != 'Норматив' && $object['StatusObject'] == 'Действующий'): ?>

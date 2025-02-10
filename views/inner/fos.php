@@ -10,7 +10,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'Написать обращение | ЛК РГМЭК';
+$this->title = 'Написать обращение | ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <h1 class="title">Написать обращение</h1>

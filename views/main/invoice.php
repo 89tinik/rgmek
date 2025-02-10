@@ -12,7 +12,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Счета |  ЛК РГМЭК';
+$this->title = 'Счета |  ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <div class="breadcrumbs">

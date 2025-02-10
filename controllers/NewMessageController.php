@@ -105,7 +105,7 @@ class NewMessageController extends Controller
                     }
                     $text = 'Ваше обращение успешно получено. Мы зарегистрируем его и сообщим Вам номер.';
                     if (!empty($email = ($model->email) ? $model->email : $model->getUser()->one()->email)) {
-                        $model->sendNoticeEmail('Обращение в РГМЭК', $text, $email);
+                        $model->sendNoticeEmail('Обращение в Р-Энергия', $text, $email);
                     } elseif (!empty($phone = ($model->phone) ? $model->phone : $model->getUser()->one()->phone)) {
                         $model->sendNoticeSms($text, $phone);
                     }

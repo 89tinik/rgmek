@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Успешная оплата | ЛК РГМЭК';
+$this->title = 'Успешная оплата | ЛК Р-Энергия';
 $receiptUID = Yii::$app->session->getFlash('receiptUID');
 ?>
 <div class="page-heading">

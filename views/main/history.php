@@ -9,7 +9,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'История показаний |  ЛК РГМЭК';
+$this->title = 'История показаний |  ЛК Р-Энергия';
 ?>
 
 <div class="page-heading">

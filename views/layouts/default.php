@@ -71,7 +71,7 @@ if($_GET['nCss'] == 7){
                     <ul>
                         <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li>
                         <?php if (!empty($piramida = \Yii::$app->controller->piramida)): ?>
-                            <li><a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Переход в ИСУ</a></li>
+                            <li><a href="http://prmd-lk.rgmek.ru:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Переход в ИСУ</a></li>
                         <?php else :?>
                             <li><a href="#" class="empty-pitrammida">Переход в ИСУ</a></li>
                         <?php endif; ?>
