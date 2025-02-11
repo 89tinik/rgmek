@@ -25,7 +25,7 @@ class DraftContractChangeController extends BaseController
      * @param string $contract
      * @return mixed
      */
-    public function actionCreate($contract='')
+    public function actionCreate($contract = '')
     {
         if ($draftContract = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $contract])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
@@ -69,6 +69,24 @@ class DraftContractChangeController extends BaseController
     {
         $model = $this->findModel($id);
         $modelForm = new DraftContractChangeForm();
+        if (empty($model->temp_data)) {
+            $data = ['id' => \Yii::$app->user->identity->id_db];
+            $currentContract = Contract::findOne(['number' => $model->contract_id]);
+            $data['contract'] = $currentContract->uid;
+            $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
+            if ($contractsInfo['success']) {
+                $model->setDefault($contractsInfo['success']);
+                if (!$model->save()) {
+                    $errors = $model->getErrors();
+                    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                    return [
+                        'success' => false,
+                        'errors' => $errors,
+                    ];
+                }
+            }
+        }
+
         $modelForm->attributes = $model->attributes;
         if ($modelForm->load(Yii::$app->request->post())) {
             $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
@@ -161,14 +179,14 @@ class DraftContractChangeController extends BaseController
         $arrayModelAttributesto1C = $model->getArrayModelAttributesto1C();
         $data = ['id' => \Yii::$app->user->identity->id_db];
 
-        $currentContract = Contract::findOne(['full_name' => '№ '.$model->contract_id]);
+        $currentContract = Contract::findOne(['full_name' => '№ ' . $model->contract_id]);
         $data['contract'] = $currentContract->uid;
 
         $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/draft', $data);
         $sendData = array_filter($contractsInfo['success'], function ($key) {
             return strpos($key, 'List') === false;
         }, ARRAY_FILTER_USE_KEY);
-        $listArr = ['contract_id'];
+        $listArr = ['source_funding', 'basis_purchase', 'contract_type', 'contract_id'];
         foreach ($arrayModelAttributesto1C as $attribute => $oneC) {
             if (in_array($attribute, $listArr)) {
                 $sendData[$oneC] = $this->get1CId($contractsInfo['success'][$oneC . 'List']['item'], $model->$attribute);

@@ -147,6 +147,7 @@ class DraftContract extends BaseDraft
         ]);
 
         $html = '';
+        $contactHtml = '';
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
                 case 'user_id':
@@ -167,6 +168,11 @@ class DraftContract extends BaseDraft
                         $off_budget = 1;
                     }
                     break;
+                case 'off_budget_name':
+                    if ($this->off_budget != 1){
+                        continue 2;
+                    }
+                    break;
                 case 'files':
                     $fileArr = json_decode($value, true);
                     $tempFiles = [];
@@ -179,13 +185,18 @@ class DraftContract extends BaseDraft
                         $value = '';
                     }
                     break;
+                case 'contact_name':
+                case 'contact_phone':
+                case 'contact_email':
+                $contactHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+                continue 2;
             }
             if ($off_budget == 1 && in_array($attribute, ['off_budget_value', 'budget_value']) || $attribute == 'contract_volume_plane') continue;
             $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
         }
 
 
-        $mpdf->WriteHTML($html);
+        $mpdf->WriteHTML($html.$contactHtml);
 
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);

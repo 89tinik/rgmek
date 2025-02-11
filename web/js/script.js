@@ -19,26 +19,49 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
-    $('.draft-contract-form .calc-price').on('change', function(){
-        // Функция для преобразования строки в число
+    function calcPrice (){
         function parseFormattedNumber(value) {
             return parseFloat(value.replace(/\s/g, ''));
         }
 
-        // Получаем значения из инпутов и убираем пробелы
-        var priceAll = parseFormattedNumber($('.calc-price-all').val()) || 0;
-        var priceOff = parseFormattedNumber($('.calc-price-off').val()) || 0;
+        let resultInput = $('.calc-result');
+        let priceAllInput = $('.calc-price-all');
+        let priceOffInput = $('.calc-price-off');
 
-        // Вычисляем результат
+        var priceAll = parseFormattedNumber(priceAllInput.val()) || 0;
+        var priceOff = parseFormattedNumber(priceOffInput.val()) || 0;
+
+        if (priceAll <= 0){
+            priceAllInput.closest('.form-group').addClass('has-error');
+            priceAllInput.siblings('.help-block').text('Значение должно быть больше 0.');
+            priceAllInput.data('yiiActiveForm', null);
+        } else {
+            priceAllInput.closest('.form-group').removeClass('has-error');
+            priceAllInput.siblings('.help-block').text('');
+            priceAllInput.addClass('send-a');
+        }
+
         var result = priceAll - priceOff;
 
-        // Устанавливаем результат и добавляем класс
-        $('.calc-result').val(result.toLocaleString('ru-RU', {
+
+        if (result < 0){
+            resultInput.closest('.form-group').addClass('has-error');
+            resultInput.siblings('.help-block').text('Значение не может быть отрицательным. Пожалуйста, измените цену контракта (договора).');
+            resultInput.data('yiiActiveForm', null);
+        } else {
+            resultInput.closest('.form-group').removeClass('has-error');
+            resultInput.siblings('.help-block').text('');
+            priceOffInput.closest('.form-group').removeClass('has-error');
+            priceOffInput.siblings('.help-block').text('');
+            priceOffInput.addClass('send-a');
+        }
+
+        resultInput.val(result.toLocaleString('ru-RU', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }).replace(',', '.')); // Округляем до 2 знаков после запятой
-        $('.calc-result').addClass('send-a');
-    });
+        resultInput.addClass('send-a');
+    }
 
     $('.generate-draft-pdf').on('click', function (e) {
         e.preventDefault();
@@ -181,6 +204,18 @@ $(function () {
             !($(attribute.input).hasClass('draft-files')) &&
             !($(attribute.input).hasClass('send-contract'))) {
             $(attribute.input).addClass('send-a');
+            if ($(attribute.input).hasClass('calc-price')) {
+                calcPrice();
+            }
+            if ($(attribute.input).hasClass('off-budget-input')) {
+                if ($(attribute.input).is(':checked')) {
+                    $('.off-budget-section').slideDown();
+                } else {
+                    $('.off-budget-section').slideUp();
+                    $('.field-draftcontractform-off_budget_name input').addClass('send-a').val('');
+                    $('.field-draftcontractform-off_budget_value input').addClass('send-a').val(0);
+                }
+            }
             sendFormAjax();
         }
         if ($(attribute.input).hasClass('send-contract')){
@@ -191,8 +226,11 @@ $(function () {
                 $('.off-budget-section').slideDown();
             } else {
                 $('.off-budget-section').slideUp();
+                $('.field-draftcontractform-off_budget_name input').val('');
+                $('.field-draftcontractform-off_budget_value input').val(0);
             }
         }
+
     });
 
     // Функция для отправки формы через AJAX

@@ -56,7 +56,7 @@ class DraftContractForm extends Model
             [['restriction_notify_fn', 'restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e',
                 'contact_name', 'contact_phone', 'responsible_4device_contact_fn', 'responsible_4device_contact_p',
                 'responsible_4calculation_contact_fn', 'responsible_4calculation_contact_p', 'director_full_name',
-                'director_position', 'director_order', 'restriction_notify_p'
+                'ikz','director_position', 'director_order', 'restriction_notify_p'
             ], 'required'],
             ['restriction_notify_p', 'match', 'pattern' => '/^\+7\d{10}$/', 'message' => 'Номер телефона должен быть в формате +71111111111.'],
             [['contract_price', 'off_budget_value', 'budget_value', 'contract_volume_plane'], 'string'],
@@ -64,6 +64,9 @@ class DraftContractForm extends Model
             [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_p'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
+            ['contract_price', 'number', 'min' => 0.01, 'tooSmall' => 'Цена контракта должна быть больше 0.'],
+            ['budget_value', 'number', 'min' => 0, 'tooSmall' => 'Бюджетные средства не могут быть отрицательными.'],
+            ['off_budget_value', 'compare', 'compareAttribute' => 'contract_price', 'operator' => '<=', 'message' => 'Сумма внебюджетных средств не может превышать цену контракта.'],
         ];
     }
 
@@ -81,7 +84,7 @@ class DraftContractForm extends Model
             'from_date' => 'С',
             'to_date' => 'По',
             'basis_purchase' => 'Основание закупки',
-            'ikz' => 'Идентификационный код закупки (ИКЗ)',
+            'ikz' => 'Идентификационный код закупки (ИКЗ)*',
             'contract_price' => 'Цена контракта (договора), руб.',
             'contract_volume_plane' => 'Планируемый объем контракта(договора), кВтч',
             'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
