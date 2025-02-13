@@ -148,7 +148,7 @@ class DraftTermination extends BaseDraft
             switch ($attribute) {
                 case 'contract_id':
                     $index = array_search($defaultArr['ContractNumber'], array_column($defaultArr['ContractNumberList']['item'], 'id'));
-                    $this->$attribute = $defaultArr['ContractNumberList']['item'][$index]['description'];
+                    $this->$attribute = ($defaultArr['ContractNumberList']['item']['description']) ?? $defaultArr['ContractNumberList']['item'][$index]['description'];
                     break;
                 case 'temp_data':
                     $keys = array_flip(['ContractNumberList', 'DirectorFullNameRP', 'DirectorFullNameDP', 'DirectorPositionRP', 'DirectorPositionDP', 'DirectorOrderRP']);

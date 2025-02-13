@@ -64,10 +64,7 @@ class DraftContractForm extends Model
             [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_p'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
-            ['contract_price', 'number', 'min' => 0.01, 'tooSmall' => 'Цена контракта должна быть больше 0.'],
-            ['budget_value', 'number', 'min' => 0, 'tooSmall' => 'Бюджетные средства не могут быть отрицательными.'],
-            ['off_budget_value', 'compare', 'compareAttribute' => 'contract_price', 'operator' => '<=', 'message' => 'Сумма внебюджетных средств не может превышать цену контракта.'],
-        ];
+            ];
     }
 
 
@@ -134,4 +131,12 @@ class DraftContractForm extends Model
         return $paths;
     }
 
+    public function strToNum()
+    {
+        $numAttrArray = ['contract_price', 'budget_value', 'off_budget_value'];
+        foreach ($numAttrArray as $attr) {
+            $this->$attr = str_replace(' ', '', $this->$attr);
+        }
+
+    }
 }

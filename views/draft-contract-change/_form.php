@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
             'validateOnBlur' => false,
             'validateOnChange' => true,
             'validateOnSubmit' => false,
-            'options' => ['enctype' => 'multipart/form-data', 'class' => 'ajax-c-form']]); ?>
+            'options' => ['enctype' => 'multipart/form-data', 'class' => 'ajax-c-form', 'onkeydown'=> 'return event.key !== "Enter";']]); ?>
         <?= $form->field($model, 'user_id')->hiddenInput([
             'value' => $userModel->id,
             'class' => 'field-user-id'

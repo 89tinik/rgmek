@@ -19,6 +19,20 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
+    $('.ajax-c-form .submit-btn').on('click', function(){
+        calcPrice();
+        if ($(this).closest('form').find('.has-error').length > 0){
+            $('.form-tab').removeClass('active');
+            $('.form-group.has-error').closest('.form-tab').addClass('active');
+            if ($('.draft-contract-form .form-tab:first').hasClass('active')) {
+                $(this).addClass('hidden');
+            }
+            $('.next-btn').removeClass('hidden');
+            $('.submit-btn').addClass('hidden');
+            return false;
+        }
+    });
+
     function calcPrice (){
         function parseFormattedNumber(value) {
             return parseFloat(value.replace(/\s/g, ''));

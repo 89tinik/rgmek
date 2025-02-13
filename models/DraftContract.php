@@ -169,7 +169,7 @@ class DraftContract extends BaseDraft
                     }
                     break;
                 case 'off_budget_name':
-                    if ($this->off_budget != 1){
+                    if ($this->off_budget != 1) {
                         continue 2;
                     }
                     break;
@@ -188,15 +188,15 @@ class DraftContract extends BaseDraft
                 case 'contact_name':
                 case 'contact_phone':
                 case 'contact_email':
-                $contactHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
-                continue 2;
+                    $contactHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+                    continue 2;
             }
             if ($off_budget == 1 && in_array($attribute, ['off_budget_value', 'budget_value']) || $attribute == 'contract_volume_plane') continue;
             $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
         }
 
 
-        $mpdf->WriteHTML($html.$contactHtml);
+        $mpdf->WriteHTML($html . $contactHtml);
 
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
@@ -230,7 +230,7 @@ class DraftContract extends BaseDraft
                     break;
                 case 'contract_id':
                     $index = array_search($defaultArr['ContractNumber'], array_column($defaultArr['ContractNumberList']['item'], 'id'));
-                    $this->$attribute = $defaultArr['ContractNumberList']['item'][$index]['description'];
+                    $this->$attribute = ($defaultArr['ContractNumberList']['item']['description']) ?? $defaultArr['ContractNumberList']['item'][$index]['description'];
                     break;
                 case 'temp_data':
                     $keys = array_flip(['ContractNumberList', 'ContractTypeList', 'BasisList', 'FundingSourceList', 'ContractPriceForecast', 'ContractVolumeForecast', 'PricePerPiece']);

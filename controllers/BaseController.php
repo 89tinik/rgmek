@@ -97,6 +97,9 @@ class BaseController extends Controller
 
     protected function get1CId($dataArray, $modelData)
     {
+        if (array_key_exists('description', $dataArray) && $dataArray['description'] == $modelData) {
+            return $dataArray['id'];
+        }
         foreach ($dataArray as $item) {
             if ($item['description'] == $modelData) {
                 return $item['id'];
