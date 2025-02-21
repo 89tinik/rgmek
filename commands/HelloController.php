@@ -10,6 +10,7 @@ namespace app\commands;
 use app\models\Contract;
 use app\models\DraftContract;
 use app\models\User;
+use pantera\yii2\pay\sberbank\models\Invoice;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\httpclient\Client;
@@ -99,5 +100,41 @@ class HelloController extends Controller
     {
         $daysAgo = date('Y-m-d H:i:s', strtotime('-30 days'));
         DraftContract::deleteAll(['<', 'send', $daysAgo]);
+    }
+
+    public function actionFixInvoiceStatus()
+    {
+        \Yii::error('Cron FixInvoice start: ' . time());
+        $daysAgo = date('Y-m-d H:i:s', strtotime('-3 days'));
+        $models = Invoice::find()
+            ->where([
+                'AND',
+                ['=', 'status', 'I'],
+                ['>', 'created_at', $daysAgo],
+            ])->all();
+        \Yii::error('Cron FixInvoice iteration: ' . count($models));
+
+        $client = new Client();
+        $ivoiceArr = [];
+        foreach ($models as $invoice) {
+            $invoice->status = 'I';
+            $user = User::findOne($invoice->user_id);
+            if ($user && $invoice->save(false)) {
+                $ivoiceArr[] = $invoice->id;
+                $user->setDataContracts();
+
+                // Вызываем веб-контроллер через HTTP-запрос
+                $response = $client->createRequest()
+                    ->setMethod('GET')
+                    ->setUrl('https://lk.rgmek.ru/sberbank/default/complete')
+                    ->setData(['orderId' => $invoice->orderId, 'lang' => 'ru'])
+                    ->send();
+
+               // \Yii::error('Invoice updated and request sent: ' . $invoice->id . ', Response: ' . json_encode($response->data));
+            }
+        }
+
+        \Yii::error('Cron FixInvoice invoices: ' . implode(',', $ivoiceArr));
+        \Yii::error('Cron FixInvoice finish: ' . time());
     }
 }
