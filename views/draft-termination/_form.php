@@ -123,7 +123,7 @@ use yii\widgets\ActiveForm;
         ])->label('E-mail*')  ?>
     </div>
 
-    <?= Html::a('Отправить заявление', ['draft-termination/send-draft', 'id' => Yii::$app->request->get('id')], ['class' => 'btn btn-success submit-btn bottom-button']) ?>
+    <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>
 

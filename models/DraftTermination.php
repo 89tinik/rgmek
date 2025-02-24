@@ -26,6 +26,7 @@ class DraftTermination extends BaseDraft
     const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-termination/';
     const MESSAGE_THEME = 8;
     const MESSAGE_TEXT = 'Направлено заявление на расторжение действующего контракта (договора) энергоснабжения';
+
     /**
      * {@inheritdoc}
      */
@@ -111,7 +112,7 @@ class DraftTermination extends BaseDraft
             'tempDir' => 'tmp-mpdf'
         ]);
 
-        $pdfData= [];
+        $pdfData = [];
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
                 case 'user_id':
@@ -124,6 +125,8 @@ class DraftTermination extends BaseDraft
                     break;
                 case 'temp_data':
                     $pdfData = array_merge($pdfData, json_decode($value, true));
+                    $pdfData['penalty_word'] = self::num2str($pdfData['Penalty']);
+                    $pdfData['provided_services_cost_word'] = self::num2str($pdfData['ProvidedServicesCost']);
                     continue 2;
             }
             $pdfData[$attribute] = $value;
@@ -151,7 +154,15 @@ class DraftTermination extends BaseDraft
                     $this->$attribute = ($defaultArr['ContractNumberList']['item']['description']) ?? $defaultArr['ContractNumberList']['item'][$index]['description'];
                     break;
                 case 'temp_data':
-                    $keys = array_flip(['ContractNumberList', 'DirectorFullNameRP', 'DirectorFullNameDP', 'DirectorPositionRP', 'DirectorPositionDP', 'DirectorOrderRP']);
+                    $keys = array_flip([
+                        'ContractNumberList',
+                        'DirectorFullNameRP',
+                        'DirectorFullNameDP',
+                        'DirectorPositionRP',
+                        'DirectorPositionDP',
+                        'DirectorOrderRP',
+                        'ProvidedServicesCost',
+                        'Penalty']);
                     $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
                     break;
                 default:
