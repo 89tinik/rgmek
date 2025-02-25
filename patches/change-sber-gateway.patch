@@ -1,0 +1,47 @@
+diff --git a/vendor/pantera-digital/yii2-sberbank-pay/controllers/DefaultController.php b/vendor/pantera-digital/yii2-sberbank-pay/controllers/DefaultController.php
+--- a/vendor/pantera-digital/yii2-sberbank-pay/controllers/DefaultController.php
++++ b/vendor/pantera-digital/yii2-sberbank-pay/controllers/DefaultController.php
+@@ -24,22 +24,23 @@
+     public function actionComplete()
+     {
+         /* @var $model Invoice */
+-        if (is_null(Yii::$app->request->get('orderId'))) {
++        if (is_null(Yii::$app->request->get('mdOrder'))) {
+             throw new NotFoundHttpException();
+         }
+         $model = Invoice::find()
+             ->where([
+                 'AND',
+                 ['=', 'status', 'I'],
+-                ['=', 'orderId', Yii::$app->request->get('orderId')],
++                ['=', 'orderId', Yii::$app->request->get('mdOrder')],
+             ])
+             ->one();
+         if (is_null($model)) {
+             throw new NotFoundHttpException();
+         }
+-        $result = $this->module->sberbank->complete(Yii::$app->request->get('orderId'));
++        $result = $this->module->sberbank->complete(Yii::$app->request->get('mdOrder'));
++
+         //Проверяем статус оплаты если всё хорошо обновим инвойс и редерекним
+-        if (isset($result['OrderStatus']) && ($result['OrderStatus'] == $this->module->sberbank->classRegister->successStatus())) {
++        if (isset($result['orderStatus']) && ($result['orderStatus'] == $this->module->sberbank->classRegister->successStatus())) {
+             $model->attributes = $this->module->sberbank->classRegister->getDataForUpdate();
+             $model->update();
+             if ($this->module->successCallback) {
+@@ -70,7 +71,7 @@
+     {
+         $model = Invoice::findOne($id);
+         $result = $this->module->sberbank->create($model);
+-        if (array_key_exists('errorCode', $result)) {
++        if (array_key_exists('errorCode', $result) && $result['errorCode'] != 0) {
+             throw new ErrorException($result['errorMessage']);
+         }
+         $orderId = $result['orderId'];
+@@ -79,4 +80,4 @@
+         $model->update();
+         return $this->redirect($formUrl);
+     }
+-}
+\ No newline at end of file
++}
