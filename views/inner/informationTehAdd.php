@@ -5,7 +5,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Информация о технологическом присоединении | ЛК РГМЭК';
+$this->title = 'Информация о технологическом присоединении | ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <div class="breadcrumbs">

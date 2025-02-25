@@ -59,6 +59,21 @@ tinymce.init({
 
 
 $(function () {
+    $('.datepicker').datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        dateFormat: 'yy-mm-dd'
+    });
+
+$(document).on('pjax:success', function() {
+
+  $('.datepicker').datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        dateFormat: 'yy-mm-dd'
+    });
+
+})
     //показать прелоадер
     function ajaxPreloaderOn() {
         $('.preloader').css({'display': 'block', 'opacity': '0.5'});

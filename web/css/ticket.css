@@ -1,0 +1,90 @@
+.operator .fw{
+    width: 80%;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.operator .fw .wrapper{
+    margin:0;
+    max-width: 100%;
+}
+body.operator {
+    color:#111;
+}
+
+.pagination {
+    margin: 100px 0 0 0;
+    float: right;
+}
+.pagination li{
+    display: block;
+    float: left;
+    margin: 5px 10px;
+}
+.pagination li.active{
+}
+
+.pagination li a{
+    text-decoration: underline;
+}
+.pagination li.active a{
+    text-decoration: none;
+    color: #111;
+}
+.grid-index tr{
+    height: 50px;
+}
+.grid-index th{text-align: left;}
+.grid-index td {text-align: left;border-bottom: 1px solid #e3e3e3;}
+.grid-index td a{
+    display: block;
+    margin: 0 5px;
+    float: left;
+}
+.grid-index.baner-index th,
+.grid-index.baner-index td{
+    padding: 1px 20px;
+}
+.grid-index td input {height:40px;}
+
+.operator header {
+    background: #fafafa;
+}
+#login-form .help-block{
+    margin:0;
+}
+
+#login-form .btn {
+    margin-top: 10px;
+}
+.ui-datepicker-calendar{
+    display: table;
+}
+table.table.table-striped.table-bordered {
+    margin-top: 50px;
+    width:100%;
+    border-collapse: collapse;
+}
+
+table.table.table-striped.table-bordered tbody td {
+    padding: 5px;
+    border: 1px solid #dddddd;
+    padding: 5px 20px;
+}
+
+.messages-form label{
+    padding-left:0;
+}
+
+.messages-form .form-group {
+    margin: 20px 0;
+}
+
+#answerFilesList .removeAnswerFile {
+    border: none;
+    padding: 3px 6px;
+    border-radius: 6px;
+    background: #ff4949;
+    color: #fff;
+    cursor: pointer;
+}

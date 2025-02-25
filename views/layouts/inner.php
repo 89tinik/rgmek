@@ -4,12 +4,17 @@
 
 /* @var $content string */
 
+use app\widgets\NewMessagesWidget;
 use yii\helpers\Html;
 use app\assets\DefaultAssets;
 use app\assets\IeAssets;
+use app\assets\NewAssets;
 
 DefaultAssets::register($this);
 IeAssets::register($this);
+if($_GET['nCss'] == 7){
+    NewAssets::register($this);
+}
 ?>
 
 <?php $this->beginPage() ?>
@@ -31,9 +36,10 @@ IeAssets::register($this);
         <?php $this->head() ?>
     </head>
 
-    <body>
+    <body class="<?=Yii::$app->controller->id?> <?=Yii::$app->controller->id?>-<?=Yii::$app->controller->action->id?>">
     <?php $this->beginBody() ?>
     <div class="bg">
+        <div class="top-line"></div>
         <!-- Preloader -->
         <div class="preloader">
             <div class="centrize full-width">
@@ -51,7 +57,8 @@ IeAssets::register($this);
                 <!-- logo -->
                 <div class="h-logo">
                     <a href="<?= \yii\helpers\Url::base(true); ?>" class="ploader">
-                        <img src="/images/logo.svg" alt=""/>
+                        <img src="/images/logo.svg" class="old" alt=""/>
+                        <img src="/images/logo-new.svg" class="new" alt=""/>
                     </a>
                 </div>
 
@@ -62,7 +69,7 @@ IeAssets::register($this);
                     <ul>
                         <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li>
                         <?php if (!empty($piramida = \Yii::$app->controller->piramida)): ?>
-                            <li><a href="http://93.92.80.25:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Переход в интеллектуальную систему учета</a></li>
+                            <li><a href="http://prmd-lk.rgmek.ru:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Переход в ИСУ</a></li>
                         <?php else :?>
                             <li><a href="#" class="empty-pitrammida">Переход в интеллектуальную систему учета</a></li>
                         <?php endif; ?>
@@ -78,7 +85,7 @@ IeAssets::register($this);
                         <li class="children"><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение
                                 договора</a></li>
                         <li><?= Html::a('Помощь', ['inner/help'], ['class' => 'ploader']) ?></li>
-                        <li><?= Html::a('Написать обращение', ['inner/fos'], ['class' => 'ploader']) ?></li>
+                        <li><?= Html::a('Диалоги', ['messages/index'], ['class' => 'ploader']) ?><?= NewMessagesWidget::widget() ?></li>
                     </ul>
                 </div>
 
@@ -131,6 +138,11 @@ IeAssets::register($this);
 
         <div class="pirammida-empty-popup custom-popup">
             <p>Отсутствуют расчетные приборы учета, подключенные к интеллектуальной системе учета..</p>
+            <div class="close"></div>
+        </div>
+
+        <div class="draft-input-popup custom-popup">
+            <p></p>
             <div class="close"></div>
         </div>
 

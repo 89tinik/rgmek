@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Переход в ИСУ |  ЛК РГМЭК';
+$this->title = 'Переход в ИСУ |  ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <div class="breadcrumbs">

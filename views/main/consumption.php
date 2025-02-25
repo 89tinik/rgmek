@@ -8,7 +8,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'Информация об электропотреблении |  ЛК РГМЭК';
+$this->title = 'Информация об электропотреблении |  ЛК Р-Энергия';
 \app\assets\ConsumptionAssets::register($this);
 $chartDataArr = array_fill(1, 12, 0);
 $chartYarsDataArr = [];

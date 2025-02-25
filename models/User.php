@@ -4,6 +4,7 @@ namespace app\models;
 
 use linslin\yii2\curl\Curl;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\httpclient\Client;
 use yii\httpclient\XmlParser;
 use Yii;
@@ -157,8 +158,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             //отправляем SMS
             $client = new Client();
             $phone = substr_replace($this->phone, '7', 0, 1);
-            $username = '5b503501ef';
-            $password = '95f1345b6a';
+            $username = '1a4a5f50fc';
+            $password = 'e599316079';
             $data = [
                 'msisdn' => $phone,
                 'shortcode' => 'rgmek',
@@ -168,7 +169,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $response = $client->createRequest()
                 ->setMethod('POST')
                 ->setHeaders(['Authorization' => 'Basic ' . base64_encode("$username:$password")])
-                ->setUrl('https://target.tele2.ru/api/v2/send_message')
+                ->setUrl('https://target.t2.ru/api/v2/send_message')
                 ->setData($data)
                 ->send();
 
@@ -186,7 +187,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 ->setFrom('noreply@send.rgmek.ru')
                 ->setTo($this->email)
                 ->setSubject('Подтверждение почты')
-                ->setHtmlBody('<h2>Добрый день!</h2><p>Вы получили настоящее письмо так как указали этот адрес электронной почты при регистрации в личном кабинете небытовых потребителей компании ООО «РГМЭК».</p><p>Код подтверждения:<b>' . $vCode . '</b>.</p><p>Если Вы не отправляли запрос на регистрацию просто удалите это письмо.</p>')
+                ->setHtmlBody('<h2>Добрый день!</h2><p>Вы получили настоящее письмо так как указали этот адрес электронной почты при регистрации в личном кабинете небытовых потребителей компании ООО «Р-Энергия».</p><p>Код подтверждения:<b>' . $vCode . '</b>.</p><p>Если Вы не отправляли запрос на регистрацию просто удалите это письмо.</p>')
                 ->send();
             if (!$mail) {
                 return ['error' => 'Не удалось отправить письмо - повторите попытку регистрации позже.'];
@@ -199,8 +200,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     { //@return true or array('error'=>'error message')
 
         $data = ['id' => $this->id_db];
-        
-         Yii::error('id user = ' .$this->id_db);
+
+        Yii::error('id user = ' .$this->id_db);
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod('GET')
@@ -211,8 +212,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $xml = new XmlParser();
             $result = $xml->parse($response);
 
-         //var_dump($result);
-         //die('00');
+            //var_dump($result);
+            //die('00');
             if ($result['Error']) {
                 return ['error' => $result['Error']['Message']];
             } else {
@@ -224,7 +225,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
                 }
             }
         } else {
-         //die('--');
+            //die('--');
             return ['error' => 'Не удалось связаться БД - повторите попытку регистрации позже.'];
         }
     }
@@ -378,6 +379,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
 
+    }
+
+    /**
+     * @return array
+     */
+    public function getContractsList()
+    {
+        $contracts = $this->getContracts()->all();
+        return ArrayHelper::map($contracts, 'id', 'number');
     }
 
 }

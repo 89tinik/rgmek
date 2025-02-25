@@ -24,19 +24,20 @@ class AjaxController extends Controller
         $currentInvoice = Invoice::findOne($data['invoice']);
         $oldStatus = $currentInvoice->status;
         $currentInvoice->status = 'I';
-        $currentInvoice->save(false);
         $user = User::findOne($currentInvoice->user_id);
-        if ($user){
+        if ($user && $currentInvoice->save(false)){
             $adminId = Yii::$app->user->id;
             $user->setDataContracts();
             if (Yii::$app->user->login($user, 3600 * 24 * 30 * 12)){
                 Admin::setSessionAdmin($adminId);
                 $client = new Client();
-                $client->createRequest()
+                $response = $client->createRequest()
                     ->setMethod('GET')
                     ->setUrl('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/background_task')
                     ->setData(['id' => $user->id_db])
                     ->send();
+                $log_p = print_r($response, 1);
+                \Yii::error('ответ с проводки в 1с:'.$log_p);
             }
             return $this->redirect(['/sberbank/default/complete', 'orderId'=>$currentInvoice->orderId,'lang'=>'ru']);
         }

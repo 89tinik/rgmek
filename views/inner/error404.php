@@ -5,6 +5,6 @@
 
 use yii\helpers\Html;
 
-$this->title = '404 | ЛК РГМЭК';
+$this->title = '404 | ЛК Р-Энергия';
 ?>
 <h1>404</h1>

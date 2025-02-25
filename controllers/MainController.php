@@ -8,6 +8,9 @@ use app\models\AttachForm;
 use app\models\Baner;
 use app\models\ConsumptionForm;
 use app\models\Contract;
+use app\models\DraftContract;
+use app\models\DraftContractChange;
+use app\models\DraftTermination;
 use app\models\HistoryForm;
 use app\models\InstallESForm;
 use app\models\ReceiptForm;
@@ -52,45 +55,45 @@ class MainController extends Controller
     {
 
         $this->userName = \Yii::$app->user->identity->full_name;
-        
-        $curentContract = Contract::find()->where(['uid'=> \Yii::$app->request->get('uid')])->one();
-        if (empty($curentContract)){
+
+        $curentContract = Contract::find()->where(['uid' => \Yii::$app->request->get('uid')])->one();
+        if (empty($curentContract)) {
             $requestForm = \Yii::$app->request->get();
-            if (is_array($requestForm[array_key_first($requestForm)])){
-                $curentContract = Contract::find()->where(['uid'=> $requestForm[array_key_first($requestForm)]['uid']])->one();
+            if (is_array($requestForm[array_key_first($requestForm)])) {
+                $curentContract = Contract::find()->where(['uid' => $requestForm[array_key_first($requestForm)]['uid']])->one();
             }
         }
-        $this->currentContract =$curentContract->full_name;
-        $this->currentContractStatus =$curentContract->status_name;
+        $this->currentContract = $curentContract->full_name;
+        $this->currentContractStatus = $curentContract->status_name;
 
-        if($action->id == 'index'){
-            if( \Yii::$app->user->identity) {
+        if ($action->id == 'index') {
+            if (\Yii::$app->user->identity) {
                 \Yii::$app->user->identity->setSessionId();
             }
         }
-        
-        if(!empty(\Yii::$app->user->identity->peramida_name)){
-            $this->piramida = ['name'=>\Yii::$app->user->identity->peramida_name, 'id'=>\Yii::$app->user->identity->session_id];
+
+        if (!empty(\Yii::$app->user->identity->peramida_name)) {
+            $this->piramida = ['name' => \Yii::$app->user->identity->peramida_name, 'id' => \Yii::$app->user->identity->session_id];
         }
-        
+
         return parent::beforeAction($action);
     }
 
     public function actionIndex()
     {
         $user = User::findOne(\Yii::$app->user->identity->id);
-        $baners = Baner::find()->where(['disable'=>0])->orderBy(['sort' => SORT_ASC,'id'=>SORT_DESC])->all();
+        $baners = Baner::find()->where(['disable' => 0])->orderBy(['sort' => SORT_ASC, 'id' => SORT_DESC])->all();
         //FOR PUSH
         $headersArr = getallheaders();
-        if (isset($headersArr['Userid']) && !empty($headersArr['Userid'])){
+        if (isset($headersArr['Userid']) && !empty($headersArr['Userid'])) {
             $user->setPushId($headersArr['Userid']);
         }
 
         //$user->setSessionId();
         $authData = [
-            'action'=>'setSession',
-            'login'=>$user->peramida_name,
-            'sessionId'=>$user->session_id
+            'action' => 'setSession',
+            'login' => $user->peramida_name,
+            'sessionId' => $user->session_id
 
         ];
         $this->sendToServer('https://auth.rgmek.ru/pub/index.php', $authData, false, 'POST');
@@ -101,13 +104,13 @@ class MainController extends Controller
         //$data = ['id' => 'NjIyODAwMDM1MS02Mg=='];
         $profileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts_list', $data);
 
-        if (isset($profileInfo['success'])){
+        if (isset($profileInfo['success'])) {
             return $this->render('index', [
-                'baners'=>$baners,
-                'result'=>$profileInfo['success'],
-                'piramida'=>$piramida,
-                'withDate'=>\Yii::$app->user->identity->with_date,
-                'byDate'=>\Yii::$app->user->identity->by_date
+                'baners' => $baners,
+                'result' => $profileInfo['success'],
+                'piramida' => $piramida,
+                'withDate' => \Yii::$app->user->identity->with_date,
+                'byDate' => \Yii::$app->user->identity->by_date
             ]);
         } else {
             return $profileInfo['error'];
@@ -119,8 +122,8 @@ class MainController extends Controller
         $data = ['id' => \Yii::$app->user->identity->id_db];
         $proifileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/profile', $data);
 
-        if (isset($proifileInfo['success'])){
-            return $this->render('profile', ['result'=>$proifileInfo['success']]);
+        if (isset($proifileInfo['success'])) {
+            return $this->render('profile', ['result' => $proifileInfo['success']]);
         } else {
             return $proifileInfo['error'];
         }
@@ -136,19 +139,19 @@ class MainController extends Controller
 
         $buttonText = 'Подписаться';
         $invoiceEmail = false;
-        if(!empty(\Yii::$app->request->get('currentEmail'))){
-            \Yii::$app->session->setFlash('success','Ящик для рассылки электронных счетов - '.\Yii::$app->request->get('currentEmail'));
+        if (!empty(\Yii::$app->request->get('currentEmail'))) {
+            \Yii::$app->session->setFlash('success', 'Ящик для рассылки электронных счетов - ' . \Yii::$app->request->get('currentEmail'));
             $buttonText = 'Изменить';
             $invoiceEmail = true;
         }
 
         if ($installESForm->load(\Yii::$app->request->post()) && $installESForm->validate()) {
             $data = ['id' => \Yii::$app->user->identity->id_db,
-                'value'=> $installESForm->email];
+                'value' => $installESForm->email];
             $setEmail = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/add_mail', $data);
 
 
-            if (isset($setEmail['success'])){
+            if (isset($setEmail['success'])) {
                 \Yii::$app->session->setFlash('success', $setEmail['success']['Message']);
                 $buttonText = 'Изменить';
                 $invoiceEmail = true;
@@ -156,7 +159,7 @@ class MainController extends Controller
                 \Yii::$app->session->setFlash('error', $setEmail['error']);
             }
         }
-        return $this->render('edo', compact('installESForm','buttonText', 'invoiceEmail'));
+        return $this->render('edo', compact('installESForm', 'buttonText', 'invoiceEmail'));
 
     }
 
@@ -165,15 +168,15 @@ class MainController extends Controller
 
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $edoInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_edo', $data);
-        if (isset($edoInfo['success'])){
-            if ($edoInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        if (isset($edoInfo['success'])) {
+            if ($edoInfo['success']['ID'] != \Yii::$app->user->identity->id_db) {
                 throw new HttpException(403, 'Доступ запрещён');
             }
 //            $file_name = \Yii::$app->user->identity->id.'_'.$edoInfo['success']['Name'];
 //            if ($this->decodingToDocSave($edoInfo['success']['File'], $file_name)){
 //                return $this->redirect(Url::home(true).'web/temp_edo/'.$file_name, 301);
 //            }
-            return \Yii::$app->response->sendContentAsFile(base64_decode ($edoInfo['success']['File']), $edoInfo['success']['Name']);
+            return \Yii::$app->response->sendContentAsFile(base64_decode($edoInfo['success']['File']), $edoInfo['success']['Name']);
         } else {
             return $edoInfo['error'];
         }
@@ -185,21 +188,20 @@ class MainController extends Controller
         $model = new ReceiptForm();
 
 
-        if ($model->load(\Yii::$app->request->post()) && $receipt=$model->addReceipt()) {
+        if ($model->load(\Yii::$app->request->post()) && $receipt = $model->addReceipt()) {
             $price = $receipt->ee + $receipt->penalty;
             $invoice = \pantera\yii2\pay\sberbank\models\Invoice::addSberbank($receipt->id, $price);
             $this->redirect(['/sberbank/default/create', 'id' => $invoice->id]);
         }
 
 
-
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contract_account/', $data);
-        if (isset($arrearInfo['success'])){
-            if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        if (isset($arrearInfo['success'])) {
+            if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db) {
                 throw new HttpException(403, 'Доступ запрещён');
             }
-            return $this->render('arrear', ['result'=>$arrearInfo['success'], 'model'=>$model]);
+            return $this->render('arrear', ['result' => $arrearInfo['success'], 'model' => $model]);
         } else {
             return $arrearInfo['error'];
         }
@@ -211,11 +213,11 @@ class MainController extends Controller
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $arrearInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list', $data);
 
-        if (isset($arrearInfo['success'])){
-            if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        if (isset($arrearInfo['success'])) {
+            if ($arrearInfo['success']['ID'] != \Yii::$app->user->identity->id_db) {
                 throw new HttpException(403, 'Доступ запрещён');
             }
-            return $this->render('objects', ['result'=>$arrearInfo['success']]);
+            return $this->render('objects', ['result' => $arrearInfo['success']]);
         } else {
             return $arrearInfo['error'];
         }
@@ -226,15 +228,15 @@ class MainController extends Controller
 
         $data = \Yii::$app->request->get();
         //$data = ['uid' => '899d2100-6c34-11eb-929b-002590c76e1b', 'print' => \Yii::$app->request->get('print')];
-        $fileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/'.\Yii::$app->request->get('action'), $data);
-        if (isset($fileInfo['success'])){
-            if ($fileInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        $fileInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/' . \Yii::$app->request->get('action'), $data);
+        if (isset($fileInfo['success'])) {
+            if ($fileInfo['success']['ID'] != \Yii::$app->user->identity->id_db) {
                 throw new HttpException(403, 'Доступ запрещён');
             }
 
-            if ($data['uploadWithServer'] == true){
-                if ($file_name = $this->savePdfToServer($fileInfo['success']['URL'], $fileInfo['success']['Name'])){
-                    return $this->redirect(Url::home(true).'web/'.$file_name, 301);
+            if ($data['uploadWithServer'] == true) {
+                if ($file_name = $this->savePdfToServer($fileInfo['success']['URL'], $fileInfo['success']['Name'])) {
+                    return $this->redirect(Url::home(true) . 'web/' . $file_name, 301);
                 }
             } else {
                 $options = [];
@@ -250,20 +252,20 @@ class MainController extends Controller
         }
 
     }
-    
+
     public function actionAccessHistoryFile()
     {
 
         $data = \Yii::$app->request->get();
-        $historyInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/'.\Yii::$app->request->get('action'), $data);
-        if (isset($historyInfo['success'])){
-            if ($historyInfo['success']['ID'] != \Yii::$app->user->identity->id_db){
+        $historyInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/download_check/' . \Yii::$app->request->get('action'), $data);
+        if (isset($historyInfo['success'])) {
+            if ($historyInfo['success']['ID'] != \Yii::$app->user->identity->id_db) {
                 throw new HttpException(403, 'Доступ запрещён');
             }
-            if ($data['print'] == 'true'){
-                return \Yii::$app->response->sendContentAsFile(base64_decode ($historyInfo['success']['FilePDF']), $historyInfo['success']['Name'].'.pdf', ['inline' => true, 'mimeType' => 'application/pdf']);
+            if ($data['print'] == 'true') {
+                return \Yii::$app->response->sendContentAsFile(base64_decode($historyInfo['success']['FilePDF']), $historyInfo['success']['Name'] . '.pdf', ['inline' => true, 'mimeType' => 'application/pdf']);
             } else {
-                return \Yii::$app->response->sendContentAsFile(base64_decode ($historyInfo['success']['FileXLS']), $historyInfo['success']['Name'].'.xls');
+                return \Yii::$app->response->sendContentAsFile(base64_decode($historyInfo['success']['FileXLS']), $historyInfo['success']['Name'] . '.xls');
             }
         } else {
             return $historyInfo['error'];
@@ -286,12 +288,12 @@ class MainController extends Controller
         if ($response->isOk) {
             $xml = new XmlParser();
             $responseArr = $xml->parse($response);
-            if (isset($responseArr['Error'])){
+            if (isset($responseArr['Error'])) {
                 return $responseArr['Error']['Message'];
             } else {
-                if ($data['uploadWithServer'] == true){
-                    if ($file_name = $this->decodingToDocSave($responseArr['File'], str_replace('/', '-',$responseArr['Name'] . '.' . $responseArr['Extension']))){
-                        return $this->redirect(Url::home(true).'web/'.$file_name, 301);
+                if ($data['uploadWithServer'] == true) {
+                    if ($file_name = $this->decodingToDocSave($responseArr['File'], str_replace('/', '-', $responseArr['Name'] . '.' . $responseArr['Extension']))) {
+                        return $this->redirect(Url::home(true) . 'web/' . $file_name, 301);
                     }
                 } else {
                     return \Yii::$app->response->sendContentAsFile(base64_decode($responseArr['File']), $responseArr['Name'] . '.' . $responseArr['Extension']);
@@ -331,10 +333,10 @@ class MainController extends Controller
     public function actionPayment()
     {
 
-        return $this->render('payment',[
-            'withDate'=>\Yii::$app->user->identity->with_date,
-            'byDate'=>\Yii::$app->user->identity->by_date,
-            'typeOrder'=>\Yii::$app->request->get('type-order')]);
+        return $this->render('payment', [
+            'withDate' => \Yii::$app->user->identity->with_date,
+            'byDate' => \Yii::$app->user->identity->by_date,
+            'typeOrder' => \Yii::$app->request->get('type-order')]);
     }
 
     public function actionIndication()
@@ -343,10 +345,10 @@ class MainController extends Controller
 
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $indicationData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list_ind', $data);
-        if (isset($indicationData['success'])){
+        if (isset($indicationData['success'])) {
             return $this->render('indication', [
-                'result'=>$indicationData['success'],
-                'model'=>$model
+                'result' => $indicationData['success'],
+                'model' => $model
             ]);
         } else {
             return $indicationData['error'];
@@ -358,23 +360,23 @@ class MainController extends Controller
     {
         $data = ['uidcontracts' => \Yii::$app->request->get('uid')];
         $invoiceData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/package_documents', $data);
-        if (isset($invoiceData['success'])){
+        if (isset($invoiceData['success'])) {
             $withDateArr = explode('.', \Yii::$app->user->identity->with_date);
             $mounth = $withDateArr[1] - 1;
-            if($mounth == 0){
+            if ($mounth == 0) {
                 $mounth = 12;
                 $year = $withDateArr[2] - 1;
             } else {
                 $year = $withDateArr[2];
             }
-            $mounth = ($mounth < 10)?'0'.$mounth:$mounth;
-            $withDateDetail = '01.'.$mounth.'.'.$year;
+            $mounth = ($mounth < 10) ? '0' . $mounth : $mounth;
+            $withDateDetail = '01.' . $mounth . '.' . $year;
 
-            if (\Yii::$app->request->get('type-order') == 'invoices'){
-                $data['withdate']=\Yii::$app->user->identity->with_date;
-                $data['bydate']=\Yii::$app->user->identity->by_date;
+            if (\Yii::$app->request->get('type-order') == 'invoices') {
+                $data['withdate'] = \Yii::$app->user->identity->with_date;
+                $data['bydate'] = \Yii::$app->user->identity->by_date;
                 $invoicesList = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/invoices', $data);
-                if ($invoicesList['success']){
+                if ($invoicesList['success']) {
                     $invoices = $invoicesList['success'];
                 } else {
                     $invoices = $invoicesList['error'];
@@ -383,12 +385,12 @@ class MainController extends Controller
 
 
             return $this->render('invoice', [
-                'result'=>$invoiceData['success'],
-                'withDate'=>\Yii::$app->user->identity->with_date,
-                'withDateDetail'=>$withDateDetail,
-                'byDate'=>\Yii::$app->user->identity->by_date,
-                'invoices'=>$invoices,
-                'typeOrder'=>\Yii::$app->request->get('type-order')
+                'result' => $invoiceData['success'],
+                'withDate' => \Yii::$app->user->identity->with_date,
+                'withDateDetail' => $withDateDetail,
+                'byDate' => \Yii::$app->user->identity->by_date,
+                'invoices' => $invoices,
+                'typeOrder' => \Yii::$app->request->get('type-order')
             ]);
         } else {
             return $invoiceData['error'];
@@ -404,9 +406,9 @@ class MainController extends Controller
             $model->uidtu = \Yii::$app->request->get('uidtu');
             $model->uid = \Yii::$app->request->get('uid');
         }
-        if (empty( $model->bydate = \Yii::$app->request->get('HistoryForm')['bydate'])) {
+        if (empty($model->bydate = \Yii::$app->request->get('HistoryForm')['bydate'])) {
             $bydateArr = explode('.', \Yii::$app->user->identity->by_date);
-            $model->bydate = '01.' . $bydateArr[1] .'.'. $bydateArr[2];
+            $model->bydate = '01.' . $bydateArr[1] . '.' . $bydateArr[2];
         }
         if (empty($model->withdate)) {
             $bydateArr = explode('.', $model->bydate);
@@ -434,13 +436,14 @@ class MainController extends Controller
         }
     }
 
-    public function actionConsumption (){
+    public function actionConsumption()
+    {
         $model = new ConsumptionForm();
         if (!$model->load(\Yii::$app->request->get())) {
             $model->uidtu = \Yii::$app->request->get('uidtu');
             $model->uid = \Yii::$app->request->get('uid');
         }
-        if (empty( $model->bydate = \Yii::$app->request->get('ConsumptionForm')['bydate'])) {
+        if (empty($model->bydate = \Yii::$app->request->get('ConsumptionForm')['bydate'])) {
             $model->bydate = \Yii::$app->user->identity->by_date;
         }
         if (empty($model->withdate)) {
@@ -448,32 +451,34 @@ class MainController extends Controller
             if (date('n') < 4) {
                 $Y--;
             }
-            $model->withdate = '01.01.'. $Y;
+            $model->withdate = '01.01.' . $Y;
         }
         $data = [
             'uidcontract' => $model->uid,
             'withdate' => $model->withdate,
             'bydate' => $model->bydate
         ];
-        //var_dump($data);die();
+
         $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/report_consumption', $data);
-        if (isset($objectsData['success'])){
+        if (isset($objectsData['success'])) {
             return $this->render('consumption', [
-            'objectsData' => $objectsData['success'],
+                'objectsData' => $objectsData['success'],
                 'model' => $model
             ]);
         } else {
             return $objectsData['error'];
         }
     }
-    
-    
-    public function actionRaz (){
+
+
+    public function actionRaz()
+    {
         return $this->render('raz', []);
     }
-    
-    public function actionTehadd (){
-        if (\Yii::$app->request->get('empty') == 1){
+
+    public function actionTehadd()
+    {
+        if (\Yii::$app->request->get('empty') == 1) {
             $outputArr = [
                 'empty' => true
             ];
@@ -482,7 +487,7 @@ class MainController extends Controller
                 'uidcontracts' => \Yii::$app->request->get('uid')
             ];
             $objectsData = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/applications_list/technological', $data);
-            if (isset($objectsData['success'])){
+            if (isset($objectsData['success'])) {
                 $outputArr = [
                     'objectsData' => $objectsData['success']
                 ];
@@ -493,7 +498,22 @@ class MainController extends Controller
         return $this->render('tehadd', $outputArr);
     }
 
-    private function sendToServer ($url, $data=array(), $toArray=true, $method='GET'){
+    public function actionCreateUpdateContract()
+    {
+        $data = ['user_id' => \Yii::$app->user->id, 'last' => 1];
+        $draftContract = DraftContract::findOne($data);
+        $draftChangeContract = DraftContractChange::findOne($data);
+        $draftTermination = DraftTermination::findOne($data);
+
+        return $this->render('createUpdateContract', [
+            'draftContract' => $draftContract,
+            'draftContractChange' => $draftChangeContract,
+            'draftTermination' => $draftTermination
+        ]);
+    }
+
+    private function sendToServer($url, $data = array(), $toArray = true, $method = 'GET')
+    {
         $client = new Client();
         $response = $client->createRequest()
             ->setMethod($method)
@@ -501,10 +521,10 @@ class MainController extends Controller
             ->setData($data)
             ->send();
         if ($response->isOk) {
-            if ($toArray){
+            if ($toArray) {
                 $xml = new XmlParser();
                 return ['success' => $xml->parse($response)];
-            }else{
+            } else {
                 return ['success' => $response];
             }
         } else {
@@ -553,21 +573,23 @@ class MainController extends Controller
 //        echo 'Done';
 //    }
 //
-private function decodingToDocSave ($base_64, $file_name){
-    $file_name = 'temp_pdf/'.time() . \Yii::$app->user->identity->id . '_' . $file_name;
-    $doc_decoded = base64_decode ($base_64);
+    private function decodingToDocSave($base_64, $file_name)
+    {
+        $file_name = 'temp_pdf/' . time() . \Yii::$app->user->identity->id . '_' . $file_name;
+        $doc_decoded = base64_decode($base_64);
 //Write data back to pdf file
-    $doc = fopen ($file_name,'w');
-    fwrite ($doc,$doc_decoded);
+        $doc = fopen($file_name, 'w');
+        fwrite($doc, $doc_decoded);
 //close output file
-    fclose ($doc);
-    return $file_name;
+        fclose($doc);
+        return $file_name;
     }
 
-    private function savePdfToServer ($url, $file_name){
-        $file_name = 'temp_pdf/'.time() . \Yii::$app->user->identity->id . '_' . $file_name;
+    private function savePdfToServer($url, $file_name)
+    {
+        $file_name = 'temp_pdf/' . time() . \Yii::$app->user->identity->id . '_' . $file_name;
         $ch = curl_init($url);
-        $fp = fopen ($file_name,'wb');
+        $fp = fopen($file_name, 'wb');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_exec($ch);

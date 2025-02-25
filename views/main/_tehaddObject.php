@@ -59,7 +59,7 @@ $seriesArr = [];
             
             <div class="leftright">
                 <ul>
-                    <li>через сервис «<?= Html::a('Написать обращение', ['inner/fos', 'tehadd' => 'true'], ['class' => 'ploader ']) ?>» Личного кабинета;</li>
+                    <li>через сервис «<?= Html::a('Диалоги', ['messages/index', 'tehadd' => 'true'], ['class' => 'ploader ']) ?>» Личного кабинета;</li>
                     <li>посредством электронного документооборота СБИС, Диадок.</li>
                 </ul>
                 <div style="clear:both;" class="dnone"></div>

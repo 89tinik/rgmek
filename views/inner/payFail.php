@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Ошибка оплаты | ЛК РГМЭК';
+$this->title = 'Ошибка оплаты | ЛК Р-Энергия';
 ?>
 <div class="page-heading">
     <h1 class="title">Ошибка при оплате.</h1>

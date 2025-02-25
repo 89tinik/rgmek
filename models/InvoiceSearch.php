@@ -43,7 +43,7 @@ class InvoiceSearch extends Invoice
      */
     public function search($params)
     {
-        $query = Invoice::find();
+        $query = Invoice::find()->alias('i');
 
         // add conditions that should always apply here
         $query->joinWith(['user','receipt.indenture']);
@@ -79,12 +79,11 @@ class InvoiceSearch extends Invoice
             'user_id' => $this->user_id,
             'order_id' => $this->order_id,
             'sum' => $this->sum,
-            'created_at' => $this->created_at,
             'pay_time' => $this->pay_time,
             'remote_id' => $this->remote_id,
         ]);
 
-        $query->andFilterWhere(['like', 'status', $this->status])
+        $query->andFilterWhere(['like', 'i.status', $this->status])
             ->andFilterWhere(['like', 'method', $this->method])
             ->andFilterWhere(['like', 'orderId', $this->orderId])
             ->andFilterWhere(['like', 'data', $this->data])
@@ -92,7 +91,9 @@ class InvoiceSearch extends Invoice
             ->andFilterWhere(['like', 'contracts.number', $this->contract])
             ->andFilterWhere(['like', 'users.username', $this->user_login])
             ->andFilterWhere(['like', 'users.full_name', $this->user_name]);
-
+        if ($this->created_at) {
+            $query->andFilterWhere(['between', 'created_at', $this->created_at . ' 00:00:00', $this->created_at . ' 23:59:59']);
+        }
         return $dataProvider;
     }
 }

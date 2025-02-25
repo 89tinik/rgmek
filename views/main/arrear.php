@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-$this->title = 'Узнать задолженность, оплатить | ЛК РГМЭК';
+$this->title = 'Узнать задолженность, оплатить | ЛК Р-Энергия';
 ?>
 
 <div class="page-heading">
@@ -146,7 +146,7 @@ $this->title = 'Узнать задолженность, оплатить | ЛК
 
             <div class="price all-price"><?= (!empty($all = str_replace(',', '.', $ee) + str_replace(',', '.', $penalty))) ? number_format($all, 2, ',', ' ') . ' ₽' : 0; ?></div>
         </div>
-        <?= Html::submitButton('Перейти к оплате', ['class' => 'btn submit-btn']) ?>
+        <?= Html::submitButton('Перейти к оплате', ['class' => 'btn submit-btn ploader']) ?>
         <?php ActiveForm::end(); ?>
     </div>
 </div>
