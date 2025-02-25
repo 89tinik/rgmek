@@ -102,10 +102,12 @@ $config = [
                     'sessionTimeoutSecs' => 60 * 60 * 24 * 7,
 
                     // логин api мерчанта
-                    'login' => 'P6229054695_1083-api',//'T6229054695_6055-api | P6229054695_1083-api',
+                    //'login' => 'sbertest_0299',// тестовый
+                    'login' => 'd5a49c4a2c54',// прод
 
                     // пароль api мерчанта
-                    'password' => 'KndhG5GF69nFdz',//'T6229054695_6055 | KndhG5GF69nFdz',
+                    //'password' => 'sbertest_029912345',// тестовый
+                    'password' => 'Pentagonsuxbsua2hxywbw',// прод
 
                     // использовать тестовый режим (по умолчанию - нет)
                     'testServer' => false,
@@ -163,6 +165,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
+        //'allowedIPs' => ['*'],
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
