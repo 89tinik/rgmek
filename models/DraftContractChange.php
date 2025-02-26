@@ -111,7 +111,8 @@ class DraftContractChange extends BaseDraft
     public function generatePdf($fileName = 'Обращение.pdf')
     {
         $mpdf = new Mpdf([
-            'tempDir' => 'tmp-mpdf'
+            'tempDir' => 'tmp-mpdf',
+            'default_font' => 'arial'
         ]);
 
         //$html = '';
