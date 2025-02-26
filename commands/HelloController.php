@@ -127,7 +127,7 @@ class HelloController extends Controller
                 $response = $client->createRequest()
                     ->setMethod('GET')
                     ->setUrl('https://lk.rgmek.ru/sberbank/default/complete')
-                    ->setData(['orderId' => $invoice->orderId, 'lang' => 'ru'])
+                    ->setData(['mdOrder' => $invoice->orderId, 'lang' => 'ru'])
                     ->send();
 
                // \Yii::error('Invoice updated and request sent: ' . $invoice->id . ', Response: ' . json_encode($response->data));
