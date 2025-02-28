@@ -64,6 +64,7 @@ class DraftContractForm extends Model
             [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_p'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
+            [['director_order'], 'checkDirectorOrder'],
             ];
     }
 
@@ -113,6 +114,30 @@ class DraftContractForm extends Model
         ];
     }
 
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function checkDirectorOrder($attribute, $params)
+    {
+        $draft = DraftContract::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $this->contract_id]);
+        $tempDataArr = json_decode($draft->temp_data, true);
+        $filesArr = json_decode($draft->files, true);
+        $emptyFiles = true;
+        foreach ($filesArr as $fileArr) {
+            $currFile = array_shift($fileArr);
+            if(!empty($currFile)) {
+                $emptyFiles = false;
+                continue;
+            }
+        }
+        if ($this->director_order != $tempDataArr['DirectorOrder'] && $emptyFiles) {
+            $this->addError($attribute, 'Прикрепите документ подтверждающий основания');
+        }
+    }
 
     public function uploadFiles($id, $idx)
     {

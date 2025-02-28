@@ -37,6 +37,7 @@ class DraftContractChangeForm extends Model
             [['contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
+            [['director_order'], 'checkDirectorOrder'],
         ];
     }
 
@@ -64,6 +65,31 @@ class DraftContractChangeForm extends Model
             'director_position' => 'Должность руководителя (подписанта)*',
             'director_order' => 'Действует на основании*',
         ];
+    }
+
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function checkDirectorOrder($attribute, $params)
+    {
+        $draft = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $this->contract_id]);
+        $tempDataArr = json_decode($draft->temp_data, true);
+        $filesArr = json_decode($draft->files, true);
+        $emptyFiles = true;
+        foreach ($filesArr as $fileArr) {
+            $currFile = array_shift($fileArr);
+            if(!empty($currFile)) {
+                $emptyFiles = false;
+                continue;
+            }
+        }
+        if ($this->director_order != $tempDataArr['DirectorOrder'] && $emptyFiles) {
+            $this->addError($attribute, 'Прикрепите документ подтверждающий основания');
+        }
     }
 
 

@@ -3,8 +3,8 @@ if ($DirectorOrder != $director_order) {
     $DirectorOrderRP = $director_order;
 }
 ?>
-<h1 align="center">Дополнительное соглашение</h1>
-<h2 align="center">о внесении изменений в Договор энергоснабжения №<?= $contract_id ?></h2>
+<h2 align="center">Дополнительное соглашение</h2>
+<h3 align="center">о внесении изменений в Договор энергоснабжения №<?= $contract_id ?></h3>
 <table width="100%">
     <tr>
         <td width="50%"><p>г. Рязань</p></td>

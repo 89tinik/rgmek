@@ -192,7 +192,7 @@ class DraftContract extends BaseDraft
                     continue 2;
             }
             if ($off_budget == 1 && in_array($attribute, ['off_budget_value', 'budget_value']) || $attribute == 'contract_volume_plane') continue;
-            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b> ' . $value . '</p>';
         }
 
 
@@ -233,7 +233,7 @@ class DraftContract extends BaseDraft
                     $this->$attribute = ($defaultArr['ContractNumberList']['item']['description']) ?? $defaultArr['ContractNumberList']['item'][$index]['description'];
                     break;
                 case 'temp_data':
-                    $keys = array_flip(['ContractNumberList', 'ContractTypeList', 'BasisList', 'FundingSourceList', 'ContractPriceForecast', 'ContractVolumeForecast', 'PricePerPiece']);
+                    $keys = array_flip(['ContractNumberList', 'ContractTypeList', 'BasisList', 'FundingSourceList', 'ContractPriceForecast', 'ContractVolumeForecast', 'PricePerPiece', 'DirectorOrder']);
                     $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
                     break;
                 default:
