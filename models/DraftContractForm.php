@@ -127,11 +127,13 @@ class DraftContractForm extends Model
         $tempDataArr = json_decode($draft->temp_data, true);
         $filesArr = json_decode($draft->files, true);
         $emptyFiles = true;
-        foreach ($filesArr as $fileArr) {
-            $currFile = array_shift($fileArr);
-            if(!empty($currFile)) {
-                $emptyFiles = false;
-                continue;
+        if (is_array($filesArr)){
+            foreach ($filesArr as $fileArr) {
+                $currFile = array_shift($fileArr);
+                if(!empty($currFile)) {
+                    $emptyFiles = false;
+                    continue;
+                }
             }
         }
         if ($this->director_order != $tempDataArr['DirectorOrder'] && $emptyFiles) {
