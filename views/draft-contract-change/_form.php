@@ -85,16 +85,14 @@ use yii\widgets\ActiveForm;
                     $model,
                     'contract_price'
                 )->textInput([
-                    'value' => number_format($model->contract_price, 2, '.', ' ')
-                        ?? number_format($contractsInfo['ContractPrice'], 2, '.', ' '),
+                    'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price), 2, '.', ' '),
                     'class' => 'form-control a-send num-format'
                 ]) ?>
                 <?= $form->field(
                     $model,
                     'contract_volume'
                 )->textInput([
-                    'value' => number_format($model->contract_volume, 2, '.', ' ')
-                        ?? number_format($contractsInfo['ContractVolume'], 2, '.', ' '),
+                    'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume), 2, '.', ' '),
                     'class' => 'form-control a-send num-format'
                 ]) ?>
             </div>
@@ -104,8 +102,7 @@ use yii\widgets\ActiveForm;
                     $model,
                     'contract_price_new'
                 )->textInput([
-                    'value' => number_format($model->contract_price_new, 2, '.', ' ')
-                        ?? number_format($contractsInfo['ContractPriceNew'], 2, '.', ' '),
+                    'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price_new), 2, '.', ' '),
                     'class' => 'form-control a-send num-format'
                 ]) ?>
 
@@ -114,8 +111,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Объем рассчитан исходя из введенной Вами цены контракта и цены за 1 кВтч.
                     Отметьте «Включать планируемый объем», если хотите, чтобы этот параметр был указан в соглашении</div>'
                 ])->textInput([
-                    'value' => number_format($model->contract_volume_new, 2, '.', ' ')
-                        ?? number_format($contractsInfo['ContractVolumeNew'], 2, '.', ' '),
+                    'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_new), 2, '.', ' '),
                     'class' => 'form-control a-send num-format'
                 ]) ?>
             </div>
@@ -145,7 +141,7 @@ use yii\widgets\ActiveForm;
             ])->label('E-mail*') ?>
         </div>
 
-        <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
+        <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
 
         <?php ActiveForm::end(); ?>
         <?php

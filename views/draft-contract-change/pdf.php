@@ -2,6 +2,9 @@
 if ($DirectorOrder != $director_order) {
     $DirectorOrderRP = $director_order;
 }
+if ($DirectorPosition != $director_position) {
+    $DirectorPositionRP = $director_position;
+}
 ?>
 <h2 align="center">Дополнительное соглашение</h2>
 <h3 align="center">о внесении изменений в Договор энергоснабжения №<?= $contract_id ?></h3>

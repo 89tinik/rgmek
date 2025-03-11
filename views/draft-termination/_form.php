@@ -87,8 +87,7 @@ use yii\widgets\ActiveForm;
             $model,
             'contract_price'
         )->textInput([
-            'value' => number_format($model->contract_price, 2, '.', ' ')
-                ?? number_format($contractsInfo['ContractPrice'], 2, '.', ' '),
+            'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price), 2, '.', ' '),
             'class' => 'form-control a-send num-format'
         ]) ?>
 
@@ -98,8 +97,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Стоимость потребленной электроэнергии по договору</div>'
         ])->textInput([
             'class' => 'form-control a-send num-format',
-            'value' => number_format($model->contract_volume_price, 2, '.', ' ')
-                ?? number_format($contractsInfo['ProvidedServicesCost'], 2, '.', ' ')
+            'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_price), 2, '.', ' ')
         ]) ?>
 
 

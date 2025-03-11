@@ -2,6 +2,9 @@
 if ($DirectorOrder != $director_order) {
     $DirectorOrderRP = $director_order;
 }
+if ($DirectorPosition != $director_position) {
+    $DirectorPositionRP = $director_position;
+}
 ?>
 <h2 align="center">Соглашение о расторжении</h2>
 <h3 align="center">Договора энергоснабжения №<?= $contract_id ?></h3>
@@ -52,7 +55,7 @@ if ($DirectorOrder != $director_order) {
             работе с юридическими лицами
         </td>
         <td width="50%">
-            Директор
+            <?= $director_position ?>
         </td>
     </tr>
 </table>

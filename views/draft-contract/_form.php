@@ -150,7 +150,7 @@ use yii\widgets\ActiveForm;
  электроэнергии (мощности) и порядок оплаты»</div>'
             ])->textInput([
                 'class' => 'form-control a-send calc-price calc-price-all num-format',
-                'value' => number_format($model->contract_price, 2, '.', ' ')
+                'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price), 2, '.', ' ')
             ]) ?>
 
             <?= $form->field($model, 'contract_volume_plane', ['template' => '{label}{input}{hint}{error}
@@ -159,7 +159,7 @@ use yii\widgets\ActiveForm;
  планируемый объем», если хотите, чтобы этот параметр был указан в разделе 4 договора</div>'
             ])->textInput([
                 'class' => 'form-control a-send num-format',
-                'value' => number_format($model->contract_volume_plane, 2, '.', ' ')
+                'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_plane), 2, '.', ' ')
             ]) ?>
         </div>
 
@@ -200,7 +200,7 @@ use yii\widgets\ActiveForm;
             ])->textInput([
                 'class' => 'form-control a-send calc-price calc-price-off num-format',
                 'maxlength' => true,
-                'value' => number_format($model->off_budget_value, 2, '.', ' ')
+                'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->off_budget_value), 2, '.', ' ')
             ]) ?>
 
             <?= $form->field($model, 'budget_value', ['template' => '{label}{input}{hint}{error}
@@ -210,7 +210,7 @@ use yii\widgets\ActiveForm;
                 'class' => 'form-control a-send calc-result',
                 'maxlength' => true,
                 'readonly' => 'readonly',
-                'value' => number_format($model->budget_value, 2, '.', ' ')
+                'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->budget_value), 2, '.', ' ')
             ]) ?>
 
         </div>
@@ -356,7 +356,7 @@ use yii\widgets\ActiveForm;
 
     <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button hidden']) ?>
     <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-    <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn bottom-button hidden', 'type' => 'submit']) ?>
+    <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button hidden', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>
 <?php

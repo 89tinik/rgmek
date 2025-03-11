@@ -35,6 +35,7 @@ class DraftTerminationForm extends Model
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
             [['director_order'], 'checkDirectorOrder'],
+            [['director_position'], 'checkDirectorPosition'],
         ];
     }
 
@@ -85,6 +86,33 @@ class DraftTerminationForm extends Model
         }
         if ($this->director_order != $tempDataArr['DirectorOrder'] && $emptyFiles) {
             $this->addError($attribute, 'Прикрепите документ подтверждающий основания');
+        }
+    }
+
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function checkDirectorPosition($attribute, $params)
+    {
+        $draft = DraftTermination::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $this->contract_id]);
+        $tempDataArr = json_decode($draft->temp_data, true);
+        $filesArr = json_decode($draft->files, true);
+        $emptyFiles = true;
+        if (is_array($filesArr)){
+            foreach ($filesArr as $fileArr) {
+                $currFile = array_shift($fileArr);
+                if(!empty($currFile)) {
+                    $emptyFiles = false;
+                    continue;
+                }
+            }
+        }
+        if ($this->director_position != $tempDataArr['DirectorPosition'] && $emptyFiles) {
+            $this->addError($attribute, 'Прикрепите документ подтверждающий изменение должности');
         }
     }
 
