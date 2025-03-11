@@ -19,6 +19,12 @@ $(window).on("load", function () {
 $(function () {
     var width = $(window).width();
 
+    /*debug response 1C*/
+    $('.show-response').on('click', function(){
+        $('.response-1c').show();
+    });
+    /*ENDdebug response 1C*/
+
     $('.ajax-c-form .submit-btn').on('click', function(){
         calcPrice();
         if ($(this).closest('form').find('.has-error').length > 0){

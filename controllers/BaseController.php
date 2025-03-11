@@ -58,6 +58,7 @@ class BaseController extends Controller
         }
         $response = $request->send();
         if ($response->isOk) {
+            Yii::$app->session->set('response1C', $response->getContent());
             if ($toArray) {
                 $xml = new XmlParser();
                 return ['success' => $xml->parse($response)];

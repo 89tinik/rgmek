@@ -359,7 +359,15 @@ use yii\widgets\ActiveForm;
     <?= Html::button('Отправить заявление', ['class' => 'btn btn-success submit-btn bottom-button hidden', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>
-
+<?php
+if (Yii::$app->session->has('response1C')) {
+    echo Html::button('Показать ответ 1С', ['class' => 'btn bottom-button show-response']);
+    ?>
+    <div class="response-1c" style="display: none"><textarea><?=Yii::$app->session->get('response1C')?></textarea></div>
+<?php
+    Yii::$app->session->remove('response1C');
+}
+?>
 </div>
 <?php
 function getSelectData($data)
