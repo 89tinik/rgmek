@@ -109,9 +109,7 @@ use yii\widgets\ActiveForm;
         ])->label('Контактное лицо по заявлению*')  ?>
 
         <?= $form->field($model, 'contact_phone')->textInput([
-            'class' => 'form-control a-send required min-length',
-            'maxlength' => true,
-            'min' => '6',
+            'class' => 'form-control a-send required',
             'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
         ])->label('Телефон*')   ?>
 

@@ -231,9 +231,9 @@ use yii\widgets\ActiveForm;
             <?= $form->field(
                 $model,
                 'restriction_notify_p'
-            )->widget(\yii\widgets\MaskedInput::class, [
-                'mask' => '+79999999999',
-            ])->textInput(['class' => 'form-control a-send'])->label(false) ?>
+            )->textInput([
+                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
+                'class' => 'form-control a-send'])->label(false) ?>
             <?= $form->field(
                 $model,
                 'restriction_notify_e'
@@ -258,6 +258,7 @@ use yii\widgets\ActiveForm;
             )->textInput([
                 'class' => 'form-control a-send',
                 'placeholder' => $model->getAttributeLabel('responsible_4device_contact_p'),
+                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
             ])->label(false) ?>
             <?= $form->field(
                 $model,
@@ -283,6 +284,7 @@ use yii\widgets\ActiveForm;
             )->textInput([
                 'class' => 'form-control a-send',
                 'placeholder' => $model->getAttributeLabel('responsible_4calculation_contact_p'),
+                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
             ])->label(false) ?>
             <?= $form->field(
                 $model,

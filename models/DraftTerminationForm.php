@@ -29,7 +29,7 @@ class DraftTerminationForm extends Model
             [['user_id', 'contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'required'],
             [['id', 'user_id'], 'integer'],
             ['contact_email', 'email'],
-            [['contact_phone'], 'match', 'pattern' => '/^\d{6,}$/', 'message' => 'Телефон должен содержать только цифры и минимум 6 цифр.'],
+            [['contact_phone'], 'match', 'pattern' => '/^8\d{10}$/', 'message' => 'Номер телефона должен быть в формате 81111111111.'],
             [['files', 'contract_price', 'contract_volume_price', 'contract_id'], 'string'],
             [['contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],

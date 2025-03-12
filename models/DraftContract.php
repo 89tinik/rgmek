@@ -236,6 +236,16 @@ class DraftContract extends BaseDraft
                     $keys = array_flip(['ContractNumberList', 'ContractTypeList', 'BasisList', 'FundingSourceList', 'ContractPriceForecast', 'ContractVolumeForecast', 'PricePerPiece', 'DirectorOrder', 'DirectorPosition']);
                     $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
                     break;
+                case 'restriction_notify_p':
+                case 'responsible_4device_contact_p':
+                case 'responsible_4calculation_contact_p':
+                    if (is_array($ArrayModelAttributesto1C[$attribute])) {
+                        $value = $defaultArr[$ArrayModelAttributesto1C[$attribute][0]][$ArrayModelAttributesto1C[$attribute][1]];
+                    } else {
+                        $value = $defaultArr[$ArrayModelAttributesto1C[$attribute]];
+                    }
+                    $this->$attribute = (!empty($value)) ? preg_replace('/[^0-9]/', '', $value) : NULL;
+                    break;
                 default:
                     if (is_array($ArrayModelAttributesto1C[$attribute])) {
                         $value = $defaultArr[$ArrayModelAttributesto1C[$attribute][0]][$ArrayModelAttributesto1C[$attribute][1]];

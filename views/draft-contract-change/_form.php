@@ -131,7 +131,6 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'contact_phone')->textInput([
                 'class' => 'form-control a-send',
-                'maxlength' => true,
                 'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
             ])->label('Телефон*')   ?>
 

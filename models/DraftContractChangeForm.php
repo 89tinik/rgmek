@@ -31,7 +31,7 @@ class DraftContractChangeForm extends Model
         return [
             [['id', 'user_id', 'contract_volume_plane_include'], 'integer'],
             ['contact_email', 'email'],
-            [['contact_phone'], 'match', 'pattern' => '/^\d{6,}$/', 'message' => 'Телефон должен содержать только цифры и минимум 6 цифр.'],
+            [['contact_phone'], 'match', 'pattern' => '/^8\d{10}$/', 'message' => 'Номер телефона должен быть в формате 81111111111.'],
             [['files', 'contract_price', 'contract_volume', 'contract_price_new', 'contract_id', 'contract_volume_new'], 'string'],
             [['user_id', 'contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'required'],
             [['contact_name', 'contact_phone', 'contact_email', 'director_full_name','director_position', 'director_order'], 'string', 'max' => 255],

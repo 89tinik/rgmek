@@ -1,9 +1,11 @@
 <?php
+use app\components\CaseHelper;
+
 if ($DirectorOrder != $director_order) {
-    $DirectorOrderRP = $director_order;
+    $DirectorOrderRP = CaseHelper::getCase($director_order, 1);
 }
 if ($DirectorPosition != $director_position) {
-    $DirectorPositionRP = $director_position;
+    $DirectorPositionRP = CaseHelper::getCase($director_position, 1);
 }
 ?>
 <h2 align="center">Соглашение о расторжении</h2>
@@ -55,7 +57,7 @@ if ($DirectorPosition != $director_position) {
             работе с юридическими лицами
         </td>
         <td width="50%">
-            <?= $director_position ?>
+            <?= CaseHelper::ucfirstCyrillic($director_position) ?>
         </td>
     </tr>
 </table>
@@ -71,7 +73,7 @@ if ($DirectorPosition != $director_position) {
             __________________
         </td>
         <td width="25%">
-            <?= $director_full_name ?>
+            <?= CaseHelper::getInitials($director_full_name) ?>
         </td>
     </tr>
     <tr>
