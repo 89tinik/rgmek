@@ -98,7 +98,7 @@ class DraftContractChange extends BaseDraft
                 }
             }
         }
-        $fileName = date('d.m.Y H:i') . '_Заявление.pdf';
+        $fileName = date('d.m.Y H:i') . '_Соглашение.pdf';
         $this->generatePdf($fileName);
         $filePath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $newPath = $uploadDirectory . '/' . basename($filePath);
@@ -108,7 +108,7 @@ class DraftContractChange extends BaseDraft
         return json_encode($paths);
     }
 
-    public function generatePdf($fileName = 'Обращение.pdf')
+    public function generatePdf($fileName = 'Соглашение.pdf')
     {
         $mpdf = new Mpdf([
             'tempDir' => 'tmp-mpdf',
