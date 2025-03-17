@@ -233,7 +233,18 @@ class DraftContract extends BaseDraft
                     $this->$attribute = ($defaultArr['ContractNumberList']['item']['description']) ?? $defaultArr['ContractNumberList']['item'][$index]['description'];
                     break;
                 case 'temp_data':
-                    $keys = array_flip(['ContractNumberList', 'ContractTypeList', 'BasisList', 'FundingSourceList', 'ContractPriceForecast', 'ContractVolumeForecast', 'PricePerPiece', 'DirectorOrder', 'DirectorPosition']);
+                    $keys = array_flip([
+                        'ContractNumberList',
+                        'ContractTypeList',
+                        'BasisList',
+                        'FundingSourceList',
+                        'ContractPriceForecast',
+                        'ContractVolumeForecast',
+                        'PricePerPiece',
+                        'DirectorOrder',
+                        'DirectorPosition',
+                        'DirectorGender'
+                    ]);
                     $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
                     break;
                 case 'restriction_notify_p':

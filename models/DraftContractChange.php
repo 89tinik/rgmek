@@ -170,7 +170,8 @@ class DraftContractChange extends BaseDraft
                         'DirectorPositionDP',
                         'DirectorOrderRP',
                         'DirectorOrder',
-                        'DirectorPosition'
+                        'DirectorPosition',
+                        'DirectorGender'
                     ]);
                     $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
                     break;

@@ -164,7 +164,10 @@ class DraftTermination extends BaseDraft
                         'DirectorOrderRP',
                         'ProvidedServicesCost',
                         'Penalty',
-                        'DirectorOrder']);
+                        'DirectorOrder',
+                        'DirectorPosition',
+                        'DirectorGender'
+                    ]);
                     $this->$attribute = json_encode(array_intersect_key($defaultArr, $keys));
                     break;
                 default:
