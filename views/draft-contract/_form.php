@@ -358,7 +358,7 @@ use yii\widgets\ActiveForm;
 
     <?= Html::button('Назад', ['class' => 'btn btn-success prev-btn bottom-button hidden']) ?>
     <?= Html::button('Далее', ['class' => 'btn btn-success next-btn bottom-button']) ?>
-    <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button hidden', 'type' => 'submit']) ?>
+    <?= Html::button('Направить заявление', ['class' => 'btn btn-success submit-btn bottom-button hidden', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>
 <?php

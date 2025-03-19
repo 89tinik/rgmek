@@ -206,6 +206,8 @@ class DraftContractChangeController extends BaseController
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/pricechanging/', $xmlString, false, 'POST', true);
 
         if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
+            $messageModel = Messages::findOne(['id' => $messageId]);
+            $messageModel->sendAdminNoticeEmail('Заявление на заключение контракта (договора) энергоснабжения на следующий период');
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
             // $model->delete();

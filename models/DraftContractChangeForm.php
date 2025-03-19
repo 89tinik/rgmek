@@ -91,7 +91,7 @@ class DraftContractChangeForm extends Model
             }
         }
         if ($this->director_order != $tempDataArr['DirectorOrder'] && $emptyFiles) {
-            $this->addError($attribute, 'Прикрепите документ подтверждающий основания');
+            $this->addError($attribute, 'Прикрепите документ, подтверждающий полномочия руководителя');
         }
     }
 

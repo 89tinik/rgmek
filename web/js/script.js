@@ -51,9 +51,9 @@ $(function () {
         var priceAll = parseFormattedNumber(priceAllInput.val()) || 0;
         var priceOff = parseFormattedNumber(priceOffInput.val()) || 0;
 
-        if (priceAll <= 0){
+        if (priceAll < 0){
             priceAllInput.closest('.form-group').addClass('has-error');
-            priceAllInput.siblings('.help-block').text('Значение должно быть больше 0.');
+            priceAllInput.siblings('.help-block').text('Значение не должно быть отрицательным.');
             priceAllInput.data('yiiActiveForm', null);
         } else {
             priceAllInput.closest('.form-group').removeClass('has-error');
