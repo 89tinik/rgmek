@@ -186,6 +186,8 @@ class DraftTerminationController extends BaseController
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/', $xmlString, false, 'POST', true);
 
         if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
+            $messageModel = Messages::findOne(['id' => $messageId]);
+            $messageModel->sendAdminNoticeEmail('Соглашение о расторжении действующего контракта (договора) '.$model->contract_id);
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
             // $model->delete();

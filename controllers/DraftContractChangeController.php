@@ -207,7 +207,7 @@ class DraftContractChangeController extends BaseController
 
         if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
             $messageModel = Messages::findOne(['id' => $messageId]);
-            $messageModel->sendAdminNoticeEmail('Заявление на заключение контракта (договора) энергоснабжения на следующий период');
+            $messageModel->sendAdminNoticeEmail('соглашение об изменении цены действующего контракта (договора) '.$model->contract_id);
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
             // $model->delete();

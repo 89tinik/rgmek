@@ -130,7 +130,7 @@ class DraftContract extends BaseDraft
                 }
             }
         }
-        $fileName = date('d.m.Y H:i') . '_Заявление.pdf';
+        $fileName = date('d.m.Y H:i') . '_Заявление_'.$this->contract_id.'.pdf';
         $this->generatePdf($fileName);
         $filePath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $newPath = $uploadDirectory . '/' . basename($filePath);
