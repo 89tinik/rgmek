@@ -143,6 +143,17 @@ class MessagesController extends Controller
         $model->scenario = Messages::SCENARIO_USER_UPDATE;
         $model->status_id = MessageStatuses::CLOSE;
         if ($model->save()) {
+            $subject = 'Отозванно обращение';
+            if ($model->admin_num) {
+                $subject .= ' №' . $model->admin_num . ' от ' . Yii::$app->formatter->asDate(new \DateTime($model->published), 'php:d.m.Y');
+            } else {
+                $subject .= ' №(не задано)';
+            }
+            $subject .= ' (id ' . $model->id . ')';
+            if ($fileName = $model->sendAdminNoticeEmail($subject)) {
+                unlink($fileName);
+            }
+
             $text = 'Уважаемый клиент! Вы отозвали обращение ' . $model->admin_num . ' от ' .
                 Yii::$app->formatter->asDate(new \DateTime($model->published), 'php:d.m.Y') .
                 '. Благодарим за пользование личным кабинетом!';

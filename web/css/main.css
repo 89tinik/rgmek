@@ -4607,6 +4607,23 @@ a.btn.border.contract-btn{
 .draft-termination .has-error select{
   border-color: red;
 }
+.draft-contract .form-message,
+.draft-contract-change .form-message,
+.draft-termination .form-message
+{
+  background: #ff6767;
+  text-align: left;
+  padding: 20px;
+  color: #fff;
+  font-size: 16px;
+}
+.draft-contract .form-message span,
+.draft-contract-change .form-message span,
+.draft-termination .form-message span
+{
+  font-weight: bold;
+  font-size: 18px;
+}
 
 @media screen and (max-width: 1200px) {
   .messages-index .invoice-table table tr{

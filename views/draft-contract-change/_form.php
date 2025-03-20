@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
                 echo '<div class="success">' . Yii::$app->session->getFlash('success') . '</div>';
             }
             if (Yii::$app->session->hasFlash('error')) {
-                echo '<div class="error">' . Yii::$app->session->getFlash('error') . '</div>';
+                echo '<div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div>';
             }
             ?>
         </div>

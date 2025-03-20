@@ -148,6 +148,7 @@ class DraftContract extends BaseDraft
 
         $html = '';
         $contactHtml = '';
+        $fileHtml = '';
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
                 case 'user_id':
@@ -184,7 +185,8 @@ class DraftContract extends BaseDraft
                     } else {
                         $value = '';
                     }
-                    break;
+                    $fileHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+                    continue 2;
                 case 'contact_name':
                 case 'contact_phone':
                 case 'contact_email':
@@ -196,7 +198,7 @@ class DraftContract extends BaseDraft
         }
 
 
-        $mpdf->WriteHTML($html . $contactHtml);
+        $mpdf->WriteHTML($html . $contactHtml . $fileHtml . '<p align="right">'.date('d.m.Y').'</p>');
 
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
