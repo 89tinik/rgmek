@@ -300,11 +300,11 @@ use yii\widgets\ActiveForm;
         ]) ?>
 
         <?= $form->field($model, 'director_position')->textInput([
-            'class' => 'form-control a-send',
+            'class' => 'form-control a-send file-required',
         ]) ?>
 
         <?= $form->field($model, 'director_order')->textInput([
-            'class' => 'form-control a-send',
+            'class' => 'form-control a-send file-required',
         ]) ?>
         <div id="wrap-uploaded-files">
             <?php

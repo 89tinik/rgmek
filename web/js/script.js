@@ -298,6 +298,8 @@ $(function () {
                     updateDraftFileList();
                     $('#wrap-uploaded-files').html(response);
                     $('.draft-files').val('');
+                    $('.file-required').parent().removeClass('has-error');
+                    $('.file-required').next('.help-block').html('');
                     ajaxPreloaderOff();
                 } else {
                     form.find('.send-a').removeClass('send-a');
