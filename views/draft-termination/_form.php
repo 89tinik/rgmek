@@ -14,16 +14,16 @@ use yii\widgets\ActiveForm;
 
 <div class="draft-contract-form">
 
-    <div class="form-message">
-        <?php
-        if (Yii::$app->session->hasFlash('success')) {
-            echo '<div class="success">' . Yii::$app->session->getFlash('success') . '</div>';
-        }
-        if (Yii::$app->session->hasFlash('error')) {
-            echo '<div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div>';
-        }
-        ?>
-    </div>
+
+    <?php
+    if (Yii::$app->session->hasFlash('success')) {
+        echo '<div class="form-message"><div class="success">' . Yii::$app->session->getFlash('success') . '</div></div>';
+    }
+    if (Yii::$app->session->hasFlash('error')) {
+        echo '<div class="form-message"><div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div></div>';
+    }
+    ?>
+
     <?php $form = ActiveForm::begin([
         'validateOnBlur' => false,
         'validateOnChange' => true,
@@ -100,23 +100,6 @@ use yii\widgets\ActiveForm;
             'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_price), 2, '.', ' ')
         ]) ?>
 
-
-
-        <?= $form->field($model, 'contact_name')->textInput([
-            'class' => 'form-control a-send required min-length',
-            'min' => '3',
-            'maxlength' => true
-        ])->label('Контактное лицо по заявлению*')  ?>
-
-        <?= $form->field($model, 'contact_phone')->textInput([
-            'class' => 'form-control a-send required',
-            'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
-        ])->label('Телефон*')   ?>
-
-        <?= $form->field($model, 'contact_email')->textInput([
-            'class' => 'form-control a-send required email',
-            'maxlength' => true
-        ])->label('E-mail*')  ?>
     </div>
 
     <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>

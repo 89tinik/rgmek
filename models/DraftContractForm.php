@@ -22,7 +22,6 @@ class DraftContractForm extends Model
     public $off_budget_name;
     public $off_budget_value;
     public $budget_value;
-    public $restriction_notify_fn;
     public $restriction_notify_p;
     public $restriction_notify_e;
     public $files;
@@ -51,11 +50,11 @@ class DraftContractForm extends Model
             [['id', 'user_id', 'contract_id', 'contract_volume_plane_include', 'off_budget'], 'integer'],
             [['from_date', 'to_date'], 'safe'],
             [['restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e'], 'email'],
-            [['contact_name', 'restriction_notify_fn', 'responsible_4calculation_contact_fn', 'responsible_4device_contact_fn'], 'match', 'pattern' => '/^[А-ЯЁа-яё\s-]{3,}$/u', 'message' => 'Поле должно содержать только русские буквы, пробелы или дефисы, и быть длиной не менее 3 символов.'],
-            [['restriction_notify_fn', 'restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e',
+            [['contact_name', 'responsible_4calculation_contact_fn', 'responsible_4device_contact_fn'], 'match', 'pattern' => '/^[А-ЯЁа-яё\s-]{3,}$/u', 'message' => 'Поле должно содержать только русские буквы, пробелы или дефисы, и быть длиной не менее 3 символов.'],
+            [['restriction_notify_e', 'contact_email', 'responsible_4device_contact_e', 'responsible_4calculation_contact_e',
                 'contact_name', 'contact_phone', 'responsible_4device_contact_fn', 'responsible_4device_contact_p',
                 'responsible_4calculation_contact_fn', 'responsible_4calculation_contact_p', 'director_full_name',
-                'ikz','director_position', 'director_order', 'restriction_notify_p'
+                'director_position', 'director_order', 'restriction_notify_p'
             ], 'required'],
             [['restriction_notify_p','contact_phone','responsible_4device_contact_p', 'responsible_4calculation_contact_p'], 'match', 'pattern' => '/^8\d{10}$/', 'message' => 'Номер телефона должен быть в формате 81111111111.'],
             [['contract_price', 'off_budget_value', 'budget_value', 'contract_volume_plane'], 'string'],
@@ -82,7 +81,7 @@ class DraftContractForm extends Model
             'from_date' => 'С',
             'to_date' => 'По',
             'basis_purchase' => 'Основание закупки',
-            'ikz' => 'Идентификационный код закупки (ИКЗ)*',
+            'ikz' => 'Идентификационный код закупки (ИКЗ)',
             'contract_price' => 'Цена контракта (договора), руб.',
             'contract_volume_plane' => 'Планируемый объем контракта(договора), кВтч',
             'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
@@ -91,7 +90,6 @@ class DraftContractForm extends Model
             'off_budget_name' => 'Иной источник финансирования',
             'off_budget_value' => 'Денежные средства из иного источника, руб',
             'budget_value' => 'Денежные средства из бюджета, руб',
-            'restriction_notify_fn' => 'Контакты для получения уведомлений о введении ограничения*',
             'restriction_notify_p' => 'Мобильный телефон*',
             'restriction_notify_e' => 'E-mail',
             'files' => 'Файлы',

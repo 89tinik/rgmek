@@ -17,20 +17,17 @@ use yii\helpers\Html;
 
     <div class="buttons">
         <?= Html::a(
-            'Направить заявление на заключение контракта (договора) энергоснабжения на следующий период'.
-            ($draftContract ? '(черновик)' : ''),
+            'Направить заявление на заключение контракта (договора) энергоснабжения на следующий период',
             $draftContract ? ['draft-contract/update', 'id' => $draftContract->id] : ['draft-contract/create'],
             ['class' => 'btn  border contract-btn']
         ) ?>
         <?= Html::a(
-            'Сформировать соглашение об изменении цены действующего контракта (договора)'.
-            ($draftContractChange ? '(черновик)' : ''),
+            'Сформировать соглашение об изменении цены контракта (договора)',
             $draftContractChange ? ['draft-contract-change/update', 'id' => $draftContractChange->id] : ['draft-contract-change/create'],
             ['class' => 'btn  border contract-btn']
         ) ?>
         <?= Html::a(
-            ' Сформировать соглашение о расторжении действующего контракта (договора)'.
-            ($draftTermination ? '(черновик)' : ''),
+            ' Сформировать соглашение о расторжении контракта (договора)',
             $draftTermination ? ['draft-termination/update', 'id' => $draftTermination->id] : ['draft-termination/create'],
             ['class' => 'btn  border contract-btn']
         ) ?>

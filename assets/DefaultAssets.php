@@ -31,7 +31,7 @@ class DefaultAssets extends AssetBundle
         'js/datepicker-ru.js',
         'js/swiper.min.js',
         'js/Cleave.js',
-        'js/script.js?v=20032025',
+        'js/script.js?v=24032025',
     ];
     public $depends = [
         'yii\web\YiiAsset',

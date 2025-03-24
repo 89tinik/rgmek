@@ -58,7 +58,7 @@ class DraftContract extends BaseDraft
             [['from_date', 'to_date', 'send'], 'safe'],
             [['contract_price', 'contract_volume_plane', 'off_budget_value', 'budget_value'], 'number'],
             [['files', 'temp_data'], 'string'],
-            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_fn',
+            [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name',
                 'restriction_notify_p', 'restriction_notify_e', 'contact_name', 'contact_phone', 'contact_email',
                 'responsible_4device_contact_fn', 'responsible_4device_contact_p', 'responsible_4device_contact_e',
                 'responsible_4calculation_contact_fn', 'responsible_4calculation_contact_p', 'responsible_4calculation_contact_e',
@@ -86,7 +86,6 @@ class DraftContract extends BaseDraft
             'off_budget_name' => 'Иной источник финансирования',
             'off_budget_value' => 'Денежные средства из иного источника, руб',
             'budget_value' => 'Денежные средства из бюджета, руб',
-            'restriction_notify_fn' => 'Контакты для получения уведомлений о введении ограничения',
             'restriction_notify_p' => 'Телефон',
             'restriction_notify_e' => 'E-mail',
             'files' => 'Файлы',
@@ -130,7 +129,7 @@ class DraftContract extends BaseDraft
                 }
             }
         }
-        $fileName = date('d.m.Y H:i') . '_Заявление_'.$this->contract_id.'.pdf';
+        $fileName = date('d.m.Y H:i') . '_Заявление_' . $this->contract_id . '.pdf';
         $this->generatePdf($fileName);
         $filePath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $newPath = $uploadDirectory . '/' . basename($filePath);
@@ -185,20 +184,26 @@ class DraftContract extends BaseDraft
                     } else {
                         $value = '';
                     }
-                    $fileHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+                    $fileHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ': </b>' . $value . '</p>';
                     continue 2;
                 case 'contact_name':
                 case 'contact_phone':
                 case 'contact_email':
-                    $contactHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b>' . $value . '</p>';
+                    $contactHtml .= '<p><b>' . $this->getAttributeLabel($attribute) . ': </b>' . $value . '</p>';
                     continue 2;
             }
             if ($off_budget == 1 && in_array($attribute, ['off_budget_value', 'budget_value']) || $attribute == 'contract_volume_plane') continue;
-            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ':</b> ' . $value . '</p>';
+            $html .= '<p><b>' . $this->getAttributeLabel($attribute) . ': </b> ' . $value . '</p>';
         }
 
 
-        $mpdf->WriteHTML($html . $contactHtml . $fileHtml . '<p align="right">'.date('d.m.Y').'</p>');
+        $mpdf->WriteHTML(
+            '<style> p { line-height: 1.2; margin-bottom: 4px; } </style>' .
+            $html .
+            $contactHtml .
+            $fileHtml .
+            '<p align="right">' . date('d.m.Y') . '</p>'
+        );
 
         $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
         $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
@@ -216,7 +221,7 @@ class DraftContract extends BaseDraft
             switch ($attribute) {
                 case 'contract_volume_plane_include':
                 case 'off_budget':
-                    $this->$attribute = ($defaultArr[$ArrayModelAttributesto1C[$attribute]]) ? 1 : 0;
+                    $this->$attribute = ($defaultArr[$ArrayModelAttributesto1C[$attribute]] == 'false') ? 0 : 1;
                     break;
                 case 'contract_type':
                     $index = array_search($defaultArr['ContractType'], array_column($defaultArr['ContractTypeList']['item'], 'id'));
@@ -291,7 +296,6 @@ class DraftContract extends BaseDraft
             'off_budget_name' => 'FundingSourceAnother',
             'off_budget_value' => 'ContractPriceAnother',
             'budget_value' => 'BudgetFunds',
-            'restriction_notify_fn' => ['RestrictionNotifyContact', 'FullName'],
             'restriction_notify_p' => ['RestrictionNotifyContact', 'Phone'],
             'restriction_notify_e' => ['RestrictionNotifyContact', 'Email'],
             'contact_name' => ['ContactPerson4Request', 'FullName'],

@@ -186,7 +186,16 @@ class DraftContractController extends BaseController
 
         if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
             $messageModel = Messages::findOne(['id' => $messageId]);
+
             $messageModel->sendAdminNoticeEmail('Заявление на заключение контракта (договора) '.$model->contract_id);
+
+            $text = 'Ваше обращение успешно получено. Мы зарегистрируем его и сообщим Вам номер.';
+            if (!empty($email = ($messageModel->email) ? $messageModel->email : $messageModel->getUser()->one()->email)) {
+                $messageModel->sendNoticeEmail('Обращение в Р-Энергия', $text, $email);
+            } elseif (!empty($phone = ($messageModel->phone) ? $messageModel->phone : $messageModel->getUser()->one()->phone)) {
+                $messageModel->sendNoticeSms($text, $phone);
+            }
+
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
             // $model->delete();

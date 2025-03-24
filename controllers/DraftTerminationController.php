@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\Contract;
-use app\models\Messages;
 use SimpleXMLElement;
 use Yii;
 use app\models\DraftTermination;
@@ -185,13 +184,11 @@ class DraftTerminationController extends BaseController
 
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/', $xmlString, false, 'POST', true);
 
-        if ($result['success'] && $messageId = Messages::createMessageFromDraft($model, $currentContract->id)) {
-            $messageModel = Messages::findOne(['id' => $messageId]);
-            $messageModel->sendAdminNoticeEmail('Соглашение о расторжении действующего контракта (договора) '.$model->contract_id);
+        if ($result['success'] ) {
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
-            // $model->delete();
-            $this->redirect(['messages/update', 'id' => $messageId]);
+            $fileName = date('d.m.Y H:i') . '_Соглашение_'.$model->contract_id.'.pdf';
+            $model->generatePdf($fileName);
         } else {
             $this->redirect(['update', 'id' => $id]);
         }

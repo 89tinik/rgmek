@@ -6,7 +6,7 @@
 <p><b>Текст обращения:<br></b> <?= $message ?></p>
 <p></p>
 <?php if (!empty($filesUploadNames)) : ?>
-    <p><b>Прикрепленные файлы:</b> <?= $filesUploadNames ?></p>
+    <p><b>Прикрепленные файлы:</b> <?= basename($filesUploadNames) ?></p>
 <?php endif; ?>
 
 <?php if (!empty($contactName)) : ?>

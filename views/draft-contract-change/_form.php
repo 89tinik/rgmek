@@ -13,16 +13,16 @@ use yii\widgets\ActiveForm;
 ?>
 
     <div class="draft-contract-form">
-        <div class="form-message">
-            <?php
-            if (Yii::$app->session->hasFlash('success')) {
-                echo '<div class="success">' . Yii::$app->session->getFlash('success') . '</div>';
-            }
-            if (Yii::$app->session->hasFlash('error')) {
-                echo '<div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div>';
-            }
-            ?>
-        </div>
+
+        <?php
+        if (Yii::$app->session->hasFlash('success')) {
+            echo '<div class="form-message"><div class="success">' . Yii::$app->session->getFlash('success') . '</div></div>';
+        }
+        if (Yii::$app->session->hasFlash('error')) {
+            echo '<div class="form-message"><div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div></div>';
+        }
+        ?>
+
         <?php $form = ActiveForm::begin([
             'validateOnBlur' => false,
             'validateOnChange' => true,
@@ -86,14 +86,16 @@ use yii\widgets\ActiveForm;
                     'contract_price'
                 )->textInput([
                     'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price), 2, '.', ' '),
-                    'class' => 'form-control a-send num-format'
+                    'class' => 'form-control a-send num-format',
+                    'disabled' => 'disabled'
                 ]) ?>
                 <?= $form->field(
                     $model,
                     'contract_volume'
                 )->textInput([
                     'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume), 2, '.', ' '),
-                    'class' => 'form-control a-send num-format'
+                    'class' => 'form-control a-send num-format',
+                    'disabled' => 'disabled'
                 ]) ?>
             </div>
 
@@ -123,21 +125,6 @@ use yii\widgets\ActiveForm;
                 'class' => 'a-send styler',
             ]) ?>
 
-            <?= $form->field($model, 'contact_name')->textInput([
-                'class' => 'form-control a-send ',
-                'min' => '3',
-                'maxlength' => true
-            ])->label('Контактное лицо по заявлению*') ?>
-
-            <?= $form->field($model, 'contact_phone')->textInput([
-                'class' => 'form-control a-send',
-                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 20);",
-            ])->label('Телефон*')   ?>
-
-            <?= $form->field($model, 'contact_email')->textInput([
-                'class' => 'form-control a-send',
-                'maxlength' => true
-            ])->label('E-mail*') ?>
         </div>
 
         <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>

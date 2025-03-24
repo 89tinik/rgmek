@@ -14,16 +14,15 @@ use yii\widgets\ActiveForm;
 
 <div class="draft-contract-form">
 
-    <div class="form-message">
-        <?php
-        if (Yii::$app->session->hasFlash('success')) {
-            echo '<div class="success">' . Yii::$app->session->getFlash('success') . '</div>';
-        }
-        if (Yii::$app->session->hasFlash('error')) {
-            echo '<div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div>';
-        }
-        ?>
-    </div>
+    <?php
+    if (Yii::$app->session->hasFlash('success')) {
+        echo '<div class="form-message"><div class="success">' . Yii::$app->session->getFlash('success') . '</div></div>';
+    }
+    if (Yii::$app->session->hasFlash('error')) {
+        echo '<div class="form-message"><div class="error">' . Yii::$app->session->getFlash('error') . '<br><br><span>После заполнения необходимо повторно отправить заявку</span></div></div>';
+    }
+    ?>
+
     <?php $form = ActiveForm::begin([
         'validateOnBlur' => false,
         'validateOnChange' => true,
@@ -218,13 +217,7 @@ use yii\widgets\ActiveForm;
     <div class="form-tab">
         <h4>Контакты ответственных лиц потребителя будут указаны в разделе 10 договора «Реквизиты сторон».
             Заполнение данных является обязательным.</h4>
-        <?= $form->field($model, 'restriction_notify_fn', ['template' => '{label}{input}{hint}{error}
-<a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">Сведения, которые указаны в действующем договоре (контракте).
-                    Вы можете изменить их.</div>'
-        ])->textInput([
-            'class' => 'form-control a-send',
-        ]) ?>
+
 
         <div class="group two-col ">
 
@@ -241,7 +234,9 @@ use yii\widgets\ActiveForm;
                 'class' => 'form-control a-send',
                 'placeholder' => $model->getAttributeLabel('restriction_notify_e'),
             ])->label(false) ?>
-
+            <a class="btn small border input-tooltip input-tooltip-js">?</a>
+            <div style="display: none">Сведения, которые указаны в действующем договоре (контракте).
+                Вы можете изменить их.</div>
         </div>
         <?= $form->field($model, 'responsible_4device_contact_fn', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>

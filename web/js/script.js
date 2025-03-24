@@ -125,6 +125,16 @@ $(function () {
         const formattedValue = formatNumber($(this).val());
         $(this).val(formattedValue);
     });
+    $('.num-format').on('focus', function () {
+        if ($(this).val() == '0.00'){
+            $(this).val('');
+        }
+    });
+    $('.num-format').on('blur', function () {
+        if ($(this).val() == ''){
+            $(this).val('0.00');
+        }
+    });
 
     // Датапикер
     var dateFormatDraft = "dd.mm.yy",

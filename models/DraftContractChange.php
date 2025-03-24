@@ -15,9 +15,6 @@ use Yii;
  * @property float|null $contract_volume_new
  * @property int|null $contract_volume_plane_include
  * @property string|null $files
- * @property string|null $contact_name
- * @property string|null $contact_phone
- * @property string|null $contact_email
  * @property string|null $send
  *
  * @property User $user
@@ -46,7 +43,7 @@ class DraftContractChange extends BaseDraft
             [['contract_price', 'contract_volume', 'contract_price_new', 'contract_volume_new'], 'number'],
             [['contract_id', 'files', 'temp_data'], 'string'],
             [['send'], 'safe'],
-            [['contact_name', 'contact_phone', 'contact_email', 'director_full_name', 'director_position', 'director_order'], 'string', 'max' => 255],
+            [['director_full_name', 'director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -66,46 +63,12 @@ class DraftContractChange extends BaseDraft
             'contract_volume_new' => 'Новый объем контракта(договора), кВтч',
             'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
             'files' => 'Файлы',
-            'contact_name' => 'Контактное лицо по заявлению',
-            'contact_phone' => 'Телефон',
-            'contact_email' => 'E-mail',
             'send' => 'Отправлено',
             'director_full_name' => 'ФИО руководителя (подписанта)',
             'director_position' => 'Должность руководителя (подписанта)',
             'director_order' => 'Действует на основании',
             'temp_data' => 'Не редактируемые данные'
         ];
-    }
-
-    public function fileToMessage($folderId)
-    {
-        $uploadDirectory = 'uploads/tickets/' . $folderId;
-
-        if (!is_dir($uploadDirectory)) {
-            mkdir($uploadDirectory, 0777, true);
-        }
-
-        $fileArr = json_decode($this->files, true);
-        $paths = [];
-        if (is_array($fileArr)) {
-            foreach ($fileArr as $file) {
-                $path = reset($file);
-                if (!empty($path)) {
-                    $newPath = $uploadDirectory . '/' . basename($path);
-                    if (copy($path, $newPath)) {
-                        $paths[] = $newPath;
-                    }
-                }
-            }
-        }
-        $fileName = date('d.m.Y H:i') . '_Соглашение_'.$this->contract_id.'.pdf';
-        $this->generatePdf($fileName);
-        $filePath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
-        $newPath = $uploadDirectory . '/' . basename($filePath);
-        if (rename($filePath, $newPath)) {
-            $paths[] = $newPath;
-        }
-        return json_encode($paths);
     }
 
     public function generatePdf($fileName = 'Соглашение.pdf')
@@ -115,7 +78,6 @@ class DraftContractChange extends BaseDraft
             'default_font' => 'arial'
         ]);
 
-        //$html = '';
         $pdfData= [];
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
@@ -132,15 +94,12 @@ class DraftContractChange extends BaseDraft
                     continue 2;
             }
             $pdfData[$attribute] = $value;
-
         }
         $html = Yii::$app->view->render('@app/views/draft-contract-change/pdf', $pdfData);
-
-
         $mpdf->WriteHTML($html);
 
-        $pdfPath = Yii::getAlias('@webroot') . '/temp_pdf/' . $fileName;
-        $mpdf->Output($pdfPath, \Mpdf\Output\Destination::FILE);
+        $mpdf->Output($fileName, \Mpdf\Output\Destination::INLINE);
+        exit;
     }
 
 
@@ -155,7 +114,7 @@ class DraftContractChange extends BaseDraft
         foreach ($nullAttributes as $attribute) {
             switch ($attribute) {
                 case 'contract_volume_plane_include':
-                    $this->$attribute = ($defaultArr[$ArrayModelAttributesto1C[$attribute]]) ? 1 : 0;
+                    $this->$attribute = ($defaultArr[$ArrayModelAttributesto1C[$attribute]] == 'false') ? 0 : 1;
                     break;
                 case 'contract_id':
                     $index = array_search($defaultArr['ContractNumber'], array_column($defaultArr['ContractNumberList']['item'], 'id'));
@@ -199,9 +158,6 @@ class DraftContractChange extends BaseDraft
             'contract_price_new' => 'ContractPriceNew',
             'contract_volume_new' => 'ContractVolumeNew',
             'contract_volume_plane_include' => 'IncludeVolumeInContract',
-            'contact_name' => ['ContactPerson4Request', 'FullName'],
-            'contact_phone' => ['ContactPerson4Request', 'Phone'],
-            'contact_email' => ['ContactPerson4Request', 'Email'],
             'director_full_name' => 'DirectorFullName',
             'director_position' => 'DirectorPosition',
             'director_order' => 'DirectorOrder'
