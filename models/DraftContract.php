@@ -198,7 +198,8 @@ class DraftContract extends BaseDraft
 
 
         $mpdf->WriteHTML(
-            '<style> p { line-height: 1.2; margin-bottom: 4px; } </style>' .
+            '<style> p { line-height: 1.15; margin-bottom: 2px; } </style>' .
+            '<h2>Заявление на заключение контракта (договора) энергоснабжения</h2>' .
             $html .
             $contactHtml .
             $fileHtml .

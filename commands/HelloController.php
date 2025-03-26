@@ -9,6 +9,8 @@ namespace app\commands;
 
 use app\models\Contract;
 use app\models\DraftContract;
+use app\models\DraftContractChange;
+use app\models\DraftTermination;
 use app\models\User;
 use pantera\yii2\pay\sberbank\models\Invoice;
 use yii\console\Controller;
@@ -100,6 +102,8 @@ class HelloController extends Controller
     {
         $daysAgo = date('Y-m-d H:i:s', strtotime('-30 days'));
         DraftContract::deleteAll(['<', 'send', $daysAgo]);
+        DraftContractChange::deleteAll(['<', 'send', $daysAgo]);
+        DraftTermination::deleteAll(['<', 'send', $daysAgo]);
     }
 
     public function actionFixInvoiceStatus()
