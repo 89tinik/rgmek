@@ -230,12 +230,21 @@ $(function () {
 
     // Обрабатываем событие валидации поля
     $('.ajax-c-form').on('afterValidateAttribute', function (event, attribute, messages) {
-        if (messages.length === 0 &&
-            !($(attribute.input).hasClass('draft-files')) &&
-            !($(attribute.input).hasClass('send-contract'))) {
+        if (messages.length === 0 && !($(attribute.input).hasClass('draft-files')) && !($(attribute.input).hasClass('send-contract'))) {
             $(attribute.input).addClass('send-a');
             if ($(attribute.input).hasClass('calc-price')) {
                 calcPrice();
+            }
+            if ($(attribute.input).hasClass('calc-price-all')) {
+                let priceperpiece = parseFloat($('.priceperpiece').val().replace(/\s/g, ''));
+                if (priceperpiece != 0){
+                    let allprice = parseFloat($('.calc-price-all').val().replace(/\s/g, ''));
+                    let planValue = allprice/priceperpiece;
+                    $('.calc-plane-volume').val(formatNumber(planValue.toString()));
+                } else {
+                    $('.calc-plane-volume').val(formatNumber('0'));
+                }
+                $('.calc-plane-volume').addClass('send-a');
             }
             if ($(attribute.input).hasClass('off-budget-input')) {
                 if ($(attribute.input).is(':checked')) {

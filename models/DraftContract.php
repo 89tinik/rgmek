@@ -198,7 +198,7 @@ class DraftContract extends BaseDraft
 
 
         $mpdf->WriteHTML(
-            '<style> p { line-height: 1.15; margin-bottom: 2px; } </style>' .
+            '<style> p { line-height: 1.15; margin-bottom: 0px; } </style>' .
             '<h2>Заявление на заключение контракта (договора) энергоснабжения</h2>' .
             $html .
             $contactHtml .
@@ -312,6 +312,15 @@ class DraftContract extends BaseDraft
             'director_position' => 'DirectorPosition',
             'director_order' => 'DirectorOrder'
         ];
+    }
+
+    public function calculateContractVolumePlane()
+    {
+        $contractsInfo = json_decode($this->temp_data, true);
+        if ($contractsInfo['PricePerPiece'] != 0){
+            return $this->contract_price / $contractsInfo['PricePerPiece'];
+        }
+        return 0;
     }
 }
 

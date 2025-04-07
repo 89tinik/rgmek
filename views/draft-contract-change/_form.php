@@ -58,11 +58,10 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'director_full_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключен договор.
+<div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключено соглашение.
 Если ФИО не совпадает с указанным, пожалуйста, прикрепите ниже приказ о назначении.</div>'
             ])->textInput([
-                'class' => 'form-control a-send',
-                'disabled' => true
+                'class' => 'form-control a-send'
             ]) ?>
 
             <?= $form->field($model, 'director_order')->textInput(['class' => 'form-control a-send file-required']) ?>
@@ -73,7 +72,9 @@ use yii\widgets\ActiveForm;
                 }
                 ?>
             </div>
-            <?= $form->field($model, 'filesUpload[]')->fileInput([
+            <?= $form->field($model, 'filesUpload[]', [
+                'template' => '{label}{input}<p>При изменении подписанта договора прикрепите документ- основание</p><div class="clear"></div>{hint}{error}'
+            ])->fileInput([
                 'multiple' => true,
                 'class' => 'input-file draft-files'
             ]); ?>
@@ -126,7 +127,7 @@ use yii\widgets\ActiveForm;
             ]) ?>
 
         </div>
-
+<p>Направьте соглашение в ООО «Р-Энергия» для подписания в системе электронного документооборота</p>
         <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
 
         <?php ActiveForm::end(); ?>

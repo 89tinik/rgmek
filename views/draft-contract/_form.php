@@ -130,15 +130,13 @@ use yii\widgets\ActiveForm;
                 $model,
                 'pricePerPiece'
             )->textInput([
-                'class' => 'form-control a-send num-format',
-                'value' => number_format($contractsInfo['PricePerPiece'], 2, '.', ' '),
+                'class' => 'form-control a-send num-format priceperpiece',
+                'value' => number_format(5, 2, '.', ' '),
                 'disabled' => true
             ]) ?>
             <a class="btn small border input-tooltip input-tooltip-js">?</a>
-            <div style="display: none">Данные рассчитаны за выбранный Вами период действия договора, исходя из
-                статистики за предыдущий период (фактического потребления и среднемесячной нерегулируемой цены) с
-                учетом
-                прогнозного изменения цены
+            <div style="display: none">Данные на год, рассчитаны исходя из фактического потребления и среднемесячной
+                нерегулируемой цены с учетом прогнозного изменения цены
             </div>
         </div>
 
@@ -157,7 +155,8 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Объем рассчитан исходя из введенной Вами цены контракта и цены за 1 кВтч. Отметьте «Включать
  планируемый объем», если хотите, чтобы этот параметр был указан в разделе 4 договора</div>'
             ])->textInput([
-                'class' => 'form-control a-send num-format',
+                'class' => 'form-control a-send num-format calc-plane-volume',
+                'readonly' => true,
                 'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_plane), 2, '.', ' ')
             ]) ?>
         </div>
@@ -174,7 +173,7 @@ use yii\widgets\ActiveForm;
             ],
             'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">Источник финансирования будет отражен в разделе 4 договора</div>'
+<div style="display: none">Информация будет будет указана в разделе 4 договора</div>'
         ])->dropDownList($fundingSourceData[0], [
             'prompt' => '',
             'options' => array_map(function ($v) {
@@ -190,12 +189,12 @@ use yii\widgets\ActiveForm;
         <div class="off-budget-section" style="display: <?= ($model->off_budget) ? 'block' : 'none' ?>">
             <?= $form->field($model, 'off_budget_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">Информация будет отражена в  разделе 4.1 договора</div>'
+<div style="display: none">Информация будет будет указана в разделе 4 договора</div>'
             ])->textInput(['class' => 'form-control a-send', 'maxlength' => true]) ?>
 
             <?= $form->field($model, 'off_budget_value', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">Информация будет отражена в  разделе 4.1 договора</div>'
+<div style="display: none">Информация будет будет указана в разделе 4 договора</div>'
             ])->textInput([
                 'class' => 'form-control a-send calc-price calc-price-off num-format',
                 'maxlength' => true,
@@ -313,11 +312,14 @@ use yii\widgets\ActiveForm;
             }
             ?>
         </div>
-        <?= $form->field($model, 'filesUpload[]')->fileInput([
-            'multiple' => true,
-            'class' => 'input-file draft-files'
-        ]); ?>
 
+        <?= $form->field($model, 'filesUpload[]', [
+                'template' => '{label}{input}<p>При изменении подписанта договора прикрепите документ- основание</p><div class="clear"></div>{hint}{error}'
+        ])->fileInput([
+            'multiple' => true,
+            'class' => 'input-file draft-files',
+
+        ]); ?>
 
         <?= $form->field($model, 'contact_name')->textInput([
             'class' => 'form-control a-send ',

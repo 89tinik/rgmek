@@ -75,7 +75,9 @@ use yii\widgets\ActiveForm;
             }
             ?>
         </div>
-        <?= $form->field($model, 'filesUpload[]')->fileInput([
+        <?= $form->field($model, 'filesUpload[]', [
+                'template' => '{label}{input}<p>При изменении подписанта договора прикрепите документ- основание</p><div class="clear"></div>{hint}{error}'
+            ])->fileInput([
             'multiple' => true,
             'class' => 'input-file draft-files'
         ]); ?>
@@ -101,7 +103,7 @@ use yii\widgets\ActiveForm;
         ]) ?>
 
     </div>
-
+<p>Уважаемый клиент! Расторжение контракта (договора) возможно при условии полной оплаты стоимости потребленной электроэнергии. Направьте соглашение в ООО «Р-Энергия» для подписания в системе электронного документооборота</p>
     <?= Html::button('Сформировать соглашение', ['class' => 'btn btn-success submit-btn bottom-button', 'type' => 'submit']) ?>
 
     <?php ActiveForm::end(); ?>

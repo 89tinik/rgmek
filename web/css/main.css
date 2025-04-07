@@ -4587,6 +4587,7 @@ a.btn.border.contract-btn{
 .draft-files {
   color: transparent;
   overflow: hidden;
+  float: left;
 }
 
 .draft-files::-webkit-file-upload-button {
@@ -4623,6 +4624,11 @@ a.btn.border.contract-btn{
 {
   font-weight: bold;
   font-size: 18px;
+}
+a.btn.border.input-tooltip {
+  color: #313795 !important;
+  background: none;
+  border: 1px solid #313795;
 }
 
 @media screen and (max-width: 1200px) {
