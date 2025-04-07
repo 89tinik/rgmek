@@ -162,7 +162,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             $password = 'e599316079';
             $data = [
                 'msisdn' => $phone,
-                'shortcode' => 'rgmek',
+                'shortcode' => 'R-energiya',
                 'text' => $vCode
             ];
 

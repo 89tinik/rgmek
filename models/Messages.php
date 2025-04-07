@@ -194,7 +194,7 @@ class Messages extends \yii\db\ActiveRecord
         $password = 'e599316079';
         $data = [
             'msisdn' => $phone,
-            'shortcode' => 'rgmek',
+            'shortcode' => 'R-energiya',
             'text' => $text
         ];
 
