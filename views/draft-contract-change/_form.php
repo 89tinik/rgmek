@@ -58,8 +58,7 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'director_full_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключено соглашение.
-Если ФИО не совпадает с указанным, пожалуйста, прикрепите ниже приказ о назначении.</div>'
+<div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключено соглашение.</div>'
             ])->textInput([
                 'class' => 'form-control a-send'
             ]) ?>

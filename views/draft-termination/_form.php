@@ -61,8 +61,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'director_full_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключен договор.
-Если ФИО не совпадает с указанным, пожалуйста, прикрепите ниже приказ о назначении.</div>'
+<div style="display: none">ФИО руководителя или уполномоченного сотрудника, в лице которого будет заключен договор.</div>'
         ])->textInput([
             'class' => 'form-control a-send']) ?>
 
@@ -90,6 +89,7 @@ use yii\widgets\ActiveForm;
             'contract_price'
         )->textInput([
             'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price), 2, '.', ' '),
+            'readonly' => true,
             'class' => 'form-control a-send num-format'
         ]) ?>
 
@@ -99,6 +99,7 @@ use yii\widgets\ActiveForm;
 <div style="display: none">Стоимость потребленной электроэнергии по договору</div>'
         ])->textInput([
             'class' => 'form-control a-send num-format',
+            'readonly' => true,
             'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_price), 2, '.', ' ')
         ]) ?>
 

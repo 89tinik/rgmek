@@ -119,6 +119,7 @@ class DraftTermination extends BaseDraft
                 case 'temp_data':
                     $keys = array_flip([
                         'ContractNumberList',
+                        'DirectorFullName',
                         'DirectorFullNameRP',
                         'DirectorFullNameDP',
                         'DirectorPositionRP',

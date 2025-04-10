@@ -7,6 +7,9 @@ if ($DirectorOrder != $director_order) {
 if ($DirectorPosition != $director_position) {
     $DirectorPositionRP = CaseHelper::getCase($director_position, 1);
 }
+if ($DirectorFullName != $director_full_name) {
+    $DirectorFullNameRP = $director_full_name;
+}
 ?>
 <h2 align="center">Дополнительное соглашение</h2>
 <h3 align="center">о внесении изменений в Договор энергоснабжения №<?= $contract_id ?></h3>

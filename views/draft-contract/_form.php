@@ -92,7 +92,7 @@ use yii\widgets\ActiveForm;
             ],
             'template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
-<div style="display: none">Основание закупки будет указано в преамбуле договора. Выберите нужное или заполните, или
+<div style="display: none">Основание закупки будет указано в преамбуле договора. Выберите нужное или
  оставьте строку не заполненной.</div>'
         ])->dropDownList($basisPurchaseData[0], [
             'prompt' => '',
@@ -131,7 +131,7 @@ use yii\widgets\ActiveForm;
                 'pricePerPiece'
             )->textInput([
                 'class' => 'form-control a-send num-format priceperpiece',
-                'value' => number_format(5, 2, '.', ' '),
+                'value' => number_format($contractsInfo['PricePerPiece'], 2, '.', ' '),
                 'disabled' => true
             ]) ?>
             <a class="btn small border input-tooltip input-tooltip-js">?</a>

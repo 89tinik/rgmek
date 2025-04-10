@@ -7,6 +7,9 @@ if ($DirectorOrder != $director_order) {
 if ($DirectorPosition != $director_position) {
     $DirectorPositionRP = CaseHelper::getCase($director_position, 1);
 }
+if ($DirectorFullName != $director_full_name) {
+    $DirectorFullNameRP = $director_full_name;
+}
 ?>
 <h2 align="center">Соглашение о расторжении</h2>
 <h3 align="center">Договора энергоснабжения №<?= $contract_id ?></h3>
