@@ -9,7 +9,6 @@ use app\models\DraftContractChange;
 use app\models\DraftContractChangeForm;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 /**
  * DraftContractChangeController implements the CRUD actions for DraftContractChange model.
@@ -88,14 +87,8 @@ class DraftContractChangeController extends BaseController
 
         $modelForm->attributes = $model->attributes;
         if ($modelForm->load(Yii::$app->request->post())) {
-            $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
-            if ($modelForm->filesUpload) {
-                $fileChange = true;
-                $postAttributes = ['filesUpload'];
-            } else {
-                $fileChange = false;
-                $postAttributes = array_keys(Yii::$app->request->post($modelForm->formName(), []));
-            }
+
+            $postAttributes = array_keys(Yii::$app->request->post($modelForm->formName(), []));
             if ($modelForm->validate($postAttributes)) {
                 if (!Yii::$app->request->isAjax) {
                     return $this->redirect(['send-draft', 'id' => $model->id]);
@@ -105,32 +98,13 @@ class DraftContractChangeController extends BaseController
                 $model->contract_volume = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume);
                 $model->contract_price_new = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price_new);
                 $model->contract_volume_new = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_new);
-                if ($fileChange) {
-                    $folderId = $model->id;
-                    $uploadDirectory = DraftContractChange::UPLOAD_FILES_FOLDER_PATH . $folderId;
 
-                    if (!is_dir($uploadDirectory)) {
-                        mkdir($uploadDirectory, 0775, true);
-                    }
-
-                    $oldFilesArr = json_decode($model->files, true) ?? [];
-                    $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
-
-                    if ($oldFilesArr) {
-                        $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
-                    }
-                    if ($allFilesArr !== false) {
-                        $model->files = json_encode($allFilesArr);
-                    }
-                }
 
                 if ($model->save()) {
                     if (Yii::$app->request->isAjax) {
-                        if ($fileChange) {
-                            return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
-                        } else {
-                            return 'Обновлено';
-                        }
+
+                        return 'Обновлено';
+
                     }
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
@@ -207,7 +181,7 @@ class DraftContractChangeController extends BaseController
         if ($result['success']) {
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
-            $fileName = date('d.m.Y H:i') . '_Соглашение_'.$model->contract_id.'.pdf';
+            $fileName = date('d.m.Y H:i') . '_Соглашение_' . $model->contract_id . '.pdf';
             $model->generatePdf($fileName);
         } else {
             $this->redirect(['update', 'id' => $id]);

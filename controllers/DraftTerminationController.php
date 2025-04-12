@@ -9,7 +9,6 @@ use app\models\DraftTermination;
 use app\models\DraftTerminationForm;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 /**
  * DraftTerminationController implements the CRUD actions for DraftTermination model.
@@ -24,7 +23,7 @@ class DraftTerminationController extends BaseController
      * @param string $contract
      * @return mixed
      */
-    public function actionCreate($contract='')
+    public function actionCreate($contract = '')
     {
         if ($draftContract = DraftTermination::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $contract])) {
             return $this->redirect(['update', 'id' => $draftContract->id]);
@@ -70,14 +69,9 @@ class DraftTerminationController extends BaseController
         $modelForm = new DraftTerminationForm();
         $modelForm->attributes = $model->attributes;
         if ($modelForm->load(Yii::$app->request->post())) {
-            $modelForm->filesUpload = UploadedFile::getInstances($modelForm, 'filesUpload');
-            if ($modelForm->filesUpload) {
-                $fileChange = true;
-                $postAttributes = ['filesUpload'];
-            } else {
-                $fileChange = false;
-                $postAttributes = array_keys(Yii::$app->request->post($modelForm->formName(), []));
-            }
+
+            $postAttributes = array_keys(Yii::$app->request->post($modelForm->formName(), []));
+
             if ($modelForm->validate($postAttributes)) {
                 if (!Yii::$app->request->isAjax) {
                     return $this->redirect(['send-draft', 'id' => $model->id]);
@@ -85,32 +79,13 @@ class DraftTerminationController extends BaseController
                 $model->attributes = $modelForm->attributes;
                 $model->contract_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_price);
                 $model->contract_volume_price = preg_replace('/[\s\xC2\xA0]+/u', '', $model->contract_volume_price);
-                if ($fileChange) {
-                    $folderId = $model->id;
-                    $uploadDirectory = DraftTermination::UPLOAD_FILES_FOLDER_PATH . $folderId;
 
-                    if (!is_dir($uploadDirectory)) {
-                        mkdir($uploadDirectory, 0775, true);
-                    }
-
-                    $oldFilesArr = json_decode($model->files, true) ?? [];
-                    $allFilesArr = $modelForm->uploadFiles($folderId, count($oldFilesArr));
-
-                    if ($oldFilesArr) {
-                        $allFilesArr = array_merge($oldFilesArr, $allFilesArr);
-                    }
-                    if ($allFilesArr !== false) {
-                        $model->files = json_encode($allFilesArr);
-                    }
-                }
 
                 if ($model->save()) {
                     if (Yii::$app->request->isAjax) {
-                        if ($fileChange) {
-                            return $this->renderPartial('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
-                        } else {
-                            return 'Обновлено';
-                        }
+
+                        return 'Обновлено';
+
                     }
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
@@ -158,7 +133,7 @@ class DraftTerminationController extends BaseController
         $arrayModelAttributesto1C = $model->getArrayModelAttributesto1C();
         $data = ['id' => \Yii::$app->user->identity->id_db];
 
-        $currentContract = Contract::findOne(['full_name' => '№ '.$model->contract_id]);
+        $currentContract = Contract::findOne(['full_name' => '№ ' . $model->contract_id]);
         $data['contract'] = $currentContract->uid;
 
         $contractsInfo = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/draft', $data);
@@ -184,10 +159,10 @@ class DraftTerminationController extends BaseController
 
         $result = $this->sendToServer('http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts/termination/', $xmlString, false, 'POST', true);
 
-        if ($result['success'] ) {
+        if ($result['success']) {
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
-            $fileName = date('d.m.Y H:i') . '_Соглашение_'.$model->contract_id.'.pdf';
+            $fileName = date('d.m.Y H:i') . '_Соглашение_' . $model->contract_id . '.pdf';
             $model->generatePdf($fileName);
         } else {
             $this->redirect(['update', 'id' => $id]);

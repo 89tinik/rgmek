@@ -14,14 +14,12 @@ use Yii;
  * @property float|null $contract_price_new
  * @property float|null $contract_volume_new
  * @property int|null $contract_volume_plane_include
- * @property string|null $files
  * @property string|null $send
  *
  * @property User $user
  */
 class DraftContractChange extends BaseDraft
 {
-    const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-contracts-change/';
     const MESSAGE_THEME = 7;
     const MESSAGE_TEXT = 'Направлено заявление на изменение цены контракта (договора) энергоснабжения';
     /**
@@ -41,7 +39,7 @@ class DraftContractChange extends BaseDraft
             [['user_id'], 'required'],
             [['user_id', 'contract_volume_plane_include', 'last'], 'integer'],
             [['contract_price', 'contract_volume', 'contract_price_new', 'contract_volume_new'], 'number'],
-            [['contract_id', 'files', 'temp_data'], 'string'],
+            [['contract_id', 'temp_data'], 'string'],
             [['send'], 'safe'],
             [['director_full_name', 'director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -62,7 +60,6 @@ class DraftContractChange extends BaseDraft
             'contract_price_new' => 'Новая цена контракта (договора), руб.',
             'contract_volume_new' => 'Новый объем контракта(договора), кВтч',
             'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
-            'files' => 'Файлы',
             'send' => 'Отправлено',
             'director_full_name' => 'ФИО руководителя (подписанта)',
             'director_position' => 'Должность руководителя (подписанта)',

@@ -13,14 +13,12 @@ use Yii;
  * @property string|null $contract_id
  * @property float|null $contract_price
  * @property float|null $contract_volume_price
- * @property string|null $files
  * @property string|null $send
  *
  * @property User $user
  */
 class DraftTermination extends BaseDraft
 {
-    const UPLOAD_FILES_FOLDER_PATH = 'uploads/draft-termination/';
     const MESSAGE_THEME = 8;
     const MESSAGE_TEXT = 'Направлено заявление на расторжение действующего контракта (договора) энергоснабжения';
 
@@ -41,7 +39,7 @@ class DraftTermination extends BaseDraft
             [['user_id'], 'required'],
             [['user_id', 'last'], 'integer'],
             [['contract_price', 'contract_volume_price'], 'number'],
-            [['files', 'temp_data'], 'string'],
+            [['temp_data'], 'string'],
             [['send'], 'safe'],
             [['contract_id', 'director_full_name', 'director_position', 'director_order'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -59,7 +57,6 @@ class DraftTermination extends BaseDraft
             'contract_id' => 'Контракт (договор)',
             'contract_price' => 'Цена контракта (договора), руб.',
             'contract_volume_price' => 'Стоимость электроэнергии, поставленной по контракту (договору), руб',
-            'files' => 'Файлы',
             'send' => 'Отправлено',
             'director_full_name' => 'ФИО руководителя (подписанта)',
             'director_position' => 'Должность руководителя (подписанта)',

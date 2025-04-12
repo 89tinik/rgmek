@@ -16,9 +16,6 @@ class DraftContractChangeForm extends Model
     public $contract_volume_new;
     public $contract_volume_plane_include;
 
-    public $files;
-    public $filesUpload;
-
     public $director_full_name;
     public $director_position;
     public $director_order;
@@ -27,13 +24,10 @@ class DraftContractChangeForm extends Model
     {
         return [
             [['id', 'user_id', 'contract_volume_plane_include'], 'integer'],
-            [['files', 'contract_price', 'contract_volume', 'contract_price_new', 'contract_id', 'contract_volume_new'], 'string'],
+            [['contract_price', 'contract_volume', 'contract_price_new', 'contract_id', 'contract_volume_new'], 'string'],
             [['user_id', 'director_full_name','director_position', 'director_order'], 'required'],
             [['director_full_name','director_position', 'director_order'], 'string', 'max' => 255],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['filesUpload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf, doc, docx', 'maxFiles' => 10],
-            [['director_order'], 'checkDirectorOrder'],
-            [['director_position'], 'checkDirectorPosition'],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']]
         ];
     }
 
@@ -52,84 +46,10 @@ class DraftContractChangeForm extends Model
             'contract_price_new' => 'Новая цена контракта (договора), руб.',
             'contract_volume_new' => 'Новый объем контракта(договора), кВтч',
             'contract_volume_plane_include' => 'Включать планируемый объем в контракт',
-            'files' => 'Файлы',
-            'filesUpload' => '',
             'director_full_name' => 'ФИО руководителя (подписанта)*',
             'director_position' => 'Должность руководителя (подписанта)*',
             'director_order' => 'Действует на основании*',
         ];
-    }
-
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function checkDirectorOrder($attribute, $params)
-    {
-        $draft = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $this->contract_id]);
-        $tempDataArr = json_decode($draft->temp_data, true);
-        $filesArr = json_decode($draft->files, true);
-        $emptyFiles = true;
-        if (is_array($filesArr)){
-            foreach ($filesArr as $fileArr) {
-                $currFile = array_shift($fileArr);
-                if(!empty($currFile)) {
-                    $emptyFiles = false;
-                    continue;
-                }
-            }
-        }
-        if ($this->director_order != $tempDataArr['DirectorOrder'] && $emptyFiles) {
-            $this->addError($attribute, 'Прикрепите документ, подтверждающий полномочия руководителя');
-        }
-    }
-
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function checkDirectorPosition($attribute, $params)
-    {
-        $draft = DraftContractChange::findOne(['user_id' => \Yii::$app->user->id, 'contract_id' => $this->contract_id]);
-        $tempDataArr = json_decode($draft->temp_data, true);
-        $filesArr = json_decode($draft->files, true);
-        $emptyFiles = true;
-        if (is_array($filesArr)){
-            foreach ($filesArr as $fileArr) {
-                $currFile = array_shift($fileArr);
-                if(!empty($currFile)) {
-                    $emptyFiles = false;
-                    continue;
-                }
-            }
-        }
-        if ($this->director_position != $tempDataArr['DirectorPosition'] && $emptyFiles) {
-            $this->addError($attribute, 'Прикрепите документ подтверждающий изменение должности');
-        }
-    }
-
-
-    public function uploadFiles($id, $idx)
-    {
-        $paths = [];
-        foreach ($this->filesUpload as $file) {
-            $idx++;
-            $filename = str_replace(' ', '-', $file->baseName) . '.' . $file->extension;
-            $filePath = DraftContractChange::UPLOAD_FILES_FOLDER_PATH . $id . '/' . $filename;
-            if (is_file($filePath)) {
-                $filePath = DraftContractChange::UPLOAD_FILES_FOLDER_PATH . $id . '/(' . time() . ')' . $filename;
-            }
-            if ($file->saveAs($filePath)) {
-                $paths[] = ['idx' . $idx => $filePath];
-            }
-        }
-        return $paths;
     }
 
 }

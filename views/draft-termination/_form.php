@@ -57,7 +57,7 @@ use yii\widgets\ActiveForm;
 
 
         <?= $form->field($model, 'director_position')->textInput([
-            'class' => 'form-control a-send file-required']) ?>
+            'class' => 'form-control a-send']) ?>
 
         <?= $form->field($model, 'director_full_name', ['template' => '{label}{input}{hint}{error}
 <a class="btn small border input-tooltip input-tooltip-js">?</a>
@@ -66,23 +66,7 @@ use yii\widgets\ActiveForm;
             'class' => 'form-control a-send']) ?>
 
         <?= $form->field($model, 'director_order')->textInput([
-            'class' => 'form-control a-send file-required']) ?>
-        <div id="wrap-uploaded-files">
-            <?php
-            if (!empty($model->files)) {
-                echo $this->render('_uploaded-files', ['files' => $model->files, 'draft' => $model->id]);
-            }
-            ?>
-        </div>
-        <?= $form->field($model, 'filesUpload[]', [
-                'template' => '{label}{input}<p>При изменении подписанта договора прикрепите документ- основание</p><div class="clear"></div>{hint}{error}'
-            ])->fileInput([
-            'multiple' => true,
-            'class' => 'input-file draft-files'
-        ]); ?>
-
-
-
+            'class' => 'form-control a-send']) ?>
 
         <?= $form->field(
             $model,
