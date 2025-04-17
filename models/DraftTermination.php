@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Mpdf\Mpdf;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
 use Yii;
 
 /**
@@ -96,6 +98,54 @@ class DraftTermination extends BaseDraft
         $mpdf->WriteHTML($html);
 
         $mpdf->Output($fileName, \Mpdf\Output\Destination::INLINE);
+        exit;
+    }
+
+    public function generateWord($fileName = 'Соглашение.pdf')
+    {
+        $phpWord = new PhpWord();
+
+        $section = $phpWord->addSection([
+            'marginTop'    => 350,
+            'marginBottom' => 350,
+            'marginLeft'   => 400,
+            'marginRight'  => 800,
+        ]);
+        $wordData = [];
+        foreach ($this->attributes as $attribute => $value) {
+            switch ($attribute) {
+                case 'user_id':
+                    $value = User::findOne($value)->full_name;
+                    break;
+                case 'send':
+                    continue 2;
+                case 'contract_volume_price':
+                    $wordData['price_in_word'] = self::num2str($value);
+                    break;
+                case 'temp_data':
+                    $wordData = array_merge($wordData, json_decode($value, true));
+                    $wordData['penalty_word'] = self::num2str($wordData['Penalty']);
+                    $wordData['provided_services_cost_word'] = self::num2str($wordData['ProvidedServicesCost']);
+                    continue 2;
+            }
+            $wordData[$attribute] = $value;
+        }
+        $content = \Yii::$app->controller->renderPartial('@app/views/draft-termination/_word', $wordData);
+
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $content);
+
+        $filename = 'DraftContractChange_' . $this->id . '.docx';
+
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save("php://output");
+
         exit;
     }
 

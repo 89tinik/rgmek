@@ -182,7 +182,7 @@ class DraftContractChangeController extends BaseController
             $model->send = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $model->save();
             $fileName = date('d.m.Y H:i') . '_Соглашение_' . $model->contract_id . '.pdf';
-            $model->generatePdf($fileName);
+            $model->generateWord($fileName);
         } else {
             $this->redirect(['update', 'id' => $id]);
         }

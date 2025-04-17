@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Mpdf\Mpdf;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
 use Yii;
 
 /**
@@ -68,14 +70,18 @@ class DraftContractChange extends BaseDraft
         ];
     }
 
-    public function generatePdf($fileName = 'Соглашение.pdf')
-    {
-        $mpdf = new Mpdf([
-            'tempDir' => 'tmp-mpdf',
-            'default_font' => 'arial'
-        ]);
 
-        $pdfData= [];
+    public function generateWord()
+    {
+        $phpWord = new PhpWord();
+
+        $section = $phpWord->addSection([
+            'marginTop'    => 350,
+            'marginBottom' => 350,
+            'marginLeft'   => 400,
+            'marginRight'  => 800,
+        ]);
+        $wordData= [];
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
                 case 'user_id':
@@ -84,18 +90,30 @@ class DraftContractChange extends BaseDraft
                 case 'send':
                     continue 2;
                 case 'contract_price_new':
-                    $pdfData['price_in_word'] = self::num2str($value);
+                    $wordData['price_in_word'] = self::num2str($value);
                     break;
                 case 'temp_data':
-                    $pdfData = array_merge($pdfData, json_decode($value, true));
+                    $wordData = array_merge($wordData, json_decode($value, true));
                     continue 2;
             }
-            $pdfData[$attribute] = $value;
+            $wordData[$attribute] = $value;
         }
-        $html = Yii::$app->view->render('@app/views/draft-contract-change/pdf', $pdfData);
-        $mpdf->WriteHTML($html);
+        $content = \Yii::$app->controller->renderPartial('@app/views/draft-contract-change/_word', $wordData);
 
-        $mpdf->Output($fileName, \Mpdf\Output\Destination::INLINE);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $content);
+
+        $filename = 'DraftContractChange_' . $this->id . '.docx';
+
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save("php://output");
+
         exit;
     }
 
