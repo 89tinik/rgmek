@@ -37,9 +37,9 @@ class AjaxController extends Controller
                     ->setData(['id' => $user->id_db])
                     ->send();
                 $log_p = print_r($response, 1);
-                \Yii::error('ответ с проводки в 1с:'.$log_p);
+               // \Yii::error('ответ с проводки в 1с:'.$log_p);
             }
-            return $this->redirect(['/sberbank/default/complete', 'orderId'=>$currentInvoice->orderId,'lang'=>'ru']);
+            return $this->redirect(['/sberbank/default/complete', 'orderId'=>$currentInvoice->mdOrder,'lang'=>'ru']);
         }
         ///sberbank/default/complete?orderId=f7579a2b-fd8a-784c-813e-e5cd02aef919&lang=ru
        // return $this->redirect(['/admin/baner', ['er'=>'gf']]);
