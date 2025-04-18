@@ -82,8 +82,11 @@ if($_GET['nCss'] == 7){
                         <!--                                <li><a href="#">Ранее поданные заявки</a></li>-->
                         <!--                            </ul>-->
                         <!--                        </li>-->
-                        <li class="children"><a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение
-                                договора</a></li>
+                        <li class="">
+                            <?=(Yii::$app->getUser()->identity->budget == 1 && false) ?
+                                Html::a('Заключение/изменение договора', ['main/create-update-contract'], ['class' => 'ploader']) :
+                                '<a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение договора</a>'?>
+                        </li>
                         <li><?= Html::a('Помощь', ['inner/help'], ['class' => 'ploader']) ?></li>
                         <li><?= Html::a('Диалоги', ['messages/index'], ['class' => 'ploader']) ?><?= NewMessagesWidget::widget() ?></li>
                     </ul>

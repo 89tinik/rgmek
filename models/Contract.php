@@ -85,4 +85,24 @@ class Contract extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public static function isBudget($contract)
+    {
+        $budget = 0;
+        if (!empty($contract['FullName'])) {
+                $budget = self::getHeadCategory($contract['Category']) == 3 ? 1 : 0;
+        } else {
+            foreach ($contract as $contractItem) {
+                if (self::getHeadCategory($contractItem['Category']) == 3){
+                    $budget = 1;
+                }
+            }
+        }
+        return $budget;
+    }
+
+    public static function getHeadCategory($category){
+        $categoryArr = explode('.', $category);
+        return$categoryArr[0];
+    }
 }
