@@ -41,7 +41,7 @@ if ($DirectorFullName != $director_full_name) {
 
 <p style="text-align: justify; font-size: 12pt;">
     «Цена договора на весь срок действия договора составляет <?= number_format(intval($contract_price_new), 2, ',', ' ') ?>
-    (<?= $price_in_word ?>) рублей, в том числе НДС 20%<?php if($contract_volume_plane_include == 1) : ?> за счет ________________________. Планируемый объем потребления электрической энергии (мощности) составляет <?= $contract_volume_plane ?> кВт.ч.<?php endif;?>» … далее по тексту договора.
+    (<?= $price_in_word ?>) рублей, в том числе НДС 20%<?php if($contract_volume_plane_include == 1) : ?> за счет ________________________. Планируемый объем потребления электрической энергии (мощности) составляет <?= $ContractVolumeForecast ?> кВт.ч.<?php endif;?>» … далее по тексту договора.
 </p>
 <br />
 

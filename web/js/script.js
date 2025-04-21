@@ -246,6 +246,17 @@ $(function () {
                 }
                 $('.calc-plane-volume').addClass('send-a');
             }
+            if ($(attribute.input).hasClass('calc-new-price')) {
+                let tarif = parseFloat($('.calc-new-volume').data('tarif'));
+                if (tarif != 0){
+                    let allprice = parseFloat($('.calc-new-price').val().replace(/\s/g, ''));
+                    let planValue = allprice/tarif;
+                    $('.calc-new-volume').val(formatNumber(planValue.toString()));
+                } else {
+                    $('.calc-new-volume').val(formatNumber('0'));
+                }
+                $('.calc-new-volume').addClass('send-a');
+            }
             if ($(attribute.input).hasClass('off-budget-input')) {
                 if ($(attribute.input).is(':checked')) {
                     $('.off-budget-section').slideDown();

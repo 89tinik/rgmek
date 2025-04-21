@@ -94,7 +94,7 @@ use yii\widgets\ActiveForm;
                     'contract_price_new'
                 )->textInput([
                     'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_price_new), 2, '.', ' '),
-                    'class' => 'form-control a-send num-format'
+                    'class' => 'form-control a-send num-format calc-new-price'
                 ]) ?>
 
                 <?= $form->field($model, 'contract_volume_new', ['template' => '{label}{input}{hint}{error}
@@ -103,7 +103,9 @@ use yii\widgets\ActiveForm;
                     Отметьте «Включать планируемый объем», если хотите, чтобы этот параметр был указан в соглашении</div>'
                 ])->textInput([
                     'value' => number_format((float)preg_replace('/[^0-9.]/', '', $model->contract_volume_new), 2, '.', ' '),
-                    'class' => 'form-control a-send num-format'
+                    'class' => 'form-control a-send num-format calc-new-volume',
+                    'readonly' => true,
+                    'data-tarif' => $contractsInfo['PricePerPiece']
                 ]) ?>
             </div>
 
