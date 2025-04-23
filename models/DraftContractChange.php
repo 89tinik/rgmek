@@ -2,9 +2,8 @@
 
 namespace app\models;
 
-use Mpdf\Mpdf;
-use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\IOFactory;
+use app\components\CaseHelper;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
 
 /**
@@ -73,14 +72,6 @@ class DraftContractChange extends BaseDraft
 
     public function generateWord()
     {
-        $phpWord = new PhpWord();
-
-        $section = $phpWord->addSection([
-            'marginTop'    => 350,
-            'marginBottom' => 350,
-            'marginLeft'   => 400,
-            'marginRight'  => 800,
-        ]);
         $wordData= [];
         foreach ($this->attributes as $attribute => $value) {
             switch ($attribute) {
@@ -98,21 +89,45 @@ class DraftContractChange extends BaseDraft
             }
             $wordData[$attribute] = $value;
         }
-        $content = \Yii::$app->controller->renderPartial('@app/views/draft-contract-change/_word', $wordData);
+        if ($wordData['DirectorPosition'] != $wordData['director_position']) {
+            $wordData['DirectorPositionRP'] = CaseHelper::getCase($wordData['director_position'], 1);
+        }
+        if ($wordData['DirectorOrder'] != $wordData['director_order']) {
+            $wordData['DirectorOrderRP'] = CaseHelper::getCase($wordData['director_order'], 1);
+        }
+        if ($wordData['DirectorFullName'] != $wordData['director_full_name']) {
+            $wordData['DirectorFullNameRP'] = $wordData['director_full_name'];
+        }
+        $active = ($wordData['DirectorGender'] == 'Мужской') ? 'действующего' : 'действующей';
+        $doc = ($wordData['contract_volume_plane_include'] == 1) ? 'soglashenie_pl.docx' : 'soglashenie.docx';
+        $template = new TemplateProcessor(Yii::getAlias('@app/views/draft-contract-change/'.$doc));
 
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $content);
+        $template->setValue('contract_number', $wordData['contract_id']);
+        $template->setValue('user_id', $wordData['user_id']);
+        $template->setValue('director_position_rp', $wordData['DirectorPositionRP']);
+        $template->setValue('director_full_name_rp', $wordData['DirectorFullNameRP']);
+        $template->setValue('active', $active);
+        $template->setValue('director_order_rp', $wordData['DirectorOrderRP']);
+        $template->setValue('contract_price_new', number_format(intval($wordData['contract_price_new']), 0, ',', ' '));
+        $template->setValue('price_in_word', $wordData['price_in_word']);
+        $template->setValue('contract_volume_forecast', $wordData['ContractVolumeForecast']);
+        $template->setValue('director_position_capitalize', CaseHelper::ucfirstCyrillic($wordData['director_position']));
+        $template->setValue('director_initials', CaseHelper::getInitials($wordData['director_full_name']));
 
+        $tempFile = tempnam(sys_get_temp_dir(), 'docx_');
+        $template->saveAs($tempFile);
         $filename = 'DraftContractChange_' . $this->id . '.docx';
 
         header("Content-Description: File Transfer");
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header('Content-Transfer-Encoding: binary');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        readfile($tempFile);
 
-        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save("php://output");
+        unlink($tempFile);
 
         exit;
     }

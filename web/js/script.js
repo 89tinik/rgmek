@@ -121,6 +121,14 @@ $(function () {
         }).replace(',', '.');
     }
 
+    function formatNumberInt(value) {
+        const number = parseFloat(value.replace(/\s/g, '').replace(',', '.') || 0); // Убираем пробелы и заменяем ',' на '.'
+        return number.toLocaleString('ru-RU', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).replace(',', '.');
+    }
+
     $('.num-format').on('change', function () {
         const formattedValue = formatNumber($(this).val());
         $(this).val(formattedValue);
@@ -251,9 +259,9 @@ $(function () {
                 if (tarif != 0){
                     let allprice = parseFloat($('.calc-new-price').val().replace(/\s/g, ''));
                     let planValue = allprice/tarif;
-                    $('.calc-new-volume').val(formatNumber(planValue.toString()));
+                    $('.calc-new-volume').val(formatNumberInt(planValue.toString()));
                 } else {
-                    $('.calc-new-volume').val(formatNumber('0'));
+                    $('.calc-new-volume').val(formatNumberInt('0'));
                 }
                 $('.calc-new-volume').addClass('send-a');
             }

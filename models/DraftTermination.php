@@ -2,9 +2,11 @@
 
 namespace app\models;
 
+use app\components\CaseHelper;
 use Mpdf\Mpdf;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
 
 /**
@@ -67,39 +69,6 @@ class DraftTermination extends BaseDraft
         ];
     }
 
-    public function generatePdf($fileName = 'Соглашение.pdf')
-    {
-        $mpdf = new Mpdf([
-            'tempDir' => 'tmp-mpdf',
-            'default_font' => 'arial'
-        ]);
-
-        $pdfData = [];
-        foreach ($this->attributes as $attribute => $value) {
-            switch ($attribute) {
-                case 'user_id':
-                    $value = User::findOne($value)->full_name;
-                    break;
-                case 'send':
-                    continue 2;
-                case 'contract_volume_price':
-                    $pdfData['price_in_word'] = self::num2str($value);
-                    break;
-                case 'temp_data':
-                    $pdfData = array_merge($pdfData, json_decode($value, true));
-                    $pdfData['penalty_word'] = self::num2str($pdfData['Penalty']);
-                    $pdfData['provided_services_cost_word'] = self::num2str($pdfData['ProvidedServicesCost']);
-                    continue 2;
-            }
-            $pdfData[$attribute] = $value;
-        }
-        $html = Yii::$app->view->render('@app/views/draft-termination/pdf', $pdfData);
-
-        $mpdf->WriteHTML($html);
-
-        $mpdf->Output($fileName, \Mpdf\Output\Destination::INLINE);
-        exit;
-    }
 
     public function generateWord($fileName = 'Соглашение.pdf')
     {
@@ -130,21 +99,44 @@ class DraftTermination extends BaseDraft
             }
             $wordData[$attribute] = $value;
         }
-        $content = \Yii::$app->controller->renderPartial('@app/views/draft-termination/_word', $wordData);
+        if ($wordData['DirectorPosition'] != $wordData['director_position']) {
+            $wordData['DirectorPositionRP'] = CaseHelper::getCase($wordData['director_position'], 1);
+        }
+        if ($wordData['DirectorOrder'] != $wordData['director_order']) {
+            $wordData['DirectorOrderRP'] = CaseHelper::getCase($wordData['director_order'], 1);
+        }
+        if ($wordData['DirectorFullName'] != $wordData['director_full_name']) {
+            $wordData['DirectorFullNameRP'] = $wordData['director_full_name'];
+        }
+        $active = ($wordData['DirectorGender'] == 'Мужской') ? 'действующего' : 'действующей';
+        $template = new TemplateProcessor(Yii::getAlias('@app/views/draft-termination/termination.docx'));
 
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $content);
+        $template->setValue('contract_number', $wordData['contract_id']);
+        $template->setValue('user_id', $wordData['user_id']);
+        $template->setValue('director_position_rp', $wordData['DirectorPositionRP']);
+        $template->setValue('director_full_name_rp', $wordData['DirectorFullNameRP']);
+        $template->setValue('active', $active);
+        $template->setValue('director_order_rp', $wordData['DirectorOrderRP']);
+        $template->setValue('provided_services_cost', number_format(intval($wordData['contract_volume_price']), 0, ',', ' '));
+        $template->setValue('provider_services_cost_word', $wordData['price_in_word']);
+        $template->setValue('contract_volume_forecast', $wordData['ContractVolumeForecast']);
+        $template->setValue('director_position_capitalize', CaseHelper::ucfirstCyrillic($wordData['director_position']));
+        $template->setValue('director_initials', CaseHelper::getInitials($wordData['director_full_name']));
 
-        $filename = 'DraftContractChange_' . $this->id . '.docx';
+        $tempFile = tempnam(sys_get_temp_dir(), 'docx_');
+        $template->saveAs($tempFile);
+        $filename = 'DraftContractTermination_' . $this->id . '.docx';
 
         header("Content-Description: File Transfer");
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header('Content-Transfer-Encoding: binary');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        readfile($tempFile);
 
-        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save("php://output");
+        unlink($tempFile);
 
         exit;
     }
