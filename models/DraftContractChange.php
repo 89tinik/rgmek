@@ -98,7 +98,7 @@ class DraftContractChange extends BaseDraft
         if ($wordData['DirectorFullName'] != $wordData['director_full_name']) {
             $wordData['DirectorFullNameRP'] = $wordData['director_full_name'];
         }
-        $active = ($wordData['DirectorGender'] == 'Мужской') ? 'действующего' : 'действующей';
+        $active = ($wordData['DirectorGender'] == 'Мужской') ? ', действующего' : ', действующей';
         $doc = ($wordData['contract_volume_plane_include'] == 1) ? 'soglashenie_pl.docx' : 'soglashenie.docx';
         $template = new TemplateProcessor(Yii::getAlias('@app/views/draft-contract-change/'.$doc));
 
@@ -116,10 +116,9 @@ class DraftContractChange extends BaseDraft
 
         $tempFile = tempnam(sys_get_temp_dir(), 'docx_');
         $template->saveAs($tempFile);
-        $filename = 'DraftContractChange_' . $this->id . '.docx';
 
         header("Content-Description: File Transfer");
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Disposition: attachment; filename="Соглашение об изменении договора энергоснабжения.docx"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');

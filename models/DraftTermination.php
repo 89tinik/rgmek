@@ -108,7 +108,7 @@ class DraftTermination extends BaseDraft
         if ($wordData['DirectorFullName'] != $wordData['director_full_name']) {
             $wordData['DirectorFullNameRP'] = $wordData['director_full_name'];
         }
-        $active = ($wordData['DirectorGender'] == 'Мужской') ? 'действующего' : 'действующей';
+        $active = ($wordData['DirectorGender'] == 'Мужской') ? ', действующего' : ', действующей';
         $template = new TemplateProcessor(Yii::getAlias('@app/views/draft-termination/termination.docx'));
 
         $template->setValue('contract_number', $wordData['contract_id']);
@@ -125,10 +125,9 @@ class DraftTermination extends BaseDraft
 
         $tempFile = tempnam(sys_get_temp_dir(), 'docx_');
         $template->saveAs($tempFile);
-        $filename = 'DraftContractTermination_' . $this->id . '.docx';
 
         header("Content-Description: File Transfer");
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Disposition: attachment; filename="Соглашение о расторжении договора энергоснабжения.docx"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
