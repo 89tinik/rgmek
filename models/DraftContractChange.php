@@ -95,11 +95,12 @@ class DraftContractChange extends BaseDraft
         if ($wordData['DirectorOrder'] != $wordData['director_order']) {
             $wordData['DirectorOrderRP'] = CaseHelper::getCase($wordData['director_order'], 1);
         }
-        $active = ($wordData['DirectorGender'] == 'Мужской') ? ', действующего' : ', действующей';
+        //$active = ($wordData['DirectorGender'] == 'Мужской') ? ', действующего' : ', действующей';
         if ($wordData['DirectorFullName'] != $wordData['director_full_name']) {
             $wordData['DirectorFullNameRP'] = $wordData['director_full_name'];
-            $active = ', действующего(ей)';
+            //$active = ', действующего(ей)';
         }
+        $active = ', действующего';
         $doc = ($wordData['contract_volume_plane_include'] == 1) ? 'soglashenie_pl.docx' : 'soglashenie.docx';
         $template = new TemplateProcessor(Yii::getAlias('@app/views/draft-contract-change/'.$doc));
 
