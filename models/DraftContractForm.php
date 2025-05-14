@@ -56,7 +56,12 @@ class DraftContractForm extends Model
                 'responsible_4calculation_contact_fn', 'responsible_4calculation_contact_p', 'director_full_name',
                 'director_position', 'director_order', 'restriction_notify_p'
             ], 'required'],
-            [['restriction_notify_p','contact_phone','responsible_4device_contact_p', 'responsible_4calculation_contact_p'], 'match', 'pattern' => '/^8\d{10}$/', 'message' => 'Номер телефона должен быть в формате 81111111111.'],
+            [
+                ['restriction_notify_p','contact_phone','responsible_4device_contact_p', 'responsible_4calculation_contact_p'],
+                'match',
+                'pattern' => '/^\d{6,11}$/',
+                'message' => 'Введите от 6 до 11 цифр без пробелов и символов.',
+            ],
             [['contract_price', 'off_budget_value', 'budget_value', 'contract_volume_plane'], 'string'],
             [['files'], 'string'],
             [['contract_type', 'basis_purchase', 'ikz', 'source_funding', 'off_budget_name', 'restriction_notify_p'], 'string', 'max' => 255],
@@ -110,6 +115,18 @@ class DraftContractForm extends Model
             'director_order' => 'Действует на основании*',
             'filesUpload' => '',
         ];
+    }
+
+    /**
+     * @param string $attribute
+     * @return void
+     */
+    public function validatePhoneDigitCount($attribute)
+    {
+        $digits = preg_replace('/\D/', '', $this->$attribute);
+        if (strlen($digits) < 6) {
+            $this->addError($attribute, 'Номер должен содержать минимум 6 цифр.');
+        }
     }
 
     /**
