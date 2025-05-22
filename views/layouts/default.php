@@ -235,7 +235,7 @@ if($_GET['nCss'] == 7){
             <h2>Уважаемый пользователь ЛК! Данный раздел находится в разработке.</h2>
             <p>Информацию по этой теме Вы можете получить:</p>
             <ul>
-                <li>на сайте, в разделе <a href="https://www.rgmek.ru/business-clients/contracts.html" target="_blank">Как
+                <li>на сайте, в разделе <a href="https://r-energiya.ru/business-clients/elektrosnabzhenie/contracts.html" target="_blank">Как
                         заключить/изменить договор</a></li>
                 <li>по телефонам контактного центра +7 (4912) 90-87-90 или 8-800-250-50-78 (звонок бесплатный).</li>
             </ul>

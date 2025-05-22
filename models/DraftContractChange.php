@@ -112,7 +112,7 @@ class DraftContractChange extends BaseDraft
         $template->setValue('director_order_rp', $wordData['DirectorOrderRP']);
         $template->setValue('contract_price_new', number_format(intval($wordData['contract_price_new']), 0, ',', ' '));
         $template->setValue('price_in_word', $wordData['price_in_word']);
-        $template->setValue('contract_volume_forecast', number_format(intval($wordData['contract_volume_new']), 0, ',', ' '));
+        $template->setValue('contract_volume_forecast', number_format(intval($wordData['contract_volume_new']), 0, ',', ' ') . ' кВт.ч.');
         $template->setValue('director_position_capitalize', CaseHelper::ucfirstCyrillic($wordData['director_position']));
         $template->setValue('director_initials', CaseHelper::getInitials($wordData['director_full_name']));
 
