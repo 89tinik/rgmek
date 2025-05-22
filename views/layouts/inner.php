@@ -83,7 +83,7 @@ if($_GET['nCss'] == 7){
                         <!--                            </ul>-->
                         <!--                        </li>-->
                         <li class="">
-                            <?=(Yii::$app->getUser()->identity->budget == 1 && false) ?
+                            <?=(Yii::$app->getUser()->identity->budget == 1) ?
                                 Html::a('Заключение/изменение договора', ['main/create-update-contract'], ['class' => 'ploader']) :
                                 '<a data-fancybox data-src="#hidden-content" href="javascript:;">Заключение/изменение договора</a>'?>
                         </li>
