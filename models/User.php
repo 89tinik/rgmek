@@ -263,6 +263,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             } else {
                 Contract::removeAllUserContract($this->id);
             }
+            if(empty($this->email) && !empty($result['FiscalReceiptEmail'])){
+                $this->email = $result['FiscalReceiptEmail'];
+                $this->save();
+            }
         } else {
             Yii::error('Не удалось связаться БД - повторите попытку позже.');
         }
