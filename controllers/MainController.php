@@ -512,6 +512,61 @@ class MainController extends Controller
         ]);
     }
 
+
+    public function actionNotification()
+    {
+        $notificationsData = $this->sendToServer(
+            'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/events_docs_list',
+//            ['contractuid' => \Yii::$app->request->get('uid')]
+            ['contractuid' => 'b0cbb9df-668b-4f6e-8e29-b6df40ecf8aa']
+        );
+        if (isset($notificationsData['success'])) {
+            return $this->render('notification', [
+                'notifications' => $notificationsData['success']
+            ]);
+        } else {
+            return $notificationsData['error'];
+        }
+    }
+
+    public function actionAccessNotificationFile()
+    {
+        $url = 'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/get_event_doc?print=true&uid='. \Yii::$app->request->get('uidfile');
+        $ch = curl_init($url);
+
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_USERAGENT => 'Mozilla/5.0',
+        ]);
+
+        $response = curl_exec($ch);
+
+        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $body = substr($response, $headerSize);
+
+        curl_close($ch);
+
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->buffer($body);
+
+        $filename = 'file';
+
+        if ($mime === 'application/pdf') {
+            $filename .= '.pdf';
+        }
+
+        return \Yii::$app->response->sendContentAsFile(
+            $body,
+            $filename,
+            [
+                'mimeType' => $mime,
+                'inline' => $mime === 'application/pdf',
+            ]
+        );
+    }
+
     private function sendToServer($url, $data = array(), $toArray = true, $method = 'GET')
     {
         $client = new Client();
