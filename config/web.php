@@ -46,32 +46,37 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => false,
-			//'transport' => [
-			//	'class' => 'Swift_SmtpTransport',
-			//	'host' => 'smtp.yandex.ru',
-			//	'username' => 'prgmek@yandex.ru',
-			//	'password' => 'njdnjayngrzxtpwn',
-			//	'port' => '465',
-			//	'encryption' => 'SSL',
-			//],
-			'transport' => [
-				'class' => 'Swift_SmtpTransport',
-				'host' => 'smtp.send.rgmek.ru',
-				'username' => 'noreply@send.rgmek.ru',
-				'password' => 'r@&hXR$X8G',
-				'port' => '587',
-			],
+            //'transport' => [
+            //	'class' => 'Swift_SmtpTransport',
+            //	'host' => 'smtp.yandex.ru',
+            //	'username' => 'prgmek@yandex.ru',
+            //	'password' => 'njdnjayngrzxtpwn',
+            //	'port' => '465',
+            //	'encryption' => 'SSL',
+            //],
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.send.rgmek.ru',
+                'username' => 'noreply@send.rgmek.ru',
+                'password' => 'r@&hXR$X8G',
+                'port' => '587',
+            ],
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'traceLevel' => 0, // Убираем трассировку вызовов
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-					'maxFileSize'=>5120,
+                    'levels' => ['error', 'warning'], // Исключаем info
+                    'logVars' => [], // Отключаем запись $_SERVER, $_GET, $_POST, $_COOKIE, $_SESSION
+                    'except' => [
+                        'yii\debug\Module::checkAccess' // Исключаем логи из этого метода
                 ],
+                    'maxFileSize' => 15120, // Ограничиваем размер логов
             ],
         ],
+        ],
+        
         'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -99,7 +104,7 @@ $config = [
             'class' => 'pantera\yii2\pay\sberbank\Module',
             'components' => [
                 'sberbank' => [
-                   // 'class' => pantera\yii2\pay\sberbank\components\Sberbank::class,
+                    // 'class' => pantera\yii2\pay\sberbank\components\Sberbank::class,
                     'class' => app\components\Sberbank::class,
 
                     // время жизни инвойса в секундах (по умолчанию 20 минут - см. документацию Сбербанка)
@@ -141,20 +146,20 @@ $config = [
 
             // обработчик, вызываемый по факту НЕуспешной оплаты
             //'failCallback' => function($invoice) {
-                // какая-то ваша логика, например
-                //$order = \your\models\Order::findOne($invoice->order_id);
-                //$client = $order->getClient();
-                //$client->sendEmail('Ошибка при оплате по вашему заказу №' . $order->id);
-                // .. и т.д.
+            // какая-то ваша логика, например
+            //$order = \your\models\Order::findOne($invoice->order_id);
+            //$client = $order->getClient();
+            //$client->sendEmail('Ошибка при оплате по вашему заказу №' . $order->id);
+            // .. и т.д.
             //},
 
             // необязательный callback для генерации uniqid инвойса, необходим
             // в том случае, если по каким-то причинам используемый по умолчанию
             // формат `#invoice_id#-#timestamp#` вам не подходит
             //'idGenerator' => function(Invoice $invoice, int $id) {
-                // $id - это uniqid, сгенерированный по умолчанию
-                // вместо него используем собственный алгоритм, например такой
-                //return '000-AAA-' . $invoice->id;
+            // $id - это uniqid, сгенерированный по умолчанию
+            // вместо него используем собственный алгоритм, например такой
+            //return '000-AAA-' . $invoice->id;
             //},
         ],
         'admin' => [
@@ -166,6 +171,25 @@ $config = [
             'layout' => 'ticket',
         ],
     ],
+    
+    //Иванов
+    'on beforeRequest' => function ($event) {
+        $requestPath = Yii::$app->request->pathInfo;
+    
+        // Обработчик для favicon.ico
+        if ($requestPath === 'favicon.ico') {
+            Yii::$app->response->sendFile(Yii::getAlias('@webroot/favicon.ico'))->send();
+            Yii::$app->end();
+        }
+    
+        // Обработчик для robots.txt
+        if ($requestPath === 'robots.txt') {
+            Yii::$app->response->sendFile(Yii::getAlias('@webroot/robots.txt'))->send();
+            Yii::$app->end();
+        }
+    },
+
+    
     'params' => $params,
 ];
 

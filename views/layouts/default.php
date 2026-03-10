@@ -70,11 +70,14 @@ if($_GET['nCss'] == 7){
                 <div class="top-menu">
                     <ul>
                         <li><?= Html::a('Профиль потребителя', ['main/profile'], ['class' => 'ploader']) ?></li>
-                        <?php if (!empty($piramida = \Yii::$app->controller->piramida)): ?>
-                            <li><a href="http://prmd-lk.rgmek.ru:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Переход в ИСУ</a></li>
-                        <?php else :?>
-                            <li><a href="#" class="empty-pitrammida">Переход в ИСУ</a></li>
-                        <?php endif; ?>
+                        <!--
+                            <?php if (!empty($piramida = \Yii::$app->controller->piramida)): ?>
+                                <li><a href="http://prmd-lk.rgmek.ru:5001/Account/LoginExternal?login=<?= $piramida['name'] ?>&sessionId=<?= $piramida['id'] ?>" target="_blank">Переход в ИСУ</a></li>
+                            <?php else :?>
+                                <li><a href="#" class="empty-pitrammida">Переход в ИСУ</a></li>
+                            <?php endif; ?>
+                        -->
+                         <li style=""><a href="#" id="btnLogin">Переход в ИСУ</a></li>
                         <!-- class="active" -->
                         <!--                        <li class="children">-->
                         <!--                            <a href="#">Заключение/изменение договора</a>-->

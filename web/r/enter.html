@@ -1,0 +1,32 @@
+<meta charset="UTF-8" />
+
+<button id="btnLogin">Войти в кабинет</button>
+
+<script>
+document.getElementById('btnLogin').onclick = async () => {
+  const resp = await fetch('get_token.php', { method: 'POST' });
+  const data = await resp.json();
+  if (!data.ok || !data.token) {
+    alert('Не получили токен');
+    return;
+  }
+
+  const token = data.token;
+
+  try {
+    await fetch('https://lkes.r-energiya.ru/Account/LogOnExternal', {
+      method: 'GET',
+      headers: { Authorization: 'Bearer ' + token },
+      credentials: 'include',
+      redirect: 'manual', // важный момент — не ходим сами за 302
+    });
+  } catch (e) {
+    // тут, скорее всего, будут CORS/redirect ошибки, но они нам не критичны
+    console.warn('Auth fetch failed (ignored):', e);
+  } finally {
+    // в любом случае пробуем зайти в ЛК "по-настоящему"
+    location.href = 'https://lkes.r-energiya.ru/';
+  }
+};
+</script>
+

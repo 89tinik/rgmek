@@ -1,0 +1,40 @@
+<button id="btnLogin">Войти в кабинет</button>
+<pre id="log" style="white-space:pre-wrap"></pre>
+<script>
+async function loginToLK() {
+  const log = document.getElementById('log');
+  try {
+    // 1) берём токен
+    const r = await fetch('./get_token.php', { method: 'POST' });
+    const txt = await r.text();
+    log.textContent = 'get_token.php RAW:\n' + txt;   // покажем сырец
+    let j;
+    try { j = JSON.parse(txt); } catch(e) {
+      alert('Ответ не JSON. См. RAW ниже.');
+      return;
+    }
+
+    if (!j.ok || !j.token) {
+      alert('Не получили токен: ' + (j.error || 'unknown'));
+      return;
+    }
+
+    const token = j.token;
+
+    // 2) логинимся у них (нужен включённый CORS на /Account/LogOnExternal)
+    const resp = await fetch('https://lkes.r-energiya.ru/Account/LogOnExternal', {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + token },
+      credentials: 'include',
+      redirect: 'follow'
+    });
+
+    // 3) уходим в кабинет
+    location.href = 'https://lkes.r-energiya.ru/';
+  } catch (e) {
+    console.error(e);
+    alert('Ошибка входа: ' + e);
+  }
+}
+document.getElementById('btnLogin').addEventListener('click', loginToLK);
+</script>

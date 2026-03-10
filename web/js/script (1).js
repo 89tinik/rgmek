@@ -18,417 +18,6 @@ $(window).on("load", function () {
 
 $(function () {
     var width = $(window).width();
-
-    /*debug response 1C*/
-    $('.show-response').on('click', function(){
-        $('.response-1c').show();
-    });
-    /*ENDdebug response 1C*/
-
-    // Переход в ИСУ
-    $('#btnLogin').on('click', async function (e) {
-        ajaxPreloaderOn();
-        e.preventDefault();
-
-        try {
-            // 1. Получаем токен
-            const resp = await $.ajax({
-                url: '/ajax/get-isu-token',
-                method: 'POST',
-                dataType: 'json'
-            });
-
-            if (!resp.ok || !resp.token) {
-                console.log('Не получили токен');
-                console.log(resp);
-                alert('Пользователь в системе не найден');
-                ajaxPreloaderOff();
-                return;
-            }
-
-            const token = resp.token;
-
-            // 2. Отправляем запрос авторизации
-            try {
-                await fetch('https://lkes.r-energiya.ru/Account/LogOnExternal', {
-                    method: 'GET',
-                    headers: { Authorization: 'Bearer ' + token },
-                    credentials: 'include',
-                    redirect: 'manual'
-                });
-            } catch (e) {
-                console.warn('Auth fetch failed (ignored):', e);
-            } finally {
-                // в любом случае пробуем зайти в ЛК "по-настоящему"
-                location.href = 'https://lkes.r-energiya.ru/';
-            }
-
-        } catch (err) {
-            console.error('Ошибка AJAX:', err);
-            alert('Пользователь в системе не найден');
-            ajaxPreloaderOff();
-        }
-    });
-    // END Переход в ИСУ
-    $('.ajax-c-form .submit-btn').on('click', function(){
-        calcPrice();
-        if ($(this).closest('form').find('.has-error').length > 0){
-            $('.form-tab').removeClass('active');
-            $('.form-group.has-error').closest('.form-tab').addClass('active');
-            if ($('.draft-contract-form .form-tab:first').hasClass('active')) {
-                $(this).addClass('hidden');
-            }
-            $('.next-btn').removeClass('hidden');
-            $('.submit-btn').addClass('hidden');
-            return false;
-        }
-    });
-
-    function calcPrice (){
-        function parseFormattedNumber(value) {
-            return parseFloat(value.replace(/\s/g, ''));
-        }
-
-        let resultInput = $('.calc-result');
-        let priceAllInput = $('.calc-price-all');
-        let priceOffInput = $('.calc-price-off');
-
-        var priceAll = parseFormattedNumber(priceAllInput.val()) || 0;
-        var priceOff = parseFormattedNumber(priceOffInput.val()) || 0;
-
-        if (priceAll < 0){
-            priceAllInput.closest('.form-group').addClass('has-error');
-            priceAllInput.siblings('.help-block').text('Значение не должно быть отрицательным.');
-            priceAllInput.data('yiiActiveForm', null);
-        } else {
-            priceAllInput.closest('.form-group').removeClass('has-error');
-            priceAllInput.siblings('.help-block').text('');
-            priceAllInput.addClass('send-a');
-        }
-
-        var result = priceAll - priceOff;
-
-
-        if (result < 0){
-            resultInput.closest('.form-group').addClass('has-error');
-            resultInput.siblings('.help-block').text('Значение не может быть отрицательным. Пожалуйста, измените цену контракта (договора).');
-            resultInput.data('yiiActiveForm', null);
-        } else {
-            resultInput.closest('.form-group').removeClass('has-error');
-            resultInput.siblings('.help-block').text('');
-            priceOffInput.closest('.form-group').removeClass('has-error');
-            priceOffInput.siblings('.help-block').text('');
-            priceOffInput.addClass('send-a');
-        }
-
-        resultInput.val(result.toLocaleString('ru-RU', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).replace(',', '.')); // Округляем до 2 знаков после запятой
-        resultInput.addClass('send-a');
-    }
-
-    $('.generate-draft-pdf').on('click', function (e) {
-        e.preventDefault();
-
-        const urlParams = new URLSearchParams(window.location.search);
-        let draftId = urlParams.get('id');
-        let url = $(this).attr('href');
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: { draft: draftId},
-            success: function (response) {
-                if (response.status === 'success') {
-                    // Создаем временную ссылку для скачивания
-                    let link = document.createElement('a');
-                    link.href = response.pdfUrl;
-                    link.download = 'Заявление.pdf'; // Имя файла при скачивании
-                    document.body.appendChild(link);
-                    link.click(); // Имитируем клик
-                    document.body.removeChild(link); // Удаляем ссылку
-                } else {
-                    alert('Ошибка при генерации PDF');
-                }
-            },
-            error: function () {
-                alert('Ошибка при отправке данных');
-            }
-        });
-    });
-
-    function formatNumber(value) {
-        const number = parseFloat(value.replace(/\s/g, '').replace(',', '.') || 0); // Убираем пробелы и заменяем ',' на '.'
-        return number.toLocaleString('ru-RU', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).replace(',', '.');
-    }
-
-    function formatNumberInt(value) {
-        const number = parseFloat(value.replace(/\s/g, '').replace(',', '.') || 0); // Убираем пробелы и заменяем ',' на '.'
-        return number.toLocaleString('ru-RU', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        }).replace(',', '.');
-    }
-
-    $('.num-format').on('change', function () {
-        const formattedValue = formatNumber($(this).val());
-        $(this).val(formattedValue);
-    });
-    $('.num-format').on('focus', function () {
-        if ($(this).val() == '0.00'){
-            $(this).val('');
-        }
-    });
-    $('.num-format').on('blur', function () {
-        if ($(this).val() == ''){
-            $(this).val('0.00');
-        }
-    });
-
-    // Датапикер
-    var dateFormatDraft = "dd.mm.yy",
-        fromDraft = $(".from-date").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            regional: "ru",
-        })
-            .on("change", function () {
-                toDraft.datepicker("option", "minDate", getDateDraft(this));
-                $(this).addClass('send-a');
-                sendFormAjax();
-            }),
-
-        toDraft = $(".to-date").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            regional: "ru",
-        })
-            .on("change", function () {
-                fromDraft.datepicker("option", "maxDate", getDateDraft(this));
-                $(this).addClass('send-a');
-                sendFormAjax();
-            });
-
-    function getDateDraft(element) {
-        var date;
-        try {
-            date = $.datepicker.parseDate(dateFormatDraft, element.value);
-        } catch (error) {
-            date = null;
-        }
-
-        return date;
-    }
-
-
-    // Удаление загруженных файлов
-    $('body').on('click', '.removeLoadedFile', function () {
-        ajaxPreloaderOn();
-        var actionForm = $(this).closest('ul').attr('ajax-action');
-        var ajaxData = 'draftId=' + $(this).closest('ul').attr('draft-id') + '&fileId=' + $(this).data('idx');
-        $.ajax({
-            url: actionForm,
-            type: 'POST',
-            data: ajaxData,
-            success: function (response) {
-                $('#wrap-uploaded-files').html(response);
-                ajaxPreloaderOff();
-                console.log('Форма успешно отправлена');
-            },
-            error: function () {
-                ajaxPreloaderOff();
-                console.log('Произошла ошибка при отправке формы');
-            }
-        });
-    });
-
-    // Переключение табов
-    $('.draft-contract-form .next-btn').on('click', function () {
-        let newActive = $('.draft-contract-form .form-tab.active').next('.form-tab');
-        $('.draft-contract-form .form-tab').removeClass('active');
-        newActive.addClass('active');
-        if ($('.draft-contract-form .form-tab:last').hasClass('active')) {
-            $(this).addClass('hidden');
-            $('.submit-btn').removeClass('hidden');
-        }
-        $('.prev-btn').removeClass('hidden');
-        return false;
-    });
-
-    $('.draft-contract-form .prev-btn').on('click', function () {
-        let newActive = $('.draft-contract-form .form-tab.active').prev('.form-tab');
-        $('.draft-contract-form .form-tab').removeClass('active');
-        newActive.addClass('active');
-        if ($('.draft-contract-form .form-tab:first').hasClass('active')) {
-            $(this).addClass('hidden');
-        }
-        $('.next-btn').removeClass('hidden');
-        $('.submit-btn').addClass('hidden');
-        return false;
-    });
-
-    // Подсказки
-    $('.input-tooltip-js').on('click', function () {
-        $('.draft-input-popup p').text($(this).next('div').text());
-        $('.draft-input-popup').animate({'top': $(window).scrollTop() + 50}, 450);
-        $('.contracts-devices-popup-overlay').fadeIn(250);
-        return false;
-    });
-
-    // Обрабатываем событие валидации поля
-    $('.ajax-c-form').on('afterValidateAttribute', function (event, attribute, messages) {
-        if (messages.length === 0 && !($(attribute.input).hasClass('draft-files')) && !($(attribute.input).hasClass('send-contract'))) {
-            $(attribute.input).addClass('send-a');
-            if ($(attribute.input).hasClass('calc-price')) {
-                calcPrice();
-            }
-            if ($(attribute.input).hasClass('calc-price-all')) {
-                let priceperpiece = parseFloat($('.priceperpiece').val().replace(/\s/g, ''));
-                if (priceperpiece != 0){
-                    let allprice = parseFloat($('.calc-price-all').val().replace(/\s/g, ''));
-                    let planValue = allprice/priceperpiece;
-                    $('.calc-plane-volume').val(formatNumber(planValue.toString()));
-                } else {
-                    $('.calc-plane-volume').val(formatNumber('0'));
-                }
-                $('.calc-plane-volume').addClass('send-a');
-            }
-            if ($(attribute.input).hasClass('calc-new-price')) {
-                let tarif = parseFloat($('.calc-new-volume').data('tarif'));
-                if (tarif != 0){
-                    let allprice = parseFloat($('.calc-new-price').val().replace(/\s/g, ''));
-                    let planValue = allprice/tarif;
-                    $('.calc-new-volume').val(formatNumberInt(planValue.toString()));
-                } else {
-                    $('.calc-new-volume').val(formatNumberInt('0'));
-                }
-                $('.calc-new-volume').addClass('send-a');
-            }
-            if ($(attribute.input).hasClass('off-budget-input')) {
-                if ($(attribute.input).is(':checked')) {
-                    $('.off-budget-section').slideDown();
-                } else {
-                    $('.off-budget-section').slideUp();
-                    $('.field-draftcontractform-off_budget_name input').addClass('send-a').val('');
-                    $('.field-draftcontractform-off_budget_value input').addClass('send-a').val(0);
-                }
-            }
-            sendFormAjax();
-        }
-        if ($(attribute.input).hasClass('send-contract')){
-            location.href = $(attribute.input).find('option:selected').data('url');
-        }
-        if ($(attribute.input).hasClass('off-budget-input')) {
-            if ($(attribute.input).is(':checked')) {
-                $('.off-budget-section').slideDown();
-            } else {
-                $('.off-budget-section').slideUp();
-                $('.field-draftcontractform-off_budget_name input').val('');
-                $('.field-draftcontractform-off_budget_value input').val(0);
-            }
-        }
-
-    });
-
-    // Функция для отправки формы через AJAX
-    function sendFormAjax(files = false) {
-        var form = $('.ajax-c-form')[0];
-        var ajaxData = new FormData(form);
-        var actionForm = form.action;
-        var content = false;
-        var process = false;
-        if (files) {
-            ajaxPreloaderOn();
-        } else {
-            form = $('.ajax-c-form');
-            actionForm = form.attr('action');
-            content = 'application/x-www-form-urlencoded; charset=UTF-8';
-            process = true;
-            var formData = form.serializeArray();
-            var filteredData = formData.filter(function (input) {
-                return form.find('[name="' + input.name + '"]').hasClass('send-a');
-            });
-
-            ajaxData = $.param(filteredData);
-
-        }
-
-        $.ajax({
-            url: actionForm,
-            type: 'POST',
-            data: ajaxData,
-            processData: process,
-            contentType: content,
-            success: function (response) {
-                if (files) {
-                    allDraftFiles = [];
-                    updateDraftFileList();
-                    $('#wrap-uploaded-files').html(response);
-                    $('.draft-files').val('');
-                    $('.file-required').parent().removeClass('has-error');
-                    $('.file-required').next('.help-block').html('');
-                    ajaxPreloaderOff();
-                } else {
-                    form.find('.send-a').removeClass('send-a');
-                }
-                console.log('Форма успешно отправлена');
-            },
-            error: function () {
-                if (files) {
-                    allDraftFiles = [];
-                    updateDraftFileList();
-                    ajaxPreloaderOff();
-                } else {
-                    form.find('.send-a').removeClass('send-a');
-                }
-                console.log('Произошла ошибка при отправке формы');
-            }
-        });
-    }
-
-
-    let allDraftFiles = [];
-
-    $('.draft-files').on('change', function (e) {
-        sendFormAjax(true);
-    });
-
-    // Проверка наличия незагруженных файлов
-    function checkFileList() {
-        if ($('#filesList li').length > 0) {
-            $('.submit-file-btn-js').show();
-            $('.draft-files').addClass('input-file-hide-text');
-        } else {
-            $('.submit-file-btn-js').hide();
-            $('.draft-files').removeClass('input-file-hide-text');
-        }
-    }
-
-    $(document).on('click', '.removeDraftFile', function () {
-        let index = $(this).data('index');
-        allDraftFiles.splice(index, 1);
-
-        updateDraftFileList();
-    });
-
-    function updateDraftFileList() {
-        $('#filesList').empty();
-        let show = 0;
-        for (let i = 0; i < allDraftFiles.length; i++) {
-            show = 1;
-            $('#filesList').append('<li><span>' + allDraftFiles[i].name +
-                '</span> <button class="removeDraftFile" data-index="' + i + '">Х</button></li>');
-        }
-
-        checkFileList();
-    }
-
     /**
      Tabs
      **/
@@ -444,9 +33,9 @@ $(function () {
         return false;
     });
 
+    /*tin*/
     $('.ajax-pdf-update').on('click', function (e) {
         e.preventDefault();
-
         let filesName = [];
         $('#filesList li').each(function ($i) {
             filesName[$i] = $(this).children('span').text();
@@ -456,16 +45,10 @@ $(function () {
         $.ajax({
             url: '/messages/generate-pdf',
             type: 'POST',
-            data: {filesuploadnames: filesName.join(', '), message: messageId},
+            data: {filesuploadnames: filesName.join(', '), message :  messageId},
             success: function (response) {
                 if (response.status === 'success') {
-                    // Создаем временную ссылку для скачивания
-                    let link = document.createElement('a');
-                    link.href = response.pdfUrl;
-                    link.download = 'Обращение.pdf'; // Имя файла при скачивании
-                    document.body.appendChild(link);
-                    link.click(); // Имитируем клик
-                    document.body.removeChild(link); // Удаляем ссылку
+                    window.open(response.pdfUrl, '_blank');
                 } else {
                     alert('Ошибка при генерации PDF');
                 }
@@ -475,7 +58,6 @@ $(function () {
             }
         });
     });
-
 
     $('.ajax-pdf').on('click', function (e) {
         e.preventDefault();
@@ -494,13 +76,7 @@ $(function () {
             contentType: false,
             success: function (response) {
                 if (response.status === 'success') {
-                    // Создаем временную ссылку для скачивания
-                    let link = document.createElement('a');
-                    link.href = response.pdfUrl;
-                    link.download = 'Обращение.pdf'; // Имя файла при скачивании
-                    document.body.appendChild(link);
-                    link.click(); // Имитируем клик
-                    document.body.removeChild(link); // Удаляем ссылку
+                    window.open(response.pdfUrl, '_blank');
                 } else {
                     alert('Ошибка при генерации PDF');
                 }
@@ -540,10 +116,8 @@ $(function () {
         }
         if (show > 0) {
             $('.messages-form form button[type=submit]').removeClass('hidden');
-            $('#messages-filesupload').addClass('input-file-hide-text');
         } else {
             $('.messages-form form button[type=submit]').addClass('hidden');
-            $('#messages-filesupload').removeClass('input-file-hide-text');
         }
     }
 

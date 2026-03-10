@@ -12,7 +12,7 @@ $receiptUID = Yii::$app->session->getFlash('receiptUID');
 </div>
 <div class="h-titles">
     <div class="h-subtitle">
-        Информация о платеже отразится в Личном кабинете в течении часа.
+        Информация о платеже отразится в Личном кабинете в течение часа.
     </div>
     <p>Квитанция об оплате <?= Yii::$app->session->getFlash('receiptN1C') ?>
 

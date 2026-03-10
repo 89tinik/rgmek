@@ -1,0 +1,98 @@
+[2025-11-24 11:39:45] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.2N57WLiLZ-86uEoB0U2jfV6fKNfjjPT4VMCu1ChaDPpHUlQi4n3l3g.wAXC8TLC3A-ow3c0jqoLhQ.7UMyob8q49DQKcAao-EamtRelMlBrs3K5vuVRvJEYxg1l-Em4ffi8AODbubD3JlUUf8P65TZjsAQp2R7D-5nZ6bb77u9ae1MwB3VVCe7JLwYjzyP6xX16S1keLFQNNCGF-QzzMquZmadYLDt144FYK6v_jK9fjCUX3REP9EhDitKE9HarTsSKt_zQxbg4Pe1FKt8TcygeXtaNltUyItzP9UEJMalVAJE44WN6dSsrsjmTm8F4mk3RXHMLNRBDUUzMzQXQ71VA3gGJCcFnFNq0kn8qdh5euImwrRpxlK2qKIcI4Z80SJ2y3DRs23DT4dsYmOViQrExN4iRWwgFlPY9HMXScWhA0DDDl9GMtec38BeHrVjHuFVPAk7f0XmkQ35.wWkA4CBZjE1Uz_W1kCI9fg</Token><Message></Message></UserData>
+
+[2025-11-24 11:41:13] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.tScETjI3HoXgaLhyID9TNAg-p1t-OsgqstPqJkUJhp1dN3QrmZ3jXA.UxWts5WbfntiW2uviviBbg.pBZ0UZYdpAyMqmnWF0an8lOQ8ADrwlY2D49bYrV4Wd9t-3IT_mKRFOt1P2rM6K7B4mQ2AaxCnAJYGpakmBq7yrIsglEHSr8ji1cXGI-_UsEK_5XCOOUZVJuDoiTFLHBl5KCOW9nx_1SSlnTCMFEhYQtOfjRdeA0JVMLONTliZlipzDxTc7DU5m4ODDuaJURMf2wyEE9l2A0VMT-9mjRj0F3StFTKkz0bWeZUe1vbCci1OOOnrBzZ9VwB9GPImEtj0DguAdkE6O4BGIVgoiZYIZmr6bknYZ7OrE21mFTiGk-LSs2eoofi4iMrNeJiyFHMcE6Q1jyqaa1PsiSEBBEaMSwXEhSsD0uznYld9gcqFN0KwERWsLIQX7LPdETcpfP_.rRtYypv9sGK_3HayJnDStQ</Token><Message></Message></UserData>
+
+[2025-11-24 11:48:25] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.vHlzYHc_7KGw8Gt_AUU9S7pQI_7qJj_tdVJAlYp1d3Pa8JoDu39ejw.cR9iaDYZZfff3xL4rJjerw.5Y2QpQJlDNweiLB-M3WMiIjM5wxeoZ9A5gLpS0nxbdepkiyWj146lnKNXsLuW4QkPAT-sHT_06ViD5y7K13ClVtObDpeBD6WdIECNahUuyJM9aTE0m_8-JavqaFdDeu7or-TK9B_j3rEbhNW0IF5HifW94L5D17u_SxAiT0lrxwpg5RFVO7eLAaSDc1UjMo-xwsC7P7zTSyz0O40G5LiVZ5Qtf1ua9RNq3gNov6_e8zADLyGY3CiOwDwclt0-Jb_p76jO9YLt1JiZwnrd5Ut_Fc91ctAw1jHym9AFLj0VEX1Es9amsgYRNsyx7uuDAkGNI0THEIqevX0V-6cnmJY_amYgxsGPr0LUeEW-rer0hV2CJy5XDm2UbMW6jEwe6vM.w7ineDZxRLLyruA4m8ntiA</Token><Message></Message></UserData>
+
+[2025-11-24 11:49:38] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.Gr6Z09L8RQxPjzlFbTGbAHEgu84ObG8CJ0GfhBqCuMH1Pv-PVchnaw.ufvG_gZmY_t8K9jKxgoRVA.sHKod0j31cy3yHxoTVHZ_cnbvyAp74zMKqqmdb_4lQ13mNkH_MZXJoV8chua0QFgqAHPm16nRHrq9ojoRK1-a2GMOw96Q48xZ-A977qwwDB9QywwigI4tG13TeLID4y0BRBsopXguAy94agGbsqG4_Pc8KYsZYVIcODsYWtbJO6WaFzPSfKJKA2uzL8QZkKrgD5-rQzvtxSHx00VK4AAunc09UxDYjj-RTbnCj2BhdnDnSTerfqU2I_qhmU51SJer7WHqrfc2E0K6G-UB3jNc-OkPmKJ8pXK-NMkFKsbHS6wQ7iEhjgMO8PFY5QcvH7pmrvkHUuZ1-bZv1t2KiZPunYebXOltH_WO1DMx9tE2LemyYm-RIvjUe5COgDkipd-.TRM03Ppw2eMMrRvW3DtVuw</Token><Message></Message></UserData>
+
+[2025-11-24 11:51:33] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.JRYRBEp7G8mMtTA6nDl8nfmJ-Th51rXp3NJTAZ2KH8X_176O6A13bg.SGo5AJHrUeg6O1Wy3nIp3g.XA3aGQaYNEGwOERHNpvYTFZm0D6SA1EJiMpmTsZ_fGB7bqLdAUoRpCoVAsW9WRSBnFDr_2yeL1eBQbiex75oSwN0hlDU9TReXOBpgAVBhhdT6TlmmGoyhNumSmAE6MqFhCfMFzDKYrl5qg2E-JAj22ZmTis5dblX6ZWRN0WDVRYEbhjdX3M1GpbHdJcsYNuR42wX35WtvNC9M6MHOTtVMY9kqXhM93AoJcq6RAg0J2re1z06EM_U7FdDllsI-4unigLiXwReUCI1_axgegOFQET1FbDY107SU3_EG5lEtMoUy68XzRMOqgaFMcsKQhRsyKSsYzqWKY4UozfmXJOwMXE1_aTeiorEqDJZlUviQzTENgqrM2SllULQJakzivKn.7uJjNUGPmUi8MeObKJAxkw</Token><Message></Message></UserData>
+
+[2025-11-24 11:52:19] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.0ymBJhe90XNR_iQvcdp0Dyhn2KuhmX6R2mJ-cNUig39h0V6znNCexg.Fhn-Rhi3Q2wFPDOhVNs3Mw.1pSdcClCXyY0uldVkBjKXLUjpi3cM3UN6NxAMcY-B5_5JzQZudOku2P4-uO7Zq9yTHK7wybxvxw7oNwFHiA-En886l_RdqKUbBWhKe34RvdZziyBtMlChSHDh5swDp9NOGuxqbF1QoqLULS-AfwJZPfyC5sqfGcdgdqw3Lh1r9JWMscp1q-Hflz4m6l9HP6_olscnqSbBPMOggrj2NJzew7u5gLuA0WFGCwi_6MH45Qo0OW8AQ2Q-KYLbxEpY1vNj_7c7CryjRK0UYMB7VVfIXSMDCBvrwi5XzzsK5tJrhzffDFf79vYnvLqg_gQqV-XMX87rCXUbskN8fl8aTfw-1C5gUvS6fBUGI5FeWICfyLg6OAi-ZI314tx1XQOIWYY.wXcpOMPPDDWm50GZ2Cslzg</Token><Message></Message></UserData>
+
+[2025-11-25 09:45:36] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.HkYsTC6OrliwJbMw0_4YFu3RniRKVfzvstZZ-5P2u0wENwX1Tv-IAg.QDDmn66jncmIMxjebJulAg.jiULlnJtQm5m8WR5cclWIkN3kOpKmnc6IuZDZJ482BnWK27UNwgDwUIURX3VqxEdyIggcZMGSv9woeh4Mif-CXToHZNV3Z-qYBreJEzinbkjMQr1LixP8xv3Ohb5fyspUMIcU8cBs63TaAzWwAnuCFpC-4imX-O3R9BRz0ekaX8S1tMAdhfbJP4h_HeQ9g9lZh3Z6Fus0ouk9Q7Bx7VBAjRdEH9z_kuVeSCSmgXSzc3sjCy_x820zWOLcn6EHb_mnXsPgiTDtRJYglkhvCnd5wk2djJzi73njE5KuCgnD1QmrfdbW_peLL64zjGAe9gkbawJ3flcb_92jjvjZFHn-aJmyjkXcAwov_sIiops9FqSPTzSPr51T0oNIMe34Gjw.3SaqcwqPUBb79UHl0vugoA</Token><Message></Message></UserData>
+
+[2025-12-01 17:16:07] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.L2tjJqVYUbC29P8GKxG_2YqQX904UpksU0NdbOjs8ZJBHa0K1mlrTQ.n04S6poYvKou1TdqZ5s7OA.FluUhG24nkj3kETg5gAxX5Fb01_xP5YP54QzbuxWqo7ns7dm3uW2s-HBlu7oLdNxdOAm7KrpXNVBHJA6AQxyV6GSBMXlN2Sw_ZPTWH5oQEdA6FJzE-x3tSbhhOp615OgQKoQUTuwyuVu6VtZ2OJtVtWt04-9jZdB_T1lSgNaR_EekXeKMZ-oQh5Lk0jlF4ZiBOwKyHBT9UXcD9Q_6tZ2D2qajQFyiWfKZ5tCg16LMB-0t_rCcTQcz0st5yFHrL7zayUXDwLqqfK7WqoD7OuuljeF1b-c6CvqAQ_BARh1fo0kPZ6XhGwtA-DW-T8KUbZ-Yi4wBtXOEkSVzxW7V1IUhp7OD4_z12FIWrMtBGn-BYCSM_Apine66j_jvTVOxvd-.NZbe6rSB3iCZMeEkugdqGw</Token><Message></Message></UserData>
+
+[2025-12-02 09:25:53] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.fqE2hHWy3vk5sM3uaTZiw9YJroQNeWi0ShQ6fjZ1JIVplNjTYLltdA.WIozkkL7QkTaMCTP0Ob0IQ.KKB6CeLgRgMKgd8R3hfTSeVk1oKmX9G8nmwLJGXUqbs7gGz0z1Cgs1Z1-jzeu1ZgU4t3N-K2d3mWABApm66ZZdsvFwyifVvuD0CL4cez15PHt0cw3v9oGGdxKGtd_DzHWr-lgUJF0IIwgmRhdC3pg0M1GirJFU0-2jtmJNYRzmzhPkkkY6nU19GPKdBDDUlWgQQonmeiz3oAxgQtGJ2PMliJ4s45YgrnPXg6COUSOumY68zJc-HnaJ5lgskuQ9q4tnK7kV7kI_B_M3ZcGauYq-03Qp9Q6qUMPUKohyCEZoscvWOeIwVpLohfnOu2jtwq9pQJRcAnXxal1coeV4gws18pxarQvSIhbu7gEqyuaQVZnBevPHZAPfJNqSEzsPx0.NvnMTo8jHRMAnanxTnNgbA</Token><Message></Message></UserData>
+
+[2025-12-02 09:29:55] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.6nwEVMPekFo9OaSZiM1J6WIvRz64orlKZVl0zr1xZrov820VwJmySQ.9l4-60OEjFgxoiWFssv1SQ.lIrMbaAo29J0wZF6tDTrzZRk55DLb9Y4P12VP7WtMf0xkBfe61O92kFsAVIu5mnWpJbtr5-haj5fhtVyz234BKTchLDJk9HpXNMq6CGMGM0dRT0aSE3F-cwbDEYBepKauN1BfkVvzWmfFxzSF-HC8KhHpVUM5vjKW6ThwIMWG7yppoQeJqunGZjAjQvK3gWPfMxkkAhytduNEI4bV2a9WyNyr227BSpUrBHT7hVSHIe8Fone8NHN0HMD76G2x3slO30XUCN-6rfKwEPKPbvbiDXvNidCQt8cye5w8NfbdmWnTIladxxMWkb-ZSk-4ryiV3m0Isdkyixrf8MHYFN2C5--yrbw5V2fr0EOtO_dylySlQeRLrfoFe7zz_CrwZym.SZtTEW39gB3Y6CXxnN3p8g</Token><Message></Message></UserData>
+
+[2025-12-02 09:30:22] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.9skLitnLc-phAtHvK9lzVC37t8Hunim_7b9zZw37WAYXEfW5kVKtXA.glS8dk1u3PbQxuxQCp-niQ.2ZwxT1sc3AcKa7I7223RwEmujOFTKsMGA3NtuyOlCDP59aii92__DNNA0IZp_xigCJTH2ToIUCjC1-HQvjROhlYWmZu_F9qISqKr3wKBh_KyRA3e2OMGnkuiUycJF7GziCo_Jmgj6MQqTGYWgj0mUnlr-E1exlUbjjG0uFz8vwBxaaWgoWYWzxlqfLXFiMJxlde-F7EHxSbTGLI0oycEpVjkD2f1gtfGmX4IyzZhRpipEYv2WauFlJKPTYwmRGoy5HO_HIvrPiVwPw0LI3Cd4L-tzFK23djXm7ZVJMXWjCFlasHhfFGT3n3U5kZW3CGzDCJKDyBjo5ESOPeTgjMKKj3a3Eoa4hl-70nlNBp58NlFbN2auEvdez0XgU58zv4F.6HNj-FXqHztAdBnPomK3yg</Token><Message></Message></UserData>
+
+[2025-12-02 09:31:22] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.qQsJzIWF1wBcHgTYYhvA704-8Yfbo0o5ZGHjOZvs0NQB0XY5gILF1Q.q7reOKWTKyP6fZgD7TvuBg.1WAy1CRV2W5v3FasebAFB50QLWAep-RHYk0qJHHcEfPoJ1MdMA-AuBj-WfT1RXUUaeGv4ftq06El7nTSl-nLke02LPhNOMykOQyQDiuIdEOWEXRkMTU4SDgEHb8DUZS9mj5O9S_ECCESESAxGsyXt8jAOkEbaJlo2fH4vfON-TYoZjmcjt0VrPVgBn9Gw81YrEK5GRVqFIoRkTqv98xKBUXUQGYmwep_1LaHWF8aK6e5-pr3_HOcR-rAGspJeir48YnWknb1OFGk_IpYd0tfTYTWWEhGD5M0pVLazRIg3dYTljYbc94WPRMcelfJRV-LTr6MfxU2o1Jpp-4QxRjQ9pFvne-yyfvfZop299LViUAxsnIjNyRMH9JvbNfg9Nsg.BU4sVXstJW7OFq8fxwQ0qA</Token><Message></Message></UserData>
+
+[2025-12-02 09:31:36] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.3o30Lc8L0rrC4RZ9yvdWw48NIikqdL6ItnN29Re9CMLEXPqlSgXGmw.wWDMZiKUJ44vnrlsTLKwjQ.IYeGCoB0svBUB_rWsn_Or3Mq2QlSUqWDty3qnGFz8FJ0eRsSYdP6fg5dofo9v7dip9QNVVGDWZHDvmEr-xcV-DKg29GSCIfim29uJbFXQRMg7PnXojsFPSk-kyI81NOzGChXZmnr41hozdQm7MC0-vhwb3uW_4LNPtcirlDotEQx-YZ78mTvqK4G69bBUW7mTlLOX6wE7JSJnAy_BoENprP5l5NtiQd-E_4rlBrt3jrwO1ga7vIepssKrgYeVl8V9l3NBose6715tYPCMZGUatjUBSHPHPmQcQpPhmnyizTB664e84TereeR8tZeY4kdDBU3g-Bup-K0cupLk1uTZ_lLKVNMGkDs99DIigKukKzfXUXPOZjZ3408PnBH2fBQ.FMYFztvC8JZ_nGg3Eq3fGg</Token><Message></Message></UserData>
+
+[2025-12-02 10:20:24] HTTP:200 Content-Type:text/xml
+SENT XML:
+<?xml version="1.0" encoding="utf-8"?><UserData><ExternalSystemId>3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE</ExternalSystemId><Meters><Meter><Type>МИРТЕК</Type><Serial>1240162914973</Serial></Meter></Meters></UserData>
+
+RESPONSE/ERROR (first 400 chars):
+<?xml version="1.0" encoding="UTF-8"?><UserData><Token>eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.oZyEGm_bCEXv3Y-RsPO3SRgu-h2vIny6WTPxA6qpHlwxQoun39ydsQ.0TqYNjV-LFTboenjPKEcyg.7ypLK9ENNeo6wBBLjk2dP0l7ibfP7FPpfI16-IHliz6EEJwgXli5RGv5bSSE7aWxReG_a5wgSCp4zV8j2NRWHGC63jQzoLVA03BHXf3g3nvXzLpujotjE3uUpWPCQLEz8c-PmH9pM45CyXFfSRRS4xSeoDvJX50tTnScX5nekQgoqwEQOQFm4Fmz6hiQGDWYzUGEZ4nEDiOSP4z3Ie_muNOE7TzW15d7ypK362CxU5PHziyCcxZr0FL6uPVysR1KGfiDG8Yx_Qrui9lChoVolN3ADGKf4GbUYwJBIJlEOrY1M9EsypDIgndCnBe1OZpNIuD05SyzlOtwHFQEJdLzNO54rq_Ykt2NFDlcyD6hMkovpcuM0S7e7p7jRrsopuTk.6GNDuWtJVQ7doZu2oegYEw</Token><Message></Message></UserData>
+

@@ -220,33 +220,30 @@ class AjaxController extends Controller
         return 'Сайт обновляется!';
     }
 
-public function actionGetIsuToken()
-{
-    $authorizeUrl     = 'https://lkes.r-energiya.ru/Account/Authorize';
-    $externalSystemId = '3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE';
-    $logFile = Yii::getAlias('@runtime/logs/get_token.log');
+    public function actionGetIsuToken()
+    {
+        $authorizeUrl     = 'https://lkes.r-energiya.ru/Account/Authorize';
+        $externalSystemId = '3BFE2123-5FEE-4EBD-B9BE-7367B7499FEE';
+        $logFile = Yii::getAlias('@runtime/logs/get_token.log');
 
-    $userId   = Yii::$app->user->identity->id;
-    $userDbId = Yii::$app->user->identity->id_db;
+        $userId  = Yii::$app->user->identity->id;
+        $userDbId = Yii::$app->user->identity->id_db;
+        file_put_contents($logFile, "INN: " . Yii::$app->user->identity->inn . "\n", FILE_APPEND);
 
-    file_put_contents($logFile, "INN: " . Yii::$app->user->identity->inn . "\n", FILE_APPEND);
+        $response = $this->sendToServer(
+            'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts',
+            ['id' => $userDbId]
+        );
 
-    // 1) Берём FIAS (если они есть) из 1С
-    $response = $this->sendToServer(
-        'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/contracts',
-        ['id' => $userDbId]
-    );
+        if ($response['success'] === false) {
+            return $this->jsonError('failed_contracts_request');
+        }
 
-    if ($response['success'] === false) {
-        return $this->jsonError('failed_contracts_request');
-    }
+        $fiasArr = $response['success']['Address'] ?? null;
 
-    $fiasArr = $response['success']['Address'] ?? null;
-
-    // -----------------------------
-    // ВСПОМОГАТЕЛЬНЫЕ ЛОКАЛЬНЫЕ ФУНКЦИИ
-    // -----------------------------
-    $buildIsuXml = function (string $externalSystemId, array $meters, bool $modeFias): string {
+        // ==========================================================
+        //              СБОРКА XML ЧЕРЕЗ DOMDocument
+        // ==========================================================
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->formatOutput = true;
 
@@ -254,30 +251,69 @@ public function actionGetIsuToken()
         $doc->appendChild($root);
 
         $root->appendChild($doc->createElement('ExternalSystemId', $externalSystemId));
-
         $metersNode = $doc->createElement('Meters');
-        if ($modeFias) {
+        // Если fiasArr — массив, значит режим FIAS → добавляем Mode="1"
+        if (is_array($fiasArr)) {
             $metersNode->setAttribute('Mode', '1');
         }
         $root->appendChild($metersNode);
 
-        foreach ($meters as $m) {
-            $meterNode = $doc->createElement('Meter');
+        // ==========================================================
+        //       1) ЕСЛИ ПРИШЛИ FIAS — ДОБАВЛЯЕМ ИХ
+        // ==========================================================
+        if (is_array($fiasArr)) {
+//$fiasArr = ['ab9023de-beae-450d-a894-63b076a086a0', '3b6f6a76-e1fb-454e-bdac-7056631923ed'];
+$i=0;
+            foreach ($fiasArr as $meter) {
+            $i++;
+                $meter = $meter['fias'] ?? $meter ?? null;
+                $meter = trim((string)$meter);
+                if ($meter === '') continue;
 
-            if ($modeFias) {
-                $meterNode->appendChild($doc->createElement('Fias', (string)$m['fias']));
-            } else {
-                $meterNode->appendChild($doc->createElement('Type', (string)$m['type']));
-                $meterNode->appendChild($doc->createElement('Serial', (string)$m['serial']));
+                $m = $doc->createElement('Meter');
+                $m->appendChild($doc->createElement('Fias', $meter));
+                $metersNode->appendChild($m);
+                if($i > 20)  break;
             }
+        } else {
+            // ======================================================
+            //      2) ИНАЧЕ — ПОЛУЧАЕМ СЧЁТЧИКИ ПО ДОГОВОРАМ
+            // ======================================================
+            $contracts = Contract::find()
+                ->where(['user_id' => $userId])
+                ->asArray()
+                ->all();
 
-            $metersNode->appendChild($meterNode);
+            foreach ($contracts as $c) {
+                $contractInfo = $this->sendToServer(
+                    'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list',
+                    ['uidcontracts' => $c['uid']]
+                );
+
+                if ($contractInfo['success'] === false) {
+                    file_put_contents($logFile, "Bad contract structure: " . json_encode($contractInfo) . "\n", FILE_APPEND);
+                    continue;
+                }
+
+                $meters = $this->extractMeters($contractInfo['success']);
+//$meters = [
+//['МИРТЕК', '1240162914973'],
+//['МИРТЕК', '523T610931265']
+//];
+                foreach ($meters as [$type, $serial]) {
+                    $m = $doc->createElement('Meter');
+                    $m->appendChild($doc->createElement('Type', $type));
+                    $m->appendChild($doc->createElement('Serial', $serial));
+                    $metersNode->appendChild($m);
+                }
+            }
         }
 
-        return $doc->saveXML();
-    };
+        $xml = $doc->saveXML();
 
-    $isuAuthorize = function (string $authorizeUrl, string $xml, string $logFile): array {
+        // ==========================================================
+        //                 ОТПРАВКА XML НА АВТОРИЗАЦИЮ
+        // ==========================================================
         $ch = curl_init($authorizeUrl);
         curl_setopt_array($ch, [
             CURLOPT_POST            => true,
@@ -289,161 +325,36 @@ public function actionGetIsuToken()
             CURLOPT_SSL_VERIFYHOST  => 2,
             CURLOPT_USERAGENT       => 'RGMEK-Bridge/1.0 (+php-curl)',
         ]);
-
         $body = curl_exec($ch);
         $err  = curl_error($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $ctype= curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
 
-        file_put_contents(
-            $logFile,
+        // Оставляем лог
+        file_put_contents($logFile,
             "[" . date("Y-m-d H:i:s") . "] HTTP:$code Content-Type:$ctype\n" .
             "SENT XML:\n$xml\n\nRESPONSE:\n" . mb_substr($body ?: $err, 0, 5000) . "\n\n",
             FILE_APPEND
         );
 
         if ($err || !$body) {
-            return [
-                'ok' => false,
-                'error' => 'curl_failed',
+            return $this->jsonError('curl_failed', [
                 'http' => $code,
-                'detail' => $err ?: 'empty_response',
-            ];
+                'detail' => $err ?: 'empty_response'
+            ]);
         }
 
-        if (preg_match('~<Token>([^<]+)</Token>~i', $body, $m)) {
-            return [
-                'ok' => true,
-                'token' => trim($m[1]),
+        // Извлекаем токен
+        if (!preg_match('~<Token>([^<]+)</Token>~i', $body, $m)) {
+            return $this->jsonError('no_token_in_response', [
                 'http' => $code,
-            ];
+                'sample' => mb_substr($body, 0, 300)
+            ]);
         }
 
-        return [
-            'ok' => false,
-            'error' => 'no_token_in_response',
-            'http' => $code,
-            'sample' => mb_substr($body, 0, 300),
-        ];
-    };
-
-    // -----------------------------
-    // 2) Собираем кандидатов (FIAS или счётчики)
-    // -----------------------------
-    $modeFias = is_array($fiasArr);
-    $candidates = [];
-
-    if ($modeFias) {
-        $i = 0;
-        foreach ($fiasArr as $meter) {
-            $i++;
-
-            $fias = $meter['fias'] ?? $meter ?? null;
-            $fias = trim((string)$fias);
-            if ($fias === '') {
-                continue;
-            }
-
-            $candidates[] = ['fias' => $fias];
-
-            // оставляем твой лимит (не больше 20)
-            if ($i >= 20) {
-                break;
-            }
-        }
-    } else {
-        // если FIAS не пришли — собираем счётчики по договорам
-        $contracts = Contract::find()
-            ->where(['user_id' => $userId])
-            ->asArray()
-            ->all();
-
-        foreach ($contracts as $c) {
-            $contractInfo = $this->sendToServer(
-                'http://s2.rgmek.ru:9900/rgmek.ru/hs/lk/objects_list',
-                ['uidcontracts' => $c['uid']]
-            );
-
-            if ($contractInfo['success'] === false) {
-                file_put_contents($logFile, "Bad contract structure: " . json_encode($contractInfo) . "\n", FILE_APPEND);
-                continue;
-            }
-
-            $meters = $this->extractMeters($contractInfo['success']);
-
-            foreach ($meters as [$type, $serial]) {
-                $type = trim((string)$type);
-                $serial = trim((string)$serial);
-                if ($type === '' || $serial === '') {
-                    continue;
-                }
-
-                $candidates[] = ['type' => $type, 'serial' => $serial];
-            }
-        }
+        return $this->jsonSuccess(['token' => trim($m[1])]);
     }
-
-    if (empty($candidates)) {
-        return $this->jsonError('no_candidates');
-    }
-
-    // -----------------------------
-    // 3) Прогоняем ПО ОДНОМУ: годные → approved
-    // -----------------------------
-    $approved = [];
-    $bad = [];
-
-    foreach ($candidates as $cand) {
-        $singleXml = $buildIsuXml($externalSystemId, [$cand], $modeFias);
-        $check = $isuAuthorize($authorizeUrl, $singleXml, $logFile);
-
-        if (!empty($check['ok'])) {
-            $approved[] = $cand;
-        } else {
-            $bad[] = $cand;
-        }
-
-        // лёгкая пауза, чтобы не выглядеть как флуд (можно убрать)
-        usleep(150000); // 150ms
-    }
-
-    file_put_contents(
-        $logFile,
-        "Approved: " . json_encode($approved, JSON_UNESCAPED_UNICODE) . "\n" .
-        "Bad: " . json_encode($bad, JSON_UNESCAPED_UNICODE) . "\n\n",
-        FILE_APPEND
-    );
-
-    if (empty($approved)) {
-        return $this->jsonError('no_valid_meters', [
-            'bad_count' => count($bad),
-        ]);
-    }
-
-    // -----------------------------
-    // 4) Финальная авторизация по approved
-    // -----------------------------
-    $finalXml = $buildIsuXml($externalSystemId, $approved, $modeFias);
-    $final = $isuAuthorize($authorizeUrl, $finalXml, $logFile);
-
-    if (empty($final['ok'])) {
-        return $this->jsonError('final_auth_failed', [
-            'http' => $final['http'] ?? null,
-            'sample' => $final['sample'] ?? null,
-            'approved_count' => count($approved),
-            'bad_count' => count($bad),
-        ]);
-    }
-
-    return $this->jsonSuccess([
-        'token' => $final['token'],
-        'approved_count' => count($approved),
-        'bad_count' => count($bad),
-        'mode' => $modeFias ? 'fias' : 'meters',
-    ]);
-}
-
 
 
     protected function sendToServer($url, $data = array(), $toArray = true, $method = 'GET', $xmlData = false)
