@@ -4710,5 +4710,5 @@ a.btn.border.input-tooltip {
 /*ivanov END*/
 
 .temphide {
-  display:none;
+  display:none !important;
 }

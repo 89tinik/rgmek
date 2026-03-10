@@ -30,7 +30,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <li><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></li>
-        <li><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'temphide ploader'])?></li>
+        <li class="temphide"><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></li>
     </ul>
     <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
         <div class="title">Выбрать действие</div>
@@ -43,7 +43,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="btn full small border white"><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></div>
-            <div class="btn full small border white"><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'temphide ploader'])?></div>
+            <div class="btn full small border white temphide"><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></div>
         </div>
     </div>
     <?php elseif($contract['status'] == 'Заключение'): ?>
@@ -78,7 +78,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
         <li><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></li>
         <li><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></li>
-        <li><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'temphide ploader'])?></li>
+        <li class="temphide"><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></li>
         </ul>
         <div class="popup-box mobile-popup sidebar-mobile-popup" style="display: none;">
             <div class="title">Выбрать действие</div>
@@ -91,7 +91,7 @@ if (Yii::$app->request->get('uid') == $contract['uid']) {
             <div class="btn full small border white"><?= Html::a('Начисления и платежи', ['main/payment', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid' => $contract['uid']], ['class' => 'ploader']) ?></div>
             <div class="btn full small border white"><?= Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></div>
-            <div class="btn full small border white"><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'temphide ploader'])?></div>
+            <div class="btn full small border white temphide"><?= Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['uid']], ['class' => 'ploader'])?></div>
             </div>
         </div>
     <?php endif; ?>

@@ -82,7 +82,7 @@ use yii\helpers\Html;
                 <li class="item-5"><?=Html::a('Начисления и платежи', ['main/payment', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-5"><?=Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-6"><?=Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
-                <li class="item-7"><?=Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['UID']], ['class' => 'temphide ploader'])?></li>
+                <li class="temphide item-7"><?=Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
             <?php elseif($contract['Status'] == 'Заключение'): ?>
                 <li class="item-0"><?=Html::a('Технологическое присоединение', ['main/tehadd', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-1"><span>Перейти к оплате</span></li>
@@ -99,7 +99,7 @@ use yii\helpers\Html;
                 <li class="item-5"><?=Html::a('Начисления и платежи', ['main/payment', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-5"><?=Html::a('Действующие объекты и приборы учёта', ['main/objects', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
                 <li class="item-6"><?=Html::a('Информация об электропотреблении', ['main/consumption', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
-                <li class="item-7"><?=Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['UID']], ['class' => 'temphide ploader'])?></li>
+                <li class="temphide item-7"><?=Html::a('Документы и уведомления', ['main/notification', 'uid'=>$contract['UID']], ['class' => 'ploader'])?></li>
            <?php endif; ?>
 
         </ul>
